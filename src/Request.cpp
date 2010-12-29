@@ -8,6 +8,11 @@
 
 using namespace mstk;
 
+Request::Request(const Request::Type& t)
+  : type_(t), trace_(false)
+{
+}
+
 Request::~Request()
 {
 }

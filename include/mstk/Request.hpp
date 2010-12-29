@@ -25,7 +25,13 @@ class Request
         UPDATE=0,
         nTypes
     };
-    
+
+    /** Constructor.
+     * Requires a request type.
+     * @param[in] t The type of the request.
+     */
+    Request(const Type& t);
+
     /** Destructor.
      * Virtual, to allow subclassing.
      */

@@ -8,6 +8,8 @@
 
 #include <mstk/config.hpp>
 #include <stdlib.h>
+#include <iostream>
+#include <set>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <mstk/Algorithm.hpp>
@@ -15,10 +17,11 @@
 #include <mstk/Manager.hpp>
 #include <mstk/Request.hpp>
 
+
 class UppercaseAlgorithm : public mstk::Algorithm
 {
   public:
-    UppercaseAlgorithm() : mstk::Algorithm() {
+    UppercaseAlgorithm() : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {
     }
 
     ~UppercaseAlgorithm() {}
@@ -35,10 +38,7 @@ class UppercaseAlgorithm : public mstk::Algorithm
         return output_;
     }
 
-    void setIncomingString(boost::shared_ptr<mstk::Filter> f, 
-      boost::shared_ptr<std::string> input)  {
-        // FIXME: need more info to be able to let go of 
-        //this->getManager()->connect(f);
+    void setIncomingString(boost::shared_ptr<std::string> input)  {
         input_ = input;
     }
 
@@ -70,30 +70,47 @@ class Source : public mstk::Algorithm
 class SimpleManager : public mstk::Manager
 {
   public:
+    typedef std::set<Manager*> ManagerSet;
+
     ~SimpleManager() {}
-    typedef std::vector<boost::shared_ptr<mstk::Filter> > FilterSet;
-    mstk::Request& processRequest(Manager::AlgorithmPtr alg, mstk::Request& req) {
-        typedef FilterSet::iterator FSI;
+
+    void setAlgorithm(mstk::Algorithm* alg) {
+        algorithm_ = alg;
+    }
+
+    mstk::Request& processRequest(mstk::Request& req) {
+        typedef ManagerSet::iterator MSI;
         // iterate over all sources
-        for (FSI i = sources_.begin(); i != sources_.end(); ++i) {
+        for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             req = (*i)->processRequest(req);
         }
-        req = alg->processRequest(req);
+        req = algorithm_->processRequest(req);
         return req;
     }
+
+    void connect(SimpleManager* sm) {
+        sources_.insert(sm);
+    }
+
   protected:
-    FilterSet sources_;
+    ManagerSet sources_;
+    mstk::Algorithm* algorithm_;
 };
 
 class StringFilter : public mstk::Filter
 {
   public:
     StringFilter() : Filter() {
-        this->setAlgorithm(boost::make_shared<UppercaseAlgorithm>());
-        this->setManager(boost::make_shared<SimpleManager>());
+        this->setAlgorithm(new UppercaseAlgorithm);
+        SimpleManager* sm = new SimpleManager;
+        sm->setAlgorithm(this->getAlgorithm());
+        this->setManager(sm);
     }
-    boost::shared_ptr<UppercaseAlgorithm> getAlgorithm() {
-        return this->algorithm_;
+    UppercaseAlgorithm* getAlgorithm() {
+        return dynamic_cast<UppercaseAlgorithm*>(this->algorithm_);
+    }
+    SimpleManager* getManager() {
+        return dynamic_cast<SimpleManager*>(this->manager_);
     }
 };
 
@@ -102,8 +119,16 @@ class StringCreator : public mstk::Filter
   public:
     StringCreator() : mstk::Filter() {
         std::string s("Hello World!");
-        this->setAlgorithm(boost::make_shared<Source>(s));
-        this->setManager(boost::make_shared<SimpleManager>());
+        this->setAlgorithm(new Source(s));
+        SimpleManager* sm = new SimpleManager;
+        sm->setAlgorithm(this->getAlgorithm());
+        this->setManager(sm);
+    }
+    Source* getAlgorithm() {
+        return dynamic_cast<Source*>(this->algorithm_);
+    }
+    SimpleManager* getManager() {
+        return dynamic_cast<SimpleManager*>(this->manager_);
     }
 };
 
@@ -111,10 +136,17 @@ int main(int argc, char *argv[])
 {
     using namespace mstk;
 
-    boost::shared_ptr<StringCreator> stringCreator = boost::make_shared<StringCreator>();
-    boost::shared_ptr<StringFilter> stringFilter = boost::make_shared<StringFilter>();
+    StringCreator* stringCreator = new StringCreator;
+    StringFilter* stringFilter = new StringFilter;
+    stringFilter->getManager()->connect(stringCreator->getManager());
     stringFilter->getAlgorithm()->setIncomingString(
       stringCreator->getAlgorithm()->getOutput());
+    Request req(mstk::Request::UPDATE);
+    stringFilter->getManager()->processRequest(req);
+    std::cout << "in: " << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
+    std::cout << "out: " << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
+    delete stringCreator;
+    delete stringFilter;
 
     
 

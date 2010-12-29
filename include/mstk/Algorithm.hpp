@@ -9,7 +9,6 @@
 
 #include <mstk/config.hpp>
 
-#include <boost/shared_ptr.hpp>
 #include <string>
 #include <map>
 #include <mstk/Request.hpp>

@@ -5,37 +5,32 @@
  *
  */
 #include <mstk/Filter.hpp>
+#include <mstk/Algorithm.hpp>
 #include <mstk/Manager.hpp>
 
 using namespace mstk;
 
+Filter::Filter() : algorithm_(0), manager_(0) {}
+
 Filter::~Filter()
 {
+    delete algorithm_;
+    delete manager_;
 }
 
 Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
-    this->getManager()->processRequest(this->algorithm_, req);
+    this->getManager()->processRequest(req);
     return req;
 }
 
-Filter::AlgorithmPtr Filter::getAlgorithm()
-{
-    return algorithm_;
-}
-
-Filter::ManagerPtr Filter::getManager()
-{
-    return manager_;
-}
-
-void Filter::setAlgorithm(Filter::AlgorithmPtr alg)
+void Filter::setAlgorithm(Algorithm* alg)
 {
     algorithm_ = alg;
 }
 
-void Filter::setManager(Filter::ManagerPtr manager)
+void Filter::setManager(Manager* manager)
 {
     manager_ = manager;
 }
