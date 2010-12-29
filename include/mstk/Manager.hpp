@@ -19,7 +19,7 @@ class Manager
 {
   public:
     typedef boost::shared_ptr<Algorithm> AlgorithmPtr;
-    virtual void processRequest(AlgorithmPtr, Request&) = 0;
+    virtual Request& processRequest(AlgorithmPtr, Request&) = 0;
     virtual ~Manager() = 0;
 };
 

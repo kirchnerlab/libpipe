@@ -22,7 +22,7 @@ bool Request::getTraceFlag() const
     return traceFlag_;
 }
 
-void Request::setTraceFlag(bool tf) const
+void Request::setTraceFlag(const bool tf)
 {
     traceFlag_ = tf;
 }

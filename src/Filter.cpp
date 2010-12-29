@@ -16,7 +16,7 @@ Filter::~Filter()
 Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
-    this->manager_->processRequest(this->algorithm_, req);
+    this->getManager()->processRequest(this->algorithm_, req);
     return req;
 }
 

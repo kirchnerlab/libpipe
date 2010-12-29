@@ -5,105 +5,116 @@
  *
  */
 
-#include <stdlib.h>
 
 #include <mstk/config.hpp>
-
+#include <stdlib.h>
+#include <boost/make_shared.hpp>
+#include <boost/shared_ptr.hpp>
 #include <mstk/Algorithm.hpp>
-#include <mstk/FilterData.hpp>
 #include <mstk/Filter.hpp>
-#include <mstk/FilterType.hpp>
 #include <mstk/Manager.hpp>
-#include <mstk/PortInformation.hpp>
-
-namespace mstk {
-
-template <class T>
-class FilterDataWrapper : public FilterData
-{
-  public:
-    FilterDataWrapper() : FilterData() {}
-    T& getData() { return data_; }
-  protected:
-    T data_;
-};
-
-} // namespace mstk
+#include <mstk/Request.hpp>
 
 class UppercaseAlgorithm : public mstk::Algorithm
 {
   public:
     UppercaseAlgorithm() : mstk::Algorithm() {
-        // set the info
-        PortInformation pi;
-        pi.setName("in-mixed-case-string");
-        pi.setType("std::string");
-        this->addInputPortInformation(pi);
-        pi.setName("out-uppercase-string");
-        this->addOutputPortInformation(pi);
     }
 
     ~UppercaseAlgorithm() {}
 
-    void* getOutputPort(const std::string& name) {
-        if (name == "in-mixed-case-string") {
-            return &(this->output_);
-        } 
-        return NULL;
-    }
-
-    void setInputPort(const std::string& lname, const Algorithm& alg, const std::string& rname) {
-        if (lname == "in-mixed-case-string") {
-            if (this->getInputPortInformation().find(lname) != 
-              this->getInputPortInformation().end() && 
-              PortInformation::is_compatible(this->getInputPortInformation[lname],
-              alg.getInputPortInformation[rname])) {
-                input_ = reinterpret_cast<std::string*>(alg.getOutputPort(rname));
-            }
+    mstk::Request& processRequest(mstk::Request& req) {
+        if (req.is(mstk::Request::UPDATE)) {
+            output_->clear();
+            std::transform(input_->begin(), input_->end(), std::back_inserter(*output_), toupper);
         }
+        return req;
     }
 
-    void processRequest() {
-        output_.clear();
-        std::transform(input_->begin(), input_->end(), std::back_inserter(output_), toupper);
+    boost::shared_ptr<std::string> getOutput() {
+        return output_;
+    }
+
+    void setIncomingString(boost::shared_ptr<mstk::Filter> f, 
+      boost::shared_ptr<std::string> input)  {
+        // FIXME: need more info to be able to let go of 
+        //this->getManager()->connect(f);
+        input_ = input;
     }
 
   protected:
-    std::string* input_;
-    std::string output_;
+    typedef boost::shared_ptr<std::string> StringPtr;
+    StringPtr input_;
+    StringPtr output_;
 };
 
 class Source : public mstk::Algorithm
 {
   public:
-    Source(const std::string& s) : mstk::Algorithm(), output_(s) {}
+    Source(const std::string& s) : mstk::Algorithm(), output_(
+      boost::make_shared<std::string>(s)) {}
     ~Source() {}
-
-    void* getOutputPort(const std::string& name) {
-        if (name == "out-mixed-case-string") {
-            return &(this->output_);
-        } 
-        return NULL;
+    
+    boost::shared_ptr<std::string> getOutput() {
+       return output_;
     }
 
-    void processRequest() {
-        // nothing to do
+    mstk::Request& processRequest(mstk::Request& req) {
+        return req;
     }
+
   protected:
-    std::string output_;
+    boost::shared_ptr<std::string> output_;
 };
 
 class SimpleManager : public mstk::Manager
 {
+  public:
+    ~SimpleManager() {}
+    typedef std::vector<boost::shared_ptr<mstk::Filter> > FilterSet;
+    mstk::Request& processRequest(Manager::AlgorithmPtr alg, mstk::Request& req) {
+        typedef FilterSet::iterator FSI;
+        // iterate over all sources
+        for (FSI i = sources_.begin(); i != sources_.end(); ++i) {
+            req = (*i)->processRequest(req);
+        }
+        req = alg->processRequest(req);
+        return req;
+    }
   protected:
-    std::vector<boost::shared_ptr<Filter> > sources_;
+    FilterSet sources_;
+};
 
-}
+class StringFilter : public mstk::Filter
+{
+  public:
+    StringFilter() : Filter() {
+        this->setAlgorithm(boost::make_shared<UppercaseAlgorithm>());
+        this->setManager(boost::make_shared<SimpleManager>());
+    }
+    boost::shared_ptr<UppercaseAlgorithm> getAlgorithm() {
+        return this->algorithm_;
+    }
+};
 
+class StringCreator : public mstk::Filter
+{
+  public:
+    StringCreator() : mstk::Filter() {
+        std::string s("Hello World!");
+        this->setAlgorithm(boost::make_shared<Source>(s));
+        this->setManager(boost::make_shared<SimpleManager>());
+    }
+};
 
 int main(int argc, char *argv[])
 {
     using namespace mstk;
+
+    boost::shared_ptr<StringCreator> stringCreator = boost::make_shared<StringCreator>();
+    boost::shared_ptr<StringFilter> stringFilter = boost::make_shared<StringFilter>();
+    stringFilter->getAlgorithm()->setIncomingString(
+      stringCreator->getAlgorithm()->getOutput());
 
     
 

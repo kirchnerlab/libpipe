@@ -12,22 +12,3 @@ Algorithm::~Algorithm()
 {
 }
 
-Algorithm::PortInformationMap Algorithm::getInputPortInformation() const
-{
-    return inputPortInformation_;
-}
-
-Algorithm::PortInformationMap Algorithm::getOutputPortInformation() const
-{
-    return outputPortInformation_;
-}
-
-void Algorithm::addInputPortInformation(const PortInformation& pInfo)
-{
-    inputPortInformation_[pInfo.getName()] = pInfo;
-}
-
-void Algorithm::addOutputPortInformation(const PortInformation& pInfo)
-{
-    outputPortInformation_[pInfo.getName()] = pInfo;
-}

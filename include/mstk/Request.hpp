@@ -10,6 +10,8 @@
 #include <vector>
 #include <string>
 
+namespace mstk {
+
 /** A request object.
  * The request object is used to transfer requests between filters. 
  */
@@ -45,7 +47,7 @@ class Request
      * This allows to switch tracing on and off. 
      * @param[in] tf The new trace flag setting (true == on).
      */
-    void setTraceFlag(bool tf); 
+    void setTraceFlag(const bool tf); 
     
     
     /** Returns all traces collected in the Request object.
@@ -81,6 +83,8 @@ class Request
      */
     std::vector<std::string> trace_;
 };
+
+} // namespace mstk
 
 #endif
 
