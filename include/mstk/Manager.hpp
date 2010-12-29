@@ -8,16 +8,18 @@
 #define __MSTK_INCLUDE_MSTK_MANAGER_HPP__
 
 #include <mstk/config.hpp>
-#include <vector>
+#include <boost/shared_ptr.hpp>
+#include <mstk/Request.hpp>
 
 namespace mstk {
 
-class Filter;
+class Algorithm;
 
 class Manager
 {
   public:
-    virtual void processRequest() = 0;
+    typedef boost::shared_ptr<Algorithm> AlgorithmPtr;
+    virtual void processRequest(AlgorithmPtr, Request&) = 0;
     virtual ~Manager() = 0;
 };
 

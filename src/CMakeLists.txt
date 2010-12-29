@@ -2,9 +2,7 @@
 SET(SRCS 
     Algorithm.cpp
     Filter.cpp
-    FilterData.cpp
     Manager.cpp
-    PortInformation.cpp
 )
 
 ADD_LIBRARY(mstk ${SRCS})

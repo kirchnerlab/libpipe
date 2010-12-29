@@ -14,6 +14,7 @@
 #include <mstk/Filter.hpp>
 #include <mstk/FilterType.hpp>
 #include <mstk/Manager.hpp>
+#include <mstk/PortInformation.hpp>
 
 namespace mstk {
 
@@ -32,25 +33,65 @@ class FilterDataWrapper : public FilterData
 class UppercaseAlgorithm : public mstk::Algorithm
 {
   public:
-    UppercaseAlgorithm() : Algorithm() {}
-    void addInput(const std::string& meta,
-      boost::shared_ptr<FilterData> inputData) {
-        input_.reset(inputData);
+    UppercaseAlgorithm() : mstk::Algorithm() {
+        // set the info
+        PortInformation pi;
+        pi.setName("in-mixed-case-string");
+        pi.setType("std::string");
+        this->addInputPortInformation(pi);
+        pi.setName("out-uppercase-string");
+        this->addOutputPortInformation(pi);
     }
-    boost::shared_ptr<FilterData> getOutput(const std::string& meta) {
-        return output_;
+
+    ~UppercaseAlgorithm() {}
+
+    void* getOutputPort(const std::string& name) {
+        if (name == "in-mixed-case-string") {
+            return &(this->output_);
+        } 
+        return NULL;
     }
-    void run() {
-        std::string& out = output_->getData();
-        std::string& in = input_->getData();
-        out.clear();
-        std::transform(in.begin(), in.end(), std::back_inserter(out), toupper);
+
+    void setInputPort(const std::string& lname, const Algorithm& alg, const std::string& rname) {
+        if (lname == "in-mixed-case-string") {
+            if (this->getInputPortInformation().find(lname) != 
+              this->getInputPortInformation().end() && 
+              PortInformation::is_compatible(this->getInputPortInformation[lname],
+              alg.getInputPortInformation[rname])) {
+                input_ = reinterpret_cast<std::string*>(alg.getOutputPort(rname));
+            }
+        }
+    }
+
+    void processRequest() {
+        output_.clear();
+        std::transform(input_->begin(), input_->end(), std::back_inserter(output_), toupper);
+    }
+
+  protected:
+    std::string* input_;
+    std::string output_;
+};
+
+class Source : public mstk::Algorithm
+{
+  public:
+    Source(const std::string& s) : mstk::Algorithm(), output_(s) {}
+    ~Source() {}
+
+    void* getOutputPort(const std::string& name) {
+        if (name == "out-mixed-case-string") {
+            return &(this->output_);
+        } 
+        return NULL;
+    }
+
+    void processRequest() {
+        // nothing to do
     }
   protected:
-    typedef mstk::FilterDataWrapper<std::string> InOutType;
-    boost::shared_ptr<InOutType> input_;
-    boost::shared_ptr<InOutType> output_;
-}
+    std::string output_;
+};
 
 class SimpleManager : public mstk::Manager
 {
