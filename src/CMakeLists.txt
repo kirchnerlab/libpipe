@@ -2,6 +2,8 @@
 SET(SRCS 
     Algorithm.cpp
     Filter.cpp
+    FilterData.cpp
+    Manager.cpp
 )
 
 ADD_LIBRARY(mstk ${SRCS})

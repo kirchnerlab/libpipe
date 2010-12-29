@@ -9,12 +9,21 @@
 
 #include <mstk/config.hpp>
 
+#include <string>
+#include <boost/shared_ptr.hpp>
+
 namespace mstk {
+
+// forward declarations
+class FilterData;
 
 class Algorithm
 {
   public:
     virtual ~Algorithm() = 0;
+    virtual void addInput(const std::string& meta, 
+      boost::shared_ptr<FilterData> inputData);
+    virtual boost::shared_ptr<FilterData> getOutput(const std::string& meta);
     virtual void run() = 0;
 };
 
