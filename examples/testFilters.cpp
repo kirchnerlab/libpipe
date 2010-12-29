@@ -18,6 +18,41 @@
 #include <mstk/Request.hpp>
 
 
+class TeeAlgorithm : public mstk::Algorithm
+{
+  public:
+    TeeAlgorithm() : mstk::Algorithm(), 
+      output1_(),
+      output2_() {
+    }
+
+    ~TeeAlgorithm() {}
+
+    mstk::Request& processRequest(mstk::Request& req) {
+        if (req.is(mstk::Request::UPDATE)) {
+            output2_ = output1_ = *input_;
+        }
+        return req;
+    }
+
+    std::string* getOutput1() {
+        return &output1_;
+    }
+
+    std::string* getOutput2() {
+        return &output2_;
+    }
+
+    void setIncomingString(boost::shared_ptr<std::string> input)  {
+        input_ = input;
+    }
+
+  protected:
+    typedef boost::shared_ptr<std::string> StringPtr;
+    StringPtr input_;
+    std::string output1_, output2_;
+};
+
 class UppercaseAlgorithm : public mstk::Algorithm
 {
   public:
@@ -114,6 +149,23 @@ class StringFilter : public mstk::Filter
     }
 };
 
+class StringTeeFilter : public mstk::Filter
+{
+  public:
+    StringTeeFilter() : Filter() {
+        this->setAlgorithm(new TeeAlgorithm);
+        SimpleManager* sm = new SimpleManager;
+        sm->setAlgorithm(this->getAlgorithm());
+        this->setManager(sm);
+    }
+    TeeAlgorithm* getAlgorithm() {
+        return dynamic_cast<TeeAlgorithm*>(this->algorithm_);
+    }
+    SimpleManager* getManager() {
+        return dynamic_cast<SimpleManager*>(this->manager_);
+    }
+};
+
 class StringCreator : public mstk::Filter
 {
   public:
@@ -138,15 +190,26 @@ int main(int argc, char *argv[])
 
     StringCreator* stringCreator = new StringCreator;
     StringFilter* stringFilter = new StringFilter;
+    StringTeeFilter* stringTeeFilter = new StringTeeFilter;
+
     stringFilter->getManager()->connect(stringCreator->getManager());
     stringFilter->getAlgorithm()->setIncomingString(
       stringCreator->getAlgorithm()->getOutput());
+
+    stringTeeFilter->getManager()->connect(stringFilter->getManager());
+    stringTeeFilter->getAlgorithm()->setIncomingString(
+      stringFilter->getAlgorithm()->getOutput());
+
     Request req(mstk::Request::UPDATE);
-    stringFilter->getManager()->processRequest(req);
-    std::cout << "in: " << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
-    std::cout << "out: " << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
-    delete stringCreator;
+    stringTeeFilter->getManager()->processRequest(req);
+    
+    std::cout << "StringCreator out: " << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
+    std::cout << "StringFilter out: " << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
+    std::cout << "StringTeeFilter out: " << *(stringTeeFilter->getAlgorithm()->getOutput1()) << ", "
+      << *(stringTeeFilter->getAlgorithm()->getOutput2()) << std::endl;
+    delete stringTeeFilter;
     delete stringFilter;
+    delete stringCreator;
 
     
 
