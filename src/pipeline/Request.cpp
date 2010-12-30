@@ -39,7 +39,13 @@ void Request::getTrace(std::vector<std::string>& trace)
 
 void Request::addTrace(const std::string& t)
 {
-    trace_.push_back(t);
+    time_t rawtime;
+    struct tm* timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    static char buffer[40];
+    strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
+    trace_.push_back(std::string(buffer) + t);
 }
 
 void Request::clearTrace()

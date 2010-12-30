@@ -9,6 +9,14 @@
 
 #include <vector>
 #include <string>
+#include <ctime>
+#include <mstk/pipeline/RequestException.hpp>
+
+/** Macro that add an entry to a requests trace.
+ * This is just for convenience.
+ */
+#define MSTK_REQUEST_TRACE(req, str) \
+  req.addTrace(std::string(__FUNCTION__) + ": " + str)
 
 namespace mstk {
 

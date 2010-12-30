@@ -18,12 +18,25 @@ void SimpleManager::setAlgorithm(mstk::Algorithm* alg)
 }
 
 mstk::Request& SimpleManager::processRequest(mstk::Request& req) {
+    if (!algorithm_) {
+        throw RequestException(
+          "Cannot process request. No algorithm setup available.");
+    }
     typedef ManagerSet::iterator MSI;
     // iterate over all sources
     for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
-        req = (*i)->processRequest(req);
+        try {
+            req = (*i)->processRequest(req);
+        } catch (RequestException& e) {
+            throw;
+        }
     }
-    req = algorithm_->processRequest(req);
+    try {
+        req = algorithm_->processRequest(req);
+    } catch (...) {
+        throw RequestException(
+          "Cannot process request: algorithm execution caused exception.");
+    }
     return req;
 }
 

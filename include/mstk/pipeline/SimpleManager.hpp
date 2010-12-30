@@ -12,6 +12,7 @@
 #include <mstk/algorithm/Algorithm.hpp>
 #include <mstk/pipeline/Manager.hpp>
 #include <mstk/pipeline/Request.hpp>
+#include <mstk/pipeline/RequestException.hpp>
 
 namespace mstk {
 

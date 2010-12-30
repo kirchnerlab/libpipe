@@ -8,6 +8,7 @@
 
 #include <mstk/config.hpp>
 #include <stdlib.h>
+#include <exception>
 #include <iostream>
 #include <set>
 #include <boost/make_shared.hpp>
@@ -16,6 +17,7 @@
 #include <mstk/pipeline/Filter.hpp>
 #include <mstk/pipeline/Manager.hpp>
 #include <mstk/pipeline/Request.hpp>
+#include <mstk/pipeline/RequestException.hpp>
 #include <mstk/pipeline/BasicFilter.hpp>
 #include <mstk/pipeline/SimpleManager.hpp>
 
@@ -54,8 +56,11 @@ class UppercaseAlgorithm : public mstk::Algorithm
      * @param[in,out] req The request object, forwarded from \c process request.
      */
     mstk::Request& update(mstk::Request& req) {
+        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
         output_->clear();
+        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: transforming to uppercase.");
         std::transform(input_->begin(), input_->end(), std::back_inserter(*output_), toupper);
+        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
         return req;
     }
 
@@ -129,13 +134,13 @@ class Source : public mstk::Algorithm
        return output_;
     }
 
-
     /** Updates the output data (i.e. does nothing).
      * The output is provided as a constant, hence there is nothing to do.
      * @param[in] req The request object.
      * @return The request object.
      */
     mstk::Request& update(mstk::Request& req) {
+        MSTK_REQUEST_TRACE(req, "providing input.");
         return req;
     }
 
@@ -163,14 +168,25 @@ int main(int argc, char *argv[])
       stringCreator->getAlgorithm()->getOutput());
 
     Request req(mstk::Request::UPDATE);
-    stringFilter->getManager()->processRequest(req);
-    
-    std::cout << "StringCreator out: " 
-      << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
-    std::cout << "StringFilter out: " 
-      << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
+    MSTK_REQUEST_TRACE(req, "Starting.");
+    try {
+        stringFilter->getManager()->processRequest(req);
+        
+        std::cout << "StringCreator out: " 
+          << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
+        std::cout << "StringFilter out: " 
+          << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
+    } catch (mstk::RequestException& e) {
+        std::cerr << e.what() << std::endl;
+    }
     delete stringFilter;
     delete stringCreator;
 
+    typedef std::vector<std::string> VS;
+    VS trace;
+    req.getTrace(trace);
+    for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
+        std::cout << *i << '\n';
+    }
     return EXIT_SUCCESS;
 }
