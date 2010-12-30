@@ -4,6 +4,7 @@ SET(SRCS
     Filter.cpp
     Manager.cpp
     Request.cpp
+    SimpleManager.cpp
 )
 
 ADD_LIBRARY(mstk ${SRCS})

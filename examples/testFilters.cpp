@@ -16,202 +16,161 @@
 #include <mstk/Filter.hpp>
 #include <mstk/Manager.hpp>
 #include <mstk/Request.hpp>
+#include <mstk/BasicFilter.hpp>
+#include <mstk/SimpleManager.hpp>
 
-
-class TeeAlgorithm : public mstk::Algorithm
-{
-  public:
-    TeeAlgorithm() : mstk::Algorithm(), 
-      output1_(),
-      output2_() {
-    }
-
-    ~TeeAlgorithm() {}
-
-    mstk::Request& processRequest(mstk::Request& req) {
-        if (req.is(mstk::Request::UPDATE)) {
-            output2_ = output1_ = *input_;
-        }
-        return req;
-    }
-
-    std::string* getOutput1() {
-        return &output1_;
-    }
-
-    std::string* getOutput2() {
-        return &output2_;
-    }
-
-    void setIncomingString(boost::shared_ptr<std::string> input)  {
-        input_ = input;
-    }
-
-  protected:
-    typedef boost::shared_ptr<std::string> StringPtr;
-    StringPtr input_;
-    std::string output1_, output2_;
-};
-
+/** Converts std::string input to uppercase.
+ * Although not exceedingly useful, this is a good example of how to write
+ * an MSTK algorithm. Basically, there are only two requirements (and one
+ * additional option):
+ * \li derive from \c mstk::Algorithm.
+ * \li implement the \c update() function.
+ * \li optionally, override the \c processRequest() function (if your
+ *     implementation does not call the \c update function, you do not
+ *     need to implement it).
+ *
+ * Contrary to other approaches to pipelining (most notably probably the VTK 
+ * way), MSTK attempts to minimize hard constraints on the implementations.
+ * There is a diverse collection of datatypes and a set of software suites
+ * that are being used to process mass spectrometry data. Minimizing the
+ * structural imprint that MSTK leaves on applications allows easy cross-suite
+ * interfacing and allows for a more rapid algorithmic development cycle.
+ */
 class UppercaseAlgorithm : public mstk::Algorithm
 {
   public:
-    UppercaseAlgorithm() : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {
-    }
-
+    /** Constructor.
+     * Make sure to call the \c mstk::Algorithm constructor.
+     */
+    UppercaseAlgorithm()
+      : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {}
+    
+    /** Destructor.
+     */
     ~UppercaseAlgorithm() {}
-
-    mstk::Request& processRequest(mstk::Request& req) {
-        if (req.is(mstk::Request::UPDATE)) {
-            output_->clear();
-            std::transform(input_->begin(), input_->end(), std::back_inserter(*output_), toupper);
-        }
+    
+    /** Runs the algorithm and updates the output data.
+     * This is where all the algorithm implementation goes. 
+     * @param[inout] req The request object, forwarded from \c process request.
+     */
+    mstk::Request& update(mstk::Request& req) {
+        output_->clear();
+        std::transform(input_->begin(), input_->end(), std::back_inserter(*output_), toupper);
         return req;
     }
 
+    /** Provides access to results.
+     * In contrast to more rigid pipeline implementations, MSTK does not
+     * impose any constraints on what data types algorithms can share; this is
+     * simply done by keeping the request pipeline separate from the
+     * input/output flow of the algorithms. In most cases the user knows best
+     * which data type is suitable for a problem at hand; there is no reason to
+     * take this freedom (and the responsibility from her/him. Algorithms need
+     * to specify input and output functions, and it is recommended (but not
+     * required) to start the respective function names with 'setInput' and
+     * 'getOutput'. 
+     *  @returns A handle to the output data of the algorithm.
+     */
     boost::shared_ptr<std::string> getOutput() {
         return output_;
     }
-
-    void setIncomingString(boost::shared_ptr<std::string> input)  {
+    
+    /** Allows to connect the output of another algorithm with the input of
+     * this algorithm.
+     * @see getOutput
+     *  
+     * @param[in] input A handle (in most cases a (smart) pointer to the data.
+     */
+    void setInputString(boost::shared_ptr<std::string> input)  {
         input_ = input;
     }
 
   protected:
     typedef boost::shared_ptr<std::string> StringPtr;
+
+    /** A reference to the input data.
+     * This can be a weak pointer or some other kind of reference. In the
+     * majority of cases, the algorithm should not attempt to modify this data.
+     * There are exceptions (and hence constness is not enforced).
+     */
     StringPtr input_;
+
+    /** The output data. 
+     * In most cases it is advisable that the memory consumed by this data is
+     * owned by the algorithm (or, at least, managed by it).
+     */
     StringPtr output_;
 };
 
+
+/** Provides a constant string as output.
+ * This is an example of a 'source'. The \c Source algorithm does not require
+ * any input and will always provide a predefined string as its output.
+ */
 class Source : public mstk::Algorithm
 {
   public:
-    Source(const std::string& s) : mstk::Algorithm(), output_(
-      boost::make_shared<std::string>(s)) {}
+    /** Constructor.
+     */
+    Source() : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {}
+
+    /** Destructor.
+     */
     ~Source() {}
+
+    void setParamString(const std::string& s) {
+        *output_ = s;
+    }
     
+    /** Provides access to the output.
+     * @return A handle to the output.
+     */
     boost::shared_ptr<std::string> getOutput() {
        return output_;
     }
 
-    mstk::Request& processRequest(mstk::Request& req) {
+
+    /** Updates the output data (i.e. does nothing).
+     * The output is provided as a constant, hence there is nothing to do.
+     * @param[in] req The request object.
+     * @return The request object.
+     */
+    mstk::Request& update(mstk::Request& req) {
         return req;
     }
 
   protected:
+    /** Holds the output string.
+     */
     boost::shared_ptr<std::string> output_;
-};
-
-class SimpleManager : public mstk::Manager
-{
-  public:
-    typedef std::set<Manager*> ManagerSet;
-
-    ~SimpleManager() {}
-
-    void setAlgorithm(mstk::Algorithm* alg) {
-        algorithm_ = alg;
-    }
-
-    mstk::Request& processRequest(mstk::Request& req) {
-        typedef ManagerSet::iterator MSI;
-        // iterate over all sources
-        for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
-            req = (*i)->processRequest(req);
-        }
-        req = algorithm_->processRequest(req);
-        return req;
-    }
-
-    void connect(SimpleManager* sm) {
-        sources_.insert(sm);
-    }
-
-  protected:
-    ManagerSet sources_;
-    mstk::Algorithm* algorithm_;
-};
-
-class StringFilter : public mstk::Filter
-{
-  public:
-    StringFilter() : Filter() {
-        this->setAlgorithm(new UppercaseAlgorithm);
-        SimpleManager* sm = new SimpleManager;
-        sm->setAlgorithm(this->getAlgorithm());
-        this->setManager(sm);
-    }
-    UppercaseAlgorithm* getAlgorithm() {
-        return dynamic_cast<UppercaseAlgorithm*>(this->algorithm_);
-    }
-    SimpleManager* getManager() {
-        return dynamic_cast<SimpleManager*>(this->manager_);
-    }
-};
-
-class StringTeeFilter : public mstk::Filter
-{
-  public:
-    StringTeeFilter() : Filter() {
-        this->setAlgorithm(new TeeAlgorithm);
-        SimpleManager* sm = new SimpleManager;
-        sm->setAlgorithm(this->getAlgorithm());
-        this->setManager(sm);
-    }
-    TeeAlgorithm* getAlgorithm() {
-        return dynamic_cast<TeeAlgorithm*>(this->algorithm_);
-    }
-    SimpleManager* getManager() {
-        return dynamic_cast<SimpleManager*>(this->manager_);
-    }
-};
-
-class StringCreator : public mstk::Filter
-{
-  public:
-    StringCreator() : mstk::Filter() {
-        std::string s("Hello World!");
-        this->setAlgorithm(new Source(s));
-        SimpleManager* sm = new SimpleManager;
-        sm->setAlgorithm(this->getAlgorithm());
-        this->setManager(sm);
-    }
-    Source* getAlgorithm() {
-        return dynamic_cast<Source*>(this->algorithm_);
-    }
-    SimpleManager* getManager() {
-        return dynamic_cast<SimpleManager*>(this->manager_);
-    }
 };
 
 int main(int argc, char *argv[])
 {
     using namespace mstk;
 
+    typedef mstk::BasicFilter<Source, 
+      mstk::SimpleManager> StringCreator;
+    typedef mstk::BasicFilter<UppercaseAlgorithm, 
+      mstk::SimpleManager> StringFilter;
+
     StringCreator* stringCreator = new StringCreator;
+    stringCreator->getAlgorithm()->setParamString("Hello World!");
     StringFilter* stringFilter = new StringFilter;
-    StringTeeFilter* stringTeeFilter = new StringTeeFilter;
 
     stringFilter->getManager()->connect(stringCreator->getManager());
-    stringFilter->getAlgorithm()->setIncomingString(
+    stringFilter->getAlgorithm()->setInputString(
       stringCreator->getAlgorithm()->getOutput());
 
-    stringTeeFilter->getManager()->connect(stringFilter->getManager());
-    stringTeeFilter->getAlgorithm()->setIncomingString(
-      stringFilter->getAlgorithm()->getOutput());
-
     Request req(mstk::Request::UPDATE);
-    stringTeeFilter->getManager()->processRequest(req);
+    stringFilter->getManager()->processRequest(req);
     
-    std::cout << "StringCreator out: " << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
-    std::cout << "StringFilter out: " << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
-    std::cout << "StringTeeFilter out: " << *(stringTeeFilter->getAlgorithm()->getOutput1()) << ", "
-      << *(stringTeeFilter->getAlgorithm()->getOutput2()) << std::endl;
-    delete stringTeeFilter;
+    std::cout << "StringCreator out: " 
+      << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
+    std::cout << "StringFilter out: " 
+      << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
     delete stringFilter;
     delete stringCreator;
-
-    
 
     return EXIT_SUCCESS;
 }

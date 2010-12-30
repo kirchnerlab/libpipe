@@ -25,10 +25,18 @@ class Algorithm
      */
     virtual ~Algorithm() = 0;
     
-    /** Processes the current request.
-     * Derived classes should run the algorithm upon this method being called.
+    /** Processes the current request object.
+     * Depending on the information contained in the request object,  this will
+     * call the \c update function 
      */
-    virtual Request& processRequest(Request& req) = 0;
+    virtual Request& processRequest(Request& req);
+
+    /** Runs the algorithm and updates the output data.
+     * Users must overload this method (this is where the beef goes).
+     * @param[inout] req The request object (useful for logging/tracing
+     *                   purposes.
+     */
+    virtual Request& update(Request& req) = 0;
 
   protected:
 };
