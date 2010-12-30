@@ -15,6 +15,8 @@
 
 namespace mstk {
 
+/** Provides simple pipeline management.
+ */
 class SimpleManager : public Manager
 {
   public:

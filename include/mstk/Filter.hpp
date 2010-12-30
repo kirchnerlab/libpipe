@@ -49,7 +49,7 @@ class Filter
 
   protected:
     /** Set the algorithm that should be used for this filter.
-     * @param[in] Pointer to the Algorithm object.
+     * @param[in] alg Pointer to the Algorithm object.
      */
     void setAlgorithm(Algorithm* alg);
     

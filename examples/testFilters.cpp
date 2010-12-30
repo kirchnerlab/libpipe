@@ -51,7 +51,7 @@ class UppercaseAlgorithm : public mstk::Algorithm
     
     /** Runs the algorithm and updates the output data.
      * This is where all the algorithm implementation goes. 
-     * @param[inout] req The request object, forwarded from \c process request.
+     * @param[in,out] req The request object, forwarded from \c process request.
      */
     mstk::Request& update(mstk::Request& req) {
         output_->clear();

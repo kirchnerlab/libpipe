@@ -33,7 +33,7 @@ class Algorithm
 
     /** Runs the algorithm and updates the output data.
      * Users must overload this method (this is where the beef goes).
-     * @param[inout] req The request object (useful for logging/tracing
+     * @param[in,out] req The request object (useful for logging/tracing
      *                   purposes.
      */
     virtual Request& update(Request& req) = 0;
