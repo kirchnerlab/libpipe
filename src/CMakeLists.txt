@@ -1,10 +1,10 @@
 
 SET(SRCS 
-    Algorithm.cpp
-    Filter.cpp
-    Manager.cpp
-    Request.cpp
-    SimpleManager.cpp
+    algorithm/Algorithm.cpp
+    pipeline/Filter.cpp
+    pipeline/Manager.cpp
+    pipeline/Request.cpp
+    pipeline/SimpleManager.cpp
 )
 
 ADD_LIBRARY(mstk ${SRCS})

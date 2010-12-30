@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <mstk/Algorithm.hpp>
+#include <mstk/algorithm/Algorithm.hpp>
 
 using namespace mstk;
 

@@ -9,7 +9,7 @@
 
 #include <mstk/config.hpp>
 #include <string>
-#include <mstk/Request.hpp>
+#include <mstk/pipeline/Request.hpp>
 
 namespace mstk {
 

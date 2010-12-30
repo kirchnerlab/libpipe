@@ -8,7 +8,7 @@
 #define __MSTK_INCLUDE_MSTK_MANAGER_HPP__
 
 #include <mstk/config.hpp>
-#include <mstk/Request.hpp>
+#include <mstk/pipeline/Request.hpp>
 
 namespace mstk {
 

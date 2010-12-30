@@ -8,7 +8,7 @@
 #define __MSTK_INCLUDE_MSTK_BASICFILTER_HPP__
 
 #include <mstk/config.hpp>
-#include <mstk/Filter.hpp>
+#include <mstk/pipeline/Filter.hpp>
 
 namespace mstk {
 

@@ -11,7 +11,7 @@
 
 #include <string>
 #include <map>
-#include <mstk/Request.hpp>
+#include <mstk/pipeline/Request.hpp>
 
 namespace mstk {
 

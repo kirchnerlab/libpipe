@@ -4,9 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <mstk/Filter.hpp>
-#include <mstk/Algorithm.hpp>
-#include <mstk/Manager.hpp>
+#include <mstk/pipeline/Filter.hpp>
+#include <mstk/algorithm/Algorithm.hpp>
+#include <mstk/pipeline/Manager.hpp>
 
 using namespace mstk;
 

@@ -9,9 +9,9 @@
 
 #include <mstk/config.hpp>
 #include <set>
-#include <mstk/Algorithm.hpp>
-#include <mstk/Manager.hpp>
-#include <mstk/Request.hpp>
+#include <mstk/algorithm/Algorithm.hpp>
+#include <mstk/pipeline/Manager.hpp>
+#include <mstk/pipeline/Request.hpp>
 
 namespace mstk {
 

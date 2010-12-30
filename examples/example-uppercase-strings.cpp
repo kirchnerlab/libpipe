@@ -12,12 +12,12 @@
 #include <set>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
-#include <mstk/Algorithm.hpp>
-#include <mstk/Filter.hpp>
-#include <mstk/Manager.hpp>
-#include <mstk/Request.hpp>
-#include <mstk/BasicFilter.hpp>
-#include <mstk/SimpleManager.hpp>
+#include <mstk/algorithm/Algorithm.hpp>
+#include <mstk/pipeline/Filter.hpp>
+#include <mstk/pipeline/Manager.hpp>
+#include <mstk/pipeline/Request.hpp>
+#include <mstk/pipeline/BasicFilter.hpp>
+#include <mstk/pipeline/SimpleManager.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write

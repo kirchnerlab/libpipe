@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <mstk/Request.hpp>
+#include <mstk/pipeline/Request.hpp>
 
 using namespace mstk;
 

@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <mstk/SimpleManager.hpp>
+#include <mstk/pipeline/SimpleManager.hpp>
 
 using namespace mstk;
 
