@@ -37,8 +37,6 @@ class Algorithm
      *                   purposes.
      */
     virtual Request& update(Request& req) = 0;
-
-  protected:
 };
 
 } // namespace mstk

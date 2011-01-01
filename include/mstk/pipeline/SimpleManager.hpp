@@ -9,12 +9,15 @@
 
 #include <mstk/config.hpp>
 #include <set>
-#include <mstk/algorithm/Algorithm.hpp>
 #include <mstk/pipeline/Manager.hpp>
 #include <mstk/pipeline/Request.hpp>
 #include <mstk/pipeline/RequestException.hpp>
 
 namespace mstk {
+
+// forward declarations
+class Algorithm;
+class Filter;
 
 /** Provides simple pipeline management.
  */
@@ -26,10 +29,10 @@ class SimpleManager : public Manager
 
     void setAlgorithm(mstk::Algorithm* alg);
     mstk::Request& processRequest(mstk::Request& req);
-    void connect(SimpleManager* sm);
+    void connect(Filter* sm);
 
   protected:
-    typedef std::set<Manager*> ManagerSet;
+    typedef std::set<Filter*> ManagerSet;
     ManagerSet sources_;
     mstk::Algorithm* algorithm_;
 };

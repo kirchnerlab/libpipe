@@ -8,6 +8,7 @@
 #define __MSTK_INCLUDE_MSTK_BASICFILTER_HPP__
 
 #include <mstk/config.hpp>
+#include <string>
 #include <mstk/pipeline/Filter.hpp>
 
 namespace mstk {
@@ -28,7 +29,7 @@ namespace mstk {
  * The filter can then be used in the usual way:
  * \code
  * ...
- * UserFilter* uf = new UserFilter;
+ * UserFilter* uf = new UserFilter("FilterName");
  * uf->getAlgorithm()->setParameters(...);
  * ...
  * uf->getManager()->connect(someOtherFilter->getManager());
@@ -42,15 +43,14 @@ class BasicFilter : public mstk::Filter
   public:
 
     /** Constructor.
+     * @param name The name of the filter. Passed through to mstk::Filter.
      */
-    BasicFilter();
-
+    BasicFilter(const std::string& name);
 
     /** Destructor.
      * Virtual, to allow for subclassing.
      */
     virtual ~BasicFilter();
-
 
     /** Provides access to the algorithm object.
      * This is a small hack: we need to redefine \c getAlgorithm in each Filter
@@ -59,7 +59,6 @@ class BasicFilter : public mstk::Filter
      * @return A pointer (with the true class type) to the algorithm object.
      */
     A* getAlgorithm();
-
     
     /** Provides access to the manager object.
      * @see getAlgorithm.
@@ -72,7 +71,8 @@ class BasicFilter : public mstk::Filter
  * Template implementation
  */
 template <class A, class M>
-BasicFilter<A, M>::BasicFilter() : mstk::Filter() 
+BasicFilter<A, M>::BasicFilter(const std::string& name) 
+  : mstk::Filter(name) 
 {
     this->setAlgorithm(new A);
     M* sm = new M;

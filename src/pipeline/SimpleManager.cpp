@@ -5,6 +5,8 @@
  *
  */
 #include <mstk/pipeline/SimpleManager.hpp>
+#include <mstk/pipeline/Filter.hpp>
+#include <mstk/algorithm/Algorithm.hpp>
 
 using namespace mstk;
 
@@ -40,7 +42,7 @@ mstk::Request& SimpleManager::processRequest(mstk::Request& req) {
     return req;
 }
 
-void SimpleManager::connect(SimpleManager* sm) {
+void SimpleManager::connect(Filter* sm) {
     sources_.insert(sm);
 }
 

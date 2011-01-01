@@ -16,6 +16,7 @@
  * This is just for convenience.
  */
 #define MSTK_REQUEST_TRACE(req, str) \
+  if (req.getTraceFlag()) \
   req.addTrace(std::string(__FUNCTION__) + ": " + str)
 
 namespace mstk {

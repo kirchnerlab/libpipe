@@ -24,7 +24,7 @@ class Filter
   public:
     /** Constructor.
      */
-    Filter();
+    Filter(const std::string&);
 
     /** Pure virtual destructor.
      */
@@ -46,6 +46,11 @@ class Filter
      * @return A pointer to the Manager object.
      */
     virtual Manager* getManager() = 0;
+    
+    /** Returns the name of the filter.
+     * @return The name of the fitler.
+     */
+    std::string getName() const;
 
   protected:
     /** Set the algorithm that should be used for this filter.
@@ -58,9 +63,19 @@ class Filter
      */
     void setManager(Manager* manager);
 
+
+    /** A pointer to the algorithm that is part of the filter.
+     */
     Algorithm* algorithm_;
+
+    /** A pointer to the manager that is part of the filter.
+     */
     Manager* manager_;
-    
+
+  private:
+    /** Holds the name of the filter.
+     */
+    std::string name_;
 };
 
 } // namespace mstk

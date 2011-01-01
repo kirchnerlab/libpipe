@@ -10,7 +10,9 @@
 
 using namespace mstk;
 
-Filter::Filter() : algorithm_(0), manager_(0) {}
+Filter::Filter(const std::string& name) 
+  : algorithm_(0), manager_(0), name_(name) 
+{}
 
 Filter::~Filter()
 {
@@ -21,7 +23,9 @@ Filter::~Filter()
 Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
+    MSTK_REQUEST_TRACE(req, this->getName() + ":Filter::processRequest: start.");
     this->getManager()->processRequest(req);
+    MSTK_REQUEST_TRACE(req, this->getName() + ":Filter::processRequest: stop.");
     return req;
 }
 
@@ -33,5 +37,10 @@ void Filter::setAlgorithm(Algorithm* alg)
 void Filter::setManager(Manager* manager)
 {
     manager_ = manager;
+}
+
+std::string Filter::getName() const
+{
+    return name_;
 }
 

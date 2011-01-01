@@ -159,15 +159,16 @@ int main(int argc, char *argv[])
     typedef mstk::BasicFilter<UppercaseAlgorithm, 
       mstk::SimpleManager> StringFilter;
 
-    StringCreator* stringCreator = new StringCreator;
+    StringCreator* stringCreator = new StringCreator(std::string("The Source"));
     stringCreator->getAlgorithm()->setParamString("Hello World!");
-    StringFilter* stringFilter = new StringFilter;
+    StringFilter* stringFilter = new StringFilter(std::string("Filter #1"));
 
-    stringFilter->getManager()->connect(stringCreator->getManager());
+    stringFilter->getManager()->connect(stringCreator);
     stringFilter->getAlgorithm()->setInputString(
       stringCreator->getAlgorithm()->getOutput());
 
     Request req(mstk::Request::UPDATE);
+    req.setTraceFlag(true);
     MSTK_REQUEST_TRACE(req, "Starting.");
     try {
         stringFilter->getManager()->processRequest(req);
