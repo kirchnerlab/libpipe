@@ -25,10 +25,10 @@ class SimpleManager : public Manager
 {
   public:
     SimpleManager();
-    ~SimpleManager();
+    virtual ~SimpleManager();
 
     void setAlgorithm(mstk::Algorithm* alg);
-    mstk::Request& processRequest(mstk::Request& req);
+    virtual mstk::Request& processRequest(mstk::Request& req);
     void connect(Filter* sm);
 
   protected:

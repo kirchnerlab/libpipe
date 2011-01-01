@@ -5,6 +5,7 @@ SET(SRCS
     pipeline/Manager.cpp
     pipeline/Request.cpp
     pipeline/SimpleManager.cpp
+    pipeline/ModificationTimeManager.cpp
 )
 
 ADD_LIBRARY(mstk ${SRCS})

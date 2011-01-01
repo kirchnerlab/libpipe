@@ -23,9 +23,9 @@ Filter::~Filter()
 Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
-    MSTK_REQUEST_TRACE(req, this->getName() + ":Filter::processRequest: start.");
+    MSTK_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    MSTK_REQUEST_TRACE(req, this->getName() + ":Filter::processRequest: stop.");
+    MSTK_REQUEST_TRACE(req,  this->getName() + "::processRequest: stop.");
     return req;
 }
 
