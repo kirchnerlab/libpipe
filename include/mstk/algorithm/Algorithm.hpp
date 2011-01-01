@@ -12,15 +12,23 @@
 #include <string>
 #include <map>
 #include <mstk/pipeline/Request.hpp>
+#include <ctime>
+
+/** Comparison operator for \c struct \c timeval objects.
+ */
+bool operator<(const timeval& lhs, const timeval& rhs);
 
 namespace mstk {
-
 
 /** Base class for all MSTK algorithms.
  */
 class Algorithm
 {
   public:
+    /** Constructor.
+     */
+    Algorithm();
+
     /** Pure virtual descructor.
      */
     virtual ~Algorithm() = 0;
@@ -37,6 +45,25 @@ class Algorithm
      *                   purposes.
      */
     virtual Request& update(Request& req) = 0;
+
+    /** Return the last modification timestamp.
+     * @return The last modification timestamp.
+     */
+    const timeval& getMTime() const;
+
+    /** Set the last modification timestamp.
+     * @param[in] tv Timestamp.
+     */
+    void setMTime(const timeval& tv);
+
+    /** Update the modification timestamp to the current system time.
+     */
+    void updateMTime();
+
+  private:
+    /** The last modification timestamp.
+     */
+    timeval mTime_;
 };
 
 } // namespace mstk
