@@ -47,8 +47,8 @@
  *
  * You can set a plateau logging level:
  * @code
- * #undef MSTK_LOG_MAX_LEVEL
- * #define MSTK_LOG_MAX_LEVEL mstk::logWARNING
+ * #undef MSTK_FILELOG_MAX_LOGGING_LEVEL
+ * #define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logWARNING
  * @endcode
  *
  * This can be used to set a global logging level or to construct a fine
@@ -319,12 +319,13 @@ LogLevel Log<T>::fromString(const std::string& level)
  */
 class FILELog : public Log<Output2FILE> {};
 
-#ifndef FILELOG_MAX_LEVEL
+#ifndef MSTK_FILELOG_MAX_LOGGING_LEVEL
 /** The deepest logging level to be compiled into the code.
  * Any logging message at a deeper level of detail will not be compiled into
  * the code.
  */
-#define FILELOG_MAX_LEVEL mstk::logDEBUG4
+
+#define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logDEBUG4
 #endif
 
 /** Default MSTK logging macro.
@@ -340,7 +341,7 @@ class FILELog : public Log<Output2FILE> {};
  * @endcode
  */
 #define MSTK_LOG(level) \
-    if (level > FILELOG_MAX_LEVEL) ;\
+    if (level > MSTK_FILELOG_MAX_LOGGING_LEVEL) ;\
     else if (level > mstk::FILELog::getReportingLevel() || !mstk::Output2FILE::getRedirect()) ; \
     else mstk::FILELog().get(level)
 

@@ -10,8 +10,8 @@
 #include <limits>
 #include <mstk/Log.hpp>
 
-#undef MSTK_LOG_MAX_LEVEL
-#define MSTK_LOG_MAX_LEVEL mstk::logINFO
+#undef MSTK_FILELOG_MAX_LOGGING_LEVEL
+#define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logINFO
 
 bool operator<=(const timeval& lhs, const timeval& rhs)
 {
