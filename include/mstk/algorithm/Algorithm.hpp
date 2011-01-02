@@ -34,9 +34,13 @@ namespace mstk {
 class Algorithm
 {
   public:
-    
-    static timeval initMaxTime();
-    static timeval MAX_TIME;
+    /** Holds the maximum time value that can be represented in a
+     * timeval struct.
+     * This is mostly necessary for initialization, but also for the correct
+     * behaviour of filters that act as sources.
+     * @see updateMTime(), needUpdate()
+     */
+    static const timeval MAX_TIME;
 
     /** Constructor.
      */
@@ -99,6 +103,11 @@ class Algorithm
     bool needUpdate() const;
 
   private:
+    /** Initializes the static constant \c MAX_TIME.
+     * @return The maximum valid entry in a timeval struct.
+     */
+    static timeval initMaxTime();
+
     /** The last modification timestamp.
      */
     timeval mTime_;

@@ -45,7 +45,7 @@ timeval Algorithm::initMaxTime()
     return tv;
 }
 
-timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
+const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 
 Algorithm::Algorithm()
 {
