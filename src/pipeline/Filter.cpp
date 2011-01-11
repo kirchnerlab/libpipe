@@ -4,11 +4,11 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <mstk/pipeline/Filter.hpp>
-#include <mstk/algorithm/Algorithm.hpp>
-#include <mstk/pipeline/Manager.hpp>
+#include <libpipe/pipeline/Filter.hpp>
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/Manager.hpp>
 
-using namespace mstk;
+using namespace libpipe;
 
 Filter::Filter(const std::string& name) 
   : algorithm_(0), manager_(0), name_(name) 
@@ -23,9 +23,9 @@ Filter::~Filter()
 Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
-    MSTK_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
+    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    MSTK_REQUEST_TRACE(req,  this->getName() + "::processRequest: stop.");
+    LIBPIPE_REQUEST_TRACE(req,  this->getName() + "::processRequest: stop.");
     return req;
 }
 

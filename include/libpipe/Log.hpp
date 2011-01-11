@@ -1,10 +1,10 @@
 /*
  * Log.hpp
  *
- * Copyright (c) 2010 Marc Kirchner <marc.kirchner@childrens.harvard.edu>
+ * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  * Copyright (c) 2009 Bernhard Kausler <bernhard.kausler@iwr.uni-heidelberg.de>
  *
- * This file is part of mstk.
+ * This file is part of libpipe.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,8 @@
  */
 
 
-#ifndef __MSTK_INCLUDE_MSTK_LOG_HPP__
-#define __MSTK_INCLUDE_MSTK_LOG_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
 
 #include <ctime>
 #include <cstdio>
@@ -39,23 +39,23 @@
  * @page log Logging
  *
  * @section usage Usage
- * @c MSTK provides logging to @c stderr via the @c MSTK_LOG macro:
+ * @c LIBPIPE provides logging to @c stderr via the @c LIBPIPE_LOG macro:
  * @code
- * MSTK_LOG(logINFO) << "Hello" << username 
+ * LIBPIPE_LOG(logINFO) << "Hello" << username 
  *   << "no endl, will be appended automatically";
  * @endcode
  *
  * You can set a plateau logging level:
  * @code
- * #undef MSTK_FILELOG_MAX_LOGGING_LEVEL
- * #define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logWARNING
+ * #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
+ * #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logWARNING
  * @endcode
  *
  * This can be used to set a global logging level or to construct a fine
  * grained logging structure (for example, different logging levels per file or
  * code segment).
  *
- * The logging macro MSTK_LOG ensures that logging code will only be compiled
+ * The logging macro LIBPIPE_LOG ensures that logging code will only be compiled
  * into the final binary, if it corresponds to the set plateu logging level.
  *
  * <em>
@@ -77,13 +77,13 @@
  * @endcode
  * Set as the plateau logging level, no logging code will be compiled in the
  * final binary. Obviously, this is provided mostly for completeness; any
- * software based on MSTK should provide at least error logging.
+ * software based on LIBPIPE should provide at least error logging.
  * <em>
- * The special logNO_LOGGING level is NOT a valid paramter to MSTK_LOG.
+ * The special logNO_LOGGING level is NOT a valid paramter to LIBPIPE_LOG.
  * </em>
  */
 
-namespace mstk {
+namespace libpipe {
 
 /** Returns a std::string representation of the current time, in millisecond
  * resolution.
@@ -97,7 +97,7 @@ inline std::string nowTime();
 
 /** Defines all available logging levels.
  * Assign one of these logging levels to each message.
- * @note Do not use @c logNO_LOGGING as a argument to @c MSTK_LOG (only used to
+ * @note Do not use @c logNO_LOGGING as a argument to @c LIBPIPE_LOG (only used to
  * turn off logging; defaults to @c logINFO if used).
  */
 enum LogLevel {
@@ -181,7 +181,7 @@ class Log
      * This function can be used as a safeguard in the logging macros to defend against illegal
      * user defined global logging levels.
      *
-     * @return The deepest mstk::LogLevel available.
+     * @return The deepest libpipe::LogLevel available.
      */
     static LogLevel& getReportingLevel();
 
@@ -319,16 +319,16 @@ LogLevel Log<T>::fromString(const std::string& level)
  */
 class FILELog : public Log<Output2FILE> {};
 
-#ifndef MSTK_FILELOG_MAX_LOGGING_LEVEL
+#ifndef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 /** The deepest logging level to be compiled into the code.
  * Any logging message at a deeper level of detail will not be compiled into
  * the code.
  */
 
-#define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logDEBUG4
+#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logDEBUG4
 #endif
 
-/** Default MSTK logging macro.
+/** Default LIBPIPE logging macro.
  * The macro checks if the logging level should be compiled, creates an
  * anonymous instance of FILELog and writes to its logging stream. Upon
  * desctruction of the anonymous object, the logging message is flushed to
@@ -336,26 +336,26 @@ class FILELog : public Log<Output2FILE> {};
  *
  * Usage:
  * @code
- * MSTK_LOG(logINFO) << "some logging" << 1224 
+ * LIBPIPE_LOG(logINFO) << "some logging" << 1224 
  *   << "no endl, will be appended automatically";
  * @endcode
  */
-#define MSTK_LOG(level) \
-    if (level > MSTK_FILELOG_MAX_LOGGING_LEVEL) ;\
-    else if (level > mstk::FILELog::getReportingLevel() || !mstk::Output2FILE::getRedirect()) ; \
-    else mstk::FILELog().get(level)
+#define LIBPIPE_LOG(level) \
+    if (level > LIBPIPE_FILELOG_MAX_LOGGING_LEVEL) ;\
+    else if (level > libpipe::FILELog::getReportingLevel() || !libpipe::Output2FILE::getRedirect()) ; \
+    else libpipe::FILELog().get(level)
 
 // We have to do the following yaketiyak, because the standard <ctime> is not thread safe.
 // (It is using static internal buffers in some functions like ctime() .)
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
-} // Temporarily close the MSTK namespace to include the external Windows headers.
+} // Temporarily close the LIBPIPE namespace to include the external Windows headers.
 // winsocks2.h has always to be included BEFORE windows.h
 // We don't use winsocks2 here, but it may be used in a file including this header.
 #include <winsock2.h>
 #include <windows.h>
 
-// Reopen the MSTK namespace.
-namespace mstk {
+// Reopen the LIBPIPE namespace.
+namespace libpipe {
 
 inline std::string nowTime()
 {
@@ -385,8 +385,8 @@ inline std::string nowTime()
 } // Temporarily close ms namespace to inclue header files.
 #include <sys/time.h>
 
-// reopen the MSTK namespace
-namespace mstk {
+// reopen the LIBPIPE namespace
+namespace libpipe {
 
 inline std::string nowTime()
 {
@@ -419,7 +419,7 @@ inline std::string nowTime()
 }
 #endif //WIN32
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

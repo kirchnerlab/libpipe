@@ -4,16 +4,16 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_SIMPLEMANAGER_HPP__
-#define __MSTK_INCLUDE_MSTK_SIMPLEMANAGER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_SIMPLEMANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_SIMPLEMANAGER_HPP__
 
-#include <mstk/config.hpp>
+#include <libpipe/config.hpp>
 #include <set>
-#include <mstk/pipeline/Manager.hpp>
-#include <mstk/pipeline/Request.hpp>
-#include <mstk/pipeline/RequestException.hpp>
+#include <libpipe/pipeline/Manager.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 // forward declarations
 class Algorithm;
@@ -27,17 +27,17 @@ class SimpleManager : public Manager
     SimpleManager();
     virtual ~SimpleManager();
 
-    void setAlgorithm(mstk::Algorithm* alg);
-    virtual mstk::Request& processRequest(mstk::Request& req);
+    void setAlgorithm(libpipe::Algorithm* alg);
+    virtual libpipe::Request& processRequest(libpipe::Request& req);
     void connect(Filter* sm);
 
   protected:
     typedef std::set<Filter*> ManagerSet;
     ManagerSet sources_;
-    mstk::Algorithm* algorithm_;
+    libpipe::Algorithm* algorithm_;
 };
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

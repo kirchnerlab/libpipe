@@ -4,19 +4,19 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <mstk/pipeline/ModificationTimeManager.hpp>
-#include <mstk/pipeline/Filter.hpp>
-#include <mstk/algorithm/Algorithm.hpp>
-#include <mstk/Log.hpp>
+#include <libpipe/pipeline/ModificationTimeManager.hpp>
+#include <libpipe/pipeline/Filter.hpp>
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/Log.hpp>
 
-using namespace mstk;
+using namespace libpipe;
 
 ModificationTimeManager::ModificationTimeManager()
   : SimpleManager() {}
 
 ModificationTimeManager::~ModificationTimeManager() {}
 
-mstk::Request& ModificationTimeManager::processRequest(mstk::Request& req) {
+libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req) {
     // make sure we have been set up correctly
     if (!algorithm_) {
         throw RequestException(
@@ -24,7 +24,7 @@ mstk::Request& ModificationTimeManager::processRequest(mstk::Request& req) {
     }
     // check if we have ever run at all
     bool needUpdate = algorithm_->needUpdate();
-    MSTK_LOG(logINFO) << "Need update: " << needUpdate;
+    LIBPIPE_LOG(logINFO) << "Need update: " << needUpdate;
     // iterate over all sources and check their modification time
     typedef ManagerSet::iterator MSI;
     for (MSI i = sources_.begin(); i != sources_.end(); ++i) {

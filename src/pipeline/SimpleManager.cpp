@@ -4,22 +4,22 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <mstk/pipeline/SimpleManager.hpp>
-#include <mstk/pipeline/Filter.hpp>
-#include <mstk/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/SimpleManager.hpp>
+#include <libpipe/pipeline/Filter.hpp>
+#include <libpipe/algorithm/Algorithm.hpp>
 
-using namespace mstk;
+using namespace libpipe;
 
 SimpleManager::SimpleManager() {}
 
 SimpleManager::~SimpleManager() {}
 
-void SimpleManager::setAlgorithm(mstk::Algorithm* alg) 
+void SimpleManager::setAlgorithm(libpipe::Algorithm* alg) 
 {
     algorithm_ = alg;
 }
 
-mstk::Request& SimpleManager::processRequest(mstk::Request& req) {
+libpipe::Request& SimpleManager::processRequest(libpipe::Request& req) {
     if (!algorithm_) {
         throw RequestException(
           "Cannot process request. No algorithm setup available.");

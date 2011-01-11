@@ -6,7 +6,7 @@
  */
 
 
-#include <mstk/config.hpp>
+#include <libpipe/config.hpp>
 #include <stdlib.h>
 #include <exception>
 #include <iostream>
@@ -14,39 +14,39 @@
 #include <set>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
-#include <mstk/algorithm/Algorithm.hpp>
-#include <mstk/pipeline/Filter.hpp>
-#include <mstk/pipeline/Manager.hpp>
-#include <mstk/pipeline/Request.hpp>
-#include <mstk/pipeline/RequestException.hpp>
-#include <mstk/pipeline/BasicFilter.hpp>
-#include <mstk/pipeline/ModificationTimeManager.hpp>
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/Filter.hpp>
+#include <libpipe/pipeline/Manager.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
+#include <libpipe/pipeline/BasicFilter.hpp>
+#include <libpipe/pipeline/ModificationTimeManager.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
- * an MSTK algorithm. Basically, there are only two requirements (and one
+ * an LIBPIPE algorithm. Basically, there are only two requirements (and one
  * additional option):
- * \li derive from \c mstk::Algorithm.
+ * \li derive from \c libpipe::Algorithm.
  * \li implement the \c update() function.
  * \li optionally, override the \c processRequest() function (if your
  *     implementation does not call the \c update function, you do not
  *     need to implement it).
  *
  * Contrary to other approaches to pipelining (most notably probably the VTK 
- * way), MSTK attempts to minimize hard constraints on the implementations.
+ * way), LIBPIPE attempts to minimize hard constraints on the implementations.
  * There is a diverse collection of datatypes and a set of software suites
  * that are being used to process mass spectrometry data. Minimizing the
- * structural imprint that MSTK leaves on applications allows easy cross-suite
+ * structural imprint that LIBPIPE leaves on applications allows easy cross-suite
  * interfacing and allows for a more rapid algorithmic development cycle.
  */
-class UppercaseAlgorithm : public mstk::Algorithm
+class UppercaseAlgorithm : public libpipe::Algorithm
 {
   public:
     /** Constructor.
-     * Make sure to call the \c mstk::Algorithm constructor.
+     * Make sure to call the \c libpipe::Algorithm constructor.
      */
     UppercaseAlgorithm()
-      : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {}
+      : libpipe::Algorithm(), output_(boost::make_shared<std::string>()) {}
     
     /** Destructor.
      */
@@ -56,20 +56,20 @@ class UppercaseAlgorithm : public mstk::Algorithm
      * This is where all the algorithm implementation goes. 
      * @param[in,out] req The request object, forwarded from \c process request.
      */
-    mstk::Request& update(mstk::Request& req) {
-        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+    libpipe::Request& update(libpipe::Request& req) {
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
         output_->clear();
-        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: transforming to uppercase.");
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: transforming to uppercase.");
         std::transform(input_->begin(), input_->end(), std::back_inserter(*output_), toupper);
         this->updateMTime();
         std::ostringstream oss;
         oss << this->getMTime();
-        MSTK_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end at " + oss.str().c_str());
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end at " + oss.str().c_str());
         return req;
     }
 
     /** Provides access to results.
-     * In contrast to more rigid pipeline implementations, MSTK does not
+     * In contrast to more rigid pipeline implementations, LIBPIPE does not
      * impose any constraints on what data types algorithms can share; this is
      * simply done by keeping the request pipeline separate from the
      * input/output flow of the algorithms. In most cases the user knows best
@@ -119,13 +119,13 @@ class UppercaseAlgorithm : public mstk::Algorithm
  * This is an example of a 'source'. The \c Source algorithm does not require
  * any input and will always provide a predefined string as its output.
  */
-class Source : public mstk::Algorithm
+class Source : public libpipe::Algorithm
 {
   public:
     /** Constructor.
      */
-    Source() : mstk::Algorithm(), output_(boost::make_shared<std::string>()) {
-        this->setMTime(mstk::Algorithm::MAX_TIME);
+    Source() : libpipe::Algorithm(), output_(boost::make_shared<std::string>()) {
+        this->setMTime(libpipe::Algorithm::MAX_TIME);
     }
 
     /** Destructor.
@@ -135,7 +135,7 @@ class Source : public mstk::Algorithm
     void setParamString(const std::string& s) {
         *output_ = s;
         // require reexecution on the next call
-        this->setMTime(mstk::Algorithm::MAX_TIME);
+        this->setMTime(libpipe::Algorithm::MAX_TIME);
     }
     
     /** Provides access to the output.
@@ -150,13 +150,13 @@ class Source : public mstk::Algorithm
      * @param[in] req The request object.
      * @return The request object.
      */
-    mstk::Request& update(mstk::Request& req) {
-        MSTK_REQUEST_TRACE(req, "Source::update: start.");
+    libpipe::Request& update(libpipe::Request& req) {
+        LIBPIPE_REQUEST_TRACE(req, "Source::update: start.");
         // simply update the modification time. Done.
         this->updateMTime();
         std::ostringstream oss;
         oss << this->getMTime();
-        MSTK_REQUEST_TRACE(req, "Source::update: end at " + oss.str().c_str());
+        LIBPIPE_REQUEST_TRACE(req, "Source::update: end at " + oss.str().c_str());
         return req;
     }
 
@@ -168,12 +168,12 @@ class Source : public mstk::Algorithm
 
 int main(int argc, char *argv[])
 {
-    using namespace mstk;
+    using namespace libpipe;
 
-    typedef mstk::BasicFilter<Source, 
-      mstk::ModificationTimeManager> StringCreator;
-    typedef mstk::BasicFilter<UppercaseAlgorithm, 
-      mstk::ModificationTimeManager> StringFilter;
+    typedef libpipe::BasicFilter<Source, 
+      libpipe::ModificationTimeManager> StringCreator;
+    typedef libpipe::BasicFilter<UppercaseAlgorithm, 
+      libpipe::ModificationTimeManager> StringFilter;
 
     StringCreator* stringCreator = new StringCreator(std::string("StringCreator#1"));
     stringCreator->getAlgorithm()->setParamString("Hello World!");
@@ -183,9 +183,9 @@ int main(int argc, char *argv[])
     stringFilter->getAlgorithm()->setInputString(
       stringCreator->getAlgorithm()->getOutput());
 
-    Request req(mstk::Request::UPDATE);
+    Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
-    MSTK_REQUEST_TRACE(req, "Starting.");
+    LIBPIPE_REQUEST_TRACE(req, "Starting.");
     try {
         // round 1
         stringFilter->processRequest(req);
@@ -214,7 +214,7 @@ int main(int argc, char *argv[])
           << *(stringCreator->getAlgorithm()->getOutput()) << '\n';
         std::cout << "StringFilter out: " 
           << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
-    } catch (mstk::RequestException& e) {
+    } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
     }
     delete stringFilter;

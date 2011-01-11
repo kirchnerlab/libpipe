@@ -4,22 +4,22 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_REQUEST_HPP__
-#define __MSTK_INCLUDE_MSTK_REQUEST_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
 
 #include <vector>
 #include <string>
 #include <ctime>
-#include <mstk/pipeline/RequestException.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
 
 /** Macro that add an entry to a requests trace.
  * This is just for convenience.
  */
-#define MSTK_REQUEST_TRACE(req, str) \
+#define LIBPIPE_REQUEST_TRACE(req, str) \
   if (req.getTraceFlag()) \
   req.addTrace(std::string(__FUNCTION__) + ": " + str)
 
-namespace mstk {
+namespace libpipe {
 
 /** A request object.
  * The request object is used to transfer requests between filters. 
@@ -99,7 +99,7 @@ class Request
     std::vector<std::string> trace_;
 };
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

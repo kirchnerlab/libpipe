@@ -4,14 +4,14 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_ALGORITHM_HPP__
-#define __MSTK_INCLUDE_MSTK_ALGORITHM_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__
 
-#include <mstk/config.hpp>
+#include <libpipe/config.hpp>
 
 #include <string>
 #include <map>
-#include <mstk/pipeline/Request.hpp>
+#include <libpipe/pipeline/Request.hpp>
 #include <ctime>
 #include <ostream>
 
@@ -27,9 +27,9 @@ bool operator<=(const timeval& lhs, const timeval& rhs);
  */
 std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
-namespace mstk {
+namespace libpipe {
 
-/** Base class for all MSTK algorithms.
+/** Base class for all LIBPIPE algorithms.
  */
 class Algorithm
 {
@@ -113,7 +113,7 @@ class Algorithm
     timeval mTime_;
 };
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

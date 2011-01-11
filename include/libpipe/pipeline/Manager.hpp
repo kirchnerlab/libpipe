@@ -4,13 +4,13 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_MANAGER_HPP__
-#define __MSTK_INCLUDE_MSTK_MANAGER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_HPP__
 
-#include <mstk/config.hpp>
-#include <mstk/pipeline/Request.hpp>
+#include <libpipe/config.hpp>
+#include <libpipe/pipeline/Request.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 class Algorithm;
 
@@ -28,7 +28,7 @@ class Manager
     virtual ~Manager() = 0;
 };
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

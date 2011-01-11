@@ -4,9 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <mstk/pipeline/Request.hpp>
+#include <libpipe/pipeline/Request.hpp>
 
-using namespace mstk;
+using namespace libpipe;
 
 Request::Request(const Request::Type& t)
   : type_(t), trace_(false)

@@ -4,15 +4,15 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
-#define __MSTK_INCLUDE_MSTK_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
 
 
-#include <mstk/config.hpp>
-#include <mstk/pipeline/Request.hpp>
-#include <mstk/pipeline/SimpleManager.hpp>
+#include <libpipe/config.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/SimpleManager.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 
 /** A manager class that makes use of the modification time information of 
@@ -36,7 +36,7 @@ class ModificationTimeManager : public SimpleManager
      * @param[inout] req The request object.
      * @return A (potentially modified) request object.
      */
-    virtual mstk::Request& processRequest(mstk::Request& req);
+    virtual libpipe::Request& processRequest(libpipe::Request& req);
 };
 
 }

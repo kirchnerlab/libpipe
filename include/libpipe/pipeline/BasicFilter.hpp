@@ -4,14 +4,14 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_BASICFILTER_HPP__
-#define __MSTK_INCLUDE_MSTK_BASICFILTER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_BASICFILTER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_BASICFILTER_HPP__
 
-#include <mstk/config.hpp>
+#include <libpipe/config.hpp>
 #include <string>
-#include <mstk/pipeline/Filter.hpp>
+#include <libpipe/pipeline/Filter.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 /** Wraps an algorithm and a manager into a Filter.
  * This is the preferred way of creating a filter type from given \c Algorithm
@@ -19,9 +19,9 @@ namespace mstk {
  * \c UserAlgorithm and makes use of the \c SimpleManager, the corresponding
  * filter is acquired using
  * \code
- * #include <mstk/SimpleManager.hpp>
+ * #include <libpipe/SimpleManager.hpp>
  * ...
- * using namespace mstk;
+ * using namespace libpipe;
  * ...
  * typedef BasicFilter<UserAlgorithm, SimpleManager> UserFilter;
  * ...
@@ -38,12 +38,12 @@ namespace mstk {
  * \endcode
  */
 template <class A, class M>
-class BasicFilter : public mstk::Filter
+class BasicFilter : public libpipe::Filter
 {
   public:
 
     /** Constructor.
-     * @param name The name of the filter. Passed through to mstk::Filter.
+     * @param name The name of the filter. Passed through to libpipe::Filter.
      */
     BasicFilter(const std::string& name);
 
@@ -72,7 +72,7 @@ class BasicFilter : public mstk::Filter
  */
 template <class A, class M>
 BasicFilter<A, M>::BasicFilter(const std::string& name) 
-  : mstk::Filter(name) 
+  : libpipe::Filter(name) 
 {
     this->setAlgorithm(new A);
     M* sm = new M;
@@ -94,7 +94,7 @@ M* BasicFilter<A, M>::getManager() {
     return dynamic_cast<M*>(this->manager_);
 }
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 

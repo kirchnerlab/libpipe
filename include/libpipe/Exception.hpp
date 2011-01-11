@@ -4,15 +4,15 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_EXCEPTION_HPP__
-#define __MSTK_INCLUDE_MSTK_EXCEPTION_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
 
 #include <exception>
 #include <string>
 
-namespace mstk {
+namespace libpipe {
 
-/** MSTK expection base class.
+/** LIBPIPE expection base class.
  */
 class Exception : public std::exception
 {
@@ -56,9 +56,9 @@ class Exception : public std::exception
 
 /** Convenience macros.
  */
-#define mstk_fail(ERROR_MESSAGE) throw mstk::Exception(ERROR_MESSAGE)
+#define libpipe_fail(ERROR_MESSAGE) throw libpipe::Exception(ERROR_MESSAGE)
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif 
 

@@ -1,4 +1,4 @@
-PROJECT(MSTK)
+PROJECT(LIBPIPE)
 
 # require at least cmake 2.6
 cmake_minimum_required(VERSION 2.6)
@@ -11,7 +11,7 @@ SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 #############################################################################
 
 # require out-of-source build
-MACRO_REQUIRE_OUT_OF_SRC_BUILD("MSTK requires out-of-source builds.")
+MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
 
 #SET(CMAKE_CXX0X_FLAGS "-std=c++0x" )
 # more warnings against everything
@@ -19,27 +19,22 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wall " )
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX0X_FLAGS}" )
 
 CONFIGURE_FILE(
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/mstk/config.hpp.cmake 
-    ${MSTK_BINARY_DIR}/include/mstk/config.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/libpipe/config.hpp.cmake 
+    ${LIBPIPE_BINARY_DIR}/include/libpipe/config.hpp
 )
 
 # add subdirs
 OPTION(ENABLE_TESTING "Compile tests" ON)
-OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of ms++)" OFF)
-OPTION(ENABLE_BENCHMARK "Do benchmarking and plotting" ON)
+OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
 OPTION(ENABLE_EXAMPLES "Compile examples" ON)
 
-# require boost
-SET(Boost_USE_STATIC_LIBS OFF)
-SET(Boost_USE_MULTITHREAD OFF)
-FIND_PACKAGE(Boost COMPONENTS program_options system REQUIRED)
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+#IF (ENABLE_EXAMPLES)
+#ENDIF(ENABLE_EXAMPLES)
 
 # global include dirs
 INCLUDE_DIRECTORIES(
-    ${MSTK_SOURCE_DIR}/include
-    ${MSTK_BINARY_DIR}/include
+    ${LIBPIPE_SOURCE_DIR}/include
+    ${LIBPIPE_BINARY_DIR}/include
 )
 
 # build lib
@@ -48,18 +43,18 @@ ADD_SUBDIRECTORY(src)
 #############################################################################
 # syncing docs
 #############################################################################
-#ADD_CUSTOM_TARGET(syncdocs COMMAND ${MSTK_SOURCE_DIR}/scripts/sync-docs-gh-pages.sh ${MSTK_SOURCE_DIR} ${MSTK_BINARY_DIR})
+#ADD_CUSTOM_TARGET(syncdocs COMMAND ${LIBPIPE_SOURCE_DIR}/scripts/sync-docs-gh-pages.sh ${LIBPIPE_SOURCE_DIR} ${LIBPIPE_BINARY_DIR})
 #ADD_DEPENDENCIES(syncdocs doc)
 
 #############################################################################
 # regression tests
 #############################################################################
-#SET(UPDATE_TYPE git)
-#IF (ENABLE_TESTING)
-#  INCLUDE(CTest)
-#  ENABLE_TESTING()
-#  ADD_SUBDIRECTORY(test)
-#ENDIF (ENABLE_TESTING)
+SET(UPDATE_TYPE git)
+IF (ENABLE_TESTING)
+  INCLUDE(CTest)
+  ENABLE_TESTING()
+  ADD_SUBDIRECTORY(test)
+ENDIF (ENABLE_TESTING)
 
 #############################################################################
 # code coverage analysis
@@ -67,16 +62,16 @@ ADD_SUBDIRECTORY(src)
 #IF (ENABLE_COVERAGE)
 #    SET (ENABLE_EXAMPLES ON)
 #    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-#    CONFIGURE_FILE(${MSTK_SOURCE_DIR}/cmake/scripts/coverage.sh.in
-#        ${MSTK_BINARY_DIR}/cmake/scripts/coverage.sh
+#    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
+#        ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
 #        @ONLY IMMEDIATE
 #    )
-#    CONFIGURE_FILE(${MSTK_SOURCE_DIR}/cmake/scripts/unit_coverage.sh.in
-#        ${MSTK_BINARY_DIR}/cmake/scripts/unit_coverage.sh
+#    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/unit_coverage.sh.in
+#        ${LIBPIPE_BINARY_DIR}/cmake/scripts/unit_coverage.sh
 #        @ONLY IMMEDIATE
 #    )
 #    ADD_CUSTOM_TARGET(
-#        coverage COMMAND /bin/bash ${MSTK_BINARY_DIR}/cmake/scripts/coverage.sh
+#        coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
 #    )
 #ENDIF(ENABLE_COVERAGE)
 
@@ -92,14 +87,14 @@ ENDIF (ENABLE_EXAMPLES)
 # documentation
 #############################################################################
 # doxygen support
-CONFIGURE_FILE(${MSTK_SOURCE_DIR}/doc/Doxyfile.cmake
-    ${MSTK_BINARY_DIR}/doc/Doxyfile
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/Doxyfile.cmake
+    ${LIBPIPE_BINARY_DIR}/doc/Doxyfile
     @ONLY IMMEDIATE
     )
 FIND_PACKAGE(Doxygen)
 
 # target for doxygen
-ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${MSTK_BINARY_DIR}/doc/Doxyfile)
+ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${LIBPIPE_BINARY_DIR}/doc/Doxyfile)
 
 ##############################################################################
 ## installation
@@ -111,19 +106,19 @@ ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${MSTK_BINARY_DIR}/doc/Doxyfile)
 #)
 #ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 ## headers
-#INSTALL(DIRECTORY ${MSTK_SOURCE_DIR}/include/fbi
+#INSTALL(DIRECTORY ${LIBPIPE_SOURCE_DIR}/include/fbi
 #    DESTINATION include
 #    COMPONENT headers
 #    REGEX "/.git$" EXCLUDE
 #    PATTERN "config.h.cmake" EXCLUDE)
 #
 ## config.h
-#INSTALL(FILES ${MSTK_BINARY_DIR}/include/fbi/config.h
+#INSTALL(FILES ${LIBPIPE_BINARY_DIR}/include/fbi/config.h
 #    DESTINATION include/fbi
 #    COMPONENT headers)
 #
 ## documentation
-#INSTALL(DIRECTORY ${MSTK_BINARY_DIR}/doc
+#INSTALL(DIRECTORY ${LIBPIPE_BINARY_DIR}/doc
 #    DESTINATION share/fbi
 #    COMPONENT documentation
 #    PATTERN "Doxyfile" EXCLUDE)
@@ -143,8 +138,8 @@ ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${MSTK_BINARY_DIR}/doc/Doxyfile)
 #SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
 #SET(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
 #
-#SET(CPACK_RESOURCE_FILE_README "${MSTK_SOURCE_DIR}/README.txt")
-#SET(CPACK_RESOURCE_FILE_LICENSE "${MSTK_SOURCE_DIR}/LICENSE.txt")
+#SET(CPACK_RESOURCE_FILE_README "${LIBPIPE_SOURCE_DIR}/README.txt")
+#SET(CPACK_RESOURCE_FILE_LICENSE "${LIBPIPE_SOURCE_DIR}/LICENSE.txt")
 #
 #set(CPACK_COMPONENTS_ALL libraries headers applications documentation)
 #set(CPACK_COMPONENT_LIBRARIES_DISPLAY_NAME "Libraries")

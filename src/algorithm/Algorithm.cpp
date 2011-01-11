@@ -4,14 +4,14 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <mstk/algorithm/Algorithm.hpp>
+#include <libpipe/algorithm/Algorithm.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>
-#include <mstk/Log.hpp>
+#include <libpipe/Log.hpp>
 
-#undef MSTK_FILELOG_MAX_LOGGING_LEVEL
-#define MSTK_FILELOG_MAX_LOGGING_LEVEL mstk::logINFO
+#undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
+#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
 bool operator<=(const timeval& lhs, const timeval& rhs)
 {
@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv)
     return os;
 }
 
-using namespace mstk;
+using namespace libpipe;
 
 timeval Algorithm::initMaxTime()
 {
@@ -83,7 +83,7 @@ void Algorithm::updateMTime()
 bool Algorithm::needUpdate() const
 {
     /*
-    MSTK_LOG(mstk::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "." 
+    LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "." 
       << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
       << Algorithm::MAX_TIME.tv_usec;
     */

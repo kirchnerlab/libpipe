@@ -4,12 +4,12 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_PIPELINE_REQUESTEXCEPTION_HPP__
-#define __MSTK_INCLUDE_MSTK_PIPELINE_REQUESTEXCEPTION_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_REQUESTEXCEPTION_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_REQUESTEXCEPTION_HPP__
 
-#include <mstk/Exception.hpp>
+#include <libpipe/Exception.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 class RequestException : public Exception
 {

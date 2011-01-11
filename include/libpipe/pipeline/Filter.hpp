@@ -4,20 +4,20 @@
  * Copyright (c) 2010 Marc Kirchner 
  *
  */
-#ifndef __MSTK_INCLUDE_MSTK_FILTER_HPP__
-#define __MSTK_INCLUDE_MSTK_FILTER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
 
-#include <mstk/config.hpp>
+#include <libpipe/config.hpp>
 #include <string>
-#include <mstk/pipeline/Request.hpp>
+#include <libpipe/pipeline/Request.hpp>
 
-namespace mstk {
+namespace libpipe {
 
 // forward declarations
 class Algorithm;
 class Manager;
 
-/** The base class for all MSTK filters.
+/** The base class for all LIBPIPE filters.
  */
 class Filter
 {
@@ -78,7 +78,7 @@ class Filter
     std::string name_;
 };
 
-} // namespace mstk
+} // namespace libpipe
 
 #endif
 
