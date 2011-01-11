@@ -19,6 +19,7 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     STRING(REGEX REPLACE "test_([^ ]+).*" "\\1" test "${exe}" )
     # build the test
     ADD_EXECUTABLE(${exe} ${src})
+    TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})
     # add test to global list of unit test
     ADD_TEST(${name} ${exe})
     MESSAGE(STATUS "Adding test for ${name}: ${exe}.")
@@ -62,6 +63,7 @@ SET(SRCS_LOG Log-test.cpp)
 SET(SRCS_EXCEPTION Exception-test.cpp)
 SET(SRCS_ALGORITHM Algorithm-test.cpp)
 
+SET(TEST_LIBS pipe)
 #### Tests
 ADD_LIBPIPE_TEST("SimpleManager" test_simplemanager ${SRCS_SIMPLEMANAGER})
 ADD_LIBPIPE_TEST("RequestException" test_requestexception ${SRCS_REQUESTEXCEPTION})

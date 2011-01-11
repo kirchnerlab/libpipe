@@ -45,13 +45,12 @@ timeval Algorithm::initMaxTime()
     return tv;
 }
 
+// initialize with maximum value such that any call to update will make the
+// instance "younger" than any non-updated instances
 const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 
-Algorithm::Algorithm()
-{
-    // initialize with maximum value such that any call to update will make the
-    // instance "younger" than any non-updated instances
-}
+Algorithm::Algorithm() : mTime_(Algorithm::MAX_TIME)
+{}
 
 Algorithm::~Algorithm()
 {}
