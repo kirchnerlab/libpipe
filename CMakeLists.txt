@@ -37,24 +37,11 @@ INCLUDE_DIRECTORIES(
     ${LIBPIPE_BINARY_DIR}/include
 )
 
-# build lib
-ADD_SUBDIRECTORY(src)
-
 #############################################################################
 # syncing docs
 #############################################################################
 #ADD_CUSTOM_TARGET(syncdocs COMMAND ${LIBPIPE_SOURCE_DIR}/scripts/sync-docs-gh-pages.sh ${LIBPIPE_SOURCE_DIR} ${LIBPIPE_BINARY_DIR})
 #ADD_DEPENDENCIES(syncdocs doc)
-
-#############################################################################
-# regression tests
-#############################################################################
-SET(UPDATE_TYPE git)
-IF (ENABLE_TESTING)
-  INCLUDE(CTest)
-  ENABLE_TESTING()
-  ADD_SUBDIRECTORY(test)
-ENDIF (ENABLE_TESTING)
 
 #############################################################################
 # code coverage analysis
@@ -74,6 +61,22 @@ IF (ENABLE_COVERAGE)
         coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
     )
 ENDIF(ENABLE_COVERAGE)
+
+#############################################################################
+# regression tests
+#############################################################################
+SET(UPDATE_TYPE git)
+IF (ENABLE_TESTING)
+  INCLUDE(CTest)
+  ENABLE_TESTING()
+  ADD_SUBDIRECTORY(test)
+ENDIF (ENABLE_TESTING)
+
+#############################################################################
+# build lib
+#############################################################################
+ADD_SUBDIRECTORY(src)
+
 
 
 ############################################################################

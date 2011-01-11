@@ -1,4 +1,3 @@
-
 SET(SRCS 
     algorithm/Algorithm.cpp
     pipeline/Filter.cpp
