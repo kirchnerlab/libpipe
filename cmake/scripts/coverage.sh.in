@@ -1,0 +1,17 @@
+#!/bin/bash
+
+lcov --directory @LIBPIPE_BINARY_DIR@ --zerocounters
+#find @LIBPIPE_BINARY_DIR@ -name *.gcno -print0 | xargs -0 rm -f
+find @LIBPIPE_BINARY_DIR@ -name *.gcda -print0 | xargs -0 rm -f
+
+make -f @LIBPIPE_BINARY_DIR@/Makefile
+
+mkdir -p @LIBPIPE_BINARY_DIR@/test/coverage
+make -f @LIBPIPE_BINARY_DIR@/Makefile test
+lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
+     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
+     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
+     -capture --output-file @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info
+pushd @LIBPIPE_BINARY_DIR@/test/coverage/
+genhtml pipe.info
+popd 

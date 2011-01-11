@@ -59,21 +59,21 @@ ENDIF (ENABLE_TESTING)
 #############################################################################
 # code coverage analysis
 #############################################################################
-#IF (ENABLE_COVERAGE)
-#    SET (ENABLE_EXAMPLES ON)
-#    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
-#    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
-#        ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
-#        @ONLY IMMEDIATE
-#    )
-#    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/unit_coverage.sh.in
-#        ${LIBPIPE_BINARY_DIR}/cmake/scripts/unit_coverage.sh
-#        @ONLY IMMEDIATE
-#    )
-#    ADD_CUSTOM_TARGET(
-#        coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
-#    )
-#ENDIF(ENABLE_COVERAGE)
+IF (ENABLE_COVERAGE)
+    SET (ENABLE_EXAMPLES ON)
+    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
+        ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
+        @ONLY IMMEDIATE
+    )
+    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/unit_coverage.sh.in
+        ${LIBPIPE_BINARY_DIR}/cmake/scripts/unit_coverage.sh
+        @ONLY IMMEDIATE
+    )
+    ADD_CUSTOM_TARGET(
+        coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
+    )
+ENDIF(ENABLE_COVERAGE)
 
 
 ############################################################################
@@ -155,3 +155,4 @@ ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${LIBPIPE_BINARY_DIR}/doc/Doxyfile)
 #
 #INCLUDE(CPack)
 #
+MESSAGE(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
