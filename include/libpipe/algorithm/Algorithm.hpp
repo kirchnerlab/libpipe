@@ -12,7 +12,7 @@
 #include <string>
 #include <map>
 #include <libpipe/pipeline/Request.hpp>
-#include <ctime>
+#include <sys/time.h> // for timeval
 #include <ostream>
 
 /** Comparison operator for \c struct \c timeval objects.
