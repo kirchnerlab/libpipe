@@ -1,16 +1,18 @@
 /*
  * RequestException-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 Marc Kirchner
  *
  */
 
 #include <iostream>
+#include <cstring>
 #include "vigra/unittest.hxx"
+#include <libpipe/pipeline/RequestException.hpp>
 
+using namespace libpipe;
 
-/** <+Short description of the test suite+>
- * <+Longer description of the test suite+> 
+/** Test suite for the RequestException class.
  */
 struct RequestExceptionTestSuite : vigra::test_suite {
     /** Constructor.
@@ -19,17 +21,34 @@ struct RequestExceptionTestSuite : vigra::test_suite {
      * case here.
      */
     RequestExceptionTestSuite() : vigra::test_suite("RequestException") {
-        add(testCase(&RequestExceptionTestSuite::fail));
+        add(testCase(&RequestExceptionTestSuite::testConstruction));
+        add(testCase(&RequestExceptionTestSuite::testThrowCatch));
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete RequestException class has tests.
+
+    /** Test construction and destruction.
      */
-    void fail() {
-        failTest("No unit tests for class RequestException!");
+    void testConstruction() {
+        RequestException re("bla");
+        shouldEqual(strncmp(re.what(), "bla", 3), 0);
+    }
+
+    /** Test throwing and catching the exception.
+     */
+    void testThrowCatch() {
+        bool caught = false;
+        try {
+            RequestException e("qwerty");
+            shouldEqual(strcmp(e.what(), "qwerty"), static_cast<int>(0));
+            throw e;
+        } catch (RequestException& e) {
+            // catch regularly
+            shouldEqual(strcmp(e.what(), "qwerty"), static_cast<int>(0));
+            caught = true;
+        }
+        shouldEqual(caught, true);
     }
 };
-
 
 /** The main function that runs the tests for class RequestException.
  * Under normal circumstances you need not edit this.

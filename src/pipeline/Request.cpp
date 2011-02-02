@@ -9,7 +9,7 @@
 using namespace libpipe;
 
 Request::Request(const Request::Type& t)
-  : type_(t), trace_(false)
+  : type_(t), traceFlag_(false)
 {
 }
 

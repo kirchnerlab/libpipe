@@ -1,16 +1,19 @@
 /*
  * Manager-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 Marc Kirchner
  *
  */
 
 #include <iostream>
 #include "vigra/unittest.hxx"
+#include <libpipe/pipeline/Manager.hpp>
 
+using namespace libpipe;
 
-/** <+Short description of the test suite+>
- * <+Longer description of the test suite+> 
+/** Test suite for the Manager base class.
+ * This is a very simple test, that just makes sure that classes that derive
+ * from Manager and overload the correct methods can be instanciated.
  */
 struct ManagerTestSuite : vigra::test_suite {
     /** Constructor.
@@ -19,14 +22,26 @@ struct ManagerTestSuite : vigra::test_suite {
      * case here.
      */
     ManagerTestSuite() : vigra::test_suite("Manager") {
-        add(testCase(&ManagerTestSuite::fail));
+        add(testCase(&ManagerTestSuite::deriveAndInstanciate));
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete Manager class has tests.
+    /** Class derived from Manager for testing purposes.
      */
-    void fail() {
-        failTest("No unit tests for class Manager!");
+    class Derived : public Manager {
+      public:
+        virtual ~Derived() {}
+        virtual Request& processRequest(Request& r) {
+            return r;
+        }
+    };
+
+    /** Try to instanciate the derived class.
+     */
+    void deriveAndInstanciate(void) {
+        Derived d;
+        Request r(Request::UPDATE);
+        Request s = d.processRequest(r);
+        shouldEqual(s.is(Request::UPDATE), true);
     }
 };
 

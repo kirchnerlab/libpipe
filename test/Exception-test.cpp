@@ -37,11 +37,22 @@ struct ExceptionTestSuite : vigra::test_suite {
         TestException() : Exception("qwerty") {}
     };
 
+    class TestExceptionWithOverload : public Exception
+    {
+      public:
+        TestExceptionWithOverload() : Exception("qwerty") {}
+        virtual const char * what(void) {
+            return Exception::what();
+        }
+    };
+
     /** Try to instantiate a derived class.
      */
     void testDerivedClass() {
         TestException t;
         shouldEqual(strncmp(t.what(), "qwerty", 6), 0);
+        TestExceptionWithOverload to;
+        shouldEqual(strncmp(to.what(), "qwerty", 6), 0);
     }
 
     /** Test construction.

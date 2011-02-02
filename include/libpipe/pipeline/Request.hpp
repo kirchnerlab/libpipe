@@ -31,8 +31,7 @@ class Request
      * Currently only UPDATE requests are necessary.
      */
     enum Type {
-        UPDATE=0,
-        nTypes
+        UPDATE=0
     };
 
     /** Constructor.

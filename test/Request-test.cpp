@@ -39,22 +39,14 @@ struct RequestTestSuite : vigra::test_suite {
     void testConstruction() {
         // make sure this compiles
         Request req(Request::UPDATE);
-        // attempt to construct with an invalid value
-        bool thrown = false;
-        try {
-            Request req(Request::nTypes);
-        } catch (Exception& e) {
-            thrown = true;
-        }
-        shouldEqual(thrown, true);
     }
 
     /** Check Request.is().
      */
     void testIs() {
         Request req(Request::UPDATE);
-        shouldEqual(req.is(Request::nTypes), false);
         shouldEqual(req.is(Request::UPDATE), true);
+        // FIXME: needs a negated test once there is more than one type
     }
 
     /** Check trace flag getter/setter
@@ -88,7 +80,9 @@ struct RequestTestSuite : vigra::test_suite {
         req.addTrace(message);
         req.getTrace(trace);
         shouldEqual(trace.size(), static_cast<size_t>(1));
-        shouldEqual(trace[0], message);
+        // do not compare the date/time part.
+        shouldEqual(trace[0].substr(trace[0].size()-message.size(), 
+          message.size()), message);
         trace.clear();
         // clear the trace info from the request object
         req.clearTrace();
@@ -105,15 +99,9 @@ struct RequestTestSuite : vigra::test_suite {
         }
         req.getTrace(trace);
         for (size_t i = 0; i < 10; ++i) {
-            shouldEqual(trace[i], control[i]);
+            shouldEqual(trace[i].substr(trace[i].size()-control[i].size(),
+              control[i].size()), control[i]);
         }
-    }
-
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete Request class has tests.
-     */
-    void fail() {
-        failTest("No unit tests for class Request!");
     }
 };
 

@@ -12,7 +12,7 @@
 
 namespace libpipe {
 
-/** LIBPIPE expection base class.
+/** libpipe expection base class.
  */
 class Exception : public std::exception
 {

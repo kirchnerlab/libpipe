@@ -12,9 +12,6 @@
 
 namespace libpipe {
 
-class Algorithm;
-
-
 /** Base class for Managers.
  * Managers are wrapped with Algorithms to form the filters of the pipeline.
  * While the filters provide all data processing capabilities, the managers
