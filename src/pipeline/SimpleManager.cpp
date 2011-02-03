@@ -10,7 +10,7 @@
 
 using namespace libpipe;
 
-SimpleManager::SimpleManager() {}
+SimpleManager::SimpleManager() : algorithm_(0) {}
 
 SimpleManager::~SimpleManager() {}
 
