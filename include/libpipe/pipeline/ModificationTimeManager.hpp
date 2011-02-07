@@ -10,16 +10,16 @@
 
 #include <libpipe/config.hpp>
 #include <libpipe/pipeline/Request.hpp>
-#include <libpipe/pipeline/SimpleManager.hpp>
+#include <libpipe/pipeline/Manager.hpp>
 
 namespace libpipe {
 
 
 /** A manager class that makes use of the modification time information of 
  * the algoritms it manages.
- * :TODO:01/01/2011 11:12:42:mkirchner: fill in algorithm details.
+ * :TODO:01/01/2011 11:12:42:mkirchner: fill in details how it works.
  */
-class ModificationTimeManager : public SimpleManager
+class ModificationTimeManager : public Manager
 {
   public:
     /** Constructor.
@@ -36,7 +36,7 @@ class ModificationTimeManager : public SimpleManager
      * @param[inout] req The request object.
      * @return A (potentially modified) request object.
      */
-    virtual libpipe::Request& processRequest(libpipe::Request& req);
+    virtual Request& processRequest(Request& req);
 };
 
 }

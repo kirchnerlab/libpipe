@@ -29,18 +29,46 @@ Request& Filter::processRequest(Request& req)
     return req;
 }
 
+Algorithm* Filter::getAlgorithm()
+{
+    return algorithm_;
+}
+
 void Filter::setAlgorithm(Algorithm* alg)
 {
-    algorithm_ = alg;
+    if (algorithm_ != alg) {
+        if (algorithm_) {
+            delete algorithm_;
+        }
+        algorithm_ = alg;
+    }
+    if (manager_) {
+        manager_->setAlgorithm(alg);
+    }
+}
+
+Manager* Filter::getManager()
+{
+    return manager_;
 }
 
 void Filter::setManager(Manager* manager)
 {
-    manager_ = manager;
+    if (manager_ != manager) {
+        if (manager_) {
+            delete manager_;
+        }
+        manager_ = manager;
+    }
 }
 
 std::string Filter::getName() const
 {
     return name_;
+}
+
+void Filter::setName(const std::string& name)
+{
+    name_ = name;
 }
 

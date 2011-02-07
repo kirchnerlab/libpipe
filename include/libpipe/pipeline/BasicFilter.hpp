@@ -16,14 +16,14 @@ namespace libpipe {
 /** Wraps an algorithm and a manager into a Filter.
  * This is the preferred way of creating a filter type from given \c Algorithm
  * and Manager types. Assuming the user has implemented an algorithm in a class
- * \c UserAlgorithm and makes use of the \c SimpleManager, the corresponding
+ * \c UserAlgorithm and makes use of the \c normal Manager, the corresponding
  * filter is acquired using
  * \code
- * #include <libpipe/SimpleManager.hpp>
+ * #include <libpipe/Manager.hpp>
  * ...
  * using namespace libpipe;
  * ...
- * typedef BasicFilter<UserAlgorithm, SimpleManager> UserFilter;
+ * typedef BasicFilter<UserAlgorithm, Manager> UserFilter;
  * ...
  * \endcode
  * The filter can then be used in the usual way:
@@ -58,13 +58,13 @@ class BasicFilter : public libpipe::Filter
      * does not include all potential functions a user might add.
      * @return A pointer (with the true class type) to the algorithm object.
      */
-    A* getAlgorithm();
+    virtual A* getAlgorithm();
     
     /** Provides access to the manager object.
      * @see getAlgorithm.
      * @return A pointer (with the true class type) to the manager object.
      */
-    M* getManager();
+    virtual M* getManager();
 };
 
 /*
@@ -74,10 +74,10 @@ template <class A, class M>
 BasicFilter<A, M>::BasicFilter(const std::string& name) 
   : libpipe::Filter(name) 
 {
-    this->setAlgorithm(new A);
-    M* sm = new M;
-    sm->setAlgorithm(this->getAlgorithm());
-    this->setManager(sm);
+    A* a = new A;
+    M* m = new M;
+    this->setManager(m);
+    this->setAlgorithm(a); // this also updates the manager
 }
 
 template <class A, class M>
@@ -86,12 +86,12 @@ BasicFilter<A, M>::~BasicFilter()
 
 template <class A, class M>
 A* BasicFilter<A, M>::getAlgorithm() {
-    return dynamic_cast<A*>(this->algorithm_);
+    return dynamic_cast<A*>(Filter::getAlgorithm());
 }
 
 template <class A, class M>
 M* BasicFilter<A, M>::getManager() {
-    return dynamic_cast<M*>(this->manager_);
+    return dynamic_cast<M*>(Filter::getManager());
 }
 
 } // namespace libpipe

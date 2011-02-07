@@ -12,7 +12,7 @@
 using namespace libpipe;
 
 ModificationTimeManager::ModificationTimeManager()
-  : SimpleManager() {}
+  : Manager() {}
 
 ModificationTimeManager::~ModificationTimeManager() {}
 
@@ -26,8 +26,8 @@ libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req)
     bool needUpdate = algorithm_->needUpdate();
     LIBPIPE_LOG(logINFO) << "Need update: " << needUpdate;
     // iterate over all sources and check their modification time
-    typedef ManagerSet::iterator MSI;
-    for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
+    typedef FilterSet::iterator FSI;
+    for (FSI i = sources_.begin(); i != sources_.end(); ++i) {
         try {
             req = (*i)->processRequest(req);
         } catch (RequestException& e) {

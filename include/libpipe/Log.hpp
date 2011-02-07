@@ -118,6 +118,8 @@ class Output2FILE
     /** Writes message to file handle.
      * This function is used in @c Log<T> and must be provided by 
      * every redirector implementation.
+     *
+     * @param[in] msg Message that is written to the file handle.
      */
     static void output(const std::string& msg);
 };
@@ -171,7 +173,7 @@ class Log
      * @endcode
      * Afterwards, it returns a reference to that internal stream and the user
      * can append the respective logging message.
-     *
+     * @param[in] level The logging level.
      * @return A reference to the logging stream.
      */
     std::ostringstream& get(LogLevel level = logINFO);
@@ -204,7 +206,7 @@ class Log
 
 protected:
     /** String stream that holds the logging message(s).
-     * Upon destruction of the @Log<T> object, this stream is written to the
+     * Upon destruction of the @c Log<T> object, this stream is written to the
      * redirector T.
      */
     std::ostringstream os_;

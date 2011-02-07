@@ -8,9 +8,14 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_HPP__
 
 #include <libpipe/config.hpp>
+#include <set>
 #include <libpipe/pipeline/Request.hpp>
 
 namespace libpipe {
+
+// forward declaration
+class Algorithm;
+class Filter;
 
 /** Base class for Managers.
  * Managers are wrapped with Algorithms to form the filters of the pipeline.
@@ -21,8 +26,54 @@ namespace libpipe {
 class Manager
 {
   public:
-    virtual Request& processRequest(Request&) = 0;
-    virtual ~Manager() = 0;
+    /** Constructor.
+     */
+    Manager();
+
+    /** Destructor.
+     */
+    virtual ~Manager();
+
+    /** Get a pointer to the algorithm object currently managed by the manager.
+     * @return A pointer to an algorithm object (or 0).
+     */
+    Algorithm* getAlgorithm();
+    
+    /** Set the algorithm that is managed by the manager.
+     * @param[in] alg Pointer to teh algorithm object.
+     */
+    void setAlgorithm(Algorithm* alg);
+
+    /** Process a processing request. In the simple base class implementation
+     * the manager will call the \c process request method of all filters
+     * it depends on and will subsequently execute its own algorithm.
+     *  
+     * @param[in] req The request object, non-const (good for e.g. adding trace
+     *                information)
+     * @return The (potentially modified) request object.
+     */
+    virtual Request& processRequest(Request& req);
+
+    /** Connect the manager to a filter it depends on. Each call connects the
+     * Manager to the specified filter; duplicates will be ignored.
+     *  
+     * @param[inout] f Pointer to a filter object on which the current manager
+     *                 should depend.
+     */
+    void connect(Filter* f);
+
+  protected:
+    /** Convenience typedef: a filter set.
+     */
+    typedef std::set<Filter*> FilterSet;
+
+    /** The set of filters the manager depends on.
+     */
+    FilterSet sources_;
+
+    /** Pointer to the algorithm that is managed by the manager.
+     */
+    Algorithm* algorithm_;
 };
 
 } // namespace libpipe

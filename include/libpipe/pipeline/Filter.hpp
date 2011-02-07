@@ -40,17 +40,22 @@ class Filter
     /** Returns a  pointer to the algorithm object.
      * @return A pointer to the algorithm object.
      */
-    virtual Algorithm* getAlgorithm() = 0;
+    virtual Algorithm* getAlgorithm();
 
     /** Returns a  pointer to the Manager object.
      * @return A pointer to the Manager object.
      */
-    virtual Manager* getManager() = 0;
+    virtual Manager* getManager();
     
     /** Returns the name of the filter.
      * @return The name of the fitler.
      */
     std::string getName() const;
+
+    /** Set the name of the filter.
+     * @param[in] name The name of the filter.
+     */
+    void setName(const std::string& name);
 
   protected:
     /** Set the algorithm that should be used for this filter.
@@ -63,7 +68,7 @@ class Filter
      */
     void setManager(Manager* manager);
 
-
+  private:
     /** A pointer to the algorithm that is part of the filter.
      */
     Algorithm* algorithm_;
@@ -72,7 +77,6 @@ class Filter
      */
     Manager* manager_;
 
-  private:
     /** Holds the name of the filter.
      */
     std::string name_;

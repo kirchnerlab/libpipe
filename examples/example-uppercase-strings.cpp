@@ -19,7 +19,6 @@
 #include <libpipe/pipeline/Request.hpp>
 #include <libpipe/pipeline/RequestException.hpp>
 #include <libpipe/pipeline/BasicFilter.hpp>
-#include <libpipe/pipeline/SimpleManager.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -155,9 +154,9 @@ int main(int argc, char *argv[])
     using namespace libpipe;
 
     typedef libpipe::BasicFilter<Source, 
-      libpipe::SimpleManager> StringCreator;
+      libpipe::Manager> StringCreator;
     typedef libpipe::BasicFilter<UppercaseAlgorithm, 
-      libpipe::SimpleManager> StringFilter;
+      libpipe::Manager> StringFilter;
 
     StringCreator* stringCreator = new StringCreator(std::string("The Source"));
     stringCreator->getAlgorithm()->setParamString("Hello World!");

@@ -3,7 +3,6 @@ SET(SRCS
     pipeline/Filter.cpp
     pipeline/Manager.cpp
     pipeline/Request.cpp
-    pipeline/SimpleManager.cpp
     pipeline/ModificationTimeManager.cpp
 )
 
