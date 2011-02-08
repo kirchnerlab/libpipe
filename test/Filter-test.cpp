@@ -31,8 +31,6 @@ struct FilterTestSuite : vigra::test_suite {
         add(testCase(&FilterTestSuite::testConstructionAndDestruction));
         add(testCase(&FilterTestSuite::testCallChain));
         add(testCase(&FilterTestSuite::testName));
-        add(testCase(&FilterTestSuite::testAlgorithm));
-        add(testCase(&FilterTestSuite::testManager));
     }
 
     void testConstructionAndDestruction() {
@@ -69,42 +67,11 @@ struct FilterTestSuite : vigra::test_suite {
         delete f;
     }
 
-    typedef BasicFilter<RaiseExceptionAlg, TestManager> F;
-    class TestFilter : public F {
-      public:
-        TestFilter(const std::string& name) : F(name) {}
-        virtual ~TestFilter() {}
-        void setAlgorithm(Algorithm* a) { F::setAlgorithm(a); }
-        void setManager(Manager* m) { F::setManager(m); }
-    };
+    /*
+     * tests for get/setAlgorithm and get/setManager are part
+     * of the BasicFilter<A, M> test routines.
+     */
 
-    void testAlgorithm() {
-        // getset
-        TestFilter* f = new TestFilter("foo");
-        RaiseExceptionAlg* p = f->getAlgorithm();
-        f->setAlgorithm(f->getAlgorithm());
-        shouldEqual(f->getAlgorithm(), p);
-        // switch algorithm
-        p = new RaiseExceptionAlg();
-        // the filter takes possession of the algorithm
-        f->setAlgorithm(p);
-        //shouldEqual(f->getAlgorithm(), p);
-        delete f;
-    }
-
-    void testManager() {
-        // getset
-        TestFilter* f = new TestFilter("bar");
-        TestManager* p = f->getManager();
-        f->setManager(f->getManager());
-        shouldEqual(f->getManager(), p);
-        // switch manager
-        p = new TestManager;
-        // the filter takes possession of the manager
-        f->setManager(p);
-        shouldEqual(f->getManager(), p);
-        delete f;
-    }
 };
 
 

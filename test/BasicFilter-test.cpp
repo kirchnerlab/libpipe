@@ -1,16 +1,24 @@
 /*
  * BasicFilter-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 Marc Kirchner
  *
  */
 
 #include <iostream>
 #include "vigra/unittest.hxx"
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/BasicFilter.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
+#include <libpipe/pipeline/Manager.hpp>
+
+#include "utils.hpp"
+
+using namespace libpipe;
 
 
-/** <+Short description of the test suite+>
- * <+Longer description of the test suite+> 
+/** Test routines for the BasicFilter template class.
  */
 struct BasicFilterTestSuite : vigra::test_suite {
     /** Constructor.
@@ -19,15 +27,49 @@ struct BasicFilterTestSuite : vigra::test_suite {
      * case here.
      */
     BasicFilterTestSuite() : vigra::test_suite("BasicFilter") {
-        add(testCase(&BasicFilterTestSuite::fail));
+        add(testCase(&BasicFilterTestSuite::testAlgorithm));
+        add(testCase(&BasicFilterTestSuite::testManager));
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete BasicFilter class has tests.
+    /** Derived class with exposed setters.
      */
-    void fail() {
-        failTest("No unit tests for class BasicFilter!");
+    typedef BasicFilter<RaiseExceptionAlg, TestManager> F;
+    class TestFilter : public F {
+      public:
+        TestFilter(const std::string& name) : F(name) {}
+        virtual ~TestFilter() {}
+        void setAlgorithm(Algorithm* a) { F::setAlgorithm(a); }
+        void setManager(Manager* m) { F::setManager(m); }
+    };
+
+    void testAlgorithm() {
+        // getset
+        TestFilter* f = new TestFilter("foo");
+        RaiseExceptionAlg* p = f->getAlgorithm();
+        f->setAlgorithm(f->getAlgorithm());
+        shouldEqual(f->getAlgorithm(), p);
+        // switch algorithm
+        p = new RaiseExceptionAlg();
+        // the filter takes possession of the algorithm
+        f->setAlgorithm(p);
+        //shouldEqual(f->getAlgorithm(), p);
+        delete f;
     }
+
+    void testManager() {
+        // getset
+        TestFilter* f = new TestFilter("bar");
+        TestManager* p = f->getManager();
+        f->setManager(f->getManager());
+        shouldEqual(f->getManager(), p);
+        // switch manager
+        p = new TestManager;
+        // the filter takes possession of the manager
+        f->setManager(p);
+        shouldEqual(f->getManager(), p);
+        delete f;
+    }
+
 };
 
 
