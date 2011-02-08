@@ -21,12 +21,9 @@ Algorithm* Manager::getAlgorithm()
 
 void Manager::setAlgorithm(Algorithm* alg) 
 {
-    if (alg != algorithm_) {
-        if (algorithm_) {
-            delete algorithm_;
-        }
-        algorithm_ = alg;
-    }
+    // the manager does not own the
+    // algorithm object. Hence, just move the pointer.
+    algorithm_ = alg;
 }
 
 Request& Manager::processRequest(Request& req) {

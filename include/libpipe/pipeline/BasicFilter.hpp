@@ -38,7 +38,7 @@ namespace libpipe {
  * \endcode
  */
 template <class A, class M>
-class BasicFilter : public libpipe::Filter
+class BasicFilter : public Filter
 {
   public:
 
@@ -71,13 +71,12 @@ class BasicFilter : public libpipe::Filter
  * Template implementation
  */
 template <class A, class M>
-BasicFilter<A, M>::BasicFilter(const std::string& name) 
-  : libpipe::Filter(name) 
+BasicFilter<A, M>::BasicFilter(const std::string& name) : Filter(name) 
 {
     A* a = new A;
     M* m = new M;
     this->setManager(m);
-    this->setAlgorithm(a); // this also updates the manager
+    this->setAlgorithm(a);
 }
 
 template <class A, class M>

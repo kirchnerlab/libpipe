@@ -16,6 +16,7 @@ Filter::Filter(const std::string& name)
 
 Filter::~Filter()
 {
+    // the filter owns its members!
     delete algorithm_;
     delete manager_;
 }
