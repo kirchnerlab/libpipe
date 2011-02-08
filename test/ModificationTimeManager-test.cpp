@@ -1,16 +1,27 @@
 /*
  * ModificationTimeManager-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 Marc Kirchner
  *
  */
 
 #include <iostream>
+#include <vector>
+#include <string>
 #include "vigra/unittest.hxx"
 
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/BasicFilter.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
+#include <libpipe/pipeline/ModificationTimeManager.hpp>
 
-/** <+Short description of the test suite+>
- * <+Longer description of the test suite+> 
+
+#include "utils.hpp"
+
+using namespace libpipe;
+
+/** Test suitre for the ModificationTime
  */
 struct ModificationTimeManagerTestSuite : vigra::test_suite {
     /** Constructor.
@@ -19,15 +30,118 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
      * case here.
      */
     ModificationTimeManagerTestSuite() : vigra::test_suite("ModificationTimeManager") {
-        add(testCase(&ModificationTimeManagerTestSuite::fail));
+        add(testCase(&ModificationTimeManagerTestSuite::testProcessRequest));
+        add(testCase(&ModificationTimeManagerTestSuite::testUpdateUponOutdate));
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete ModificationTimeManager class has tests.
+    /** Test the request processing.
      */
-    void fail() {
-        failTest("No unit tests for class ModificationTimeManager!");
+    void testProcessRequest() {
+        ModificationTimeManager mtm;
+        // no algorithm defined, needs to throw an exception
+        Request req(Request::UPDATE);
+        bool thrown = false;
+        try { 
+            req = mtm.processRequest(req);
+        } catch (RequestException& e) {
+            thrown = true;
+        }
+        shouldEqual(thrown, true);
+        // use of needUpdate: add an Algorithm which throws an exception upon
+        // execution, don't add any sources and manually set the algorithms
+        // mTime to something that is not equal to Algorithm::MAX_TIME. In that
+        // case the Manager should NOT execute the algorithm. If it does we can
+        // detect this by catching the exception.
+        RaiseExceptionAlg* a = new RaiseExceptionAlg();
+        a->updateMTime();
+        mtm.setAlgorithm(a);
+        thrown = false;
+        try { 
+            req = mtm.processRequest(req);
+        } catch (RequestException& e) {
+            thrown = true;
+        }
+        shouldEqual(thrown, false);
+        // now require the update via Algorithm::MAX_TIME
+        a->setMTime(Algorithm::MAX_TIME);
+        thrown = false;
+        try { 
+            req = mtm.processRequest(req);
+        } catch (RequestException& e) {
+            // only catching the RequestException also ensures that exceptions
+            // are encapsulated (RaiseExceptionAlg throws a std::exception)
+            thrown = true;
+        }
+        shouldEqual(thrown, true);
+        mtm.setAlgorithm(0);
+        delete a;
     }
+
+    /** Require the update via a source with a newer modification time.
+     */
+    void testUpdateUponOutdate() {
+        typedef BasicFilter<RaiseExceptionAlg, ModificationTimeManager> RaiseFilter;
+        typedef BasicFilter<Inc, ModificationTimeManager> IncFilter;
+
+        IncFilter* i1 = new IncFilter("I1");
+        IncFilter* i2 = new IncFilter("I2");
+        // connect
+        i2->getAlgorithm()->setInput(i1->getAlgorithm()->getOutput());
+        i2->getManager()->connect(i1);
+        int* src = new int(42);
+        i1->getAlgorithm()->setInput(src);
+        // the following line simulates source behavior for i1
+        i1->getAlgorithm()->setMTime(Algorithm::MAX_TIME);
+        shouldEqual(*(i1->getAlgorithm()->getOutput()), 0);
+        shouldEqual(*(i2->getAlgorithm()->getOutput()), 0);
+        Request req(Request::UPDATE);
+        req.setTraceFlag(true);
+        req = i2->processRequest(req);
+/*         typedef std::vector<std::string> VS;
+ *         VS trace;
+ *         req.getTrace(trace);
+ *         typedef VS::iterator IT;
+ *         for (IT i = trace.begin(); i != trace.end(); ++i) {
+ *             std::cerr << *i << '\n';
+ *         }
+ *         std::cerr << std::flush;
+ */
+
+        shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
+        shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
+
+        // if we re-run, nothing should happen because the source (i1) has
+        // an mTime different from Algorithm::MAX_TIME and the dependent
+        // algorithm (i2) has an mTime that is younger than the source.
+        req.clearTrace();
+        req = i2->processRequest(req);
+        shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
+        shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
+
+        // ok, now update the mTime on i1 (and also change the value to be able
+        // to observe the change). This should trigger a recalculation of i2
+        // ONLY, which we check by abusing the pointer returned by getOutput()
+        // to actually change the value 
+        *src = 1335;
+        i1->getAlgorithm()->updateMTime();
+        *(i1->getAlgorithm()->getOutput()) = 110;
+        req.clearTrace();
+        req = i2->processRequest(req);
+        shouldEqual(*(i1->getAlgorithm()->getOutput()), 110);
+        shouldEqual(*(i2->getAlgorithm()->getOutput()), 111);
+
+        // close the circle: fake a source update
+        i1->getAlgorithm()->setMTime(Algorithm::MAX_TIME);
+        req.clearTrace();
+        req = i2->processRequest(req);
+        shouldEqual(*(i1->getAlgorithm()->getOutput()), 1336);
+        shouldEqual(*(i2->getAlgorithm()->getOutput()), 1337);
+
+        delete i2;
+        delete i1;
+        delete src;
+    }
+
 };
 
 

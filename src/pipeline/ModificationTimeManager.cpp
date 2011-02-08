@@ -24,7 +24,6 @@ libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req)
     }
     // check if we have ever run at all
     bool needUpdate = algorithm_->needUpdate();
-    LIBPIPE_LOG(logINFO) << "Need update: " << needUpdate;
     // iterate over all sources and check their modification time
     typedef FilterSet::iterator FSI;
     for (FSI i = sources_.begin(); i != sources_.end(); ++i) {
