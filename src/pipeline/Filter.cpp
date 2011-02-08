@@ -41,9 +41,9 @@ void Filter::setAlgorithm(Algorithm* alg)
             delete algorithm_;
         }
         algorithm_ = alg;
-    }
-    if (manager_) {
-        manager_->setAlgorithm(alg);
+        if (manager_) {
+            manager_->setAlgorithm(alg);
+        }
     }
 }
 

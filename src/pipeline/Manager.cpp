@@ -16,16 +16,21 @@ Manager::~Manager() {}
 
 Algorithm* Manager::getAlgorithm()
 {
-    return this->algorithm_;
+    return algorithm_;
 }
 
 void Manager::setAlgorithm(Algorithm* alg) 
 {
-    this->algorithm_ = alg;
+    if (alg != algorithm_) {
+        if (algorithm_) {
+            delete algorithm_;
+        }
+        algorithm_ = alg;
+    }
 }
 
 Request& Manager::processRequest(Request& req) {
-    if (!this->algorithm_) {
+    if (!algorithm_) {
         throw RequestException(
           "Cannot process request. No algorithm setup available.");
     }
@@ -39,7 +44,7 @@ Request& Manager::processRequest(Request& req) {
         }
     }
     try {
-        req = this->algorithm_->processRequest(req);
+        req = algorithm_->processRequest(req);
     } catch (...) {
         throw RequestException(
           "Cannot process request: algorithm execution caused exception.");
