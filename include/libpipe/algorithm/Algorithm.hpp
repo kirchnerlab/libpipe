@@ -53,6 +53,8 @@ class Algorithm
     /** Processes the current request object.
      * Depending on the information contained in the request object,  this will
      * call the \c update function 
+     * @param[inout] req A request object.
+     * @return A (potentially modified) request object.
      */
     virtual Request& processRequest(Request& req);
 
