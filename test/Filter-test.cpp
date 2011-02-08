@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+#include <cstring>
 #include "vigra/unittest.hxx"
 #include <libpipe/algorithm/Algorithm.hpp>
 #include <libpipe/pipeline/BasicFilter.hpp>
