@@ -568,7 +568,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include/mstk @LIBPIPE_SOURCE_DIR@/src
+INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include/libpipe @LIBPIPE_SOURCE_DIR@/include/libpipe/algorithm @LIBPIPE_SOURCE_DIR@/include/libpipe/pipeline @LIBPIPE_SOURCE_DIR@/src @LIBPIPE_SOURCE_DIR@/src/algorithm @LIBPIPE_SOURCE_DIR@/src/pipeline @LIBPIPE_SOURCE_DIR@/examples
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -646,7 +646,7 @@ EXAMPLE_RECURSIVE      = NO
 # directories that contain image that are included in the documentation (see
 # the \image command).
 
-IMAGE_PATH             = @LIBPIPE_SOURCE_DIR@/doc/images
+IMAGE_PATH             = @LIBPIPE_SOURCE_DIR@/doc
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
