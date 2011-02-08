@@ -7,13 +7,22 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
+#include <exception>
+#include <stdexcept>
+#include <vector>
+#include <string>
+
+#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/pipeline/BasicFilter.hpp>
+#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/pipeline/RequestException.hpp>
 #include <libpipe/pipeline/Manager.hpp>
+
+#include "utils.hpp"
 
 using namespace libpipe;
 
-/** Test suite for the Manager base class.
- * This is a very simple test, that just makes sure that classes that derive
- * from Manager and overload the correct methods can be instanciated.
+/** Test suite for the simple manager.
  */
 struct ManagerTestSuite : vigra::test_suite {
     /** Constructor.
@@ -22,27 +31,131 @@ struct ManagerTestSuite : vigra::test_suite {
      * case here.
      */
     ManagerTestSuite() : vigra::test_suite("Manager") {
-        add(testCase(&ManagerTestSuite::deriveAndInstanciate));
+        add(testCase(&ManagerTestSuite::testSetAlgorithm));
+        add(testCase(&ManagerTestSuite::testConnect));
+        add(testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
+        add(testCase(&ManagerTestSuite::testProcessRequestNoSources));
+        add(testCase(&ManagerTestSuite::testProcessRequestFailingSources));
+    }
+    
+    
+    /** Setting the algorithm.
+     */
+    void testSetAlgorithm() {
+        Algorithm* a = new Identity;
+        Manager m;
+        m.setAlgorithm(a);
+        // make sure the pointers point at the same location
+        shouldEqual(m.getAlgorithm(), a);
+        delete a;
     }
 
-    /** Class derived from Manager for testing purposes.
+    /** Test source setup, i.e. connecting.
      */
-    class Derived : public Manager {
-      public:
-        virtual ~Derived() {}
-        virtual Request& processRequest(Request& r) {
-            return r;
+    void testConnect() {
+        // Use a derived class to gain access to the source list.
+        TestManager tm;
+        shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
+
+        typedef BasicFilter<Identity, TestManager> IdentityFilter;
+        Filter* fi = new IdentityFilter("Filter 1: ID");
+        tm.connect(fi);
+        shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
+         
+        typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
+        Filter* ff = new FailFilter("Filter 2: FAILER");
+        tm.connect(ff);
+        shouldEqual(tm.getSources().size(), static_cast<size_t>(2));
+
+        delete fi;
+        delete ff;
+    }
+
+    /** Request processing w/o a defined algorithm.
+     */
+    void testProcessRequestNoAlgorithmSetup() {
+        // make sure we fail if there is no algorithm setup
+        TestManager tm;
+        Request req(Request::UPDATE);
+        bool thrown = false;
+        // FIXME: we should have different error classes to distinguish
+        //        between different errors.
+        try {
+            req = tm.processRequest(req);
+        } catch (RequestException& e) {
+            thrown = true;
         }
-    };
-
-    /** Try to instanciate the derived class.
-     */
-    void deriveAndInstanciate(void) {
-        Derived d;
-        Request r(Request::UPDATE);
-        Request s = d.processRequest(r);
-        shouldEqual(s.is(Request::UPDATE), true);
+        shouldEqual(thrown, true);
     }
+
+    /** Request processing with no sources and a successful algorithm.
+     */
+    void testProcessRequestNoSources() {
+        TestManager tm;
+        Request req(Request::UPDATE);
+        req.setTraceFlag(true);
+        // the following algorithm should not throw any exceptions
+        Identity* a = new Identity;
+        tm.setAlgorithm(a);
+        shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
+        a->setInput(42);
+        req = tm.processRequest(req);
+        shouldEqual(a->getOutput(), 42);
+        delete a;
+        std::vector<std::string> trace;
+        req.getTrace(trace);
+        shouldEqual(trace.size(), static_cast<size_t>(1));
+        // now let the algorithm throw an exception
+        RaiseExceptionAlg* b = new RaiseExceptionAlg;
+        tm.setAlgorithm(b);
+        bool thrown = false;
+        try {
+            req = tm.processRequest(req);
+        } catch (RequestException& e) {
+            thrown = true;
+        }
+        shouldEqual(thrown, true);
+        delete b;
+    }
+
+    /** Request processing if one of the sources fails.
+     */
+    void testProcessRequestFailingSources() {
+        TestManager tm;
+        Request req(Request::UPDATE);
+        Algorithm* a = new Identity;
+        tm.setAlgorithm(a);
+
+        typedef BasicFilter<Identity, TestManager> IdentityFilter;
+        IdentityFilter* fi = new IdentityFilter("Id");
+        tm.connect(fi);
+
+        // this is the ok source
+        fi->getAlgorithm()->setInput(42);
+        req = tm.processRequest(req);
+        shouldEqual(fi->getAlgorithm()->getOutput(), 42);
+
+        // now add the failing source
+        typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
+        FailFilter* ff = new FailFilter("FailFilter");
+        tm.connect(ff);
+        
+        bool thrown = false;
+        try {
+            req = tm.processRequest(req);
+        } catch (RequestException& e) {
+            thrown = true;
+        }
+        shouldEqual(thrown, true);
+
+        delete ff;
+        delete fi;
+        delete a;
+    } 
+
+    /** Test that is guaranteed to fail.
+     * Leave this in until the complete Manager class has tests.
+     */
 };
 
 
