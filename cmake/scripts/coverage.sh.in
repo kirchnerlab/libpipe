@@ -12,6 +12,7 @@ lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
      --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
      --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
      -capture --output-file @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info
+lcov --extract @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info.extracted
 pushd @LIBPIPE_BINARY_DIR@/test/coverage/
-genhtml pipe.info
+genhtml pipe.info.extracted
 popd 
