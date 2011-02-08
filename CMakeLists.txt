@@ -57,6 +57,10 @@ IF (ENABLE_COVERAGE)
         ${LIBPIPE_BINARY_DIR}/cmake/scripts/unit_coverage.sh
         @ONLY IMMEDIATE
     )
+    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/gcov.css
+        ${LIBPIPE_BINARY_DIR}/test/coverage/gcov.css
+        @ONLY IMMEDIATE
+    )
     ADD_CUSTOM_TARGET(
         coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
     )
