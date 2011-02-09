@@ -7,6 +7,8 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_REQUESTEXCEPTION_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_REQUESTEXCEPTION_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <libpipe/Exception.hpp>
 
 namespace libpipe {

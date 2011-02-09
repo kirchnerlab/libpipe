@@ -8,7 +8,7 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 
-#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/Request.hpp>
 
 #include <sstream>
 #include <vector>

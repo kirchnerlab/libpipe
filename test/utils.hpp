@@ -9,11 +9,11 @@
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
 
-#include <libpipe/algorithm/Algorithm.hpp>
-#include <libpipe/pipeline/BasicFilter.hpp>
-#include <libpipe/pipeline/Request.hpp>
-#include <libpipe/pipeline/RequestException.hpp>
-#include <libpipe/pipeline/Manager.hpp>
+#include <libpipe/Algorithm.hpp>
+#include <libpipe/BasicFilter.hpp>
+#include <libpipe/Request.hpp>
+#include <libpipe/RequestException.hpp>
+#include <libpipe/Manager.hpp>
 
 #include <sstream>
 

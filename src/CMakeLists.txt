@@ -1,9 +1,9 @@
 SET(SRCS 
-    algorithm/Algorithm.cpp
-    pipeline/Filter.cpp
-    pipeline/Manager.cpp
-    pipeline/Request.cpp
-    pipeline/ModificationTimeManager.cpp
+    Algorithm.cpp
+    Filter.cpp
+    Manager.cpp
+    Request.cpp
+    ModificationTimeManager.cpp
 )
 
 ADD_LIBRARY(pipe ${SRCS})

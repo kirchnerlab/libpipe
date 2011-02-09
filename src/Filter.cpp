@@ -4,9 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <libpipe/pipeline/Filter.hpp>
-#include <libpipe/algorithm/Algorithm.hpp>
-#include <libpipe/pipeline/Manager.hpp>
+#include <libpipe/Filter.hpp>
+#include <libpipe/Algorithm.hpp>
+#include <libpipe/Manager.hpp>
 
 using namespace libpipe;
 

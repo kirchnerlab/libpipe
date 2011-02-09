@@ -9,7 +9,7 @@
 
 #include <libpipe/config.hpp>
 #include <set>
-#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/Request.hpp>
 
 namespace libpipe {
 

@@ -4,13 +4,13 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_MODIFICATIONTIMEMANAGER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
 
 
 #include <libpipe/config.hpp>
-#include <libpipe/pipeline/Request.hpp>
-#include <libpipe/pipeline/Manager.hpp>
+#include <libpipe/Request.hpp>
+#include <libpipe/Manager.hpp>
 
 namespace libpipe {
 

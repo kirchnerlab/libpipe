@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#include "libpipe/algorithm/Algorithm.hpp"
+#include "libpipe/Algorithm.hpp"
 #include <sys/time.h> // for gettimeofday
 
 using namespace libpipe;

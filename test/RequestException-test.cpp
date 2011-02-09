@@ -8,7 +8,7 @@
 #include <iostream>
 #include <cstring>
 #include "vigra/unittest.hxx"
-#include <libpipe/pipeline/RequestException.hpp>
+#include <libpipe/RequestException.hpp>
 
 using namespace libpipe;
 

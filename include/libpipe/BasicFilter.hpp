@@ -9,7 +9,7 @@
 
 #include <libpipe/config.hpp>
 #include <string>
-#include <libpipe/pipeline/Filter.hpp>
+#include <libpipe/Filter.hpp>
 
 namespace libpipe {
 

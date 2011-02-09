@@ -10,11 +10,11 @@
 #include <string>
 #include "vigra/unittest.hxx"
 
-#include <libpipe/algorithm/Algorithm.hpp>
-#include <libpipe/pipeline/BasicFilter.hpp>
-#include <libpipe/pipeline/Request.hpp>
-#include <libpipe/pipeline/RequestException.hpp>
-#include <libpipe/pipeline/ModificationTimeManager.hpp>
+#include <libpipe/Algorithm.hpp>
+#include <libpipe/BasicFilter.hpp>
+#include <libpipe/Request.hpp>
+#include <libpipe/RequestException.hpp>
+#include <libpipe/ModificationTimeManager.hpp>
 
 
 #include "utils.hpp"

@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/Request.hpp>
 
 using namespace libpipe;
 

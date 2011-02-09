@@ -11,7 +11,7 @@
 
 #include <string>
 #include <map>
-#include <libpipe/pipeline/Request.hpp>
+#include <libpipe/Request.hpp>
 #include <sys/time.h> // for timeval
 #include <ostream>
 

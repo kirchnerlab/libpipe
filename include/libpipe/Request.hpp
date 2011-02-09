@@ -7,10 +7,12 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <vector>
 #include <string>
 #include <ctime>
-#include <libpipe/pipeline/RequestException.hpp>
+#include <libpipe/RequestException.hpp>
 
 /** Macro that add an entry to a requests trace.
  * This is just for convenience.

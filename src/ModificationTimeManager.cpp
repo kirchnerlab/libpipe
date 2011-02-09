@@ -4,9 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <libpipe/pipeline/ModificationTimeManager.hpp>
-#include <libpipe/pipeline/Filter.hpp>
-#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/ModificationTimeManager.hpp>
+#include <libpipe/Filter.hpp>
+#include <libpipe/Algorithm.hpp>
 #include <libpipe/Log.hpp>
 
 using namespace libpipe;

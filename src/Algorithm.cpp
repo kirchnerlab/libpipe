@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
-#include <libpipe/algorithm/Algorithm.hpp>
+#include <libpipe/Algorithm.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>

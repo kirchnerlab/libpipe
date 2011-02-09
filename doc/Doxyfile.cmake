@@ -568,7 +568,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include/libpipe @LIBPIPE_SOURCE_DIR@/include/libpipe/algorithm @LIBPIPE_SOURCE_DIR@/include/libpipe/pipeline @LIBPIPE_SOURCE_DIR@/src @LIBPIPE_SOURCE_DIR@/src/algorithm @LIBPIPE_SOURCE_DIR@/src/pipeline @LIBPIPE_SOURCE_DIR@/examples
+INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include/libpipe @LIBPIPE_SOURCE_DIR@/src @LIBPIPE_SOURCE_DIR@/examples
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
