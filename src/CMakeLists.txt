@@ -1,5 +1,6 @@
 SET(SRCS 
     Algorithm.cpp
+    Exception.cpp
     Filter.cpp
     Manager.cpp
     Request.cpp
