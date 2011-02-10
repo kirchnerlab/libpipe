@@ -10,6 +10,7 @@
 #include <libpipe/config.hpp>
 #include <set>
 #include <libpipe/Request.hpp>
+#include <libpipe/NonCopyable.hpp>
 
 namespace libpipe {
 
@@ -23,7 +24,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager
+class Manager : private NonCopyable
 {
   public:
     /** Constructor.

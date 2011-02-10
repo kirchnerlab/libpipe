@@ -9,6 +9,7 @@
 
 #include <libpipe/config.hpp>
 #include <string>
+#include <libpipe/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
 
 namespace libpipe {
@@ -17,9 +18,10 @@ namespace libpipe {
 class Algorithm;
 class Manager;
 
-/** The base class for all LIBPIPE filters.
+/** The base class for all LIBPIPE filters. Filters are non-copyable by
+ * default.
  */
-class Filter
+class Filter : private NonCopyable
 {
   public:
     /** Constructor.
