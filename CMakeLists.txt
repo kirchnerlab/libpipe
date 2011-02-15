@@ -103,7 +103,7 @@ ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${LIBPIPE_BINARY_DIR}/doc/Doxyfile)
 # location, location, location
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 SET(CMAKE_INSTALL_PREFIX
-"/usr/local" CACHE PATH "libfbi install prefix" FORCE
+"/usr/local" CACHE PATH "libpipe install prefix" FORCE
 )
 ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 # headers
@@ -115,7 +115,7 @@ INSTALL(DIRECTORY ${LIBPIPE_SOURCE_DIR}/include/libpipe
 
 # config.h
 INSTALL(FILES ${LIBPIPE_BINARY_DIR}/include/libpipe/config.hpp
-    DESTINATION include/fbi
+    DESTINATION include/libpipe
     COMPONENT headers)
 
 # documentation
