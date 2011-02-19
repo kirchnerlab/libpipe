@@ -28,47 +28,62 @@ namespace libpipe {
  * \c SharedData overcomes this problem by essentially providing a proxy object
  * that always allows to default-construct the shared data and to write the 
  * following code:
+ * 
+ * \li in Alg0.hpp
+ * 
  * \code
- *  // in Alg0.hpp
- *  ...
- *  public:
- *  ...
- *  boost::shared_ptr<SharedData<MyType> > getOutput();
- *  ...
- *  private:
- *  ...
- *  boost::shared_ptr<SharedData<MyType> > output_;
- *  ...
- *
- *  // in Alg0.cpp
- *  ...
- *  Alg0::Alg0() : output_(boost::make_shared<SharedData<MyType> >())
- *
- *  // in Alg1.hpp
- *  ...
- *  void setInput(boost::shared_ptr<SharedData<MyType> > p);
- *  ...
- *
- *  // in Alg1.cpp
- *  ...
- *  Request& processRequest(Request& req)
- *  {
- *      ...
- *      if (!input_.isNull()) {
- *          // run the algorithm
- *      } else {
- *          // report the error condition into the request object
- *          // or throw an exception.
- *      }
- *      ...
- *      return req;
- *  }
- *
- *  // somewhere in main.cpp
- *  ...
- *  filter1->getAlgorithm()->setInput(filter0->getAlgorithm()->getOutput())
- *
+ * ...
+ * public:
+ * ...
+ * boost::shared_ptr<SharedData<MyType> > getOutput();
+ * ...
+ * private:
+ * ...
+ * boost::shared_ptr<SharedData<MyType> > output_;
+ * ...
  * \endcode
+ *
+ * \li in Alg0.cpp
+ * 
+ * \code
+ * ...
+ * Alg0::Alg0() : output_(boost::make_shared<SharedData<MyType> >())
+ * ...
+ * \endcode
+ *
+ * \li in Alg1.hpp
+ *
+ * \code
+ * ...
+ * void setInput(boost::shared_ptr<SharedData<MyType> > p);
+ * ...
+ * \endcode
+ *
+ * \li in Alg1.cpp
+ *
+ * \code
+ * ...
+ * Request& processRequest(Request& req)
+ * {
+ *     ...
+ *     if (!input_.isNull()) {
+ *         ... run the algorithm ...
+ *     } else {
+ *         ... report the error condition into the request object
+ *         ... or throw an exception.
+ *     }
+ *     ...
+ *     return req;
+ * }
+ * \endcode
+ *
+ * \li somewhere in main.cpp
+ * 
+ * \code
+ * ...
+ * filter1->getAlgorithm()->setInput(filter0->getAlgorithm()->getOutput())
+ * \endcode
+ *
  * Note that this simply guarantees that two connected algorithms will always
  * be able to share data, irrespective of the question if the source side is
  * capable of providing the data structure immediately upon construction or
@@ -92,6 +107,8 @@ class SharedData : private NonCopyable
      * x.set(new int);
      * *(x.get()) = 10;
      * ...
+     * \endcode
+     *
      * @param[in] ptr Pointer to a \c T instance or 0. If \c ptr is a valid
      *                pointer, \c SharedData takes ownership!
      */
