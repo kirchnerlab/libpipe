@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_SHAREDDATA SharedData-test.cpp)
 SET(SRCS_REQUESTEXCEPTION RequestException-test.cpp)
 SET(SRCS_REQUEST Request-test.cpp)
 SET(SRCS_MODIFICATIONTIMEMANAGER ModificationTimeManager-test.cpp)
@@ -67,6 +68,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("SharedData" test_shareddata ${SRCS_SHAREDDATA})
 ADD_LIBPIPE_TEST("RequestException" test_requestexception ${SRCS_REQUESTEXCEPTION})
 ADD_LIBPIPE_TEST("Request" test_request ${SRCS_REQUEST})
 ADD_LIBPIPE_TEST("ModificationTimeManager" test_modificationtimemanager ${SRCS_MODIFICATIONTIMEMANAGER})
