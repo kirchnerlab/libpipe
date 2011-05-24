@@ -9,6 +9,7 @@
 
 #include <libpipe/config.hpp>
 #include <libpipe/NonCopyable.hpp>
+#include <memory>
 
 namespace libpipe {
 
