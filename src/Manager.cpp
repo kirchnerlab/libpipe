@@ -42,6 +42,10 @@ Request& Manager::processRequest(Request& req) {
     }
     try {
         req = algorithm_->processRequest(req);
+    } catch (std::exception& e) {
+        std::string str(e.what());
+        throw RequestException(
+          "Cannot process request: algorithm execution caused exception: " + str);
     } catch (...) {
         throw RequestException(
           "Cannot process request: algorithm execution caused exception.");
