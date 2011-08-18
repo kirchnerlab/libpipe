@@ -42,9 +42,13 @@ libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req)
     if (needUpdate) {
         try {
             req = algorithm_->processRequest(req);
+        } catch (std::exception& e) {
+            std::string str(e.what());
+            throw RequestException(
+              "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception: " + str);
         } catch (...) {
             throw RequestException(
-              "Cannot process request: algorithm execution caused exception.");
+              "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception.");
         }
     }
     return req;

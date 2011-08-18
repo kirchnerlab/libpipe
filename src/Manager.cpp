@@ -45,10 +45,10 @@ Request& Manager::processRequest(Request& req) {
     } catch (std::exception& e) {
         std::string str(e.what());
         throw RequestException(
-          "Cannot process request: algorithm execution caused exception: " + str);
+          "ModificationTimeManager: Cannot process request: algorithm execution caused exception: " + str);
     } catch (...) {
         throw RequestException(
-          "Cannot process request: algorithm execution caused exception.");
+          "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
     }
     return req;
 }
