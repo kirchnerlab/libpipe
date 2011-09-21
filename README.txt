@@ -1,3 +1,2 @@
 libpipe README
 ==============
-test git
