@@ -25,7 +25,7 @@ CONFIGURE_FILE(
 # add subdirs
 OPTION(ENABLE_TESTING "Compile tests" ON)
 OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
-OPTION(ENABLE_EXAMPLES "Compile examples" ON)
+OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 
 # global include dirs
 INCLUDE_DIRECTORIES(
