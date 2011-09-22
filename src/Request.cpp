@@ -8,8 +8,8 @@
 
 using namespace libpipe;
 
-Request::Request(const Request::Type& t)
-  : type_(t), traceFlag_(false)
+Request::Request(const Request::Type& t) :
+    type_(t), traceFlag_(false)
 {
 }
 

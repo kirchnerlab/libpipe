@@ -9,22 +9,28 @@
 #include "vigra/unittest.hxx"
 #include "libpipe/Algorithm.hpp"
 #include <sys/time.h> // for gettimeofday
-
 using namespace libpipe;
 
 /** Test suite for the libpipe::Algorithm base class.
  * The basic setup is: derive from Algorithm and test all inherited functions. 
  */
-struct AlgorithmTestSuite : vigra::test_suite {
-    
+struct AlgorithmTestSuite : vigra::test_suite
+{
+
     /** A local class that derives from Algorithm.
      */
     class MyAlgorithm : public Algorithm
     {
-      public:
-        MyAlgorithm() : Algorithm() {}
-        ~MyAlgorithm() {}
-        virtual Request& update(Request& req) {
+    public:
+        MyAlgorithm() :
+            Algorithm()
+        {
+        }
+        ~MyAlgorithm()
+        {
+        }
+        virtual Request& update(Request& req)
+        {
             // dummy
             return req;
         }
@@ -35,7 +41,9 @@ struct AlgorithmTestSuite : vigra::test_suite {
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    AlgorithmTestSuite() : vigra::test_suite("Algorithm") {
+    AlgorithmTestSuite() :
+        vigra::test_suite("Algorithm")
+    {
         // add(testCase(&AlgorithmTestSuite::fail));
         add(testCase(&AlgorithmTestSuite::testFreeOperators));
         add(testCase(&AlgorithmTestSuite::testInitialization));
@@ -46,7 +54,8 @@ struct AlgorithmTestSuite : vigra::test_suite {
 
     /** Test free operators
      */
-    void testFreeOperators() {
+    void testFreeOperators()
+    {
         timeval tv1, tv2;
         gettimeofday(&tv1, NULL);
         tv2 = tv1;
@@ -73,7 +82,8 @@ struct AlgorithmTestSuite : vigra::test_suite {
 
     /** Test if the max initialization worked.
      */
-    void testInitialization() {
+    void testInitialization()
+    {
         MyAlgorithm a;
         shouldEqual(a.getMTime(), Algorithm::MAX_TIME);
     }
@@ -83,7 +93,8 @@ struct AlgorithmTestSuite : vigra::test_suite {
 
     /** Test Algorithm::updateMTime().
      */
-    void testUpdateMTime() {
+    void testUpdateMTime()
+    {
         // check if the self-update works.
         MyAlgorithm a;
         shouldEqual(a.needUpdate(), true);
@@ -93,7 +104,8 @@ struct AlgorithmTestSuite : vigra::test_suite {
 
     /** Test Algorithm::needUpdate().
      */
-    void testNeedUpdate() {
+    void testNeedUpdate()
+    {
         MyAlgorithm a;
         // we expect the need for an update right after construction
         shouldEqual(a.needUpdate(), true);
@@ -106,7 +118,8 @@ struct AlgorithmTestSuite : vigra::test_suite {
 
     /** Run GET/SET tests for all member variables.
      */
-    void testGetSet() {
+    void testGetSet()
+    {
         MyAlgorithm a;
         a.setMTime(a.getMTime());
     }
@@ -114,11 +127,11 @@ struct AlgorithmTestSuite : vigra::test_suite {
     /** Test that is guaranteed to fail.
      * Leave this in until the complete Algorithm class has tests.
      */
-    void fail() {
+    void fail()
+    {
         failTest("No unit tests for class Algorithm!");
     }
 };
-
 
 /** The main function that runs the tests for class Algorithm.
  * Under normal circumstances you need not edit this.

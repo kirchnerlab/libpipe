@@ -11,16 +11,22 @@
 
 using namespace libpipe;
 
-ModificationTimeManager::ModificationTimeManager()
-  : Manager() {}
+ModificationTimeManager::ModificationTimeManager() :
+    Manager()
+{
+}
 
-ModificationTimeManager::~ModificationTimeManager() {}
+ModificationTimeManager::~ModificationTimeManager()
+{
+}
 
-libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req) {
+libpipe::Request& ModificationTimeManager::processRequest(
+    libpipe::Request& req)
+{
     // make sure we have been set up correctly
     if (!algorithm_) {
         throw RequestException(
-          "Cannot process request. No algorithm setup available.");
+            "Cannot process request. No algorithm setup available.");
     }
     // check if we have ever run at all
     bool needUpdate = algorithm_->needUpdate();
@@ -33,8 +39,8 @@ libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req)
             throw;
         }
         // check the modification time and see if we need to update
-        if (!needUpdate && 
-          algorithm_->getMTime() <= (*i)->getAlgorithm()->getMTime()) {
+        if (!needUpdate && algorithm_->getMTime()
+                <= (*i)->getAlgorithm()->getMTime()) {
             needUpdate = true;
         }
     }
@@ -45,10 +51,11 @@ libpipe::Request& ModificationTimeManager::processRequest(libpipe::Request& req)
         } catch (std::exception& e) {
             std::string str(e.what());
             throw RequestException(
-              "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception: " + str);
+                "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception: "
+                        + str);
         } catch (...) {
             throw RequestException(
-              "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception.");
+                "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception.");
         }
     }
     return req;

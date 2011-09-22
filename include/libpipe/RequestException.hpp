@@ -15,12 +15,20 @@ namespace libpipe {
 
 class RequestException : public Exception
 {
-  public:
-    RequestException(const char* msg) : Exception(msg) {}
-    
-    RequestException(const std::string& msg) : Exception(msg) {}
-    
-    virtual ~RequestException() throw() {}
+public:
+    RequestException(const char* msg) :
+        Exception(msg)
+    {
+    }
+
+    RequestException(const std::string& msg) :
+        Exception(msg)
+    {
+    }
+
+    virtual ~RequestException() throw ()
+    {
+    }
 };
 
 }

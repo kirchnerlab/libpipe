@@ -24,24 +24,27 @@ using namespace libpipe;
 
 /** Test suite for the simple manager.
  */
-struct ManagerTestSuite : vigra::test_suite {
+struct ManagerTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The ManagerTestSuite constructor adds all Manager tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    ManagerTestSuite() : vigra::test_suite("Manager") {
+    ManagerTestSuite() :
+        vigra::test_suite("Manager")
+    {
         add(testCase(&ManagerTestSuite::testSetAlgorithm));
         add(testCase(&ManagerTestSuite::testConnect));
         add(testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
         add(testCase(&ManagerTestSuite::testProcessRequestNoSources));
         add(testCase(&ManagerTestSuite::testProcessRequestFailingSources));
     }
-    
-    
+
     /** Setting the algorithm.
      */
-    void testSetAlgorithm() {
+    void testSetAlgorithm()
+    {
         Algorithm* a = new Identity;
         Manager m;
         m.setAlgorithm(a);
@@ -52,7 +55,8 @@ struct ManagerTestSuite : vigra::test_suite {
 
     /** Test source setup, i.e. connecting.
      */
-    void testConnect() {
+    void testConnect()
+    {
         // Use a derived class to gain access to the source list.
         TestManager tm;
         shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
@@ -61,7 +65,7 @@ struct ManagerTestSuite : vigra::test_suite {
         Filter* fi = new IdentityFilter("Filter 1: ID");
         tm.connect(fi);
         shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
-         
+
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
         Filter* ff = new FailFilter("Filter 2: FAILER");
         tm.connect(ff);
@@ -73,7 +77,8 @@ struct ManagerTestSuite : vigra::test_suite {
 
     /** Request processing w/o a defined algorithm.
      */
-    void testProcessRequestNoAlgorithmSetup() {
+    void testProcessRequestNoAlgorithmSetup()
+    {
         // make sure we fail if there is no algorithm setup
         TestManager tm;
         Request req(Request::UPDATE);
@@ -90,7 +95,8 @@ struct ManagerTestSuite : vigra::test_suite {
 
     /** Request processing with no sources and a successful algorithm.
      */
-    void testProcessRequestNoSources() {
+    void testProcessRequestNoSources()
+    {
         TestManager tm;
         Request req(Request::UPDATE);
         req.setTraceFlag(true);
@@ -120,7 +126,8 @@ struct ManagerTestSuite : vigra::test_suite {
 
     /** Request processing if one of the sources fails.
      */
-    void testProcessRequestFailingSources() {
+    void testProcessRequestFailingSources()
+    {
         TestManager tm;
         Request req(Request::UPDATE);
         Algorithm* a = new Identity;
@@ -139,7 +146,7 @@ struct ManagerTestSuite : vigra::test_suite {
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
         FailFilter* ff = new FailFilter("FailFilter");
         tm.connect(ff);
-        
+
         bool thrown = false;
         try {
             req = tm.processRequest(req);
@@ -151,13 +158,12 @@ struct ManagerTestSuite : vigra::test_suite {
         delete ff;
         delete fi;
         delete a;
-    } 
+    }
 
     /** Test that is guaranteed to fail.
      * Leave this in until the complete Manager class has tests.
      */
 };
-
 
 /** The main function that runs the tests for class Manager.
  * Under normal circumstances you need not edit this.

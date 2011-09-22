@@ -10,16 +10,21 @@
 
 using namespace libpipe;
 
-Exception::Exception(const char* message) : msg_(message)
-{}
+Exception::Exception(const char* message) :
+    msg_(message)
+{
+}
 
-Exception::Exception(const std::string& message) : msg_(message)
-{}
+Exception::Exception(const std::string& message) :
+    msg_(message)
+{
+}
 
-Exception::~Exception() throw()
-{}
+Exception::~Exception() throw ()
+{
+}
 
-const char* Exception::what() const throw()
+const char* Exception::what() const throw ()
 {
     return msg_.c_str();
 }

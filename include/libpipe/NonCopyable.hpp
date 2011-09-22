@@ -18,10 +18,14 @@ namespace libpipe {
  */
 class NonCopyable
 {
-  protected:
-    NonCopyable() {}
-    ~NonCopyable() {} // *not* virtual
-  private:
+protected:
+    NonCopyable()
+    {
+    }
+    ~NonCopyable()
+    {
+    } // *not* virtual
+private:
     NonCopyable(const NonCopyable&);
     const NonCopyable& operator=(const NonCopyable&);
 };

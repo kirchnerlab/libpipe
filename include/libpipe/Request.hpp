@@ -28,12 +28,13 @@ namespace libpipe {
  */
 class Request
 {
-  public:
+public:
     /** Defines the request type.
      * Currently only UPDATE requests are necessary.
      */
-    enum Type {
-        UPDATE=0
+    enum Type
+    {
+        UPDATE = 0
     };
 
     /** Constructor.
@@ -46,31 +47,30 @@ class Request
      * Virtual, to allow subclassing.
      */
     virtual ~Request();
-    
+
     /** Tests the type of a request.
      * @param[in] t A request type.
      */
     bool is(const Type& t);
-    
+
     /** Returns the state of the trace flag.
      * If the trace flag is on, clients should add trace information
      * while processing the request, using addTrace().
      * @return The state if the trace flag (true == on).
      */
     bool getTraceFlag() const;
-    
+
     /** Set the state of the trace flag.
      * This allows to switch tracing on and off. 
      * @param[in] tf The new trace flag setting (true == on).
      */
-    void setTraceFlag(const bool tf); 
-    
-    
+    void setTraceFlag(const bool tf);
+
     /** Returns all traces collected in the Request object.
      * @param[out] trace All collected trace information.
      */
     void getTrace(std::vector<std::string>& trace);
-    
+
     /** Add trace information to the request object.
      * Currently the request object simply collects std::strings.
      * @param[in] t Trace information.
@@ -81,7 +81,7 @@ class Request
      */
     void clearTrace();
 
-  protected:
+protected:
 
     /** The request type.
      * @see Type

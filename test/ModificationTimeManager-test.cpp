@@ -16,32 +16,35 @@
 #include <libpipe/RequestException.hpp>
 #include <libpipe/ModificationTimeManager.hpp>
 
-
 #include "utils.hpp"
 
 using namespace libpipe;
 
 /** Test suitre for the ModificationTime
  */
-struct ModificationTimeManagerTestSuite : vigra::test_suite {
+struct ModificationTimeManagerTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The ModificationTimeManagerTestSuite constructor adds all ModificationTimeManager tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    ModificationTimeManagerTestSuite() : vigra::test_suite("ModificationTimeManager") {
+    ModificationTimeManagerTestSuite() :
+        vigra::test_suite("ModificationTimeManager")
+    {
         add(testCase(&ModificationTimeManagerTestSuite::testProcessRequest));
         add(testCase(&ModificationTimeManagerTestSuite::testUpdateUponOutdate));
     }
 
     /** Test the request processing.
      */
-    void testProcessRequest() {
+    void testProcessRequest()
+    {
         ModificationTimeManager mtm;
         // no algorithm defined, needs to throw an exception
         Request req(Request::UPDATE);
         bool thrown = false;
-        try { 
+        try {
             req = mtm.processRequest(req);
         } catch (RequestException& e) {
             thrown = true;
@@ -56,7 +59,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
         a->updateMTime();
         mtm.setAlgorithm(a);
         thrown = false;
-        try { 
+        try {
             req = mtm.processRequest(req);
         } catch (RequestException& e) {
             thrown = true;
@@ -65,7 +68,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
         // now require the update via Algorithm::MAX_TIME
         a->setMTime(Algorithm::MAX_TIME);
         thrown = false;
-        try { 
+        try {
             req = mtm.processRequest(req);
         } catch (RequestException& e) {
             // only catching the RequestException also ensures that exceptions
@@ -79,8 +82,10 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
 
     /** Require the update via a source with a newer modification time.
      */
-    void testUpdateUponOutdate() {
-        typedef BasicFilter<RaiseExceptionAlg, ModificationTimeManager> RaiseFilter;
+    void testUpdateUponOutdate()
+    {
+        typedef BasicFilter<RaiseExceptionAlg, ModificationTimeManager>
+                RaiseFilter;
         typedef BasicFilter<Inc, ModificationTimeManager> IncFilter;
 
         IncFilter* i1 = new IncFilter("I1");
@@ -97,15 +102,15 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
         Request req(Request::UPDATE);
         req.setTraceFlag(true);
         req = i2->processRequest(req);
-/*         typedef std::vector<std::string> VS;
- *         VS trace;
- *         req.getTrace(trace);
- *         typedef VS::iterator IT;
- *         for (IT i = trace.begin(); i != trace.end(); ++i) {
- *             std::cerr << *i << '\n';
- *         }
- *         std::cerr << std::flush;
- */
+        /*         typedef std::vector<std::string> VS;
+         *         VS trace;
+         *         req.getTrace(trace);
+         *         typedef VS::iterator IT;
+         *         for (IT i = trace.begin(); i != trace.end(); ++i) {
+         *             std::cerr << *i << '\n';
+         *         }
+         *         std::cerr << std::flush;
+         */
 
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
@@ -143,7 +148,6 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite {
     }
 
 };
-
 
 /** The main function that runs the tests for class ModificationTimeManager.
  * Under normal circumstances you need not edit this.

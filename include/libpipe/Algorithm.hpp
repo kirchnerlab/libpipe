@@ -33,7 +33,7 @@ namespace libpipe {
  */
 class Algorithm
 {
-  public:
+public:
     /** Holds the maximum time value that can be represented in a
      * timeval struct.
      * This is mostly necessary for initialization, but also for the correct
@@ -49,7 +49,7 @@ class Algorithm
     /** Pure virtual descructor.
      */
     virtual ~Algorithm() = 0;
-    
+
     /** Processes the current request object.
      * Depending on the information contained in the request object,  this will
      * call the \c update function 
@@ -79,7 +79,6 @@ class Algorithm
      */
     void updateMTime();
 
-    
     /** Returns a flag that signifies if the Algorithm needs an update,
      * irrespective of its modification time.
      * The function essentially tests it the modification time of the algorithm
@@ -104,7 +103,7 @@ class Algorithm
      */
     bool needUpdate() const;
 
-  private:
+private:
     /** Initializes the static constant \c MAX_TIME.
      * @return The maximum valid entry in a timeval struct.
      */

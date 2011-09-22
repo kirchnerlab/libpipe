@@ -18,14 +18,17 @@ using namespace libpipe;
 
 /** Test the Request class.
  */
-struct RequestTestSuite : vigra::test_suite {
+struct RequestTestSuite : vigra::test_suite
+{
 
     /** Constructor.
      * The RequestTestSuite constructor adds all Request tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    RequestTestSuite() : vigra::test_suite("Request") {
+    RequestTestSuite() :
+        vigra::test_suite("Request")
+    {
         add(testCase(&RequestTestSuite::testConstruction));
         add(testCase(&RequestTestSuite::testIs));
         add(testCase(&RequestTestSuite::testTraceFlag));
@@ -33,17 +36,18 @@ struct RequestTestSuite : vigra::test_suite {
         //add(testCase(&RequestTestSuite::fail));
     }
 
-
     /** Check request construction.
      */
-    void testConstruction() {
+    void testConstruction()
+    {
         // make sure this compiles
         Request req(Request::UPDATE);
     }
 
     /** Check Request.is().
      */
-    void testIs() {
+    void testIs()
+    {
         Request req(Request::UPDATE);
         shouldEqual(req.is(Request::UPDATE), true);
         // FIXME: needs a negated test once there is more than one type
@@ -51,7 +55,8 @@ struct RequestTestSuite : vigra::test_suite {
 
     /** Check trace flag getter/setter
      */
-    void testTraceFlag() {
+    void testTraceFlag()
+    {
         {
             // getset test
             Request req(Request::UPDATE);
@@ -68,7 +73,8 @@ struct RequestTestSuite : vigra::test_suite {
 
     /** Check trace info handling.
      */
-    void testTrace() {
+    void testTrace()
+    {
         Request req(Request::UPDATE);
         std::vector<std::string> trace;
         // make sure we initially have an empty trace
@@ -81,8 +87,8 @@ struct RequestTestSuite : vigra::test_suite {
         req.getTrace(trace);
         shouldEqual(trace.size(), static_cast<size_t>(1));
         // do not compare the date/time part.
-        shouldEqual(trace[0].substr(trace[0].size()-message.size(), 
-          message.size()), message);
+        shouldEqual(trace[0].substr(trace[0].size()-message.size(),
+                        message.size()), message);
         trace.clear();
         // clear the trace info from the request object
         req.clearTrace();
@@ -100,11 +106,10 @@ struct RequestTestSuite : vigra::test_suite {
         req.getTrace(trace);
         for (size_t i = 0; i < 10; ++i) {
             shouldEqual(trace[i].substr(trace[i].size()-control[i].size(),
-              control[i].size()), control[i]);
+                            control[i].size()), control[i]);
         }
     }
 };
-
 
 /** The main function that runs the tests for class Request.
  * Under normal circumstances you need not edit this.

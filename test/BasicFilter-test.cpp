@@ -17,16 +17,18 @@
 
 using namespace libpipe;
 
-
 /** Test routines for the BasicFilter template class.
  */
-struct BasicFilterTestSuite : vigra::test_suite {
+struct BasicFilterTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The BasicFilterTestSuite constructor adds all BasicFilter tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    BasicFilterTestSuite() : vigra::test_suite("BasicFilter") {
+    BasicFilterTestSuite() :
+        vigra::test_suite("BasicFilter")
+    {
         add(testCase(&BasicFilterTestSuite::testAlgorithm));
         add(testCase(&BasicFilterTestSuite::testManager));
     }
@@ -34,15 +36,28 @@ struct BasicFilterTestSuite : vigra::test_suite {
     /** Derived class with exposed setters.
      */
     typedef BasicFilter<RaiseExceptionAlg, TestManager> F;
-    class TestFilter : public F {
-      public:
-        TestFilter(const std::string& name) : F(name) {}
-        virtual ~TestFilter() {}
-        void setAlgorithm(Algorithm* a) { F::setAlgorithm(a); }
-        void setManager(Manager* m) { F::setManager(m); }
+    class TestFilter : public F
+    {
+    public:
+        TestFilter(const std::string& name) :
+            F(name)
+        {
+        }
+        virtual ~TestFilter()
+        {
+        }
+        void setAlgorithm(Algorithm* a)
+        {
+            F::setAlgorithm(a);
+        }
+        void setManager(Manager* m)
+        {
+            F::setManager(m);
+        }
     };
 
-    void testAlgorithm() {
+    void testAlgorithm()
+    {
         // getset
         TestFilter* f = new TestFilter("foo");
         RaiseExceptionAlg* p = f->getAlgorithm();
@@ -56,7 +71,8 @@ struct BasicFilterTestSuite : vigra::test_suite {
         delete f;
     }
 
-    void testManager() {
+    void testManager()
+    {
         // getset
         TestFilter* f = new TestFilter("bar");
         TestManager* p = f->getManager();
@@ -71,7 +87,6 @@ struct BasicFilterTestSuite : vigra::test_suite {
     }
 
 };
-
 
 /** The main function that runs the tests for class BasicFilter.
  * Under normal circumstances you need not edit this.

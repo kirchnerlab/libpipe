@@ -16,15 +16,19 @@
 
 using namespace libpipe;
 
-struct LogTestSuite : vigra::test_suite {
-    LogTestSuite() : vigra::test_suite("Logging") {
-        add( testCase(&LogTestSuite::testFILELog) );
-        add( testCase(&LogTestSuite::testOutput2FILE) );
-        add( testCase(&LogTestSuite::testMacros) );
-        add( testCase(&LogTestSuite::testNowTime) );
+struct LogTestSuite : vigra::test_suite
+{
+    LogTestSuite() :
+        vigra::test_suite("Logging")
+    {
+        add(testCase(&LogTestSuite::testFILELog));
+        add(testCase(&LogTestSuite::testOutput2FILE));
+        add(testCase(&LogTestSuite::testMacros));
+        add(testCase(&LogTestSuite::testNowTime));
     }
 
-    void testOutput2FILE() {
+    void testOutput2FILE()
+    {
         Output2FILE out;
         // getStream()
         should(out.getRedirect() == stderr);
@@ -33,7 +37,8 @@ struct LogTestSuite : vigra::test_suite {
     }
 
     // implicitly, this tests the Log<T> too
-    void testFILELog() {
+    void testFILELog()
+    {
         FILELog l;
 
         shouldEqual(l.fromString("DEBUG4"), logDEBUG4);
@@ -71,28 +76,34 @@ struct LogTestSuite : vigra::test_suite {
         l.get(logWARNING);
         l.get(logERROR);
         l.get(logNO_LOGGING); // should default to INFO
-        l.get((LogLevel)(-1)); // invalid input
+        l.get((LogLevel) (-1)); // invalid input
         // test intended usage
         FILELog().get() << "Test of intended usage";
     }
 
-    void testMacros() {
+    void testMacros()
+    {
         // LIBPIPE_LOG
-        LIBPIPE_LOG(logINFO) << "Macro test.";
+        LIBPIPE_LOG(logINFO)
+                << "Macro test.";
 
         // max level mechanism
 #undef FILELOG_MAX_LEVEL
 #define FILELOG_MAX_LEVEL logINFO
-        LIBPIPE_LOG(logWARNING) << "This should be logged, since WARNING is above INFO.";
-        LIBPIPE_LOG(logDEBUG) << "This SHOULDN'T be logged, since DEBUG is below INFO!";
+        LIBPIPE_LOG(logWARNING)
+                << "This should be logged, since WARNING is above INFO.";
+        LIBPIPE_LOG(logDEBUG)
+                << "This SHOULDN'T be logged, since DEBUG is below INFO!";
 
         // reset to standard max level
 #undef FILELOG_MAX_LEVEL
 #define FILELOG_MAX_LEVEL logDEBUG4
-        LIBPIPE_LOG(logDEBUG1) << "This should be logged again, since we reset to logDEBUG4.";
+        LIBPIPE_LOG(logDEBUG1)
+                << "This should be logged again, since we reset to logDEBUG4.";
     }
 
-    void testNowTime() {
+    void testNowTime()
+    {
         nowTime();
     }
 };
@@ -104,5 +115,4 @@ int main()
     std::cout << test.report() << std::endl;
     return success;
 }
-
 

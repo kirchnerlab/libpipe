@@ -23,7 +23,7 @@ class Manager;
  */
 class Filter : private NonCopyable
 {
-  public:
+public:
     /** Constructor.
      */
     Filter(const std::string&);
@@ -31,14 +31,14 @@ class Filter : private NonCopyable
     /** Pure virtual destructor.
      */
     virtual ~Filter();
-    
+
     /** Processes a request.
      * This method forwards the request to the Algorithm and Manager objects.
      * @param[in] req The request object.
      * @return The request object with processing information filled out.
      */
     virtual Request& processRequest(Request& req);
-    
+
     /** Returns a  pointer to the algorithm object.
      * @return A pointer to the algorithm object.
      */
@@ -48,7 +48,7 @@ class Filter : private NonCopyable
      * @return A pointer to the Manager object.
      */
     virtual Manager* getManager();
-    
+
     /** Returns the name of the filter.
      * @return The name of the fitler.
      */
@@ -59,18 +59,18 @@ class Filter : private NonCopyable
      */
     void setName(const std::string& name);
 
-  protected:
+protected:
     /** Set the algorithm that should be used for this filter.
      * @param[in] alg Pointer to the Algorithm object.
      */
     void setAlgorithm(Algorithm* alg);
-    
+
     /** Set the manager that manages the filter.
      * @param[in] manager Pointer to the Manager object.
      */
     void setManager(Manager* manager);
 
-  private:
+private:
     /** A pointer to the algorithm that is part of the filter.
      */
     Algorithm* algorithm_;

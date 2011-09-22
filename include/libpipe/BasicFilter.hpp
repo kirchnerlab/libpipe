@@ -37,10 +37,10 @@ namespace libpipe {
  * ...
  * \endcode
  */
-template <class A, class M>
+template<class A, class M>
 class BasicFilter : public Filter
 {
-  public:
+public:
 
     /** Constructor.
      * @param name The name of the filter. Passed through to libpipe::Filter.
@@ -59,7 +59,7 @@ class BasicFilter : public Filter
      * @return A pointer (with the true class type) to the algorithm object.
      */
     virtual A* getAlgorithm();
-    
+
     /** Provides access to the manager object.
      * @see getAlgorithm.
      * @return A pointer (with the true class type) to the manager object.
@@ -70,8 +70,9 @@ class BasicFilter : public Filter
 /*
  * Template implementation
  */
-template <class A, class M>
-BasicFilter<A, M>::BasicFilter(const std::string& name) : Filter(name) 
+template<class A, class M>
+BasicFilter<A, M>::BasicFilter(const std::string& name) :
+    Filter(name)
 {
     A* a = new A;
     M* m = new M;
@@ -79,18 +80,21 @@ BasicFilter<A, M>::BasicFilter(const std::string& name) : Filter(name)
     this->setAlgorithm(a);
 }
 
-template <class A, class M>
+template<class A, class M>
 BasicFilter<A, M>::~BasicFilter()
-{}
-
-template <class A, class M>
-A* BasicFilter<A, M>::getAlgorithm() {
-    return dynamic_cast<A*>(Filter::getAlgorithm());
+{
 }
 
-template <class A, class M>
-M* BasicFilter<A, M>::getManager() {
-    return dynamic_cast<M*>(Filter::getManager());
+template<class A, class M>
+A* BasicFilter<A, M>::getAlgorithm()
+{
+    return dynamic_cast<A*> (Filter::getAlgorithm());
+}
+
+template<class A, class M>
+M* BasicFilter<A, M>::getManager()
+{
+    return dynamic_cast<M*> (Filter::getManager());
 }
 
 } // namespace libpipe

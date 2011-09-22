@@ -23,24 +23,34 @@ using namespace libpipe;
  */
 class Identity : public Algorithm
 {
-  public:
-    Identity() : Algorithm(), in_(0), out_(0) {}
-    ~Identity() {}
-    Request& update(Request& req) {
+public:
+    Identity() :
+        Algorithm(), in_(0), out_(0)
+    {
+    }
+    ~Identity()
+    {
+    }
+    Request& update(Request& req)
+    {
         LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
         out_ = in_;
         this->updateMTime();
         return req;
     }
-    int getOutput() { return out_; }
-    void setInput(int input) {
+    int getOutput()
+    {
+        return out_;
+    }
+    void setInput(int input)
+    {
         if (in_ != input) {
             in_ = input;
             this->updateMTime();
         }
     }
 
-  private:
+private:
     int in_, out_;
 };
 
@@ -50,26 +60,37 @@ class Identity : public Algorithm
  */
 class Inc : public Algorithm
 {
-  public:
-    Inc() : Algorithm(), out_(new int(0)) {}
-    ~Inc() { delete out_; }
-    Request& update(Request& req) {
+public:
+    Inc() :
+        Algorithm(), out_(new int(0))
+    {
+    }
+    ~Inc()
+    {
+        delete out_;
+    }
+    Request& update(Request& req)
+    {
         std::ostringstream oss;
-        *out_ = (*in_)+1;
+        *out_ = (*in_) + 1;
         oss << "Inc: " << *in_ << " -> " << *out_;
         LIBPIPE_REQUEST_TRACE(req, oss.str());
         this->updateMTime();
         return req;
     }
-    int* getOutput() { return out_; }
-    void setInput(int* input) {
+    int* getOutput()
+    {
+        return out_;
+    }
+    void setInput(int* input)
+    {
         if (in_ != input) {
             in_ = input;
             this->updateMTime();
         }
     }
 
-  private:
+private:
     Inc(const Inc&); // don't define
     Inc& operator=(const Inc&); // don't define
     int* in_;
@@ -80,10 +101,16 @@ class Inc : public Algorithm
  */
 class RaiseExceptionAlg : public Algorithm
 {
-  public:
-    RaiseExceptionAlg() : Algorithm() {}
-    ~RaiseExceptionAlg() {}
-    Request& update(Request& req) {
+public:
+    RaiseExceptionAlg() :
+        Algorithm()
+    {
+    }
+    ~RaiseExceptionAlg()
+    {
+    }
+    Request& update(Request& req)
+    {
         // deliberately raise a non-libpipe exception
         throw std::exception();
     }
@@ -92,9 +119,13 @@ class RaiseExceptionAlg : public Algorithm
 /** Derive from Manager to be able to access the protected classes
  * for testing.
  */
-class TestManager : public Manager {
-  public:
-    std::set<Filter*> getSources() { return sources_; }
+class TestManager : public Manager
+{
+public:
+    std::set<Filter*> getSources()
+    {
+        return sources_;
+    }
 };
 
 #endif

@@ -7,13 +7,11 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
 
-
 #include <libpipe/config.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/Manager.hpp>
 
 namespace libpipe {
-
 
 /** A manager class that makes use of the modification time information of 
  * the algoritms it manages.
@@ -21,7 +19,7 @@ namespace libpipe {
  */
 class ModificationTimeManager : public Manager
 {
-  public:
+public:
     /** Constructor.
      */
     ModificationTimeManager();
