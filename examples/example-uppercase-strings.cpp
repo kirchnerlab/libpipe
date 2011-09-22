@@ -2,6 +2,7 @@
  * testFilters.cpp
  * 
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
+ * ROT13 Algorithm added by David Sichau
  *
  */
 
@@ -48,28 +49,27 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         {
         }
 
+        /** Destructor.
+         */
+        virtual ~UppercaseAlgorithm()
+        {
+        }
 
-    /** Destructor.
-     */
-    virtual ~UppercaseAlgorithm()
-    {
-    }
-
-    /** Runs the algorithm and updates the output data.
-     * This is where all the algorithm implementation goes. 
-     * @param[in,out] req The request object, forwarded from \c process request.
-     */
-    libpipe::Request& update(libpipe::Request& req)
-    {
-        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-        output_->clear();
-        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: transforming to uppercase.");
-        std::transform(input_->begin(), input_->end(),
-            std::back_inserter(*output_), toupper);
-        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
-        return req;
-    }
-
+        /** Runs the algorithm and updates the output data.
+         * This is where all the algorithm implementation goes.
+         * @param[in,out] req The request object, forwarded from \c process request.
+         */
+        libpipe::Request& update(libpipe::Request& req)
+        {
+            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+            output_->clear();
+            LIBPIPE_REQUEST_TRACE(req,
+                "UppercaseAlgorithm::update: transforming to uppercase.");
+            std::transform(input_->begin(), input_->end(),
+                std::back_inserter(*output_), toupper);
+            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
+            return req;
+        }
 
         /** Provides access to results.
          * In contrast to more rigid pipeline implementations, LIBPIPE does not
@@ -174,13 +174,12 @@ class ROT13Algorithm : public libpipe::Algorithm
             return output_;
         }
 
-
         /** Allows to connect the output of another algorithm with the input of
-        * this algorithm.
-        * @see getOutput
-        *
-        * @param[in] input A handle (in most cases a (smart) pointer to the data.)
-        */
+         * this algorithm.
+         * @see getOutput
+         *
+         * @param[in] input A handle (in most cases a (smart) pointer to the data.)
+         */
         void setInputString(boost::shared_ptr<std::string> input)
         {
             input_ = input;
@@ -216,8 +215,8 @@ class ROT13Algorithm : public libpipe::Algorithm
 
             result->reserve(str->length());
 
-            for (std::string::const_iterator it = str->begin(); it != str->end();
-                    ++it) {
+            for (std::string::const_iterator it = str->begin();
+                    it != str->end(); ++it) {
                 if ((pos = lcalph.find(*it)) != std::string::npos)
                     result->push_back(lcalph[(pos + 13) % 26]);
                 else
@@ -256,7 +255,6 @@ class Source : public libpipe::Algorithm
             *output_ = s;
         }
 
-
         /** Provides access to the output.
          * @return A handle to the output.
          */
@@ -291,9 +289,8 @@ int main(int argc, char *argv[])
     typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilter;
     typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
 
-
-    StringCreator* stringCreator =
-            new StringCreator(std::string("The Source"));
+    StringCreator* stringCreator = new StringCreator(
+        std::string("The Source"));
     stringCreator->getAlgorithm()->setParamString("Hello World!");
 
     StringFilter* stringFilter = new StringFilter(std::string("Filter #1"));
@@ -314,7 +311,6 @@ int main(int argc, char *argv[])
     rotDecryper1->getManager()->connect(rotDecryper);
     rotDecryper1->getAlgorithm()->setInputString(
         rotDecryper->getAlgorithm()->getOutput());
-
 
     Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
