@@ -51,7 +51,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
 
     /** Destructor.
      */
-    ~UppercaseAlgorithm()
+    virtual ~UppercaseAlgorithm()
     {
     }
 
