@@ -14,7 +14,7 @@
 namespace libpipe {
 
 /** A template class used to hold data that is shared between algorithms.
- * Sometimes algorithm objects are not able to immediately instantiate a result
+ * Sometimes algorithm objects are not able to immediately instanciate a result
  * object but need to process data beforehand. The two foremost cases where
  * this holds true are: (1) using external classes that implement the 'object
  * initialization is resource allocation' idiom, where the allocation depends
