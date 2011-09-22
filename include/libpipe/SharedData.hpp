@@ -14,7 +14,7 @@
 namespace libpipe {
 
 /** A template class used to hold data that is shared between algorithms.
- * Sometimes algorithm objects are not able to immediately instanciate a result
+ * Sometimes algorithm objects are not able to immediately instantiate a result
  * object but need to process data beforehand. The two foremost cases where
  * this holds true are: (1) using external classes that implement the 'object
  * initialization is resource allocation' idiom, where the allocation depends
@@ -22,7 +22,7 @@ namespace libpipe {
  * dependent (e.g the well-known Shape/Rectangle/Circle example). In both
  * cases, the final object does not exist while the filters and algorithms are
  * connected. As a consequence, in- and out-data between algorithms cannot be
- * connected either: there is no point in issueing
+ * connected either: there is no point in issuing
  * alg1->setInput(alg0->getOutput()), if alg0->getOutput() still is a null
  * pointer.
  *
