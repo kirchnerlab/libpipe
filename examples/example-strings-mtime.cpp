@@ -50,7 +50,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
     
     /** Destructor.
      */
-    ~UppercaseAlgorithm() {}
+    virtual ~UppercaseAlgorithm() {}
     
     /** Runs the algorithm and updates the output data.
      * This is where all the algorithm implementation goes. 
@@ -130,7 +130,7 @@ class Source : public libpipe::Algorithm
 
     /** Destructor.
      */
-    ~Source() {}
+    virtual ~Source() {}
 
     void setParamString(const std::string& s) {
         *output_ = s;
