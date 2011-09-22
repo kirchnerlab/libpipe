@@ -50,7 +50,7 @@ class Filter : private NonCopyable
     virtual Manager* getManager();
     
     /** Returns the name of the filter.
-     * @return The name of the fitler.
+     * @return The name of the filter.
      */
     std::string getName() const;
 

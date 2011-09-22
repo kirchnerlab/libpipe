@@ -41,7 +41,7 @@ class Manager : private NonCopyable
     Algorithm* getAlgorithm();
     
     /** Set the algorithm that is managed by the manager.
-     * @param[in] alg Pointer to teh algorithm object.
+     * @param[in] alg Pointer to the algorithm object.
      */
     void setAlgorithm(Algorithm* alg);
 

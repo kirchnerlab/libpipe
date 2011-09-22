@@ -108,7 +108,11 @@ struct AlgorithmTestSuite : vigra::test_suite {
      */
     void testGetSet() {
         MyAlgorithm a;
-        a.setMTime(a.getMTime());
+        timeval tv;
+        gettimeofday(&tv, NULL);
+        a.setMTime(tv);
+        shouldEqual(a.getMTime(),tv);
+
     }
 
     /** Test that is guaranteed to fail.
