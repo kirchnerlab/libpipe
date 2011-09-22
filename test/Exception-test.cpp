@@ -15,40 +15,50 @@ using namespace libpipe;
 
 /** Test suite for the Exception class.
  */
-struct ExceptionTestSuite : vigra::test_suite {
+struct ExceptionTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The ExceptionTestSuite constructor adds all Exception tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    ExceptionTestSuite() : vigra::test_suite("Exception") {
+    ExceptionTestSuite() :
+        vigra::test_suite("Exception")
+    {
         add(testCase(&ExceptionTestSuite::testDerivedClass));
         add(testCase(&ExceptionTestSuite::testConstruction));
         add(testCase(&ExceptionTestSuite::testMacros));
         // add(testCase(&ExceptionTestSuite::fail));
     }
 
-    
     /** Make sure we can derive from it.
      */
     class TestException : public Exception
     {
-      public:
-        TestException() : Exception("qwerty") {}
+    public:
+        TestException() :
+            Exception("qwerty")
+        {
+        }
     };
 
     class TestExceptionWithOverload : public Exception
     {
-      public:
-        TestExceptionWithOverload() : Exception("qwerty") {}
-        virtual const char * what(void) {
+    public:
+        TestExceptionWithOverload() :
+            Exception("qwerty")
+        {
+        }
+        virtual const char * what(void)
+        {
             return Exception::what();
         }
     };
 
     /** Try to instantiate a derived class.
      */
-    void testDerivedClass() {
+    void testDerivedClass()
+    {
         TestException t;
         shouldEqual(strncmp(t.what(), "qwerty", 6), 0);
         TestExceptionWithOverload to;
@@ -57,16 +67,18 @@ struct ExceptionTestSuite : vigra::test_suite {
 
     /** Test construction.
      */
-    void testConstruction() {
+    void testConstruction()
+    {
         Exception e("message");
         shouldEqual(strncmp("message", e.what(), 7), 0);
         Exception e2(std::string("message"));
         shouldEqual(strncmp("message", e2.what(), 7), 0);
     }
-    
+
     /** Test the macros that come with the class.
      */
-    void testMacros() {
+    void testMacros()
+    {
         // also test the macros
         bool thrown = false;
         try {
@@ -90,11 +102,11 @@ struct ExceptionTestSuite : vigra::test_suite {
     /** Test that is guaranteed to fail.
      * Leave this in until the complete Exception class has tests.
      */
-    void fail() {
+    void fail()
+    {
         failTest("No unit tests for class Exception!");
     }
 };
-
 
 /** The main function that runs the tests for class Exception.
  * Under normal circumstances you need not edit this.

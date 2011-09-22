@@ -26,7 +26,7 @@ class Filter;
  */
 class Manager : private NonCopyable
 {
-  public:
+public:
     /** Constructor.
      */
     Manager();
@@ -39,7 +39,7 @@ class Manager : private NonCopyable
      * @return A pointer to an algorithm object (or 0).
      */
     Algorithm* getAlgorithm();
-    
+
     /** Set the algorithm that is managed by the manager.
      * @param[in] alg Pointer to the algorithm object.
      */
@@ -63,7 +63,7 @@ class Manager : private NonCopyable
      */
     void connect(Filter* f);
 
-  protected:
+protected:
     /** Convenience typedef: a filter set.
      */
     typedef std::set<Filter*> FilterSet;

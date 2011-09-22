@@ -48,29 +48,28 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         {
         }
 
-        /** virtual Destructor.
-         */
-        virtual ~UppercaseAlgorithm()
-        {
-            std::cout << "Filter destroyed with input: " << *input_
-                    << "\t and output: " << *output_ << std::endl;
-        }
 
-        /** Runs the algorithm and updates the output data.
-         * This is where all the algorithm implementation goes.
-         * @param[in,out] req The request object, forwarded from \c process request.
-         */
-        libpipe::Request& update(libpipe::Request& req)
-        {
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-            output_->clear();
-            LIBPIPE_REQUEST_TRACE(req,
-                "UppercaseAlgorithm::update: transforming to uppercase.");
-            std::transform(input_->begin(), input_->end(),
-                std::back_inserter(*output_), toupper);
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
-            return req;
-        }
+    /** Destructor.
+     */
+    ~UppercaseAlgorithm()
+    {
+    }
+
+    /** Runs the algorithm and updates the output data.
+     * This is where all the algorithm implementation goes. 
+     * @param[in,out] req The request object, forwarded from \c process request.
+     */
+    libpipe::Request& update(libpipe::Request& req)
+    {
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+        output_->clear();
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: transforming to uppercase.");
+        std::transform(input_->begin(), input_->end(),
+            std::back_inserter(*output_), toupper);
+        LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
+        return req;
+    }
+
 
         /** Provides access to results.
          * In contrast to more rigid pipeline implementations, LIBPIPE does not
@@ -169,6 +168,7 @@ class ROT13Algorithm : public libpipe::Algorithm
          * 'getOutput'.
          *  @returns A handle to the output data of the algorithm.
          */
+
         boost::shared_ptr<std::string> getOutput()
         {
             return output_;
@@ -185,9 +185,7 @@ class ROT13Algorithm : public libpipe::Algorithm
         {
             input_ = input;
         }
-
     protected:
-
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
          * owned by the algorithm (or, at least, managed by it).
@@ -258,6 +256,7 @@ class Source : public libpipe::Algorithm
             *output_ = s;
         }
 
+
         /** Provides access to the output.
          * @return A handle to the output.
          */
@@ -281,6 +280,7 @@ class Source : public libpipe::Algorithm
         /** Holds the output string.
          */
         boost::shared_ptr<std::string> output_;
+
 };
 
 int main(int argc, char *argv[])
@@ -291,8 +291,9 @@ int main(int argc, char *argv[])
     typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilter;
     typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
 
-    StringCreator* stringCreator = new StringCreator(
-        std::string("The Source"));
+
+    StringCreator* stringCreator =
+            new StringCreator(std::string("The Source"));
     stringCreator->getAlgorithm()->setParamString("Hello World!");
 
     StringFilter* stringFilter = new StringFilter(std::string("Filter #1"));
@@ -314,6 +315,7 @@ int main(int argc, char *argv[])
     rotDecryper1->getAlgorithm()->setInputString(
         rotDecryper->getAlgorithm()->getOutput());
 
+
     Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
     LIBPIPE_REQUEST_TRACE(req, "Starting.");
@@ -328,6 +330,7 @@ int main(int argc, char *argv[])
                 << *(rotDecryper->getAlgorithm()->getOutput()) << '\n';
         std::cout << "ROT13Filter1 out: "
                 << *(rotDecryper1->getAlgorithm()->getOutput()) << std::endl;
+
     } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
     }

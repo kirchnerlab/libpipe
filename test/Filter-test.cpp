@@ -18,29 +18,33 @@
 
 using namespace libpipe;
 
-
 /** Test for the Filter base class.
  * Derives from the Filter base class and tests the standard implementations. 
  */
-struct FilterTestSuite : vigra::test_suite {
+struct FilterTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The FilterTestSuite constructor adds all Filter tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    FilterTestSuite() : vigra::test_suite("Filter") {
+    FilterTestSuite() :
+        vigra::test_suite("Filter")
+    {
         add(testCase(&FilterTestSuite::testConstructionAndDestruction));
         add(testCase(&FilterTestSuite::testCallChain));
         add(testCase(&FilterTestSuite::testName));
     }
 
-    void testConstructionAndDestruction() {
+    void testConstructionAndDestruction()
+    {
         // this is a test for valgrind
         typedef BasicFilter<Identity, TestManager> IdentityFilter;
         IdentityFilter filter("bla");
     }
 
-    void testCallChain() {
+    void testCallChain()
+    {
         // tests if the filter calls its managers process request function
         // the manager will then call the process request function of the fail
         // filter and raise an exception.
@@ -57,7 +61,8 @@ struct FilterTestSuite : vigra::test_suite {
         delete f;
     }
 
-    void testName() {
+    void testName()
+    {
         // getset name
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
         Filter* f = new FailFilter("Fail!");
@@ -74,7 +79,6 @@ struct FilterTestSuite : vigra::test_suite {
      */
 
 };
-
 
 /** The main function that runs the tests for class Filter.
  * Under normal circumstances you need not edit this.

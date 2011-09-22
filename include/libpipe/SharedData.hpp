@@ -90,10 +90,10 @@ namespace libpipe {
  * capable of providing the data structure immediately upon construction or
  * not.
  */
-template <typename T>
+template<typename T>
 class SharedData : private NonCopyable
 {
-  public:
+public:
     /** Constructor.
      */
     SharedData();
@@ -138,7 +138,7 @@ class SharedData : private NonCopyable
      */
     bool isNull();
 
-  private:
+private:
     /** Pointer to the \c T instance.
      */
     std::auto_ptr<T> ptr_;
@@ -147,27 +147,30 @@ class SharedData : private NonCopyable
 //
 // template implementations
 //
-template <typename T>
-SharedData<T>::SharedData()
-  : ptr_(0)
-{}
+template<typename T>
+SharedData<T>::SharedData() :
+    ptr_(0)
+{
+}
 
-template <typename T>
-SharedData<T>::SharedData(T* ptr)
-  : ptr_(ptr)
-{}
+template<typename T>
+SharedData<T>::SharedData(T* ptr) :
+    ptr_(ptr)
+{
+}
 
-template <typename T>
+template<typename T>
 SharedData<T>::~SharedData()
-{}
+{
+}
 
-template <typename T>
+template<typename T>
 T* SharedData<T>::get() const
 {
     return ptr_.get();
 }
 
-template <typename T>
+template<typename T>
 void SharedData<T>::set(T* ptr)
 {
     if (ptr != ptr_.get()) {
@@ -175,7 +178,7 @@ void SharedData<T>::set(T* ptr)
     }
 }
 
-template <typename T>
+template<typename T>
 bool SharedData<T>::isNull()
 {
     return ptr_.get() == 0;

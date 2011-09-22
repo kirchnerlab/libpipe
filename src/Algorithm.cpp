@@ -15,8 +15,8 @@
 
 bool operator<=(const timeval& lhs, const timeval& rhs)
 {
-    if (lhs.tv_sec < rhs.tv_sec ||
-      ( lhs.tv_sec == rhs.tv_sec && lhs.tv_usec <= rhs.tv_usec )) {
+    if (lhs.tv_sec < rhs.tv_sec || (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec
+            <= rhs.tv_usec)) {
         return true;
     }
     return false;
@@ -24,7 +24,7 @@ bool operator<=(const timeval& lhs, const timeval& rhs)
 
 bool operator==(const timeval& lhs, const timeval& rhs)
 {
-    if (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec == rhs.tv_usec )
+    if (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec == rhs.tv_usec)
         return true;
     return false;
 }
@@ -49,19 +49,22 @@ timeval Algorithm::initMaxTime()
 // instance "younger" than any non-updated instances
 const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 
-Algorithm::Algorithm() : mTime_(Algorithm::MAX_TIME)
-{}
+Algorithm::Algorithm() :
+    mTime_(Algorithm::MAX_TIME)
+{
+}
 
 Algorithm::~Algorithm()
-{}
+{
+}
 
-Request& Algorithm::processRequest(Request& req) {
+Request& Algorithm::processRequest(Request& req)
+{
     if (req.is(Request::UPDATE)) {
         req = this->update(req);
     }
     return req;
 }
-
 
 const timeval& Algorithm::getMTime() const
 {
@@ -70,7 +73,7 @@ const timeval& Algorithm::getMTime() const
 
 void Algorithm::setMTime(const timeval& mTime)
 {
-    mTime_	= mTime;
+    mTime_ = mTime;
 }
 
 void Algorithm::updateMTime()
@@ -82,9 +85,9 @@ void Algorithm::updateMTime()
 bool Algorithm::needUpdate() const
 {
     /*
-    LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "." 
-      << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
-      << Algorithm::MAX_TIME.tv_usec;
-    */
+     LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "."
+     << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
+     << Algorithm::MAX_TIME.tv_usec;
+     */
     return mTime_ == Algorithm::MAX_TIME;
 }

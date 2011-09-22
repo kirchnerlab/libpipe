@@ -14,28 +14,32 @@ using namespace libpipe;
 
 /** Test suite for the RequestException class.
  */
-struct RequestExceptionTestSuite : vigra::test_suite {
+struct RequestExceptionTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The RequestExceptionTestSuite constructor adds all RequestException tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    RequestExceptionTestSuite() : vigra::test_suite("RequestException") {
+    RequestExceptionTestSuite() :
+        vigra::test_suite("RequestException")
+    {
         add(testCase(&RequestExceptionTestSuite::testConstruction));
         add(testCase(&RequestExceptionTestSuite::testThrowCatch));
     }
 
-
     /** Test construction and destruction.
      */
-    void testConstruction() {
+    void testConstruction()
+    {
         RequestException re("bla");
         shouldEqual(strncmp(re.what(), "bla", 3), 0);
     }
 
     /** Test throwing and catching the exception.
      */
-    void testThrowCatch() {
+    void testThrowCatch()
+    {
         bool caught = false;
         try {
             RequestException e("qwerty");

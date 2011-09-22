@@ -14,20 +14,24 @@ using namespace libpipe;
 
 /** Test suite for the SharedData template class
  */
-struct SharedDataTestSuite : vigra::test_suite {
+struct SharedDataTestSuite : vigra::test_suite
+{
     /** Constructor.
      * The SharedDataTestSuite constructor adds all SharedData tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    SharedDataTestSuite() : vigra::test_suite("SharedData") {
+    SharedDataTestSuite() :
+        vigra::test_suite("SharedData")
+    {
         add(testCase(&SharedDataTestSuite::instance));
     }
 
-    void instance() {
+    void instance()
+    {
         SharedData<int> s;
         shouldEqual(s.isNull(), true);
-        SharedData<int> s2(new int);   
+        SharedData<int> s2(new int);
         shouldEqual(s2.isNull(), false);
         *(s2.get()) = 10;
         int* pI = new int(5);
@@ -36,7 +40,6 @@ struct SharedDataTestSuite : vigra::test_suite {
         shouldEqual(*(s.get()), 5);
     }
 };
-
 
 /** The main function that runs the tests for class SharedData.
  * Under normal circumstances you need not edit this.

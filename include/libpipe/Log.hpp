@@ -1,30 +1,10 @@
 /*
  * Log.hpp
  *
- * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
- * Copyright (c) 2009 Bernhard Kausler <bernhard.kausler@iwr.uni-heidelberg.de>
+ * Copyright (c) 2010 Marc Kirchner
+ * Copyright (c) 2009 Bernhard Kausler
  *
- * This file is part of libpipe.
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without  restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions: 
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR  OTHER DEALINGS IN
- * THE SOFTWARE.
  */
-
 
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
@@ -100,9 +80,18 @@ inline std::string nowTime();
  * @note Do not use @c logNO_LOGGING as a argument to @c LIBPIPE_LOG (only used to
  * turn off logging; defaults to @c logINFO if used).
  */
-enum LogLevel {
-    logNO_LOGGING, logERROR, logWARNING, logINFO, 
-    logDEBUG, logDEBUG1, logDEBUG2, logDEBUG3, logDEBUG4};
+enum LogLevel
+{
+    logNO_LOGGING,
+    logERROR,
+    logWARNING,
+    logINFO,
+    logDEBUG,
+    logDEBUG1,
+    logDEBUG2,
+    logDEBUG3,
+    logDEBUG4
+};
 
 /** Redirect the logging stream to a file handle.
  * At the moment, the file handle is hardcoded to 'stderr'.
@@ -110,7 +99,7 @@ enum LogLevel {
  */
 class Output2FILE
 {
-  public:
+public:
     /** Returns the file handle of the logging stream traget..
      */
     static FILE*& getRedirect();
@@ -151,14 +140,13 @@ inline void Output2FILE::output(const std::string& msg)
  * @endcode
  * is considered a redirector.
  */
-template <typename T>
+template<typename T>
 class Log
 {
-  public:
+public:
     /** Constructor.
      */
     Log();
-
 
     /** Destructor.
      * Virtual, to allow subclassing.
@@ -212,7 +200,7 @@ protected:
     std::ostringstream os_;
 
 private:
-    
+
     /** Copy constructor.
      * Declared as private and never defined to disallow copying.
      *  
@@ -232,19 +220,19 @@ private:
 // Template implementation
 //
 
-template <typename T>
+template<typename T>
 Log<T>::Log()
-{}
+{
+}
 
-template <typename T>
+template<typename T>
 std::ostringstream& Log<T>::get(LogLevel level)
 {
     // check if logging level is valid 
     LogLevel ll = level;
-    if ( ll <= logNO_LOGGING || ll > getReportingLevel() ) {
-        Log<T>().get(logWARNING) 
-          << "Log<T>::get(): Invalid logging level '" << ll 
-          << "'. Using INFO level as default.";
+    if (ll <= logNO_LOGGING || ll > getReportingLevel()) {
+        Log<T> ().get(logWARNING) << "Log<T>::get(): Invalid logging level '"
+                << ll << "'. Using INFO level as default.";
         ll = logINFO;
     }
 
@@ -256,7 +244,7 @@ std::ostringstream& Log<T>::get(LogLevel level)
     return os_;
 }
 
-template <typename T>
+template<typename T>
 Log<T>::~Log()
 {
     // terminate the log stream and make sure it flushes.
@@ -265,29 +253,29 @@ Log<T>::~Log()
     T::output(os_.str());
 }
 
-template <typename T>
+template<typename T>
 LogLevel& Log<T>::getReportingLevel()
 {
     static LogLevel reportingLevel = logDEBUG4;
     return reportingLevel;
 }
 
-template <typename T>
+template<typename T>
 std::string Log<T>::toString(LogLevel level)
 {
     if (level > getReportingLevel() || level < logNO_LOGGING) {
-        Log<T>().get(logWARNING) 
-          << "Log<T>::toString(): Unknown logging level '" << level 
-          << "'. Using INFO level as default.";
+        Log<T> ().get(logWARNING)
+                << "Log<T>::toString(): Unknown logging level '" << level
+                << "'. Using INFO level as default.";
         level = logINFO;
     }
-    static const char* const buffer[] = {
-        "NO_LOGGING", "ERROR", "WARNING", "INFO", 
-        "DEBUG", "DEBUG1", "DEBUG2", "DEBUG3", "DEBUG4"};
+    static const char* const buffer[] = { "NO_LOGGING", "ERROR", "WARNING",
+                                          "INFO", "DEBUG", "DEBUG1", "DEBUG2",
+                                          "DEBUG3", "DEBUG4" };
     return buffer[level];
 }
 
-template <typename T>
+template<typename T>
 LogLevel Log<T>::fromString(const std::string& level)
 {
     // tedious...
@@ -310,16 +298,18 @@ LogLevel Log<T>::fromString(const std::string& level)
     if (level == "NO_LOGGING")
         return logNO_LOGGING;
     // default to logINFO
-    Log<T>().get(logWARNING) 
-      << "Log<T>::fromString(): Unknown logging level '" << level
-       << "'. Using INFO level as default.";
+    Log<T> ().get(logWARNING)
+            << "Log<T>::fromString(): Unknown logging level '" << level
+            << "'. Using INFO level as default.";
     return logINFO;
 }
 
 /** A file logger.
  * A class derived from @c Log<T> that writes to stderr.
  */
-class FILELog : public Log<Output2FILE> {};
+class FILELog : public Log<Output2FILE>
+{
+};
 
 #ifndef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 /** The deepest logging level to be compiled into the code.
@@ -366,12 +356,12 @@ inline std::string nowTime()
 
     // get time
     if (GetTimeFormatA(
-                LOCALE_USER_DEFAULT,    // locale
-                0,                      // time format flags
-                0,                      // optional ptr to systemtime structure
-                "HH':'mm':'ss",         // format
-                buffer,                 // ptr to output buffer
-                MAX_LEN)                // size of output buffer
+                    LOCALE_USER_DEFAULT, // locale
+                    0, // time format flags
+                    0, // optional ptr to systemtime structure
+                    "HH':'mm':'ss", // format
+                    buffer, // ptr to output buffer
+                    MAX_LEN) // size of output buffer
             == 0) {
         return "Error in nowTime()";
     }
@@ -395,12 +385,12 @@ inline std::string nowTime()
     // get time
     time_t t;
     t = time(NULL);
-    if ( t == static_cast<std::time_t>(-1) ) {
+    if (t == static_cast<std::time_t> (-1)) {
         return "Error_in_nowTime().time";
     }
 
     // convert time to local time
-    tm r = {0};
+    tm r = { 0 };
     if (localtime_r(&t, &r) == NULL) {
         return "Error_in_nowTime().localtime_r";
     }
@@ -414,13 +404,12 @@ inline std::string nowTime()
     // format the string according to our format: "hh:mm:ss.ms"
     struct timeval tv;
     gettimeofday(&tv, 0);
-    char result[101] = {0};
-    std::sprintf(result, "%s.%03ld", buffer, (long)tv.tv_usec / 1000);
+    char result[101] = { 0 };
+    std::sprintf(result, "%s.%03ld", buffer, (long) tv.tv_usec / 1000);
 
     return result;
 }
 #endif //WIN32
-
 } // namespace libpipe
 
 #endif

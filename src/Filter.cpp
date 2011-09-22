@@ -10,9 +10,10 @@
 
 using namespace libpipe;
 
-Filter::Filter(const std::string& name) 
-  : algorithm_(0), manager_(0), name_(name) 
-{}
+Filter::Filter(const std::string& name) :
+    algorithm_(0), manager_(0), name_(name)
+{
+}
 
 Filter::~Filter()
 {
@@ -26,7 +27,7 @@ Request& Filter::processRequest(Request& req)
     // forward algorithm handle and request to manager
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    LIBPIPE_REQUEST_TRACE(req,  this->getName() + "::processRequest: stop.");
+    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
     return req;
 }
 

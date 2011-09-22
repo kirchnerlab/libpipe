@@ -10,26 +10,32 @@
 
 using namespace libpipe;
 
-Manager::Manager() : algorithm_(0) {}
+Manager::Manager() :
+    algorithm_(0)
+{
+}
 
-Manager::~Manager() {}
+Manager::~Manager()
+{
+}
 
 Algorithm* Manager::getAlgorithm()
 {
     return algorithm_;
 }
 
-void Manager::setAlgorithm(Algorithm* alg) 
+void Manager::setAlgorithm(Algorithm* alg)
 {
     // the manager does not own the
     // algorithm object. Hence, just move the pointer.
     algorithm_ = alg;
 }
 
-Request& Manager::processRequest(Request& req) {
+Request& Manager::processRequest(Request& req)
+{
     if (!algorithm_) {
         throw RequestException(
-          "Cannot process request. No algorithm setup available.");
+            "Cannot process request. No algorithm setup available.");
     }
     typedef FilterSet::iterator MSI;
     // iterate over all sources
@@ -45,15 +51,17 @@ Request& Manager::processRequest(Request& req) {
     } catch (std::exception& e) {
         std::string str(e.what());
         throw RequestException(
-          "ModificationTimeManager: Cannot process request: algorithm execution caused exception: " + str);
+            "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+                    + str);
     } catch (...) {
         throw RequestException(
-          "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
+            "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
     }
     return req;
 }
 
-void Manager::connect(Filter* f) {
+void Manager::connect(Filter* f)
+{
     sources_.insert(f);
 }
 
