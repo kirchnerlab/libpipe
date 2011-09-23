@@ -11,6 +11,8 @@
 #include <set>
 #include <libpipe/Request.hpp>
 #include <libpipe/NonCopyable.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 namespace libpipe {
 
@@ -61,12 +63,12 @@ public:
      * @param[inout] f Pointer to a filter object on which the current manager
      *                 should depend.
      */
-    void connect(Filter* f);
+    void connect(boost::shared_ptr<Filter> f);
 
 protected:
     /** Convenience typedef: a filter set.
      */
-    typedef std::set<Filter*> FilterSet;
+    typedef std::set<boost::shared_ptr<Filter> > FilterSet;
 
     /** The set of filters the manager depends on.
      */
