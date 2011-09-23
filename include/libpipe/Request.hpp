@@ -2,6 +2,7 @@
  * Request.hpp
  *
  * Copyright (c) 2010 Marc Kirchner
+ * changed by David Sichau
  *
  */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
