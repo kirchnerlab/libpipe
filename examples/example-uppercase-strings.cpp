@@ -19,6 +19,9 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 #include <libpipe/BasicFilter.hpp>
+#include <libpipe/SharedData.hpp>
+
+
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -311,6 +314,8 @@ int main(int argc, char *argv[])
     rotDecryper1->getManager()->connect(rotDecryper);
     rotDecryper1->getAlgorithm()->setInputString(
         rotDecryper->getAlgorithm()->getOutput());
+
+
 
     Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
