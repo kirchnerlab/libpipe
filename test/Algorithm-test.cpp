@@ -9,6 +9,7 @@
 #include "vigra/unittest.hxx"
 #include "libpipe/Algorithm.hpp"
 #include <sys/time.h> // for gettimeofday
+#include <limits>
 using namespace libpipe;
 
 /** Test suite for the libpipe::Algorithm base class.
@@ -50,6 +51,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         add(testCase(&AlgorithmTestSuite::testUpdateMTime));
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
+        add(testCase(&AlgorithmTestSuite::testInitMaxTime));
     }
 
     /** Test free operators
@@ -121,11 +123,7 @@ struct AlgorithmTestSuite : vigra::test_suite
     void testGetSet()
     {
         MyAlgorithm a;
-        timeval tv;
-        gettimeofday(&tv, NULL);
-        a.setMTime(tv);
-        shouldEqual(a.getMTime(),tv);
-
+        a.setMTime(a.getMTime());
     }
 
     /** Test that is guaranteed to fail.
@@ -135,6 +133,16 @@ struct AlgorithmTestSuite : vigra::test_suite
     {
         failTest("No unit tests for class Algorithm!");
     }
+
+    void testInitMaxTime()
+    {
+        timeval tv;
+        tv.tv_sec =  std::numeric_limits<time_t>::max();
+        tv.tv_usec = std::numeric_limits<suseconds_t>::max();
+        shouldEqual(tv,Algorithm::MAX_TIME);
+
+    }
+
 };
 
 /** The main function that runs the tests for class Algorithm.
