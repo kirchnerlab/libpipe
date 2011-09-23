@@ -41,16 +41,22 @@ struct RequestTestSuite : vigra::test_suite
     void testConstruction()
     {
         // make sure this compiles
-        Request req(Request::UPDATE);
+        Request reqU(Request::UPDATE);
+        Request reqD(Request::DELETE);
     }
 
     /** Check Request.is().
      */
     void testIs()
     {
-        Request req(Request::UPDATE);
-        shouldEqual(req.is(Request::UPDATE), true);
-        // FIXME: needs a negated test once there is more than one type
+        Request reqU(Request::UPDATE);
+        shouldEqual(reqU.is(Request::UPDATE), true);
+
+        Request reqD(Request::DELETE);
+        shouldEqual(reqD.is(Request::DELETE),true);
+
+        shouldEqual(reqU.is(Request::DELETE), false);
+        shouldEqual(reqD.is(Request::UPDATE), false);
     }
 
     /** Check trace flag getter/setter
