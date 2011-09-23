@@ -30,11 +30,13 @@ class Request
 {
 public:
     /** Defines the request type.
-     * Currently only UPDATE requests are necessary.
+     * UPDATE for updating the filters
+     * DELETE for deleting the filters
      */
     enum Type
     {
-        UPDATE = 0
+        UPDATE = 0,
+        DELETE = 1
     };
 
     /** Constructor.
