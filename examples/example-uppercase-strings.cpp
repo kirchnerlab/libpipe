@@ -46,7 +46,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          */
         UppercaseAlgorithm() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >())
+                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
         {
         }
 
@@ -65,7 +65,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-            output_.get()->set(new std::string);
+            output_.get()->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_.get()->get()->begin(),
@@ -134,7 +134,7 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         ROT13Algorithm() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >())
+                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
         {
         }
 
@@ -153,7 +153,7 @@ class ROT13Algorithm : public libpipe::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
-            output_.get()->set(new std::string);
+            output_.get()->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "ROT13Algorithm::update: transforming with ROT13.");
             rot13(input_, output_);
@@ -248,7 +248,7 @@ class Source : public libpipe::Algorithm
          */
         Source() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >())
+                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
         {
         }
 
@@ -262,8 +262,7 @@ class Source : public libpipe::Algorithm
 
         void setParamString(const std::string& s)
         {
-            output_.get()->set(new std::string);
-            (*output_.get()->get()) = s;
+            *output_.get()->get() = s;
         }
 
         /** Provides access to the output.
