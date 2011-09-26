@@ -51,7 +51,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         add(testCase(&AlgorithmTestSuite::testUpdateMTime));
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
-        add(testCase(&AlgorithmTestSuite::testInitMaxTime));
+        add(testCase(&AlgorithmTestSuite::testInitTime));
     }
 
     /** Test free operators
@@ -134,15 +134,18 @@ struct AlgorithmTestSuite : vigra::test_suite
         failTest("No unit tests for class Algorithm!");
     }
 
-    void testInitMaxTime()
+    void testInitTime()
     {
         timeval tv;
         tv.tv_sec =  std::numeric_limits<time_t>::max();
         tv.tv_usec = std::numeric_limits<suseconds_t>::max();
         shouldEqual(tv,Algorithm::MAX_TIME);
 
-    }
+        tv.tv_sec = std::numeric_limits<time_t>::min();
+        tv.tv_usec = std::numeric_limits<suseconds_t>::min();
+        shouldEqual(tv,Algorithm::MIN_TIME);
 
+    }
 };
 
 /** The main function that runs the tests for class Algorithm.
