@@ -29,10 +29,10 @@ namespace libpipe {
  * The filter can then be used in the usual way:
  * \code
  * ...
- * UserFilter* uf = new UserFilter("FilterName");
+ * boost::shared_ptr<UserFilter> uf (new UserFilter("FilterName"));
  * uf->getAlgorithm()->setParameters(...);
  * ...
- * uf->getManager()->connect(someOtherFilter->getManager());
+ * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
  * uf->getAlgorithm()->setInputFoo(someOtherFilter->getAlgorithm()->getOutputBar());
  * ...
  * \endcode
