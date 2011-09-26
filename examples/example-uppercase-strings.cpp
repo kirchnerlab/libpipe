@@ -55,9 +55,10 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          */
         virtual ~UppercaseAlgorithm()
         {
-            std::cout << "\033[22;32m Uppercase Algorithm destroyed with input: "
+            std::cout
+                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
                     << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m"<<std::endl;
+                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -144,7 +145,8 @@ class CombineAlgorithm : public libpipe::Algorithm
         {
             std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
                     << *input1_->get() << " and " << *input2_->get()
-                    << "\t and output: " << *output_->get() <<"\e[m"<<std::endl;
+                    << "\t and output: " << *output_->get() << "\e[m"
+                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -244,8 +246,17 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-            std::cout << "\033[22;32m ROT13 destroyed with input: " << *input_.get()->get()
-                    << "\t and output: " << *output_.get()->get() <<"\e[m"<<std::endl;
+            if (!input_) {
+                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
+                        << "\t and output: " << *output_->get() << "\e[m"
+                        << std::endl;
+            } else {
+                std::cout << "\033[22;32m ROT13 destroyed with input: "
+                        << *input_->get() << "\t and output: "
+                        << *output_->get() << "\e[m" << std::endl;
+
+            }
+
         }
 
         /** Runs the algorithm and updates the output data.
@@ -254,12 +265,18 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         libpipe::Request& update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
-            output_.get()->get()->clear();
-            LIBPIPE_REQUEST_TRACE(req,
-                "ROT13Algorithm::update: transforming with ROT13.");
-            rot13(input_, output_);
-            LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
+            if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
+                std::cout << "\e[31m update needed\e[m" << std::endl;
+                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
+                output_.get()->get()->clear();
+                LIBPIPE_REQUEST_TRACE(req,
+                    "ROT13Algorithm::update: transforming with ROT13.");
+                rot13(input_, output_);
+                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
+
+            } else if (req.is(libpipe::Request::DELETE)) {
+                input_.reset();
+            }
             return req;
         }
 
@@ -358,7 +375,7 @@ class Source : public libpipe::Algorithm
         virtual ~Source()
         {
             std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_.get()->get() << "\e[m"<<std::endl;
+                    << *output_.get()->get() << "\e[m" << std::endl;
         }
 
         void setParamString(const std::string& s)
@@ -480,7 +497,9 @@ int main(int argc, char *argv[])
         std::cout << *i << '\n';
     }
 
-    std::cout << "\033[22;35m All output after this is due to automatically called destructors. \e[m" << std::endl;
+    std::cout
+            << "\033[22;35m All output after this is due to automatically called destructors. \e[m"
+            << std::endl;
 
     return EXIT_SUCCESS;
 }
