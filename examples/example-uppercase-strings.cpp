@@ -46,7 +46,8 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          */
         UppercaseAlgorithm() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
+                    boost::make_shared<libpipe::SharedData<std::string> >(
+                        new std::string))
         {
         }
 
@@ -54,8 +55,9 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          */
         virtual ~UppercaseAlgorithm()
         {
-            std::cout << "Uppercase Algorithm destroyed with input: " << *input_.get()->get()
-                                << "\t and output: " << *output_.get()->get() << std::endl;
+            std::cout << "\033[22;32m Uppercase Algorithm destroyed with input: "
+                    << *input_->get() << "\t and output: " << *output_->get()
+                    << "\e[m"<<std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -68,9 +70,8 @@ class UppercaseAlgorithm : public libpipe::Algorithm
             output_.get()->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
-            std::transform(input_.get()->get()->begin(),
-                input_.get()->get()->end(),
-                std::back_inserter(*output_.get()->get()), toupper);
+            std::transform(input_->get()->begin(), input_->get()->end(),
+                std::back_inserter(*output_->get()), toupper);
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
             return req;
         }
@@ -121,6 +122,106 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         StringPtr output_;
 };
 
+/** Combines the input strings to one string.
+ *
+ */
+class CombineAlgorithm : public libpipe::Algorithm
+{
+    public:
+        /** Constructor.
+         * Make sure to call the \c libpipe::Algorithm constructor.
+         */
+        CombineAlgorithm() :
+                libpipe::Algorithm(), output_(
+                    boost::make_shared<libpipe::SharedData<std::string> >(
+                        new std::string))
+        {
+        }
+
+        /** Destructor.
+         */
+        virtual ~CombineAlgorithm()
+        {
+            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
+                    << *input1_->get() << " and " << *input2_->get()
+                    << "\t and output: " << *output_->get() <<"\e[m"<<std::endl;
+        }
+
+        /** Runs the algorithm and updates the output data.
+         * This is where all the algorithm implementation goes.
+         * @param[in,out] req The request object, forwarded from \c process request.
+         */
+        libpipe::Request& update(libpipe::Request& req)
+        {
+            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
+            output_.get()->get()->clear();
+            LIBPIPE_REQUEST_TRACE(req,
+                "CombineAlgorithm::update: combining inputs");
+            combine(output_);
+            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: end.");
+            return req;
+        }
+
+        /** Provides access to results.
+         * In contrast to more rigid pipeline implementations, LIBPIPE does not
+         * impose any constraints on what data types algorithms can share; this is
+         * simply done by keeping the request pipeline separate from the
+         * input/output flow of the algorithms. In most cases the user knows best
+         * which data type is suitable for a problem at hand; there is no reason to
+         * take this freedom (and the responsibility from her/him. Algorithms need
+         * to specify input and output functions, and it is recommended (but not
+         * required) to start the respective function names with 'setInput' and
+         * 'getOutput'.
+         *  @returns A handle to the output data of the algorithm.
+         */
+        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        {
+            return output_;
+        }
+
+        /** Allows to connect the output of another algorithm with the input of
+         * this algorithm.
+         * @see getOutput
+         *
+         * @param[in] input A handle (in most cases a (smart) pointer to the data.
+         */
+        void setInput1(
+            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+        {
+            input1_ = input;
+        }
+
+        void setInput2(
+            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+        {
+            input2_ = input;
+        }
+
+    protected:
+        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+
+        /** A reference to the input data.
+         * This can be a weak pointer or some other kind of reference. In the
+         * majority of cases, the algorithm should not attempt to modify this data.
+         * There are exceptions (and hence constness is not enforced).
+         */
+        StringPtr input1_;
+        StringPtr input2_;
+        /** The output data.
+         * In most cases it is advisable that the memory consumed by this data is
+         * owned by the algorithm (or, at least, managed by it).
+         */
+        StringPtr output_;
+    private:
+        void combine(
+            boost::shared_ptr<libpipe::SharedData<std::string> > result)
+        {
+            result->get()->append(*input1_->get());
+            result->get()->append(*input2_->get());
+        }
+
+};
+
 /** cipher the string with ROT13
  *
  */
@@ -134,7 +235,8 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         ROT13Algorithm() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
+                    boost::make_shared<libpipe::SharedData<std::string> >(
+                        new std::string))
         {
         }
 
@@ -142,8 +244,8 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-            std::cout << "ROT13 destroyed with input: " << *input_.get()->get()
-                    << "\t and output: " << *output_.get()->get() << std::endl;
+            std::cout << "\033[22;32m ROT13 destroyed with input: " << *input_.get()->get()
+                    << "\t and output: " << *output_.get()->get() <<"\e[m"<<std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -221,18 +323,16 @@ class ROT13Algorithm : public libpipe::Algorithm
 
             std::string::size_type pos;
 
-            result.get()->get()->reserve(str.get()->get()->length());
+            result->get()->reserve(str->get()->length());
 
-            for (std::string::const_iterator it = str.get()->get()->begin();
-                    it != str.get()->get()->end(); ++it) {
+            for (std::string::const_iterator it = str->get()->begin();
+                    it != str->get()->end(); ++it) {
                 if ((pos = lcalph.find(*it)) != std::string::npos)
-                    result.get()->get()->push_back(lcalph[(pos + 13) % 26]);
+                    result->get()->push_back(lcalph[(pos + 13) % 26]);
+                else if ((pos = ucalph.find(*it)) != std::string::npos)
+                    result->get()->push_back(ucalph[(pos + 13) % 26]);
                 else
-                    if ((pos = ucalph.find(*it)) != std::string::npos)
-                        result.get()->get()->push_back(
-                            ucalph[(pos + 13) % 26]);
-                    else
-                        result.get()->get()->push_back(*it);
+                    result->get()->push_back(*it);
             }
         }
 };
@@ -248,7 +348,8 @@ class Source : public libpipe::Algorithm
          */
         Source() :
                 libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(new std::string))
+                    boost::make_shared<libpipe::SharedData<std::string> >(
+                        new std::string))
         {
         }
 
@@ -256,8 +357,8 @@ class Source : public libpipe::Algorithm
          */
         virtual ~Source()
         {
-            std::cout << "Source destroyed with output: "
-                    << *output_.get()->get() << "\n";
+            std::cout << "\033[22;32m Source destroyed with output: "
+                    << *output_.get()->get() << "\e[m"<<std::endl;
         }
 
         void setParamString(const std::string& s)
@@ -298,50 +399,55 @@ int main(int argc, char *argv[])
     typedef libpipe::BasicFilter<Source, libpipe::Manager> StringCreator;
     typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilter;
     typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
+    typedef libpipe::BasicFilter<CombineAlgorithm, libpipe::Manager> Combiner;
 
-    boost::shared_ptr<StringCreator> stringCreator (new StringCreator(
-        std::string("The Source")));
+    boost::shared_ptr<ROTDecrypter> rotDecryper(
+        new ROTDecrypter(std::string("ROT Decrypter")));
+    boost::shared_ptr<Combiner> combiner(
+        new Combiner(std::string("Combiner")));
+    {
+        boost::shared_ptr<StringCreator> stringCreator(
+            new StringCreator(std::string("The Source")));
 
-    stringCreator->getAlgorithm()->setParamString("Hello World!");
+        boost::shared_ptr<StringFilter> stringFilter(
+            new StringFilter(std::string("Filter #1")));
 
-    boost::shared_ptr<StringFilter> stringFilter (new StringFilter(std::string("Filter #1")));
+        boost::shared_ptr<ROTDecrypter> rotDecryper1(
+            new ROTDecrypter(std::string("ROT Decrypter 1")));
 
-    boost::shared_ptr<ROTDecrypter> rotDecryper (new ROTDecrypter(std::string("ROT Decrypter")));
+        stringCreator->getAlgorithm()->setParamString("Hello World!");
 
-    boost::shared_ptr<ROTDecrypter> rotDecryper1 (new ROTDecrypter(
-        std::string("ROT Encrypter")));
+        stringFilter->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(stringCreator));
+        stringFilter->getAlgorithm()->setInput(
+            stringCreator->getAlgorithm()->getOutput());
 
-    stringFilter->getManager()->connect(boost::dynamic_pointer_cast<Filter> (stringCreator));
-    stringFilter->getAlgorithm()->setInput(
-        stringCreator->getAlgorithm()->getOutput());
+        rotDecryper->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(stringFilter));
+        rotDecryper->getAlgorithm()->setInput(
+            stringFilter->getAlgorithm()->getOutput());
 
-    rotDecryper->getManager()->connect(boost::dynamic_pointer_cast<Filter> (stringFilter));
-    rotDecryper->getAlgorithm()->setInput(
-        stringFilter->getAlgorithm()->getOutput());
+        combiner->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(rotDecryper));
+        combiner->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(rotDecryper1));
+        combiner->getAlgorithm()->setInput1(
+            rotDecryper->getAlgorithm()->getOutput());
+        combiner->getAlgorithm()->setInput2(
+            rotDecryper1->getAlgorithm()->getOutput());
 
-    rotDecryper1->getManager()->connect(boost::dynamic_pointer_cast<Filter> (rotDecryper));
-    rotDecryper1->getAlgorithm()->setInput(
-        rotDecryper->getAlgorithm()->getOutput());
+        rotDecryper1->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(rotDecryper));
+        rotDecryper1->getAlgorithm()->setInput(
+            rotDecryper->getAlgorithm()->getOutput());
+    }
 
     Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
     LIBPIPE_REQUEST_TRACE(req, "Starting.");
 
     try {
-        rotDecryper1->getManager()->processRequest(req);
-
-        std::cout << "StringCreator out: "
-                << *(stringCreator->getAlgorithm()->getOutput().get()->get())
-                << '\n';
-        std::cout << "StringFilter out: "
-                << *(stringFilter->getAlgorithm()->getOutput().get()->get())
-                << '\n';
-        std::cout << "ROT13Filter out: "
-                << *(rotDecryper->getAlgorithm()->getOutput().get()->get())
-                << '\n';
-        std::cout << "ROT13Filter1 out: "
-                << *(rotDecryper1->getAlgorithm()->getOutput().get()->get())
-                << std::endl;
+        combiner->getManager()->processRequest(req);
 
     } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
@@ -353,6 +459,29 @@ int main(int argc, char *argv[])
     for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }
+
+    Request reqDelete(libpipe::Request::DELETE);
+    rotDecryper->getManager()->processRequest(reqDelete);
+
+    Request req1(libpipe::Request::UPDATE);
+    req1.setTraceFlag(true);
+    LIBPIPE_REQUEST_TRACE(req1, "Starting.");
+
+    try {
+        combiner->getManager()->processRequest(req1);
+
+    } catch (libpipe::RequestException& e) {
+        std::cerr << e.what() << std::endl;
+    }
+
+    VS trace1;
+    req1.getTrace(trace1);
+    for (VS::const_iterator i = trace1.begin(); i != trace1.end(); ++i) {
+        std::cout << *i << '\n';
+    }
+
+    std::cout << "\033[22;35m All output after this is due to automatically called destructors. \e[m" << std::endl;
+
     return EXIT_SUCCESS;
 }
 
