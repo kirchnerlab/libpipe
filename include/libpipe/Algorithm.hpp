@@ -42,6 +42,12 @@ public:
      */
     static const timeval MAX_TIME;
 
+    /** Holds the minimum time value that can be represented in a
+     * timeval struct.
+     * This is mostly necessary for disconnecting the input filter.
+     */
+    static const timeval MIN_TIME;
+
     /** Constructor.
      */
     Algorithm();
@@ -108,6 +114,11 @@ private:
      * @return The maximum valid entry in a timeval struct.
      */
     static timeval initMaxTime();
+
+    /** Initializes the static constant \c MIN_TIME.
+     * @return The minimum valid entry in a timeval struct.
+     */
+    static timeval initMinTime();
 
     /** The last modification timestamp.
      */

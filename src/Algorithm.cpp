@@ -45,9 +45,21 @@ timeval Algorithm::initMaxTime()
     return tv;
 }
 
+timeval Algorithm::initMinTime()
+{
+    timeval tv;
+    tv.tv_sec = std::numeric_limits<time_t>::min();
+    tv.tv_usec = std::numeric_limits<suseconds_t>::min();
+    return tv;
+}
+
 // initialize with maximum value such that any call to update will make the
 // instance "younger" than any non-updated instances
 const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
+
+// initialize with minimum value such that any call to update will make the
+// instance "older" than any non-updated instances
+const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
 Algorithm::Algorithm() :
     mTime_(Algorithm::MAX_TIME)
