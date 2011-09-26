@@ -9,7 +9,7 @@
 using namespace libpipe;
 
 Request::Request(const Request::Type& t) :
-    type_(t), traceFlag_(false)
+        type_(t), traceFlag_(false)
 {
 }
 
@@ -20,6 +20,11 @@ Request::~Request()
 bool Request::is(const Type& t)
 {
     return t == type_;
+}
+
+Request::Type Request::getType() const
+{
+    return type_;
 }
 
 bool Request::getTraceFlag() const

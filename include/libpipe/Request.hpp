@@ -56,6 +56,11 @@ public:
      */
     bool is(const Type& t);
 
+    /** Returns the type of request
+     * @return The Request Type of the request
+     */
+    Type getType() const;
+
     /** Returns the state of the trace flag.
      * If the trace flag is on, clients should add trace information
      * while processing the request, using addTrace().
