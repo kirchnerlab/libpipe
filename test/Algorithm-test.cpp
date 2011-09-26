@@ -48,6 +48,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         // add(testCase(&AlgorithmTestSuite::fail));
         add(testCase(&AlgorithmTestSuite::testFreeOperators));
         add(testCase(&AlgorithmTestSuite::testInitialization));
+        add(testCase(&AlgorithmTestSuite::testProcessRequest));
         add(testCase(&AlgorithmTestSuite::testUpdateMTime));
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
@@ -92,6 +93,13 @@ struct AlgorithmTestSuite : vigra::test_suite
 
     /** Test Algorithm::processRequest.
      */
+    void testProcessRequest(){
+        MyAlgorithm a;
+        Request req(Request::DELETE);
+        a.processRequest(req);
+        shouldEqual(a.getMTime(), Algorithm::MIN_TIME);
+
+    }
 
     /** Test Algorithm::updateMTime().
      */
