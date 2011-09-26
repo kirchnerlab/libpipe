@@ -1,4 +1,5 @@
 /*
+
  * Manager-test.cpp
  *
  * Copyright (c) 2011 Marc Kirchner
@@ -28,140 +29,161 @@ using namespace libpipe;
  */
 struct ManagerTestSuite : vigra::test_suite
 {
-    /** Constructor.
-     * The ManagerTestSuite constructor adds all Manager tests to
-     * the test suite. If you write an additional test, add the test
-     * case here.
-     */
-    ManagerTestSuite() :
-        vigra::test_suite("Manager")
-    {
-        add(testCase(&ManagerTestSuite::testSetAlgorithm));
-        add(testCase(&ManagerTestSuite::testConnect));
-        add(testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
-        add(testCase(&ManagerTestSuite::testProcessRequestNoSources));
-        add(testCase(&ManagerTestSuite::testProcessRequestFailingSources));
-    }
-
-    /** Setting the algorithm.
-     */
-    void testSetAlgorithm()
-    {
-        Algorithm* a = new Identity;
-        Manager m;
-        m.setAlgorithm(a);
-        // make sure the pointers point at the same location
-        shouldEqual(m.getAlgorithm(), a);
-        delete a;
-    }
-
-    /** Test source setup, i.e. connecting.
-     */
-    void testConnect()
-    {
-        // Use a derived class to gain access to the source list.
-        TestManager tm;
-        shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
-
-        typedef BasicFilter<Identity, TestManager> IdentityFilter;
-        boost::shared_ptr<Filter> fi ( new IdentityFilter("Filter 1: ID"));
-        tm.connect(fi);
-        shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
-
-        typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
-        boost::shared_ptr<Filter> ff ( new FailFilter("Filter 2: FAILER"));
-        tm.connect(ff);
-        shouldEqual(tm.getSources().size(), static_cast<size_t>(2));
-
-
-    }
-
-    /** Request processing w/o a defined algorithm.
-     */
-    void testProcessRequestNoAlgorithmSetup()
-    {
-        // make sure we fail if there is no algorithm setup
-        TestManager tm;
-        Request req(Request::UPDATE);
-        bool thrown = false;
-        // FIXME: we should have different error classes to distinguish
-        //        between different errors.
-        try {
-            req = tm.processRequest(req);
-        } catch (RequestException& e) {
-            thrown = true;
+        /** Constructor.
+         * The ManagerTestSuite constructor adds all Manager tests to
+         * the test suite. If you write an additional test, add the test
+         * case here.
+         */
+        ManagerTestSuite() :
+                vigra::test_suite("Manager")
+        {
+            add(testCase(&ManagerTestSuite::testSetAlgorithm));
+            add(testCase(&ManagerTestSuite::testSharedPtr));
+            add(testCase(&ManagerTestSuite::testConnect));
+            add(testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
+            add(testCase(&ManagerTestSuite::testProcessRequestNoSources));
+            add(testCase(&ManagerTestSuite::testProcessRequestFailingSources));
         }
-        shouldEqual(thrown, true);
-    }
 
-    /** Request processing with no sources and a successful algorithm.
-     */
-    void testProcessRequestNoSources()
-    {
-        TestManager tm;
-        Request req(Request::UPDATE);
-        req.setTraceFlag(true);
-        // the following algorithm should not throw any exceptions
-        Identity* a = new Identity;
-        tm.setAlgorithm(a);
-        shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
-        a->setInput(42);
-        req = tm.processRequest(req);
-        shouldEqual(a->getOutput(), 42);
-        delete a;
-        std::vector<std::string> trace;
-        req.getTrace(trace);
-        shouldEqual(trace.size(), static_cast<size_t>(1));
-        // now let the algorithm throw an exception
-        RaiseExceptionAlg* b = new RaiseExceptionAlg;
-        tm.setAlgorithm(b);
-        bool thrown = false;
-        try {
-            req = tm.processRequest(req);
-        } catch (RequestException& e) {
-            thrown = true;
+        /** Setting the algorithm.
+         */
+        void testSetAlgorithm()
+        {
+            Algorithm* a = new Identity;
+            Manager m;
+            m.setAlgorithm(a);
+            // make sure the pointers point at the same location
+            shouldEqual(m.getAlgorithm(), a);
+            delete a;
         }
-        shouldEqual(thrown, true);
-        delete b;
-    }
 
-    /** Request processing if one of the sources fails.
-     */
-    void testProcessRequestFailingSources()
-    {
-        TestManager tm;
-        Request req(Request::UPDATE);
-        Algorithm* a = new Identity;
-        tm.setAlgorithm(a);
+        /** Test shared_ptr
+         */
+        void testSharedPtr()
+        {
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
+            boost::shared_ptr<Filter> fi(new IdentityFilter("Filter 1: ID"));
+            shouldEqual(fi.use_count(), 1);
+            shouldEqual(fi.unique(), true);
 
-        typedef BasicFilter<Identity, TestManager> IdentityFilter;
-        boost::shared_ptr<IdentityFilter> fi ( new IdentityFilter("Id"));
-        tm.connect(boost::dynamic_pointer_cast<Filter> (fi));
+            typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
+            boost::shared_ptr<Filter> ff(fi);
 
-        // this is the ok source
-        fi->getAlgorithm()->setInput(42);
-        req = tm.processRequest(req);
-        shouldEqual(fi->getAlgorithm()->getOutput(), 42);
+            shouldEqual(fi.use_count(), 2);
+            shouldEqual(fi.unique(), false);
+            shouldEqual(ff,fi);
 
-        // now add the failing source
-        typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
-        boost::shared_ptr<Filter> ff ( new FailFilter("FailFilter"));
-        tm.connect(ff);
+            fi.reset();
+            shouldEqual(fi.use_count(),0);
+            shouldEqual(ff.use_count(),1);
+            shouldEqual(ff.unique(), true);
 
-        bool thrown = false;
-        try {
-            req = tm.processRequest(req);
-        } catch (RequestException& e) {
-            thrown = true;
         }
-        shouldEqual(thrown, true);
 
-        delete a;
-    }
+        /** Test source setup, i.e. connecting.
+         */
+        void testConnect()
+        {
+            // Use a derived class to gain access to the source list.
+            TestManager tm;
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete Manager class has tests.
-     */
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
+            boost::shared_ptr<Filter> fi(new IdentityFilter("Filter 1: ID"));
+            tm.connect(fi);
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
+
+            typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
+            boost::shared_ptr<Filter> ff(new FailFilter("Filter 2: FAILER"));
+            tm.connect(ff);
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(2));
+
+        }
+
+        /** Request processing w/o a defined algorithm.
+         */
+        void testProcessRequestNoAlgorithmSetup()
+        {
+            // make sure we fail if there is no algorithm setup
+            TestManager tm;
+            Request req(Request::UPDATE);
+            bool thrown = false;
+            // FIXME: we should have different error classes to distinguish
+            //        between different errors.
+            try {
+                req = tm.processRequest(req);
+            } catch (RequestException& e) {
+                thrown = true;
+            }
+            shouldEqual(thrown, true);
+        }
+
+        /** Request processing with no sources and a successful algorithm.
+         */
+        void testProcessRequestNoSources()
+        {
+            TestManager tm;
+            Request req(Request::UPDATE);
+            req.setTraceFlag(true);
+            // the following algorithm should not throw any exceptions
+            Identity* a = new Identity;
+            tm.setAlgorithm(a);
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
+            a->setInput(42);
+            req = tm.processRequest(req);
+            shouldEqual(a->getOutput(), 42);
+            delete a;
+            std::vector<std::string> trace;
+            req.getTrace(trace);
+            shouldEqual(trace.size(), static_cast<size_t>(1));
+            // now let the algorithm throw an exception
+            RaiseExceptionAlg* b = new RaiseExceptionAlg;
+            tm.setAlgorithm(b);
+            bool thrown = false;
+            try {
+                req = tm.processRequest(req);
+            } catch (RequestException& e) {
+                thrown = true;
+            }shouldEqual(thrown, true);
+            delete b;
+        }
+
+        /** Request processing if one of the sources fails.
+         */
+        void testProcessRequestFailingSources()
+        {
+            TestManager tm;
+            Request req(Request::UPDATE);
+            Algorithm* a = new Identity;
+            tm.setAlgorithm(a);
+
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
+            boost::shared_ptr<IdentityFilter> fi(new IdentityFilter("Id"));
+            tm.connect(boost::dynamic_pointer_cast<Filter>(fi));
+
+            // this is the ok source
+            fi->getAlgorithm()->setInput(42);
+            req = tm.processRequest(req);
+            shouldEqual(fi->getAlgorithm()->getOutput(), 42);
+
+            // now add the failing source
+            typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
+            boost::shared_ptr<Filter> ff(new FailFilter("FailFilter"));
+            tm.connect(ff);
+
+            bool thrown = false;
+            try {
+                req = tm.processRequest(req);
+            } catch (RequestException& e) {
+                thrown = true;
+            }shouldEqual(thrown, true);
+
+            delete a;
+        }
+
+        /** Test that is guaranteed to fail.
+         * Leave this in until the complete Manager class has tests.
+         */
 };
 
 /** The main function that runs the tests for class Manager.
