@@ -11,7 +11,7 @@
 #include <exception>
 #include <iostream>
 #include <set>
-#include <boost/make_shared.hpp>
+#include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
 #include <libpipe/Algorithm.hpp>
 #include <libpipe/Filter.hpp>
@@ -299,26 +299,27 @@ int main(int argc, char *argv[])
     typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilter;
     typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
 
-    StringCreator* stringCreator = new StringCreator(
-        std::string("The Source"));
+    boost::shared_ptr<StringCreator> stringCreator (new StringCreator(
+        std::string("The Source")));
+
     stringCreator->getAlgorithm()->setParamString("Hello World!");
 
-    StringFilter* stringFilter = new StringFilter(std::string("Filter #1"));
+    boost::shared_ptr<StringFilter> stringFilter (new StringFilter(std::string("Filter #1")));
 
-    ROTDecrypter* rotDecryper = new ROTDecrypter(std::string("ROT Decrypter"));
+    boost::shared_ptr<ROTDecrypter> rotDecryper (new ROTDecrypter(std::string("ROT Decrypter")));
 
-    ROTDecrypter* rotDecryper1 = new ROTDecrypter(
-        std::string("ROT Encrypter"));
+    boost::shared_ptr<ROTDecrypter> rotDecryper1 (new ROTDecrypter(
+        std::string("ROT Encrypter")));
 
-    stringFilter->getManager()->connect(stringCreator);
+    stringFilter->getManager()->connect(boost::dynamic_pointer_cast<Filter> (stringCreator));
     stringFilter->getAlgorithm()->setInput(
         stringCreator->getAlgorithm()->getOutput());
 
-    rotDecryper->getManager()->connect(stringFilter);
+    rotDecryper->getManager()->connect(boost::dynamic_pointer_cast<Filter> (stringFilter));
     rotDecryper->getAlgorithm()->setInput(
         stringFilter->getAlgorithm()->getOutput());
 
-    rotDecryper1->getManager()->connect(rotDecryper);
+    rotDecryper1->getManager()->connect(boost::dynamic_pointer_cast<Filter> (rotDecryper));
     rotDecryper1->getAlgorithm()->setInput(
         rotDecryper->getAlgorithm()->getOutput());
 
@@ -345,11 +346,6 @@ int main(int argc, char *argv[])
     } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
     }
-
-    delete rotDecryper1;
-    delete rotDecryper;
-    delete stringFilter;
-    delete stringCreator;
 
     typedef std::vector<std::string> VS;
     VS trace;

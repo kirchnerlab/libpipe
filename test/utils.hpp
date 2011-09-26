@@ -15,6 +15,8 @@
 #include <libpipe/RequestException.hpp>
 #include <libpipe/Manager.hpp>
 
+#include <boost/shared_ptr.hpp>
+
 #include <sstream>
 
 using namespace libpipe;
@@ -38,11 +40,11 @@ public:
         this->updateMTime();
         return req;
     }
-    int getOutput()
+    virtual int getOutput()
     {
         return out_;
     }
-    void setInput(int input)
+    virtual void setInput(int input)
     {
         if (in_ != input) {
             in_ = input;
@@ -122,7 +124,7 @@ public:
 class TestManager : public Manager
 {
 public:
-    std::set<Filter*> getSources()
+    std::set<boost::shared_ptr<Filter> > getSources()
     {
         return sources_;
     }

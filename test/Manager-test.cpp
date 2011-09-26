@@ -18,6 +18,8 @@
 #include <libpipe/RequestException.hpp>
 #include <libpipe/Manager.hpp>
 
+#include <boost/pointer_cast.hpp>
+
 #include "utils.hpp"
 
 using namespace libpipe;
@@ -62,17 +64,16 @@ struct ManagerTestSuite : vigra::test_suite
         shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
 
         typedef BasicFilter<Identity, TestManager> IdentityFilter;
-        Filter* fi = new IdentityFilter("Filter 1: ID");
+        boost::shared_ptr<Filter> fi ( new IdentityFilter("Filter 1: ID"));
         tm.connect(fi);
         shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
 
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
-        Filter* ff = new FailFilter("Filter 2: FAILER");
+        boost::shared_ptr<Filter> ff ( new FailFilter("Filter 2: FAILER"));
         tm.connect(ff);
         shouldEqual(tm.getSources().size(), static_cast<size_t>(2));
 
-        delete fi;
-        delete ff;
+
     }
 
     /** Request processing w/o a defined algorithm.
@@ -134,8 +135,8 @@ struct ManagerTestSuite : vigra::test_suite
         tm.setAlgorithm(a);
 
         typedef BasicFilter<Identity, TestManager> IdentityFilter;
-        IdentityFilter* fi = new IdentityFilter("Id");
-        tm.connect(fi);
+        boost::shared_ptr<IdentityFilter> fi ( new IdentityFilter("Id"));
+        tm.connect(boost::dynamic_pointer_cast<Filter> (fi));
 
         // this is the ok source
         fi->getAlgorithm()->setInput(42);
@@ -144,7 +145,7 @@ struct ManagerTestSuite : vigra::test_suite
 
         // now add the failing source
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
-        FailFilter* ff = new FailFilter("FailFilter");
+        boost::shared_ptr<Filter> ff ( new FailFilter("FailFilter"));
         tm.connect(ff);
 
         bool thrown = false;
@@ -155,8 +156,7 @@ struct ManagerTestSuite : vigra::test_suite
         }
         shouldEqual(thrown, true);
 
-        delete ff;
-        delete fi;
+
         delete a;
     }
 

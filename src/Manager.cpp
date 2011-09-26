@@ -60,7 +60,7 @@ Request& Manager::processRequest(Request& req)
     return req;
 }
 
-void Manager::connect(Filter* f)
+void Manager::connect(boost::shared_ptr<Filter> f)
 {
     sources_.insert(f);
 }

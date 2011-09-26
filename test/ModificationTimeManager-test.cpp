@@ -88,11 +88,14 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
                 RaiseFilter;
         typedef BasicFilter<Inc, ModificationTimeManager> IncFilter;
 
-        IncFilter* i1 = new IncFilter("I1");
-        IncFilter* i2 = new IncFilter("I2");
+        boost::shared_ptr<IncFilter> i1 (new IncFilter("I1"));
+        boost::shared_ptr<IncFilter> i2 (new IncFilter("I2"));
+       // IncFilter* i1 = new IncFilter("I1");
+       // IncFilter* i2 = new IncFilter("I2");
         // connect
+
         i2->getAlgorithm()->setInput(i1->getAlgorithm()->getOutput());
-        i2->getManager()->connect(i1);
+        i2->getManager()->connect(boost::dynamic_pointer_cast<Filter> (i1));
         int* src = new int(42);
         i1->getAlgorithm()->setInput(src);
         // the following line simulates source behavior for i1
@@ -142,8 +145,8 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 1336);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 1337);
 
-        delete i2;
-        delete i1;
+      //  delete i2;
+      //  delete i1;
         delete src;
     }
 
