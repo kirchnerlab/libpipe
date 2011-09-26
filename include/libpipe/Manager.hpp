@@ -1,4 +1,5 @@
 /*
+
  * Manager.hpp
  * 
  * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
@@ -59,6 +60,15 @@ public:
 
     /** Connect the manager to a filter it depends on. Each call connects the
      * Manager to the specified filter; duplicates will be ignored.
+     * Because of the use of shared_pointers one need to dynamically cast the
+     * pointers to boost::shared_ptr<Filter> this can be done with the use of
+     * boost::dynamic_pointer_cast<Filter>
+     * \code
+     * ...
+     * boost::shared_ptr<UserFilter> uf (new UserFilter("FilterName"));
+     * ...
+     * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
+     * \endcode
      *  
      * @param[inout] f Pointer to a filter object on which the current manager
      *                 should depend.
