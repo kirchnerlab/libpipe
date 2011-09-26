@@ -40,9 +40,12 @@ struct ManagerTestSuite : vigra::test_suite
             add(testCase(&ManagerTestSuite::testSetAlgorithm));
             add(testCase(&ManagerTestSuite::testSharedPtr));
             add(testCase(&ManagerTestSuite::testConnect));
-            add(testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
+            add(
+                testCase(&ManagerTestSuite::testProcessRequestNoAlgorithmSetup));
             add(testCase(&ManagerTestSuite::testProcessRequestNoSources));
             add(testCase(&ManagerTestSuite::testProcessRequestFailingSources));
+            add(testCase(&ManagerTestSuite::testProcessRequestFailingSourcesDelete));
+
         }
 
         /** Setting the algorithm.
@@ -71,11 +74,11 @@ struct ManagerTestSuite : vigra::test_suite
 
             shouldEqual(fi.use_count(), 2);
             shouldEqual(fi.unique(), false);
-            shouldEqual(ff,fi);
+            shouldEqual(ff, fi);
 
             fi.reset();
-            shouldEqual(fi.use_count(),0);
-            shouldEqual(ff.use_count(),1);
+            shouldEqual(fi.use_count(), 0);
+            shouldEqual(ff.use_count(), 1);
             shouldEqual(ff.unique(), true);
 
         }
@@ -177,6 +180,28 @@ struct ManagerTestSuite : vigra::test_suite
             } catch (RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
+
+            delete a;
+        }
+        /** Request processing if the request type is delete.
+         */
+        void testProcessRequestFailingSourcesDelete()
+        {
+            TestManager tm;
+            Request req(Request::DELETE);
+            Algorithm* a = new Identity;
+            tm.setAlgorithm(a);
+
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
+            boost::shared_ptr<IdentityFilter> fi(new IdentityFilter("Id"));
+            tm.connect(boost::dynamic_pointer_cast<Filter>(fi));
+
+            // make sure that the filters are deleted
+            fi->getAlgorithm()->setInput(42);
+            req = tm.processRequest(req);
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
+            shouldEqual(tm.getAlgorithm()->needUpdate(), false);
+
 
             delete a;
         }
