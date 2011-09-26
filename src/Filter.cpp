@@ -24,19 +24,9 @@ Filter::~Filter()
 
 Request& Filter::processRequest(Request& req)
 {
+    // forward algorithm handle and request to manager
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
-    if(req.is(Request::UPDATE)){
-        // forward algorithm handle and request to manager
-        this->getManager()->processRequest(req);
-    }
-    else if(req.is(Request::DELETE)){
-        this->getManager()->disconnect();
-    }
-    else{
-        throw RequestException (
-            "Filter: Cannot process request: request type is unknown: "
-                    + req.getType());
-    }
+    this->getManager()->processRequest(req);
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
     return req;
 }
