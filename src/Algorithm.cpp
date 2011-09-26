@@ -76,7 +76,7 @@ Request& Algorithm::processRequest(Request& req)
         req = this->update(req);
     }
     else if(req.is(Request::DELETE)){
-        ;
+        this->setMTime(Algorithm::MIN_TIME);
     }
     return req;
 }

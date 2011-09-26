@@ -58,9 +58,19 @@ Request& Manager::processRequest(Request& req)
             throw RequestException(
                 "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
         }
-    }
-    else if(req.is(Request::DELETE)){
-        ;
+    } else if (req.is(Request::DELETE)) {
+        try {
+            req = algorithm_->processRequest(req);
+        } catch (std::exception& e) {
+            std::string str(e.what());
+            throw RequestException(
+                "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+                        + str);
+        } catch (...) {
+            throw RequestException(
+                "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
+        }
+        this->disconnect();
     }
     return req;
 }
