@@ -87,6 +87,12 @@ protected:
     /** Pointer to the algorithm that is managed by the manager.
      */
     Algorithm* algorithm_;
+
+    /** Disconnects the manager from all his input filters.
+     * This fixes the output of the algorithm to the current state.
+     *
+     */
+    void disconnect();
 };
 
 } // namespace libpipe

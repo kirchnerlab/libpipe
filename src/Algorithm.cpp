@@ -75,6 +75,9 @@ Request& Algorithm::processRequest(Request& req)
     if (req.is(Request::UPDATE)) {
         req = this->update(req);
     }
+    else if(req.is(Request::DELETE)){
+        ;
+    }
     return req;
 }
 
