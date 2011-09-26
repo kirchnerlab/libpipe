@@ -156,7 +156,6 @@ struct ManagerTestSuite : vigra::test_suite
         }
         shouldEqual(thrown, true);
 
-
         delete a;
     }
 

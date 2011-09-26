@@ -90,8 +90,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
 
         boost::shared_ptr<IncFilter> i1 (new IncFilter("I1"));
         boost::shared_ptr<IncFilter> i2 (new IncFilter("I2"));
-       // IncFilter* i1 = new IncFilter("I1");
-       // IncFilter* i2 = new IncFilter("I2");
+
         // connect
 
         i2->getAlgorithm()->setInput(i1->getAlgorithm()->getOutput());
@@ -145,8 +144,6 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 1336);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 1337);
 
-      //  delete i2;
-      //  delete i1;
         delete src;
     }
 
