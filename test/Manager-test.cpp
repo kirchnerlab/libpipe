@@ -198,6 +198,7 @@ struct ManagerTestSuite : vigra::test_suite
 
             // make sure that the filters are deleted
             fi->getAlgorithm()->setInput(42);
+            shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
             req = tm.processRequest(req);
             shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
             shouldEqual(tm.getAlgorithm()->needUpdate(), false);
