@@ -123,6 +123,108 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         StringPtr output_;
 };
 
+/** Converts std::string input to lowercase.
+ * Although not exceedingly useful, this is a good example of how to write
+ * an LIBPIPE algorithm. Basically, there are only two requirements (and one
+ * additional option):
+ * \li derive from \c libpipe::Algorithm.
+ * \li implement the \c update() function.
+ * \li optionally, override the \c processRequest() function (if your
+ *     implementation does not call the \c update function, you do not
+ *     need to implement it).
+ *
+ * Contrary to other approaches to pipelining (most notably probably the VTK
+ * way), LIBPIPE attempts to minimize hard constraints on the implementations.
+ * There is a diverse collection of datatypes and a set of software suites
+ * that are being used to process mass spectrometry data. Minimizing the
+ * structural imprint that LIBPIPE leaves on applications allows easy cross-suite
+ * interfacing and allows for a more rapid algorithmic development cycle.
+ */
+class LowercaseAlgorithm : public libpipe::Algorithm
+{
+    public:
+        /** Constructor.
+         * Make sure to call the \c libpipe::Algorithm constructor.
+         */
+        LowercaseAlgorithm() :
+                libpipe::Algorithm(), output_(
+                    boost::make_shared<libpipe::SharedData<std::string> >(
+                        new std::string))
+        {
+        }
+
+        /** Destructor.
+         */
+        virtual ~LowercaseAlgorithm()
+        {
+            std::cout
+                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
+                    << *input_->get() << "\t and output: " << *output_->get()
+                    << "\e[m" << std::endl;
+        }
+
+        /** Runs the algorithm and updates the output data.
+         * This is where all the algorithm implementation goes.
+         * @param[in,out] req The request object, forwarded from \c process request.
+         */
+        libpipe::Request& update(libpipe::Request& req)
+        {
+            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
+            output_.get()->get()->clear();
+            LIBPIPE_REQUEST_TRACE(req,
+                "LowercaseAlgorithm::update: transforming to uppercase.");
+            std::transform(input_->get()->begin(), input_->get()->end(),
+                std::back_inserter(*output_->get()), tolower);
+            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: end.");
+            return req;
+        }
+
+        /** Provides access to results.
+         * In contrast to more rigid pipeline implementations, LIBPIPE does not
+         * impose any constraints on what data types algorithms can share; this is
+         * simply done by keeping the request pipeline separate from the
+         * input/output flow of the algorithms. In most cases the user knows best
+         * which data type is suitable for a problem at hand; there is no reason to
+         * take this freedom (and the responsibility from her/him. Algorithms need
+         * to specify input and output functions, and it is recommended (but not
+         * required) to start the respective function names with 'setInput' and
+         * 'getOutput'.
+         *  @returns A handle to the output data of the algorithm.
+         */
+        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        {
+            return output_;
+        }
+
+        /** Allows to connect the output of another algorithm with the input of
+         * this algorithm.
+         * @see getOutput
+         *
+         * @param[in] input A handle (in most cases a (smart) pointer to the data.
+         */
+        void setInput(
+            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+        {
+            input_ = input;
+        }
+
+    protected:
+        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+
+        /** A reference to the input data.
+         * This can be a weak pointer or some other kind of reference. In the
+         * majority of cases, the algorithm should not attempt to modify this data.
+         * There are exceptions (and hence constness is not enforced).
+         */
+        StringPtr input_;
+
+        /** The output data.
+         * In most cases it is advisable that the memory consumed by this data is
+         * owned by the algorithm (or, at least, managed by it).
+         */
+        StringPtr output_;
+};
+
 /** Combines the input strings to one string.
  *
  */
@@ -246,27 +348,26 @@ class ROT13Algorithm : public libpipe::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-            if (!input_) {
-                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
-                        << "\t and output: " << *output_->get() << "\e[m"
-                        << std::endl;
-            } else {
+            if (input_) {
                 std::cout << "\033[22;32m ROT13 destroyed with input: "
                         << *input_->get() << "\t and output: "
                         << *output_->get() << "\e[m" << std::endl;
-
+            } else {
+                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
+                        << "\t and output: " << *output_->get() << "\e[m"
+                        << std::endl;
             }
 
         }
 
         /** Runs the algorithm and updates the output data.
+         * If the request type is DELETE the input gets deleted.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
         libpipe::Request& update(libpipe::Request& req)
         {
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
-                std::cout << "\e[31m update needed\e[m" << std::endl;
                 LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
                 LIBPIPE_REQUEST_TRACE(req,
@@ -276,6 +377,8 @@ class ROT13Algorithm : public libpipe::Algorithm
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
+                LIBPIPE_REQUEST_TRACE(req,
+                    "ROT13Algorithm::update: deleted the input");
             }
             return req;
         }
@@ -414,25 +517,27 @@ int main(int argc, char *argv[])
     using namespace libpipe;
 
     typedef libpipe::BasicFilter<Source, libpipe::Manager> StringCreator;
-    typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilter;
+    typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilterUp;
     typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
     typedef libpipe::BasicFilter<CombineAlgorithm, libpipe::Manager> Combiner;
+    typedef libpipe::BasicFilter<LowercaseAlgorithm, libpipe::Manager> StringFilterLow;
 
-    boost::shared_ptr<ROTDecrypter> rotDecryper(
-        new ROTDecrypter(std::string("ROT Decrypter")));
-    boost::shared_ptr<Combiner> combiner(
-        new Combiner(std::string("Combiner")));
+    boost::shared_ptr<StringFilterLow> lowerFilter(
+        new StringFilterLow(std::string("Lowercase Filter")));
     {
         boost::shared_ptr<StringCreator> stringCreator(
-            new StringCreator(std::string("The Source")));
-
-        boost::shared_ptr<StringFilter> stringFilter(
-            new StringFilter(std::string("Filter #1")));
-
+                    new StringCreator(std::string("The Source")));
+        boost::shared_ptr<StringFilterUp> stringFilter(
+                      new StringFilterUp(std::string("Filter #1")));
+        boost::shared_ptr<ROTDecrypter> rotDecryper(
+                        new ROTDecrypter(std::string("ROT Decrypter")));
         boost::shared_ptr<ROTDecrypter> rotDecryper1(
-            new ROTDecrypter(std::string("ROT Decrypter 1")));
+                        new ROTDecrypter(std::string("ROT Decrypter 1")));
+        boost::shared_ptr<Combiner> combiner(
+                       new Combiner(std::string("Combiner")));
 
-        stringCreator->getAlgorithm()->setParamString("Hello World!");
+        stringCreator->getAlgorithm()->setParamString(
+            "Hello World! I am a very long string to see how much memory is freed by deleting the objects");
 
         stringFilter->getManager()->connect(
             boost::dynamic_pointer_cast<Filter>(stringCreator));
@@ -444,6 +549,11 @@ int main(int argc, char *argv[])
         rotDecryper->getAlgorithm()->setInput(
             stringFilter->getAlgorithm()->getOutput());
 
+        rotDecryper1->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(rotDecryper));
+        rotDecryper1->getAlgorithm()->setInput(
+            rotDecryper->getAlgorithm()->getOutput());
+
         combiner->getManager()->connect(
             boost::dynamic_pointer_cast<Filter>(rotDecryper));
         combiner->getManager()->connect(
@@ -453,10 +563,10 @@ int main(int argc, char *argv[])
         combiner->getAlgorithm()->setInput2(
             rotDecryper1->getAlgorithm()->getOutput());
 
-        rotDecryper1->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper));
-        rotDecryper1->getAlgorithm()->setInput(
-            rotDecryper->getAlgorithm()->getOutput());
+        lowerFilter->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(combiner));
+        lowerFilter->getAlgorithm()->setInput(
+            combiner->getAlgorithm()->getOutput());
     }
 
     Request req(libpipe::Request::UPDATE);
@@ -464,7 +574,7 @@ int main(int argc, char *argv[])
     LIBPIPE_REQUEST_TRACE(req, "Starting.");
 
     try {
-        combiner->getManager()->processRequest(req);
+        lowerFilter->getManager()->processRequest(req);
 
     } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
@@ -478,14 +588,25 @@ int main(int argc, char *argv[])
     }
 
     Request reqDelete(libpipe::Request::DELETE);
-    rotDecryper->getManager()->processRequest(reqDelete);
+    reqDelete.setTraceFlag(true);
+    LIBPIPE_REQUEST_TRACE(reqDelete, "Starting with DELETE");
+
+    lowerFilter->getManager()->processRequest(reqDelete);
+
+
+    VS traceDelete;
+    reqDelete.getTrace(traceDelete);
+    for (VS::const_iterator i = traceDelete.begin(); i != traceDelete.end();
+            ++i) {
+        std::cout << *i << '\n';
+    }
 
     Request req1(libpipe::Request::UPDATE);
     req1.setTraceFlag(true);
     LIBPIPE_REQUEST_TRACE(req1, "Starting.");
 
     try {
-        combiner->getManager()->processRequest(req1);
+        lowerFilter->getManager()->processRequest(req1);
 
     } catch (libpipe::RequestException& e) {
         std::cerr << e.what() << std::endl;
