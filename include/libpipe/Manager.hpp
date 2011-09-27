@@ -89,7 +89,9 @@ protected:
     Algorithm* algorithm_;
 
     /** Disconnects the manager from all his input filters.
-     * This fixes the output of the algorithm to the current state.
+     * The Algorithm calls does at the same time fix the output
+     * of the corresponding Algorithm, so that the output will
+     * stay constant.
      *
      */
     void disconnect();

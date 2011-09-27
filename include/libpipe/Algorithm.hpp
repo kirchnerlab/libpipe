@@ -64,10 +64,14 @@ public:
      */
     virtual Request& processRequest(Request& req);
 
-    /** Runs the algorithm and updates the output data.
+    /** Runs the algorithm and updates the output data, if the Request
+     * Type is \c Request::Update. If the request Type is \c Request::DELETE
+     * after calling the update function the modification time is fixed to
+     * \c Algorithm::MIN_TIME.
      * Users must overload this method (this is where the beef goes).
      * @param[in,out] req The request object (useful for logging/tracing
-     *                   purposes.
+     *                   purposes). Also useful to get the type of request
+     *                   (Update of Delete), so that the input can be deleted.
      */
     virtual Request& update(Request& req) = 0;
 
@@ -98,6 +102,9 @@ public:
      *     especially true for filter setups with branches). Hence, their
      *     modification time is set to \c Algorithm::MAX_TIME to guarantee
      *     their execution on the first call to \c update.
+     * \li When the precursors are deleted the modification time gets set to
+     *     \c Algorithm::MIN_TIME to guarantee that the algorithm does not
+     *     update himself.
      * \li Managers in filters that act as sources (i.e. do not have any
      *     predecessor) cannot determine the need for execution by comparing \c
      *     Algorithm::getMTime() against their predecessor. In the event that
