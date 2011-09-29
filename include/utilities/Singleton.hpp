@@ -38,20 +38,26 @@
 template <class T>
 class Singleton {
     public:
-        static T& instance(void);
+        static T& instance();
         ~Singleton();
     private:
         Singleton();
         Singleton(const Singleton&);
         Singleton& operator=(const Singleton&);
 
-        static void create(void);
+        static void create();
         static T* pInstance_;
         static bool destroyed_;
 
 };
 
-template<class T> T& Singleton<T>::instance(void) {
+/** Returns the unique instance of class T. If it was already
+ *  deleted an exception is thrown. If the class T was never used
+ *  before a new instance is generated.
+ *
+ * @return Unique instance of class T
+ */
+template<class T> T& Singleton<T>::instance() {
     if (!pInstance_) {
         if (destroyed_) {
             // dead reference
@@ -69,7 +75,7 @@ template <class T> Singleton<T>::~Singleton() {
     destroyed_ = true;
 }
 
-template <class T> void Singleton<T>::create(void) {
+template <class T> void Singleton<T>::create() {
     static T theInstance;
     pInstance_ = &theInstance;
 }
