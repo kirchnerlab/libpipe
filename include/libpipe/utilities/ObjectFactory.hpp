@@ -2,8 +2,7 @@
  * ObjectFactory.hpp
  *
  *  Copyright (c) 2009 Marc Kirchner <marc.kirchner@iwr.uni-heidelberg.de>
- *  Created on: 29.09.2011
- *      Author: david
+ *
  */
 
 #ifndef OBJECTFACTORY_HPP_
@@ -14,7 +13,7 @@
 #include <typeinfo>
 #include <iostream>
 
-namespace test {
+namespace libpipe {
 
 namespace FactorySite {
 
@@ -41,7 +40,7 @@ class ErrorPolicyReturnNull
 template<class AbstractProduct, typename IdentifierType, template<typename,
         class > class FactoryErrorPolicy = ErrorPolicyThrowException,
 typename ProductCreatorSignature = AbstractProduct* (*)()>
-class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
+class ObjectFactory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
 {
     public:
         bool registerType(const IdentifierType& id,

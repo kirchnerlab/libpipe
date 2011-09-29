@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_OBJECTFACTORY ObjectFactory-test.cpp)
 SET(SRCS_SINGLETON Singleton-test.cpp)
 SET(SRCS_SHAREDDATA SharedData-test.cpp)
 SET(SRCS_REQUESTEXCEPTION RequestException-test.cpp)
@@ -69,6 +70,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("ObjectFactory" test_objectfactory ${SRCS_OBJECTFACTORY})
 ADD_LIBPIPE_TEST("Singleton" test_singleton ${SRCS_SINGLETON})
 ADD_LIBPIPE_TEST("SharedData" test_shareddata ${SRCS_SHAREDDATA})
 ADD_LIBPIPE_TEST("RequestException" test_requestexception ${SRCS_REQUESTEXCEPTION})

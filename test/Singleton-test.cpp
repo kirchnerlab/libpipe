@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner <marc.kirchner@childrens.harvard.edu>
  *
  */
-#include <utilities/Singleton.hpp>
+#include <libpipe/utilities/Singleton.hpp>
 
 #include "vigra/unittest.hxx"
 
@@ -26,6 +26,7 @@ struct SingletonTestSuite : vigra::test_suite {
         SingletonTest& v = ST::instance();
         should(&u == &v);
     }
+
 };
 
 int main()
