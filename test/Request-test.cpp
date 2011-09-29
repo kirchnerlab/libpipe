@@ -33,6 +33,8 @@ struct RequestTestSuite : vigra::test_suite
         add(testCase(&RequestTestSuite::testIs));
         add(testCase(&RequestTestSuite::testTraceFlag));
         add(testCase(&RequestTestSuite::testTrace));
+        add(testCase(&RequestTestSuite::testGetter));
+
         //add(testCase(&RequestTestSuite::fail));
     }
 
@@ -58,6 +60,14 @@ struct RequestTestSuite : vigra::test_suite
         shouldEqual(reqU.is(Request::DELETE), false);
         shouldEqual(reqD.is(Request::UPDATE), false);
     }
+
+    /** Check getter
+     */
+    void testGetter(){
+        Request req(Request::UPDATE);
+        shouldEqual(req.getType(), Request::UPDATE);
+    }
+
 
     /** Check trace flag getter/setter
      */
