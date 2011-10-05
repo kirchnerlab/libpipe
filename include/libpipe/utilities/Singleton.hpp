@@ -28,15 +28,16 @@
 #ifndef SINGLETON_HPP_
 #define SINGLETON_HPP_
 #include <exception>
-
+namespace utilities {
 /** Singleton holder template class.
  * Template class to create singletons. A singleton of type SinglImpl is
  * created by
  *
  * typedef Singleton<SinglImpl> Singl;
  */
-template <class T>
-class Singleton {
+template<class T>
+class Singleton
+{
     public:
         static T& instance();
         ~Singleton();
@@ -57,7 +58,8 @@ class Singleton {
  *
  * @return Unique instance of class T
  */
-template<class T> T& Singleton<T>::instance() {
+template<class T> T& Singleton<T>::instance()
+{
     if (!pInstance_) {
         if (destroyed_) {
             // dead reference
@@ -70,17 +72,20 @@ template<class T> T& Singleton<T>::instance() {
     return *pInstance_;
 }
 
-template <class T> Singleton<T>::~Singleton() {
+template<class T> Singleton<T>::~Singleton()
+{
     pInstance_ = 0;
     destroyed_ = true;
 }
 
-template <class T> void Singleton<T>::create() {
+template<class T> void Singleton<T>::create()
+{
     static T theInstance;
     pInstance_ = &theInstance;
 }
 
-template <class T> T* Singleton<T>::pInstance_ = 0;
-template <class T> bool Singleton<T>::destroyed_ = false;
+template<class T> T* Singleton<T>::pInstance_ = 0;
+template<class T> bool Singleton<T>::destroyed_ = false;
 
+}
 #endif /* SINGLETON_HPP_ */

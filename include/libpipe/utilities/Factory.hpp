@@ -15,7 +15,7 @@
 
 namespace libpipe {
 
-namespace FactorySite {
+namespace utilities {
 
 template<typename IdentifierType, typename ProductType>
 class ErrorPolicyThrowException
