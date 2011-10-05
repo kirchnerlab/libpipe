@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef OBJECTFACTORY_HPP_
-#define OBJECTFACTORY_HPP_
+#ifndef FACTORY_HPP_
+#define FACTORY_HPP_
 
 #include <map>
 #include <exception>

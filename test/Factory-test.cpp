@@ -9,7 +9,7 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 #include <libpipe/utilities/Singleton.hpp>
-#include <libpipe/utilities/ObjectFactory.hpp>
+#include <libpipe/utilities/Factory.hpp>
 
 #include <string>
 #include <exception>
