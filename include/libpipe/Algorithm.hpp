@@ -1,7 +1,8 @@
 /*
  * Algorithm.hpp
  * 
- * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
+ * Copyright (c) 2010 Marc Kirchner
+ *               2011 David Sichau
  *
  */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__

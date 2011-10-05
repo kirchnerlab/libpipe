@@ -1,8 +1,8 @@
 /*
  * testFilters.cpp
  * 
- * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
- * ROT13 Algorithm added by David Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *               2011 David Sichau
  *
  */
 

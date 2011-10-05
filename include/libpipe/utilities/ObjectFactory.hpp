@@ -1,7 +1,7 @@
 /*
  * ObjectFactory.hpp
  *
- *  Copyright (c) 2009 Marc Kirchner <marc.kirchner@iwr.uni-heidelberg.de>
+ *  Copyright (c) 2009 Marc Kirchner
  *
  */
 

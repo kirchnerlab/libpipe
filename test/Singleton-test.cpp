@@ -1,7 +1,7 @@
 /*
  * Singleton-test.cpp
  *
- * Copyright (c) 2010 Marc Kirchner <marc.kirchner@childrens.harvard.edu>
+ * Copyright (c) 2010 Marc Kirchner
  *
  */
 #include <libpipe/utilities/Singleton.hpp>

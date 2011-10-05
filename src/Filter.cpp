@@ -1,7 +1,7 @@
 /*
  * Filter.cpp
  * 
- * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
+ * Copyright (c) 2010 Marc Kirchner
  *
  */
 #include <libpipe/Filter.hpp>

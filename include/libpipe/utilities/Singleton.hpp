@@ -1,8 +1,8 @@
 /*
  * Singleton.hpp
  *
- * Copyright (c) 2010 Marc Kirchner <marc.kirchner@childrens.harvard.edu>
- * Copyright (c) 2008 Thorben Kroeger <thorben.kroeger@iwr.uni-heidelberg.de>
+ * Copyright (c) 2010 Marc Kirchner
+ * Copyright (c) 2008 Thorben Kroeger
  *
  * This file is part of ms++.
  *

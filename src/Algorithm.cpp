@@ -1,8 +1,8 @@
 /*
  * Algorithm.cpp
  * 
- * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
- *
+ * Copyright (c) 2010 Marc Kirchner
+ *               2011 David Sichau
  */
 #include <libpipe/Algorithm.hpp>
 #include <cstring> // for memset
