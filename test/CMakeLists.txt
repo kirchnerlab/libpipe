@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_FILTERRTC FilterRTC-test.cpp)
 SET(SRCS_OBJECTFACTORY Factory-test.cpp)
 SET(SRCS_SINGLETON Singleton-test.cpp)
 SET(SRCS_SHAREDDATA SharedData-test.cpp)
@@ -70,6 +71,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("FilterRTC" test_filterrtc ${SRCS_FILTERRTC})
 ADD_LIBPIPE_TEST("ObjectFactory" test_factory ${SRCS_OBJECTFACTORY})
 ADD_LIBPIPE_TEST("Singleton" test_singleton ${SRCS_SINGLETON})
 ADD_LIBPIPE_TEST("SharedData" test_shareddata ${SRCS_SHAREDDATA})

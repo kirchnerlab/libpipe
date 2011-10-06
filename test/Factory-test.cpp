@@ -17,7 +17,7 @@
 class AbstractType;
 
 typedef utilities::Singleton<
-        libpipe::utilities::Factory<AbstractType, std::string> > AbstractFactory;
+        utilities::Factory<AbstractType, std::string> > AbstractFactory;
 
 class AbstractType
 {
