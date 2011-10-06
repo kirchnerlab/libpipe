@@ -13,7 +13,6 @@
 #include <typeinfo>
 #include <iostream>
 
-namespace libpipe {
 
 namespace utilities {
 
@@ -70,6 +69,6 @@ class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
 
 }
 
-}
+
 
 #endif /* OBJECTFACTORY_HPP_ */

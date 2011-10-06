@@ -14,16 +14,18 @@
 #include "libpipe/Manager.hpp"
 #include "libpipe/BasicFilterRTC.hpp"
 
+namespace libpipe {
 namespace RTC {
 
 typedef utilities::Singleton<
-        libpipe::utilities::Factory<libpipe::Algorithm, std::string> > AlgorithmFactory;
+        utilities::Factory<libpipe::Algorithm, std::string> > AlgorithmFactory;
 
 typedef utilities::Singleton<
-        libpipe::utilities::Factory<libpipe::Manager, std::string> > ManagerFactory;
+        utilities::Factory<libpipe::Manager, std::string> > ManagerFactory;
 
 typedef utilities::Singleton<
-        libpipe::utilities::Factory<libpipe::RTC::BasicFilter, std::string> > FilterFactory;
+        utilities::Factory<libpipe::RTC::BasicFilter, std::string> > FilterFactory;
 
 } //end namespace RTC
+} //end namespace libpipe
 #endif /* LIBPIPEFACTORIES_HPP_ */
