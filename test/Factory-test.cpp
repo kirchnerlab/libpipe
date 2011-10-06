@@ -16,8 +16,8 @@
 
 class AbstractType;
 
-typedef Singleton<
-        libpipe::FactorySite::ObjectFactory<AbstractType, std::string> > Factory;
+typedef utilities::Singleton<
+        libpipe::utilities::Factory<AbstractType, std::string> > AbstractFactory;
 
 class AbstractType
 {
@@ -48,7 +48,7 @@ class ConcreteType : public AbstractType
         static const bool registerLoader()
         {
             std::string ids="test";
-            return Factory::instance().registerType(ids, ConcreteType::create);
+            return AbstractFactory::instance().registerType(ids, ConcreteType::create);
         }
 };
 
@@ -83,7 +83,7 @@ struct ObjectFactoryTestSuite : vigra::test_suite
         void test()
         {
             std::string ids= "test";
-            AbstractType * t = Factory::instance().createObject(ids);
+            AbstractType * t = AbstractFactory::instance().createObject(ids);
             shouldEqual(t->getName(), "test");
             delete t;
         }
@@ -92,7 +92,7 @@ struct ObjectFactoryTestSuite : vigra::test_suite
             std::string ids="blubb";
             bool thrown=false;
             try{
-                AbstractType *t = Factory::instance().createObject(ids);
+                AbstractType *t = AbstractFactory::instance().createObject(ids);
                 delete t;
             }
             catch(std::exception& e){
