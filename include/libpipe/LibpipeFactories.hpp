@@ -17,7 +17,7 @@
 namespace RTC {
 
 typedef utilities::Singleton<
-        libpipe::utilities:Factory<libpipe::Algorithm, std::string> > AlgorithmFactory;
+        libpipe::utilities::Factory<libpipe::Algorithm, std::string> > AlgorithmFactory;
 
 typedef utilities::Singleton<
         libpipe::utilities::Factory<libpipe::Manager, std::string> > ManagerFactory;
