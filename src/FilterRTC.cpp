@@ -6,12 +6,15 @@
  *
  */
 #include <libpipe/RTC/FilterRTC.hpp>
-#include <libpipe/RTC/AlgorithmRTC.hpp>
 #include <libpipe/RTC/ManagerRTC.hpp>
+#include <libpipe/RTC/AlgorithmRTC.hpp>
+
+#include <libpipe/RTC/LibpipeFactories.hpp>
 
 using namespace libpipe_rtc;
 
-static FilterRTC* FilterRTC::create(const std::string& name,
+
+FilterRTC* FilterRTC::create(const std::string& name,
     const std::string& algorithmName, const std::string& managerName)
 {
     AlgorithmRTC* a = libpipe_rtc::AlgorithmFactory::instance().createObject(
@@ -23,7 +26,7 @@ static FilterRTC* FilterRTC::create(const std::string& name,
 
 FilterRTC::FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
     ManagerRTC* manager) :
-        name_(name), algorithm_(algorithm), manager_(manager)
+        algorithm_(algorithm),  manager_(manager) , name_(name)
 {
 }
 

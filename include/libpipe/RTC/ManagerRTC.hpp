@@ -16,6 +16,8 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
+#include <libpipe/RTC/LibpipeFactories.hpp>
+
 
 namespace libpipe_rtc {
 
@@ -34,7 +36,9 @@ class ManagerRTC : private libpipe::NonCopyable
 {
     public:
 
-        static ManagerRTC* create()=0;
+        static ManagerRTC* create(){
+            return new ManagerRTC;
+        }
 
         /** Destructor.
          */

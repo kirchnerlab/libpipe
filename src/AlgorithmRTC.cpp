@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *               2011 David Sichau
  */
-#include <libpipe/AlgorithmRTC.hpp>
+#include <libpipe/RTC/AlgorithmRTC.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>
@@ -13,29 +13,11 @@
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
-bool operator<=(const timeval& lhs, const timeval& rhs)
-{
-    if (lhs.tv_sec < rhs.tv_sec || (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec
-            <= rhs.tv_usec)) {
-        return true;
-    }
-    return false;
-}
+#include "libpipe/Algorithm.hpp" //for timeval comparisons
 
-bool operator==(const timeval& lhs, const timeval& rhs)
-{
-    if (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec == rhs.tv_usec)
-        return true;
-    return false;
-}
-
-std::ostream& operator<<(std::ostream& os, const timeval& tv)
-{
-    os << tv.tv_sec << "." << tv.tv_usec;
-    return os;
-}
 
 using namespace libpipe_rtc;
+
 
 timeval AlgorithmRTC::initMaxTime()
 {
@@ -104,3 +86,6 @@ bool AlgorithmRTC::needUpdate() const
      */
     return mTime_ == AlgorithmRTC::MAX_TIME;
 }
+
+const bool AlgorithmRTC::registered_ = registerLoader();
+

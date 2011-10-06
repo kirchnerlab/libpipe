@@ -1,4 +1,8 @@
+
 SET(SRCS 
+    AlgorithmRTC.cpp
+    ManagerRTC.cpp
+    FilterRTC.cpp
     Algorithm.cpp
     Exception.cpp
     Filter.cpp
@@ -16,4 +20,5 @@ INSTALL(TARGETS pipe
     ARCHIVE DESTINATION lib
     COMPONENT libraries
 )
+
 

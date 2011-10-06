@@ -17,19 +17,9 @@
 #include <ostream>
 #include <libpipe/RTC/LibpipeFactories.hpp>
 
-/** Comparison operator for \c struct \c timeval objects.
- */
-bool operator==(const timeval& lhs, const timeval& rhs);
-
-/** Comparison operator for \c struct \c timeval objects.
- */
-bool operator<=(const timeval& lhs, const timeval& rhs);
-
-/** Stream operator for timeval structs.
- */
-std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 namespace libpipe_rtc {
+
 
 /** Base class for all LIBPIPE algorithms.
  */
@@ -50,11 +40,13 @@ class AlgorithmRTC
          */
         static const timeval MIN_TIME;
 
-        static AlgorithmRTC* create()=0;
+        static AlgorithmRTC* create(){
+            return new AlgorithmRTC;
+        }
 
         /** Pure virtual descructor.
          */
-        virtual ~AlgorithmRTC() = 0;
+        virtual ~AlgorithmRTC();
 
         /** Processes the current request object.
          * Depending on the information contained in the request object,  this will
@@ -73,7 +65,7 @@ class AlgorithmRTC
          *                   purposes). Also useful to get the type of request
          *                   (Update of Delete), so that the input can be deleted.
          */
-        virtual libpipe::Request& update(libpipe::Request& req) = 0;
+        virtual libpipe::Request& update(libpipe::Request& req);
 
         /** Return the last modification timestamp.
          * @return The last modification timestamp.

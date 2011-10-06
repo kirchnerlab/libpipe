@@ -7,9 +7,8 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#include <libpipe/FilterRTC.hpp>
+#include <libpipe/RTC/FilterRTC.hpp>
 
-#include <libpipe/LibpipeFactories.hpp>
 
 
 
@@ -22,7 +21,7 @@ struct FilterRTCTestSuite : vigra::test_suite {
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    FilterRTCTestSuite() : vigra::test_suite("BasicFilterRTC") {
+    FilterRTCTestSuite() : vigra::test_suite("FilterRTC") {
         add(testCase(&FilterRTCTestSuite::test));
     }
 
@@ -30,7 +29,7 @@ struct FilterRTCTestSuite : vigra::test_suite {
     void test() {
         std::string ids="test";
 
-        libpipe_rtc::FilterRTC* bf = libpipe_rtc::FilterFactory::instance().createObject(ids)(ids,ids,ids);
+        libpipe_rtc::FilterRTC* bf = libpipe_rtc::FilterRTC::create("filter1", "test","test");
         delete bf;
 
     }

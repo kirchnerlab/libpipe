@@ -11,7 +11,6 @@
 #include <string>
 #include <libpipe/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
-#include <libpipe/LibpipeFactories.hpp>
 
 namespace libpipe_rtc {
 
@@ -65,7 +64,14 @@ class FilterRTC : private libpipe::NonCopyable
          */
         void setName(const std::string& name);
 
-    protected:
+    private:
+        /** Constructor.
+         * @param name The name of the filter.
+         * @param algorithm Pointer to the Algorithm that the filter will uses
+         * @param manager Pointer to the Manager that the filter will uses
+         */
+        FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
+            ManagerRTC* manager);
         /** Set the algorithm that should be used for this filter.
          * @param[in] alg Pointer to the Algorithm object.
          */
@@ -75,15 +81,6 @@ class FilterRTC : private libpipe::NonCopyable
          * @param[in] manager Pointer to the Manager object.
          */
         void setManager(ManagerRTC* manager);
-
-    private:
-        /** Constructor.
-         * @param name The name of the filter.
-         * @param algorithm Pointer to the Algorithm that the filter will uses
-         * @param manager Pointer to the Manager that the filter will uses
-         */
-        FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
-                    ManagerRTC* manager);
 
         /** A pointer to the algorithm that is part of the filter.
          */
@@ -98,7 +95,6 @@ class FilterRTC : private libpipe::NonCopyable
         std::string name_;
 
 };
-
 
 } // namespace libpipe_rtc
 
