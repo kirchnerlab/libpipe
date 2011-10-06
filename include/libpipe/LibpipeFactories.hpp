@@ -12,18 +12,18 @@
 #include "libpipe/utilities/Factory.hpp"
 #include "libpipe/Algorithm.hpp"
 #include "libpipe/Manager.hpp"
+#include "libpipe/BasicFilterRTC.hpp"
 
 namespace RTC {
 
 typedef utilities::Singleton<
-        libpipe::utilities::ObjectFactory<libpipe::Algorithm, std::string> > AlgorithmFactory;
+        libpipe::utilities:Factory<libpipe::Algorithm, std::string> > AlgorithmFactory;
 
 typedef utilities::Singleton<
-        libpipe::utilities::ObjectFactory<libpipe::Manager, std::string> > ManagerFactory;
+        libpipe::utilities::Factory<libpipe::Manager, std::string> > ManagerFactory;
 
-//TODO add Factory for Basicfilter when implemented
-//typedef Singleton<
-//        libpipe::FactorySite::ObjectFactory<libpipe::FIXME, std::string> > FilterFactory;
+typedef utilities::Singleton<
+        libpipe::utilities::Factory<libpipe::RTC::BasicFilter, std::string> > FilterFactory;
 
 } //end namespace RTC
 #endif /* LIBPIPEFACTORIES_HPP_ */
