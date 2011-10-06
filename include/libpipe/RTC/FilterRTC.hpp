@@ -19,36 +19,39 @@ namespace libpipe_rtc {
 class AlgorithmRTC;
 class ManagerRTC;
 
-/** The base class for all LIBPIPE filters. Filters are non-copyable by
+/** The only class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
 class FilterRTC : private libpipe::NonCopyable
 {
     public:
 
+        /** static create Methode to generate Filters
+         *
+         * @param name Name of the Filter
+         * @param algorithmName Identifier of the Algorithm used.
+         * @param managerName Identifier of the Manager used
+         * @return a new Instance of Filter
+         */
         static FilterRTC* create(const std::string& name,
             const std::string& algorithmName, const std::string& managerName);
-
-        /** Pure virtual destructor.
-         */
-        virtual ~FilterRTC();
 
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
          * @return The request object with processing information filled out.
          */
-        virtual libpipe::Request& processRequest(libpipe::Request& req);
+        libpipe::Request& processRequest(libpipe::Request& req);
 
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
          */
-        virtual AlgorithmRTC* getAlgorithm();
+        AlgorithmRTC* getAlgorithm();
 
         /** Returns a  pointer to the Manager object.
          * @return A pointer to the Manager object.
          */
-        virtual ManagerRTC* getManager();
+        ManagerRTC* getManager();
 
         /** Returns the name of the filter.
          * @return The name of the filter.
@@ -74,11 +77,11 @@ class FilterRTC : private libpipe::NonCopyable
     private:
         /** Constructor.
          * @param name The name of the filter.
-         * @param algorithmName The name of the Algorithm that will be generated
-         * @param managerName The name of the Manager that will be generated
+         * @param algorithm Pointer to the Algorithm that the filter will uses
+         * @param manager Pointer to the Manager that the filter will uses
          */
-        FilterRTC(const std::string& name, const std::string& algorithmName,
-            const std::string& managerName);
+        FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
+                    ManagerRTC* manager);
 
         /** A pointer to the algorithm that is part of the filter.
          */
@@ -91,17 +94,7 @@ class FilterRTC : private libpipe::NonCopyable
         /** Holds the name of the filter.
          */
         std::string name_;
-        /** Register Filter in the FilterFactory
-         *
-         */
-        static const bool registered_;
 
-        static const bool registerLoader()
-        {
-            std::string ids = "FilterRTC";
-            return FilterFactory::instance().registerType(ids,
-                FilterRTC::create);
-        }
 };
 
 

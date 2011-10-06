@@ -5,24 +5,26 @@
  *               2011 David Sichau
  *
  */
-#include <libpipe/FilterRTC.hpp>
-#include <libpipe/AlgorithmRTC.hpp>
-#include <libpipe/ManagerRTC.hpp>
+#include <libpipe/RTC/FilterRTC.hpp>
+#include <libpipe/RTC/AlgorithmRTC.hpp>
+#include <libpipe/RTC/ManagerRTC.hpp>
 
 using namespace libpipe_rtc;
 
-static FilterRTC* FilterRTC::create(const std::string& name, const std::string& algorithmName,
-    const std::string& managerName){
-    return new FilterRTC(name, algorithmName, managerName);
+static FilterRTC* FilterRTC::create(const std::string& name,
+    const std::string& algorithmName, const std::string& managerName)
+{
+    AlgorithmRTC* a = libpipe_rtc::AlgorithmFactory::instance().createObject(
+        algorithmName);
+    ManagerRTC* m = libpipe_rtc::ManagerFactory::instance().createObject(
+        managerName);
+    return new FilterRTC(name, a, m);
 }
 
-FilterRTC::FilterRTC(const std::string& name, const std::string& algorithmName,
-    const std::string& managerName)
+FilterRTC::FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
+    ManagerRTC* manager) :
+        name_(name), algorithm_(algorithm), manager_(manager)
 {
-    AlgorithmRTC* a = libpipe_rtc::AlgorithmFactory::instance().createObject(algorithmName);
-    ManagerRTC* m = libpipe_rtc::ManagerFactory::instance().createObject(managerName);
-    this->setManager(m);
-    this->setAlgorithm(a);
 }
 
 FilterRTC::~FilterRTC()
