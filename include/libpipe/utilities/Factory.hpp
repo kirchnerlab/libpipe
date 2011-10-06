@@ -40,7 +40,7 @@ class ErrorPolicyReturnNull
 template<class AbstractProduct, typename IdentifierType, template<typename,
         class > class FactoryErrorPolicy = ErrorPolicyThrowException,
 typename ProductCreatorSignature = AbstractProduct* (*)()>
-class ObjectFactory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
+class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
 {
     public:
         bool registerType(const IdentifierType& id,
