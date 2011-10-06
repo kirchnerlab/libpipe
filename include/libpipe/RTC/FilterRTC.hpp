@@ -36,6 +36,8 @@ class FilterRTC : private libpipe::NonCopyable
         static FilterRTC* create(const std::string& name,
             const std::string& algorithmName, const std::string& managerName);
 
+        ~FilterRTC();
+
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
