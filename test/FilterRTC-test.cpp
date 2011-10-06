@@ -38,10 +38,10 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testConstructionAndDestruction()
         {
 
-            libpipe_rtc::FilterRTC* bf = libpipe_rtc::FilterRTC::create(
+            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "IdentityRTC", "MangerRTC");
             AlgorithmRTC* iA =
-                    libpipe_rtc::AlgorithmFactory::instance().createObject(
+                    libpipe::rtc::AlgorithmFactory::instance().createObject(
                         "IdentityRTC");
             shouldEqual(typeid(iA)==typeid(bf->getAlgorithm()), true);
             delete bf;
@@ -51,7 +51,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testAlgorithm()
         {
             // getset
-            libpipe_rtc::FilterRTC* bf = libpipe_rtc::FilterRTC::create(
+            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "RaiseExceptionAlg", "MangerRTC");
             AlgorithmRTC* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
@@ -64,7 +64,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testManager()
         {
             // getset
-            libpipe_rtc::FilterRTC* bf = libpipe_rtc::FilterRTC::create(
+            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                             "filter1", "RaiseExceptionAlg", "MangerRTC");
             ManagerRTC* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
@@ -74,7 +74,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 
         void testCallChain()
         {
-            using namespace libpipe_rtc;
+            using namespace libpipe::rtc;
             // tests if the filter calls its managers process request function
             // the manager will then call the process request function of the fail
             // filter and raise an exception.
@@ -93,7 +93,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testName()
         {
             // getset name
-            using namespace libpipe_rtc;
+            using namespace libpipe::rtc;
 
             //typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
             FilterRTC* f = FilterRTC::create("Fail!", "RaiseExceptionAlg",

@@ -16,7 +16,7 @@
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
 
 
-using namespace libpipe_rtc;
+using namespace libpipe::rtc;
 
 
 timeval AlgorithmRTC::initMaxTime()

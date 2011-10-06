@@ -17,7 +17,8 @@
 #include <ostream>
 #include <libpipe/RTC/LibpipeFactories.hpp>
 
-namespace libpipe_rtc {
+namespace libpipe {
+namespace rtc {
 
 /** Base class for all LIBPIPE algorithms.
  */
@@ -50,7 +51,7 @@ class AlgorithmRTC
          * @param[inout] req A request object.
          * @return A (potentially modified) request object.
          */
-        virtual libpipe::Request& processRequest(libpipe::Request& req);
+        virtual Request& processRequest(Request& req);
 
         /** Runs the algorithm and updates the output data, if the Request
          * Type is \c Request::Update. If the request Type is \c Request::DELETE
@@ -61,7 +62,7 @@ class AlgorithmRTC
          *                   purposes). Also useful to get the type of request
          *                   (Update of Delete), so that the input can be deleted.
          */
-        virtual libpipe::Request& update(libpipe::Request& req)=0;
+        virtual Request& update(Request& req)=0;
 
         /** Return the last modification timestamp.
          * @return The last modification timestamp.
@@ -126,7 +127,7 @@ class AlgorithmRTC
 
 
 };
-
+} // namespace rtc
 } // namespace libpipe
 
 #endif

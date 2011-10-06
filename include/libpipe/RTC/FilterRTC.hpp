@@ -12,7 +12,8 @@
 #include <libpipe/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
 
-namespace libpipe_rtc {
+namespace libpipe {
+namespace rtc {
 
 // forward declarations
 class AlgorithmRTC;
@@ -21,7 +22,7 @@ class ManagerRTC;
 /** The only class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
-class FilterRTC : private libpipe::NonCopyable
+class FilterRTC : private NonCopyable
 {
     public:
 
@@ -42,7 +43,7 @@ class FilterRTC : private libpipe::NonCopyable
          * @param[in] req The request object.
          * @return The request object with processing information filled out.
          */
-        libpipe::Request& processRequest(libpipe::Request& req);
+        Request& processRequest(Request& req);
 
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
@@ -96,7 +97,8 @@ class FilterRTC : private libpipe::NonCopyable
 
 };
 
-} // namespace libpipe_rtc
+} // namespace rtc
+} // namespace libpipe
 
 #endif
 

@@ -19,7 +19,8 @@
 #include <libpipe/RTC/LibpipeFactories.hpp>
 
 
-namespace libpipe_rtc {
+namespace libpipe {
+namespace rtc {
 
 // forward declaration
 class AlgorithmRTC;
@@ -62,7 +63,7 @@ class ManagerRTC : private libpipe::NonCopyable
          *                information)
          * @return The (potentially modified) request object.
          */
-        virtual libpipe::Request& processRequest(libpipe::Request& req);
+        virtual Request& processRequest(Request& req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.
@@ -120,6 +121,7 @@ class ManagerRTC : private libpipe::NonCopyable
         }
 };
 
+} // namespace rtc
 } // namespace libpipe
 
 #endif

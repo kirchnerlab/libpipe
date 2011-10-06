@@ -9,7 +9,7 @@
 #include <libpipe/RTC/FilterRTC.hpp>
 #include <libpipe/RTC/AlgorithmRTC.hpp>
 
-using namespace libpipe_rtc;
+using namespace libpipe::rtc;
 
 ManagerRTC::ManagerRTC() :
         algorithm_(0)
