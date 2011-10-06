@@ -7,6 +7,8 @@
  */
 
 #include <iostream>
+#include <cstring>
+
 #include "vigra/unittest.hxx"
 #include <libpipe/RTC/FilterRTC.hpp>
 #include <libpipe/RTC/LibpipeFactories.hpp>
