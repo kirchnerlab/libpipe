@@ -17,9 +17,7 @@
 #include <ostream>
 #include <libpipe/RTC/LibpipeFactories.hpp>
 
-
 namespace libpipe_rtc {
-
 
 /** Base class for all LIBPIPE algorithms.
  */
@@ -40,13 +38,11 @@ class AlgorithmRTC
          */
         static const timeval MIN_TIME;
 
-        static AlgorithmRTC* create(){
-            return new AlgorithmRTC;
-        }
+        static AlgorithmRTC* create();
 
         /** Pure virtual descructor.
          */
-        virtual ~AlgorithmRTC();
+        virtual ~AlgorithmRTC()=0;
 
         /** Processes the current request object.
          * Depending on the information contained in the request object,  this will
@@ -65,7 +61,7 @@ class AlgorithmRTC
          *                   purposes). Also useful to get the type of request
          *                   (Update of Delete), so that the input can be deleted.
          */
-        virtual libpipe::Request& update(libpipe::Request& req);
+        virtual libpipe::Request& update(libpipe::Request& req)=0;
 
         /** Return the last modification timestamp.
          * @return The last modification timestamp.
@@ -108,11 +104,11 @@ class AlgorithmRTC
          */
         bool needUpdate() const;
 
-    private:
-
+    protected:
         /** Constructor.
          */
         AlgorithmRTC();
+    private:
 
         /** Initializes the static constant \c MAX_TIME.
          * @return The maximum valid entry in a timeval struct.
@@ -128,20 +124,8 @@ class AlgorithmRTC
          */
         timeval mTime_;
 
-        /** Register Filter in the FilterFactory
-         *
-         */
-        static const bool registered_;
 
-        static const bool registerLoader()
-        {
-            std::string ids = "AlgorithmRTC";
-            return AlgorithmFactory::instance().registerType(ids,
-                AlgorithmRTC::create);
-        }
 };
-
-
 
 } // namespace libpipe
 
