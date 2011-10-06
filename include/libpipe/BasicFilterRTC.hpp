@@ -16,9 +16,8 @@
 
 #include <libpipe/LibpipeFactories.hpp>
 
-namespace libpipe {
+namespace libpipe_rtc {
 
-namespace RTC {
 
 /** Wraps an algorithm and a manager into a Filter.
  * This is the preferred way of creating a filter type from given \c Algorithm
@@ -44,27 +43,21 @@ namespace RTC {
  * ...
  * \endcode
  */
-class BasicFilter : public Filter
+class BasicFilterRTC : public libpipe::Filter
 {
     public:
 
-        void Create(const std::string& name, const std::string& algorithmName,
-            const std::string& managerName);
+        static BasicFilterRTC* create(const std::string& name,
+            const std::string& algorithmName, const std::string& managerName){
+            return new BasicFilterRTC(name, algorithmName, managerName);
+        }
 
         /** Destructor.
          * Virtual, to allow for subclassing.
          */
-        virtual ~BasicFilter();
+        virtual ~BasicFilterRTC();
 
-        /** Provides access to the algorithm object.
-         * @return A pointer  to the algorithm object.
-         */
-        virtual Algorithm* getAlgorithm();
 
-        /** Provides access to the manager object.
-         * @return A pointer to the manager object.
-         */
-        virtual Manager* getManager();
 
     private:
 
@@ -74,7 +67,7 @@ class BasicFilter : public Filter
          * @param managerName The name of the Manager that will be generated
          */
 
-        BasicFilter(const std::string& name, const std::string& algorithmName,
+        BasicFilterRTC(const std::string& name, const std::string& algorithmName,
             const std::string& managerName);
 
         /** Register Filter in the FilterFactory
@@ -86,29 +79,27 @@ class BasicFilter : public Filter
         {
             std::string ids = "BasicFilterRTC";
             return FilterFactory::instance().registerType(ids,
-                BasicFilter::create);
+                BasicFilterRTC::create);
         }
 };
 
-const bool BasicFilter::registered_ = registerLoader();
+const bool BasicFilterRTC::registered_ = registerLoader();
 
-
-BasicFilter::BasicFilter(const std::string& name,
+BasicFilterRTC::BasicFilterRTC(const std::string& name,
     const std::string& algorithmName, const std::string& managerName) :
         Filter(name)
 {
-    Algorithm* a = AlgorithmFactory::instance().createObject(algorithmName);
-    Manager* m = ManagerFactory::instance().createObject(managerName);
+    libpipe::Algorithm* a = libpipe_rtc::AlgorithmFactory::instance().createObject(algorithmName);
+    libpipe::Manager* m = libpipe_rtc::ManagerFactory::instance().createObject(managerName);
     this->setManager(m);
     this->setAlgorithm(a);
 }
 
-BasicFilter::~BasicFilter()
+BasicFilterRTC::~BasicFilterRTC()
 {
 }
 
-} // namespace RTC
-} // namespace libpipe
+} // namespace libpipe_rtc
 
 #endif
 
