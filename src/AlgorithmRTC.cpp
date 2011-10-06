@@ -87,5 +87,4 @@ bool AlgorithmRTC::needUpdate() const
     return mTime_ == AlgorithmRTC::MAX_TIME;
 }
 
-const bool AlgorithmRTC::registered_ = registerLoader();
 
