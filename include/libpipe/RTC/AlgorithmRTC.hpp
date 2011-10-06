@@ -15,6 +15,7 @@
 #include <libpipe/Request.hpp>
 #include <sys/time.h> // for timeval
 #include <ostream>
+#include <libpipe/RTC/LibpipeFactories.hpp>
 
 /** Comparison operator for \c struct \c timeval objects.
  */
@@ -148,7 +149,6 @@ class AlgorithmRTC
         }
 };
 
-const bool AlgorithmRTC::registered_ = registerLoader();
 
 
 } // namespace libpipe

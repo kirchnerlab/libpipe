@@ -5,38 +5,38 @@
  *               2011 David Sichau
  *
  */
-#include <libpipe/Manager.hpp>
-#include <libpipe/Filter.hpp>
-#include <libpipe/Algorithm.hpp>
+#include <libpipe/RTC/ManagerRTC.hpp>
+#include <libpipe/RTC/FilterRTC.hpp>
+#include <libpipe/RTC/AlgorithmRTC.hpp>
 
-using namespace libpipe;
+using namespace libpipe_rtc;
 
-Manager::Manager() :
+ManagerRTC::ManagerRTC() :
         algorithm_(0)
 {
 }
 
-Manager::~Manager()
+ManagerRTC::~ManagerRTC()
 {
 }
 
-Algorithm* Manager::getAlgorithm()
+AlgorithmRTC* ManagerRTC::getAlgorithm()
 {
     return algorithm_;
 }
 
-void Manager::setAlgorithm(Algorithm* alg)
+void ManagerRTC::setAlgorithm(AlgorithmRTC* alg)
 {
     // the manager does not own the
     // algorithm object. Hence, just move the pointer.
     algorithm_ = alg;
 }
 
-Request& Manager::processRequest(Request& req)
+libpipe::Request& ManagerRTC::processRequest(libpipe::Request& req)
 {
-    if (req.is(Request::UPDATE)) {
+    if (req.is(libpipe::Request::UPDATE)) {
         if (!algorithm_) {
-            throw RequestException(
+            throw libpipe::RequestException(
                 "Cannot process request. No algorithm setup available.");
         }
         typedef FilterSet::iterator MSI;
@@ -44,7 +44,7 @@ Request& Manager::processRequest(Request& req)
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
                 req = (*i)->processRequest(req);
-            } catch (RequestException& e) {
+            } catch (libpipe::RequestException& e) {
                 throw;
             }
         }
@@ -52,27 +52,29 @@ Request& Manager::processRequest(Request& req)
             req = algorithm_->processRequest(req);
         } catch (std::exception& e) {
             std::string str(e.what());
-            throw RequestException(
+            throw libpipe::RequestException(
                 "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
                         + str);
         } catch (...) {
-            throw RequestException(
+            throw libpipe::RequestException(
                 "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
         }
-    } else if (req.is(Request::DELETE)) {
+    } else if (req.is(libpipe::Request::DELETE)) {
         req = algorithm_->processRequest(req);
         this->disconnect();
     }
     return req;
 }
 
-void Manager::connect(boost::shared_ptr<Filter> f)
+void ManagerRTC::connect(boost::shared_ptr<FilterRTC> f)
 {
     sources_.insert(f);
 }
 
-void Manager::disconnect()
+void ManagerRTC::disconnect()
 {
     sources_.clear();
 }
+
+const bool ManagerRTC::registered_ = registerLoader();
 
