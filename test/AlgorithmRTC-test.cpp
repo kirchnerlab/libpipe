@@ -24,11 +24,11 @@ using namespace libpipe::rtc;
 
 /** A local class that derives from Algorithm.
  */
-class MyAlgorithm : public AlgorithmRTC
+class MyAlgorithm : public Algorithm
 {
     public:
 
-        static AlgorithmRTC* create()
+        static Algorithm* create()
         {
             return new MyAlgorithm;
         }
@@ -43,7 +43,7 @@ class MyAlgorithm : public AlgorithmRTC
         }
     private:
         MyAlgorithm() :
-                AlgorithmRTC()
+                Algorithm()
         {
         }
 
@@ -98,12 +98,12 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             shouldEqual(operator==(tv2, tv1), false);
             shouldEqual(operator<=(tv1, tv2), true);
             shouldEqual(operator<=(tv2, tv1), false);
-            tv2 = AlgorithmRTC::MAX_TIME;
+            tv2 = Algorithm::MAX_TIME;
             shouldEqual(operator==(tv1, tv2), false);
             shouldEqual(operator==(tv2, tv1), false);
             shouldEqual(operator<=(tv1, tv2), true);
             shouldEqual(operator<=(tv2, tv1), false);
-            tv1 = AlgorithmRTC::MAX_TIME;
+            tv1 = Algorithm::MAX_TIME;
             shouldEqual(operator==(tv1, tv2), true);
             shouldEqual(operator==(tv2, tv1), true);
             shouldEqual(operator<=(tv1, tv2), true);
@@ -114,9 +114,9 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
          */
         void testInitialization()
         {
-            AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+            Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
-            shouldEqual(a->getMTime(), AlgorithmRTC::MAX_TIME);
+            shouldEqual(a->getMTime(), Algorithm::MAX_TIME);
             delete a;
         }
 
@@ -124,11 +124,11 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
          */
         void testProcessRequest()
         {
-            AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+            Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             libpipe::Request req(libpipe::Request::DELETE);
             a->processRequest(req);
-            shouldEqual(a->getMTime(), AlgorithmRTC::MIN_TIME);
+            shouldEqual(a->getMTime(), Algorithm::MIN_TIME);
             delete a;
         }
 
@@ -137,7 +137,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
         void testUpdateMTime()
         {
             // check if the self-update works.
-            AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+            Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             shouldEqual(a->needUpdate(), true);
             a->updateMTime();
@@ -150,7 +150,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
          */
         void testNeedUpdate()
         {
-            AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+            Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             // we expect the need for an update right after construction
             shouldEqual(a->needUpdate(), true);
@@ -166,7 +166,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
          */
         void testGetSet()
         {
-            AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+            Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             a->setMTime(a->getMTime());
             delete a;
@@ -177,11 +177,11 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             timeval tv;
             tv.tv_sec = std::numeric_limits<time_t>::max();
             tv.tv_usec = std::numeric_limits<suseconds_t>::max();
-            shouldEqual(tv, AlgorithmRTC::MAX_TIME);
+            shouldEqual(tv, Algorithm::MAX_TIME);
 
             tv.tv_sec = std::numeric_limits<time_t>::min();
             tv.tv_usec = std::numeric_limits<suseconds_t>::min();
-            shouldEqual(tv, AlgorithmRTC::MIN_TIME);
+            shouldEqual(tv, Algorithm::MIN_TIME);
 
         }
 };

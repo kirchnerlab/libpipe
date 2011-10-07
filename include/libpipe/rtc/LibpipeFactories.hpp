@@ -17,11 +17,11 @@ namespace libpipe {
 namespace rtc {
 
 class FilterRTC;
-class AlgorithmRTC;
+class Algorithm;
 class ManagerRTC;
 
 typedef utilities::Singleton<
-        utilities::Factory<AlgorithmRTC, std::string> > AlgorithmFactory;
+        utilities::Factory<Algorithm, std::string> > AlgorithmFactory;
 
 typedef utilities::Singleton<utilities::Factory<ManagerRTC, std::string> > ManagerFactory;
 

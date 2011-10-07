@@ -42,7 +42,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 
             libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "IdentityRTC", "MangerRTC");
-            libpipe::rtc::AlgorithmRTC* iA =
+            libpipe::rtc::Algorithm* iA =
                     libpipe::rtc::AlgorithmFactory::instance().createObject(
                         "IdentityRTC");
             shouldEqual(typeid(iA)==typeid(bf->getAlgorithm()), true);
@@ -55,7 +55,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             // getset
             libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "RaiseExceptionAlg", "MangerRTC");
-            libpipe::rtc::AlgorithmRTC* p = bf->getAlgorithm();
+            libpipe::rtc::Algorithm* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
             // switch algorithm
 

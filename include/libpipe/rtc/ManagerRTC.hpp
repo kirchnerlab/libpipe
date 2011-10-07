@@ -23,7 +23,7 @@ namespace libpipe {
 namespace rtc {
 
 // forward declaration
-class AlgorithmRTC;
+class Algorithm;
 class FilterRTC;
 
 
@@ -48,12 +48,12 @@ class ManagerRTC : private libpipe::NonCopyable
         /** Get a pointer to the algorithm object currently managed by the manager.
          * @return A pointer to an algorithm object (or 0).
          */
-        AlgorithmRTC* getAlgorithm();
+        Algorithm* getAlgorithm();
 
         /** Set the algorithm that is managed by the manager.
          * @param[in] alg Pointer to the algorithm object.
          */
-        void setAlgorithm(AlgorithmRTC* alg);
+        void setAlgorithm(Algorithm* alg);
 
         /** Process a processing request. In the simple base class implementation
          * the manager will call the \c process request method of all filters
@@ -98,7 +98,7 @@ class ManagerRTC : private libpipe::NonCopyable
 
         /** Pointer to the algorithm that is managed by the manager.
          */
-        AlgorithmRTC* algorithm_;
+        Algorithm* algorithm_;
 
         /** Disconnects the manager from all his input filters.
          * The Algorithm calls does at the same time fix the output

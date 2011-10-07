@@ -22,7 +22,7 @@ namespace rtc {
 
 /** Base class for all LIBPIPE algorithms.
  */
-class AlgorithmRTC
+class Algorithm
 {
     public:
         /** Holds the maximum time value that can be represented in a
@@ -39,11 +39,11 @@ class AlgorithmRTC
          */
         static const timeval MIN_TIME;
 
-        static AlgorithmRTC* create();
+        static Algorithm* create();
 
         /** Pure virtual descructor.
          */
-        virtual ~AlgorithmRTC()=0;
+        virtual ~Algorithm()=0;
 
         /** Processes the current request object.
          * Depending on the information contained in the request object,  this will
@@ -108,7 +108,7 @@ class AlgorithmRTC
     protected:
         /** Constructor.
          */
-        AlgorithmRTC();
+        Algorithm();
     private:
 
         /** Initializes the static constant \c MAX_TIME.

@@ -17,14 +17,14 @@ using namespace libpipe::rtc;
 FilterRTC* FilterRTC::create(const std::string& name,
     const std::string& algorithmName, const std::string& managerName)
 {
-    AlgorithmRTC* a = AlgorithmFactory::instance().createObject(
+    Algorithm* a = AlgorithmFactory::instance().createObject(
         algorithmName);
     ManagerRTC* m = ManagerFactory::instance().createObject(
         managerName);
     return new FilterRTC(name, a, m);
 }
 
-FilterRTC::FilterRTC(const std::string& name, AlgorithmRTC* algorithm,
+FilterRTC::FilterRTC(const std::string& name, Algorithm* algorithm,
     ManagerRTC* manager) :
         algorithm_(algorithm),  manager_(manager) , name_(name)
 {
@@ -46,12 +46,12 @@ libpipe::Request& FilterRTC::processRequest(libpipe::Request& req)
     return req;
 }
 
-AlgorithmRTC* FilterRTC::getAlgorithm()
+Algorithm* FilterRTC::getAlgorithm()
 {
     return algorithm_;
 }
 
-void FilterRTC::setAlgorithm(AlgorithmRTC* alg)
+void FilterRTC::setAlgorithm(Algorithm* alg)
 {
     if (algorithm_ != alg) {
         if (algorithm_) {

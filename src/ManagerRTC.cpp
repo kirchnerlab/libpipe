@@ -20,12 +20,12 @@ ManagerRTC::~ManagerRTC()
 {
 }
 
-AlgorithmRTC* ManagerRTC::getAlgorithm()
+Algorithm* ManagerRTC::getAlgorithm()
 {
     return algorithm_;
 }
 
-void ManagerRTC::setAlgorithm(AlgorithmRTC* alg)
+void ManagerRTC::setAlgorithm(Algorithm* alg)
 {
     // the manager does not own the
     // algorithm object. Hence, just move the pointer.

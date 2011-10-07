@@ -26,10 +26,10 @@ namespace rtc {
 
 /** An algorithm that does not change its input.
  */
-class IdentityRTC : public AlgorithmRTC
+class IdentityRTC : public Algorithm
 {
     public:
-        static AlgorithmRTC* create()
+        static Algorithm* create()
         {
             return new IdentityRTC;
         }
@@ -37,7 +37,7 @@ class IdentityRTC : public AlgorithmRTC
         ~IdentityRTC()
         {
         }
-        libpipe::Request& update(libpipe::Request& req)
+        Request& update(Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
             out_ = in_;
@@ -59,7 +59,7 @@ class IdentityRTC : public AlgorithmRTC
     private:
 
         IdentityRTC() :
-                AlgorithmRTC(), in_(0), out_(0)
+                Algorithm(), in_(0), out_(0)
         {
         }
         int in_, out_;
@@ -81,11 +81,11 @@ const bool IdentityRTC::registered_ = registerLoader();
 
 /** An algorithm that throws an exception during execution.
  */
-class RaiseExceptionAlg : public AlgorithmRTC
+class RaiseExceptionAlg : public Algorithm
 {
     public:
 
-        static AlgorithmRTC* create()
+        static Algorithm* create()
         {
             return new RaiseExceptionAlg;
         }
@@ -93,7 +93,7 @@ class RaiseExceptionAlg : public AlgorithmRTC
         ~RaiseExceptionAlg()
         {
         }
-        libpipe::Request& update(libpipe::Request& req)
+        Request& update(Request& req)
         {
 // deliberately raise a non-libpipe exception
             throw std::exception();
@@ -101,7 +101,7 @@ class RaiseExceptionAlg : public AlgorithmRTC
 
     private:
         RaiseExceptionAlg() :
-                AlgorithmRTC()
+                Algorithm()
         {
         }
 

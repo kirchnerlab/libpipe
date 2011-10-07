@@ -19,7 +19,7 @@
 using namespace libpipe::rtc;
 
 
-timeval AlgorithmRTC::initMaxTime()
+timeval Algorithm::initMaxTime()
 {
     timeval tv;
     tv.tv_sec = std::numeric_limits<time_t>::max();
@@ -27,7 +27,7 @@ timeval AlgorithmRTC::initMaxTime()
     return tv;
 }
 
-timeval AlgorithmRTC::initMinTime()
+timeval Algorithm::initMinTime()
 {
     timeval tv;
     tv.tv_sec = std::numeric_limits<time_t>::min();
@@ -37,54 +37,54 @@ timeval AlgorithmRTC::initMinTime()
 
 // initialize with maximum value such that any call to update will make the
 // instance "younger" than any non-updated instances
-const timeval AlgorithmRTC::MAX_TIME = AlgorithmRTC::initMaxTime();
+const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 
 // initialize with minimum value such that any call to update will make the
 // instance "older" than any non-updated instances
-const timeval AlgorithmRTC::MIN_TIME = AlgorithmRTC::initMinTime();
+const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
-AlgorithmRTC::AlgorithmRTC() :
-    mTime_(AlgorithmRTC::MAX_TIME)
+Algorithm::Algorithm() :
+    mTime_(Algorithm::MAX_TIME)
 {
 }
 
-AlgorithmRTC::~AlgorithmRTC()
+Algorithm::~Algorithm()
 {
 }
 
-libpipe::Request& AlgorithmRTC::processRequest(libpipe::Request& req)
+libpipe::Request& Algorithm::processRequest(libpipe::Request& req)
 {
     req = this->update(req);
     if(req.is(libpipe::Request::DELETE)){
-        this->setMTime(AlgorithmRTC::MIN_TIME);
+        this->setMTime(Algorithm::MIN_TIME);
     }
     return req;
 }
 
-const timeval& AlgorithmRTC::getMTime() const
+const timeval& Algorithm::getMTime() const
 {
     return mTime_;
 }
 
-void AlgorithmRTC::setMTime(const timeval& mTime)
+void Algorithm::setMTime(const timeval& mTime)
 {
     mTime_ = mTime;
 }
 
-void AlgorithmRTC::updateMTime()
+void Algorithm::updateMTime()
 {
     // use gettimeofday for microsecond resolution
     gettimeofday(&mTime_, NULL);
 }
 
-bool AlgorithmRTC::needUpdate() const
+bool Algorithm::needUpdate() const
 {
     /*
      LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "."
      << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
      << Algorithm::MAX_TIME.tv_usec;
      */
-    return mTime_ == AlgorithmRTC::MAX_TIME;
+    return mTime_ == Algorithm::MAX_TIME;
 }
 
 
