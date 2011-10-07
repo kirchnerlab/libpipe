@@ -11,6 +11,11 @@
 
 using namespace libpipe::rtc;
 
+Manager* Manager::create()
+{
+    return new Manager;
+}
+
 Manager::Manager() :
         algorithm_(0)
 {
@@ -82,10 +87,10 @@ const bool Manager::registerLoader()
     return ManagerFactory::instance().registerType(ids, Manager::create);
 }
 
-std::set<boost::shared_ptr<Filter> > Manager::getSources(){
+std::set<boost::shared_ptr<Filter> > Manager::getSources()
+{
     return sources_;
 }
-
 
 const bool Manager::registered_ = registerLoader();
 

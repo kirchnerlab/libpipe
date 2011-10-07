@@ -24,7 +24,7 @@ namespace rtc {
 class Algorithm;
 class Filter;
 
-/** Base class for Managers.
+/** Base class for runtime configuration Managers.
  * Managers are wrapped with Algorithms to form the filters of the pipeline.
  * While the filters provide all data processing capabilities, the managers
  * link the components of the pipeline and make sure that filters get executed
@@ -34,10 +34,10 @@ class Manager : private libpipe::NonCopyable
 {
     public:
 
-        static Manager* create()
-        {
-            return new Manager;
-        }
+        /** create Methode for manager which is called by ManagerFactory
+         * @return A Pointer to the new generated Manager, keep in mind that you are responsible for deleting the pointer after usage
+         */
+        static Manager* create();
 
         /** Destructor.
          */

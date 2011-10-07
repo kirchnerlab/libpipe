@@ -19,15 +19,14 @@ namespace rtc {
 class Algorithm;
 class Manager;
 
-/** The only class for all LIBPIPE filters. Filters are non-copyable by
- * default.
+/** The only class for all LIBPIPE runtime configuration filters. Filters are non-copyable by
+ * default. You should not inherit from this class.
  */
 class Filter : private NonCopyable
 {
     public:
 
         /** static create Methode to generate Filters
-         *
          * @param name Name of the Filter
          * @param algorithmName Identifier of the Algorithm used.
          * @param managerName Identifier of the Manager used
@@ -36,6 +35,8 @@ class Filter : private NonCopyable
         static Filter* create(const std::string& name,
             const std::string& algorithmName, const std::string& managerName);
 
+        /** Destructor of class Filter it will releas the memory for the algorithm and manager the filter contains
+         */
         ~Filter();
 
         /** Processes a request.

@@ -14,10 +14,17 @@
 #include <libpipe/rtc/LibpipeFactories.hpp>
 #include <sys/time.h> // for timeval
 
+/**
+ * \namespace libpipe The Namespace for all libpipe classes.
+ */
 namespace libpipe {
+/**
+ * \namespace rtc The Namespace where all classes are located which are used for the runtime configuration of libpipe
+ */
 namespace rtc {
 
-/** Base class for all LIBPIPE algorithms.
+
+/** Base class for all LIBPIPE Runtime configuration algorithms.
  */
 class Algorithm
 {
@@ -36,6 +43,9 @@ class Algorithm
          */
         static const timeval MIN_TIME;
 
+        /** create Methode which is registered in the Ablgorithm Factory
+         * @return Pointer to the new generated Algorithm class, keep in mind to call delete on this generated pointer
+         */
         static Algorithm* create();
 
         /** Pure virtual descructor.

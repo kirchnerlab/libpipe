@@ -12,7 +12,9 @@
 #include <exception>
 #include <typeinfo>
 
-
+/**
+ * \namespace utilities The Namespace where all classes are located which are used for different general usages
+ */
 namespace utilities {
 
 template<typename IdentifierType, typename ProductType>
