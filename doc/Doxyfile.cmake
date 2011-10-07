@@ -105,7 +105,7 @@ INLINE_INHERITED_MEMB  = YES
 # path before files name in the file list and in the header files. If set
 # to NO the shortest path that makes the file name unique will be used.
 
-FULL_PATH_NAMES        = NO
+FULL_PATH_NAMES        = YES
 
 # If the FULL_PATH_NAMES tag is set to YES then the STRIP_FROM_PATH tag
 # can be used to strip a user-defined part of the path. Stripping is
@@ -949,7 +949,7 @@ ENUM_VALUES_PER_LINE   = 4
 # JavaScript, DHTML, CSS and frames is required (i.e. any modern browser).
 # Windows users are probably better off using the HTML help feature.
 
-GENERATE_TREEVIEW      = NO
+GENERATE_TREEVIEW      = NO 
 
 # By enabling USE_INLINE_TREES, doxygen will generate the Groups, Directories,
 # and Class Hierarchy pages using a tree view instead of an ordered list.
@@ -984,7 +984,7 @@ SEARCHENGINE           = YES
 # If the GENERATE_LATEX tag is set to YES (the default) Doxygen will
 # generate Latex output.
 
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be
