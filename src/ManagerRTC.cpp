@@ -11,28 +11,28 @@
 
 using namespace libpipe::rtc;
 
-ManagerRTC::ManagerRTC() :
+Manager::Manager() :
         algorithm_(0)
 {
 }
 
-ManagerRTC::~ManagerRTC()
+Manager::~Manager()
 {
 }
 
-Algorithm* ManagerRTC::getAlgorithm()
+Algorithm* Manager::getAlgorithm()
 {
     return algorithm_;
 }
 
-void ManagerRTC::setAlgorithm(Algorithm* alg)
+void Manager::setAlgorithm(Algorithm* alg)
 {
     // the manager does not own the
     // algorithm object. Hence, just move the pointer.
     algorithm_ = alg;
 }
 
-libpipe::Request& ManagerRTC::processRequest(libpipe::Request& req)
+libpipe::Request& Manager::processRequest(libpipe::Request& req)
 {
     if (req.is(libpipe::Request::UPDATE)) {
         if (!algorithm_) {
@@ -66,15 +66,15 @@ libpipe::Request& ManagerRTC::processRequest(libpipe::Request& req)
     return req;
 }
 
-void ManagerRTC::connect(boost::shared_ptr<Filter> f)
+void Manager::connect(boost::shared_ptr<Filter> f)
 {
     sources_.insert(f);
 }
 
-void ManagerRTC::disconnect()
+void Manager::disconnect()
 {
     sources_.clear();
 }
 
-const bool ManagerRTC::registered_ = registerLoader();
+const bool Manager::registered_ = registerLoader();
 

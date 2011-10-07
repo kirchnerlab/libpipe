@@ -19,13 +19,13 @@ Filter* Filter::create(const std::string& name,
 {
     Algorithm* a = AlgorithmFactory::instance().createObject(
         algorithmName);
-    ManagerRTC* m = ManagerFactory::instance().createObject(
+    Manager* m = ManagerFactory::instance().createObject(
         managerName);
     return new Filter(name, a, m);
 }
 
 Filter::Filter(const std::string& name, Algorithm* algorithm,
-    ManagerRTC* manager) :
+    Manager* manager) :
         algorithm_(algorithm),  manager_(manager) , name_(name)
 {
 }
@@ -64,12 +64,12 @@ void Filter::setAlgorithm(Algorithm* alg)
     }
 }
 
-ManagerRTC* Filter::getManager()
+Manager* Filter::getManager()
 {
     return manager_;
 }
 
-void Filter::setManager(ManagerRTC* manager)
+void Filter::setManager(Manager* manager)
 {
     if (manager_ != manager) {
         if (manager_) {

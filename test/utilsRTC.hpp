@@ -123,10 +123,10 @@ const bool RaiseExceptionAlg::registered_ = registerLoader();
 /** Derive from Manager to be able to access the protected classes
  * for testing.
  */
-class TestManager : public ManagerRTC
+class TestManager : public Manager
 {
     public:
-        static ManagerRTC* create()
+        static Manager* create()
         {
             return new TestManager;
         }

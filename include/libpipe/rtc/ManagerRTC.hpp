@@ -33,17 +33,17 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class ManagerRTC : private libpipe::NonCopyable
+class Manager : private libpipe::NonCopyable
 {
     public:
 
-        static ManagerRTC* create(){
-            return new ManagerRTC;
+        static Manager* create(){
+            return new Manager;
         }
 
         /** Destructor.
          */
-        virtual ~ManagerRTC();
+        virtual ~Manager();
 
         /** Get a pointer to the algorithm object currently managed by the manager.
          * @return A pointer to an algorithm object (or 0).
@@ -86,7 +86,7 @@ class ManagerRTC : private libpipe::NonCopyable
 
         /** Constructor.
          */
-        ManagerRTC();
+        Manager();
 
         /** Convenience typedef: a filter set.
          */
@@ -117,7 +117,7 @@ class ManagerRTC : private libpipe::NonCopyable
         {
             std::string ids = "MangerRTC";
             return ManagerFactory::instance().registerType(ids,
-                ManagerRTC::create);
+                Manager::create);
         }
 };
 

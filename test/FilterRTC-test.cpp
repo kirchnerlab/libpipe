@@ -68,7 +68,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             // getset
             libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
                             "filter1", "RaiseExceptionAlg", "MangerRTC");
-            libpipe::rtc::ManagerRTC* p = bf->getManager();
+            libpipe::rtc::Manager* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
 
             delete bf;

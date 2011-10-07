@@ -17,7 +17,7 @@ namespace rtc {
 
 // forward declarations
 class Algorithm;
-class ManagerRTC;
+class Manager;
 
 /** The only class for all LIBPIPE filters. Filters are non-copyable by
  * default.
@@ -53,7 +53,7 @@ class Filter : private NonCopyable
         /** Returns a  pointer to the Manager object.
          * @return A pointer to the Manager object.
          */
-        ManagerRTC* getManager();
+        Manager* getManager();
 
         /** Returns the name of the filter.
          * @return The name of the filter.
@@ -72,7 +72,7 @@ class Filter : private NonCopyable
          * @param manager Pointer to the Manager that the filter will uses
          */
         Filter(const std::string& name, Algorithm* algorithm,
-            ManagerRTC* manager);
+            Manager* manager);
         /** Set the algorithm that should be used for this filter.
          * @param[in] alg Pointer to the Algorithm object.
          */
@@ -81,7 +81,7 @@ class Filter : private NonCopyable
         /** Set the manager that manages the filter.
          * @param[in] manager Pointer to the Manager object.
          */
-        void setManager(ManagerRTC* manager);
+        void setManager(Manager* manager);
 
         /** A pointer to the algorithm that is part of the filter.
          */
@@ -89,7 +89,7 @@ class Filter : private NonCopyable
 
         /** A pointer to the manager that is part of the filter.
          */
-        ManagerRTC* manager_;
+        Manager* manager_;
 
         /** Holds the name of the filter.
          */
