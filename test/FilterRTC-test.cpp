@@ -10,7 +10,11 @@
 #include <cstring>
 
 #include "vigra/unittest.hxx"
+#define private public
+#define protected public
 #include <libpipe/rtc/FilterRTC.hpp>
+#undef private
+#undef protected
 #include <libpipe/rtc/LibpipeFactories.hpp>
 
 #include <typeinfo>
@@ -20,6 +24,8 @@
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
+
+using namespace libpipe::rtc;
 struct FilterRTCTestSuite : vigra::test_suite
 {
         /** Constructor.
@@ -59,6 +65,12 @@ struct FilterRTCTestSuite : vigra::test_suite
             shouldEqual(bf->getAlgorithm(), p);
             // switch algorithm
 
+            Algorithm* c = AlgorithmFactory::instance().createObject("IdentityRTC");
+
+            bf->setAlgorithm(c);
+
+            shouldEqual(bf->getAlgorithm(),c);
+
             delete bf;
 
         }
@@ -70,6 +82,10 @@ struct FilterRTCTestSuite : vigra::test_suite
                             "filter1", "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::Manager* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
+
+            Manager* m = ManagerFactory::instance().createObject("MangerRTC");
+            bf->setManager(m);
+            shouldEqual(bf->getManager(),m);
 
             delete bf;
         }
