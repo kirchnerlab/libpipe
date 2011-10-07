@@ -5,8 +5,7 @@
  *               2011 David Sichau
  */
 #include <libpipe/rtc/AlgorithmRTC.hpp>
-#include <cstring> // for memset
-#include <sys/time.h> // for gettimeofday
+
 #include <limits>
 #include <libpipe/Log.hpp>
 

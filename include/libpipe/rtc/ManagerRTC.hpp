@@ -14,7 +14,6 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
 
 #include <libpipe/rtc/LibpipeFactories.hpp>
 
