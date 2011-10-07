@@ -13,6 +13,7 @@
 #include <set>
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include <libpipe/Algorithm.hpp>
 #include <libpipe/Filter.hpp>
 #include <libpipe/Manager.hpp>

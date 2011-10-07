@@ -112,12 +112,7 @@ class Manager : private libpipe::NonCopyable
          */
         static const bool registered_;
 
-        static const bool registerLoader()
-        {
-            std::string ids = "MangerRTC";
-            return ManagerFactory::instance().registerType(ids,
-                Manager::create);
-        }
+        static const bool registerLoader();
 };
 
 } // namespace rtc

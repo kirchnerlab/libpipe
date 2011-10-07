@@ -76,5 +76,11 @@ void Manager::disconnect()
     sources_.clear();
 }
 
+const bool Manager::registerLoader()
+{
+    std::string ids = "MangerRTC";
+    return ManagerFactory::instance().registerType(ids, Manager::create);
+}
+
 const bool Manager::registered_ = registerLoader();
 
