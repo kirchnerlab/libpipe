@@ -10,11 +10,7 @@
 
 #include <libpipe/config.hpp>
 
-#include <string>
-#include <map>
 #include <libpipe/Request.hpp>
-#include <sys/time.h> // for timeval
-#include <ostream>
 #include <libpipe/RTC/LibpipeFactories.hpp>
 
 namespace libpipe {
