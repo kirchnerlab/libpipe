@@ -17,14 +17,12 @@
 
 #include <libpipe/rtc/LibpipeFactories.hpp>
 
-
 namespace libpipe {
 namespace rtc {
 
 // forward declaration
 class Algorithm;
 class Filter;
-
 
 /** Base class for Managers.
  * Managers are wrapped with Algorithms to form the filters of the pipeline.
@@ -36,7 +34,8 @@ class Manager : private libpipe::NonCopyable
 {
     public:
 
-        static Manager* create(){
+        static Manager* create()
+        {
             return new Manager;
         }
 
@@ -113,6 +112,12 @@ class Manager : private libpipe::NonCopyable
         static const bool registered_;
 
         static const bool registerLoader();
+
+    private:
+        /** Returns the Filter Manager is dependent on
+         * @return A Set of shared_ptr to Filters
+         */
+        std::set<boost::shared_ptr<Filter> > getSources();
 };
 
 } // namespace rtc

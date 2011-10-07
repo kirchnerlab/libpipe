@@ -120,38 +120,6 @@ class RaiseExceptionAlg : public Algorithm
 
 const bool RaiseExceptionAlg::registered_ = registerLoader();
 
-/** Derive from Manager to be able to access the protected classes
- * for testing.
- */
-class TestManager : public Manager
-{
-    public:
-        static Manager* create()
-        {
-            return new TestManager;
-        }
-
-        std::set<boost::shared_ptr<Filter> > getSources()
-        {
-            return sources_;
-        }
-    private:
-        TestManager(){};
-
-        /** Register Filter in the FilterFactory
-         *
-         */
-        static const bool registered_;
-
-        static const bool registerLoader()
-        {
-            std::string ids = "TestManager";
-            return ManagerFactory::instance().registerType(ids,
-                TestManager::create);
-        }
-};
-
-const bool TestManager::registered_ = registerLoader();
 }
 }
 

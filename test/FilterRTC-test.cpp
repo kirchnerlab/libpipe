@@ -99,7 +99,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 
             //typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
             Filter* f = Filter::create("Fail!", "RaiseExceptionAlg",
-                "TestManager");
+                "MangerRTC");
             f->setName(f->getName());
             shouldEqual(strncmp(f->getName().c_str(), "Fail!", 5), 0);
             f->setName("foo");

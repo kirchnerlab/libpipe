@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_MANAGERRTC ManagerRTC-test.cpp)
 SET(SRCS_ALGORITHMRTC AlgorithmRTC-test.cpp)
 SET(SRCS_FILTERRTC FilterRTC-test.cpp)
 SET(SRCS_OBJECTFACTORY Factory-test.cpp)
@@ -72,6 +73,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("ManagerRTC" test_managerrtc ${SRCS_MANAGERRTC})
 ADD_LIBPIPE_TEST("AlgorithmRTC" test_algorithmrtc ${SRCS_ALGORITHMRTC})
 ADD_LIBPIPE_TEST("FilterRTC" test_filterrtc ${SRCS_FILTERRTC})
 ADD_LIBPIPE_TEST("ObjectFactory" test_factory ${SRCS_OBJECTFACTORY})
