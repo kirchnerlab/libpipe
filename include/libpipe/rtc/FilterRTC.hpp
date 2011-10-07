@@ -22,7 +22,7 @@ class ManagerRTC;
 /** The only class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
-class FilterRTC : private NonCopyable
+class Filter : private NonCopyable
 {
     public:
 
@@ -33,10 +33,10 @@ class FilterRTC : private NonCopyable
          * @param managerName Identifier of the Manager used
          * @return a new Instance of Filter
          */
-        static FilterRTC* create(const std::string& name,
+        static Filter* create(const std::string& name,
             const std::string& algorithmName, const std::string& managerName);
 
-        ~FilterRTC();
+        ~Filter();
 
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
@@ -71,7 +71,7 @@ class FilterRTC : private NonCopyable
          * @param algorithm Pointer to the Algorithm that the filter will uses
          * @param manager Pointer to the Manager that the filter will uses
          */
-        FilterRTC(const std::string& name, Algorithm* algorithm,
+        Filter(const std::string& name, Algorithm* algorithm,
             ManagerRTC* manager);
         /** Set the algorithm that should be used for this filter.
          * @param[in] alg Pointer to the Algorithm object.

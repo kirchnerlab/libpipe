@@ -40,7 +40,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testConstructionAndDestruction()
         {
 
-            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
                 "filter1", "IdentityRTC", "MangerRTC");
             libpipe::rtc::Algorithm* iA =
                     libpipe::rtc::AlgorithmFactory::instance().createObject(
@@ -53,7 +53,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testAlgorithm()
         {
             // getset
-            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
                 "filter1", "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::Algorithm* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
@@ -66,7 +66,7 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testManager()
         {
             // getset
-            libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
                             "filter1", "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::ManagerRTC* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
@@ -80,7 +80,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             // tests if the filter calls its managers process request function
             // the manager will then call the process request function of the fail
             // filter and raise an exception.
-            FilterRTC* f = FilterRTC::create("fail Filter",
+            Filter* f = Filter::create("fail Filter",
                 "RaiseExceptionAlg", "MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
@@ -98,7 +98,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             using namespace libpipe::rtc;
 
             //typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
-            FilterRTC* f = FilterRTC::create("Fail!", "RaiseExceptionAlg",
+            Filter* f = Filter::create("Fail!", "RaiseExceptionAlg",
                 "TestManager");
             f->setName(f->getName());
             shouldEqual(strncmp(f->getName().c_str(), "Fail!", 5), 0);

@@ -131,7 +131,7 @@ class TestManager : public ManagerRTC
             return new TestManager;
         }
 
-        std::set<boost::shared_ptr<FilterRTC> > getSources()
+        std::set<boost::shared_ptr<Filter> > getSources()
         {
             return sources_;
         }

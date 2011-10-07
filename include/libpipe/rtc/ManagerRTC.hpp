@@ -24,7 +24,7 @@ namespace rtc {
 
 // forward declaration
 class Algorithm;
-class FilterRTC;
+class Filter;
 
 
 /** Base class for Managers.
@@ -80,7 +80,7 @@ class ManagerRTC : private libpipe::NonCopyable
          * @param[inout] f Pointer to a filter object on which the current manager
          *                 should depend.
          */
-        void connect(boost::shared_ptr<FilterRTC> f);
+        void connect(boost::shared_ptr<Filter> f);
 
     protected:
 
@@ -90,7 +90,7 @@ class ManagerRTC : private libpipe::NonCopyable
 
         /** Convenience typedef: a filter set.
          */
-        typedef std::set<boost::shared_ptr<FilterRTC> > FilterSet;
+        typedef std::set<boost::shared_ptr<Filter> > FilterSet;
 
         /** The set of filters the manager depends on.
          */

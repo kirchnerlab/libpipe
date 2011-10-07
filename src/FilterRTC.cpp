@@ -14,30 +14,30 @@
 using namespace libpipe::rtc;
 
 
-FilterRTC* FilterRTC::create(const std::string& name,
+Filter* Filter::create(const std::string& name,
     const std::string& algorithmName, const std::string& managerName)
 {
     Algorithm* a = AlgorithmFactory::instance().createObject(
         algorithmName);
     ManagerRTC* m = ManagerFactory::instance().createObject(
         managerName);
-    return new FilterRTC(name, a, m);
+    return new Filter(name, a, m);
 }
 
-FilterRTC::FilterRTC(const std::string& name, Algorithm* algorithm,
+Filter::Filter(const std::string& name, Algorithm* algorithm,
     ManagerRTC* manager) :
         algorithm_(algorithm),  manager_(manager) , name_(name)
 {
 }
 
-FilterRTC::~FilterRTC()
+Filter::~Filter()
 {
     // the filter owns its members!
     delete algorithm_;
     delete manager_;
 }
 
-libpipe::Request& FilterRTC::processRequest(libpipe::Request& req)
+libpipe::Request& Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
@@ -46,12 +46,12 @@ libpipe::Request& FilterRTC::processRequest(libpipe::Request& req)
     return req;
 }
 
-Algorithm* FilterRTC::getAlgorithm()
+Algorithm* Filter::getAlgorithm()
 {
     return algorithm_;
 }
 
-void FilterRTC::setAlgorithm(Algorithm* alg)
+void Filter::setAlgorithm(Algorithm* alg)
 {
     if (algorithm_ != alg) {
         if (algorithm_) {
@@ -64,12 +64,12 @@ void FilterRTC::setAlgorithm(Algorithm* alg)
     }
 }
 
-ManagerRTC* FilterRTC::getManager()
+ManagerRTC* Filter::getManager()
 {
     return manager_;
 }
 
-void FilterRTC::setManager(ManagerRTC* manager)
+void Filter::setManager(ManagerRTC* manager)
 {
     if (manager_ != manager) {
         if (manager_) {
@@ -79,12 +79,12 @@ void FilterRTC::setManager(ManagerRTC* manager)
     }
 }
 
-std::string FilterRTC::getName() const
+std::string Filter::getName() const
 {
     return name_;
 }
 
-void FilterRTC::setName(const std::string& name)
+void Filter::setName(const std::string& name)
 {
     name_ = name;
 }

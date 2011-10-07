@@ -66,7 +66,7 @@ libpipe::Request& ManagerRTC::processRequest(libpipe::Request& req)
     return req;
 }
 
-void ManagerRTC::connect(boost::shared_ptr<FilterRTC> f)
+void ManagerRTC::connect(boost::shared_ptr<Filter> f)
 {
     sources_.insert(f);
 }
