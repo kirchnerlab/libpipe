@@ -11,7 +11,7 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/Request.hpp>
-#include <libpipe/RTC/LibpipeFactories.hpp>
+#include <libpipe/rtc/LibpipeFactories.hpp>
 
 namespace libpipe {
 namespace rtc {

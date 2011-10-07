@@ -10,8 +10,8 @@
 #include <cstring>
 
 #include "vigra/unittest.hxx"
-#include <libpipe/RTC/FilterRTC.hpp>
-#include <libpipe/RTC/LibpipeFactories.hpp>
+#include <libpipe/rtc/FilterRTC.hpp>
+#include <libpipe/rtc/LibpipeFactories.hpp>
 
 #include <typeinfo>
 

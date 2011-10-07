@@ -16,7 +16,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
-#include <libpipe/RTC/LibpipeFactories.hpp>
+#include <libpipe/rtc/LibpipeFactories.hpp>
 
 
 namespace libpipe {

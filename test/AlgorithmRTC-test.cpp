@@ -8,10 +8,9 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 
-#include "libpipe/RTC/AlgorithmRTC.hpp"
-#include "libpipe/RTC/LibpipeFactories.hpp"
-#include <sys/time.h> // for gettimeofday
-#include <limits>
+#include "libpipe/rtc/AlgorithmRTC.hpp"
+#include "libpipe/rtc/LibpipeFactories.hpp"
+
 
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
 

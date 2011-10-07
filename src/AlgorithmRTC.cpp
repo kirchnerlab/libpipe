@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *               2011 David Sichau
  */
-#include <libpipe/RTC/AlgorithmRTC.hpp>
+#include <libpipe/rtc/AlgorithmRTC.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>

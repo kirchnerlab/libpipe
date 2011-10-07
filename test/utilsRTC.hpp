@@ -9,8 +9,8 @@
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
 
-#include <libpipe/RTC/AlgorithmRTC.hpp>
-#include <libpipe/RTC/ManagerRTC.hpp>
+#include <libpipe/rtc/AlgorithmRTC.hpp>
+#include <libpipe/rtc/ManagerRTC.hpp>
 
 #include <set>
 #include <libpipe/Request.hpp>
