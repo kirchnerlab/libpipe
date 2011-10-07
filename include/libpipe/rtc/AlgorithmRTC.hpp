@@ -19,7 +19,7 @@
  */
 namespace libpipe {
 /**
- * \namespace rtc The Namespace where all classes are located which are used for the runtime configuration of libpipe
+ * \namespace libpipe::rtc The Namespace where all classes are located which are used for the runtime configuration of libpipe
  */
 namespace rtc {
 
