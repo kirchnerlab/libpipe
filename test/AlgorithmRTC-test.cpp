@@ -11,6 +11,7 @@
 #include "libpipe/rtc/AlgorithmRTC.hpp"
 #include "libpipe/rtc/LibpipeFactories.hpp"
 
+#include <limits>
 
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
 

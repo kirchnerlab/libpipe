@@ -12,6 +12,8 @@
 
 #include <libpipe/Request.hpp>
 #include <libpipe/rtc/LibpipeFactories.hpp>
+#include <sys/time.h> // for timeval
+#include <ostream>
 
 namespace libpipe {
 namespace rtc {
