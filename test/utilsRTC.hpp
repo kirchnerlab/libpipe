@@ -10,6 +10,7 @@
 #define __LIBPIPE_TEST_UTILS_HPP__
 
 #include <libpipe/RTC/AlgorithmRTC.hpp>
+#include <libpipe/RTC/ManagerRTC.hpp>
 
 #include <set>
 #include <libpipe/Request.hpp>
@@ -19,7 +20,9 @@
 
 #include <sstream>
 
-using namespace libpipe::rtc;
+namespace libpipe {
+namespace rtc {
+
 
 /** An algorithm that does not change its input.
  */
@@ -120,35 +123,36 @@ const bool RaiseExceptionAlg::registered_ = registerLoader();
 /** Derive from Manager to be able to access the protected classes
  * for testing.
  */
-//class TestManager : public ManagerRTC
-//{
-//    public:
-//        static ManagerRTC* create()
-//        {
-//            return new TestManager;
-//        }
-//
-//        std::set<boost::shared_ptr<FilterRTC> > getSources()
-//        {
-//            return sources_;
-//        }
-//    private:
-//        TestManager();
-//
-//        /** Register Filter in the FilterFactory
-//         *
-//         */
-//        static const bool registered_;
-//
-//        static const bool registerLoader()
-//        {
-//            std::string ids = "TestManager";
-//            return ManagerFactory::instance().registerType(ids,
-//                TestManager::create);
-//        }
-//};
-//
-//const bool TestManager::registered_ = registerLoader();
+class TestManager : public ManagerRTC
+{
+    public:
+        static ManagerRTC* create()
+        {
+            return new TestManager;
+        }
 
+        std::set<boost::shared_ptr<FilterRTC> > getSources()
+        {
+            return sources_;
+        }
+    private:
+        TestManager(){};
+
+        /** Register Filter in the FilterFactory
+         *
+         */
+        static const bool registered_;
+
+        static const bool registerLoader()
+        {
+            std::string ids = "TestManager";
+            return ManagerFactory::instance().registerType(ids,
+                TestManager::create);
+        }
+};
+
+const bool TestManager::registered_ = registerLoader();
+}
+}
 
 #endif

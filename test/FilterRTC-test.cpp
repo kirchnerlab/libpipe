@@ -42,7 +42,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 
             libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "IdentityRTC", "MangerRTC");
-            AlgorithmRTC* iA =
+            libpipe::rtc::AlgorithmRTC* iA =
                     libpipe::rtc::AlgorithmFactory::instance().createObject(
                         "IdentityRTC");
             shouldEqual(typeid(iA)==typeid(bf->getAlgorithm()), true);
@@ -55,7 +55,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             // getset
             libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                 "filter1", "RaiseExceptionAlg", "MangerRTC");
-            AlgorithmRTC* p = bf->getAlgorithm();
+            libpipe::rtc::AlgorithmRTC* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
             // switch algorithm
 
@@ -68,7 +68,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             // getset
             libpipe::rtc::FilterRTC* bf = libpipe::rtc::FilterRTC::create(
                             "filter1", "RaiseExceptionAlg", "MangerRTC");
-            ManagerRTC* p = bf->getManager();
+            libpipe::rtc::ManagerRTC* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
 
             delete bf;
@@ -99,7 +99,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 
             //typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
             FilterRTC* f = FilterRTC::create("Fail!", "RaiseExceptionAlg",
-                "MangerRTC");
+                "TestManager");
             f->setName(f->getName());
             shouldEqual(strncmp(f->getName().c_str(), "Fail!", 5), 0);
             f->setName("foo");
