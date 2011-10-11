@@ -21,6 +21,7 @@ Filter* Filter::create(const std::string& name,
         algorithmName);
     Manager* m = ManagerFactory::instance().createObject(
         managerName);
+    m->setAlgorithm(a);
     return new Filter(name, a, m);
 }
 
