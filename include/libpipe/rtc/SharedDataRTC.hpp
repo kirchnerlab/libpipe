@@ -37,55 +37,24 @@ namespace rtc {
  * 
  * \code
  * ...
- * public:
+ * protected:
  * ...
- * boost::shared_ptr<SharedData<MyType> > getOutput();
+ * Constructor(){
+ *  ...
+ *  ports_["StringInput"] = boost::make_shared<
+ *                   libpipe::rtc::SharedData<std::string> >();
+ *  ...
+ *  }
  * ...
- * private:
- * ...
- * boost::shared_ptr<SharedData<MyType> > output_;
- * ...
- * \endcode
- *
- * \li in Alg0.cpp
- * 
- * \code
- * ...
- * Alg0::Alg0() : output_(boost::make_shared<SharedData<MyType> >())
- * ...
- * \endcode
- *
- * \li in Alg1.hpp
- *
- * \code
- * ...
- * void setInput(boost::shared_ptr<SharedData<MyType> > p);
- * ...
- * \endcode
- *
- * \li in Alg1.cpp
- *
- * \code
- * ...
- * Request& processRequest(Request& req)
- * {
- *     ...
- *     if (!input_.isNull()) {
- *         ... run the algorithm ...
- *     } else {
- *         ... report the error condition into the request object
- *         ... or throw an exception.
- *     }
- *     ...
- *     return req;
- * }
  * \endcode
  *
  * \li somewhere in main.cpp
  * 
  * \code
  * ...
- * filter1->getAlgorithm()->setInput(filter0->getAlgorithm()->getOutput())
+ * filterMap.find("TheSource")->second->getAlgorithm()->connect(
+ *           filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
+ *           "StringOutput");
  * \endcode
  *
  * Note that this simply guarantees that two connected algorithms will always

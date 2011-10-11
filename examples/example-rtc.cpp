@@ -57,11 +57,11 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             std::cout
                     << "\033[22;32m Uppercase Algorithm destroyed with input: "
                     << *input_->get() << "\t and output: " << *output_->get()
@@ -77,11 +77,11 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_.get()->get()->clear();
@@ -195,11 +195,11 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
 
             std::cout
                     << "\033[22;32m Lowercase Algorithm destroyed with input: "
@@ -216,11 +216,11 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_.get()->get()->clear();
@@ -279,15 +279,15 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput1"));
+                        this->getPort("StringInput1"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput2"));
+                        this->getPort("StringInput2"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
                     << *input1_->get() << " and " << *input2_->get()
                     << "\t and output: " << *output_->get() << "\e[m"
@@ -304,15 +304,15 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput1"));
+                        this->getPort("StringInput1"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput2"));
+                        this->getPort("StringInput2"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
             output_.get()->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
@@ -331,15 +331,15 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput1"));
+                        this->getPort("StringInput1"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput2"));
+                        this->getPort("StringInput2"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             result->get()->append(*input1_->get());
             result->get()->append(*input2_->get());
         }
@@ -391,11 +391,11 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             if (input_) {
                 std::cout << "\033[22;32m ROT13 destroyed with input: "
                         << *input_->get() << "\t and output: "
@@ -418,11 +418,11 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringInput"));
+                        this->getPort("StringInput"));
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
                 LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
@@ -513,7 +513,7 @@ class Source : public libpipe::rtc::Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
-                        this->getPorts("StringOutput"));
+                        this->getPort("StringOutput"));
             std::cout << "\033[22;32m Source destroyed with output: "
                     << *output_.get()->get() << "\e[m" << std::endl;
         }
@@ -561,17 +561,7 @@ int main(int argc, char *argv[])
     boost::shared_ptr<Filter> lowerFilter;
 
     {
-        //boost::shared_ptr<Filter> stringCreator(
-        //  Filter::create("The Source", "Source", "MangerRTC"));
-        //boost::shared_ptr<Filter> stringFilter(
-        //  Filter::create("Filter #1", "UppercaseAlgorithm", "MangerRTC"));
-//        boost::shared_ptr<Filter> rotDecryper(
-//            Filter::create("ROT Decrypter", "ROT13Algorithm", "MangerRTC"));
-//        boost::shared_ptr<Filter> rotDecryper1(
-//            Filter::create("ROT Decrypter 1", "ROT13Algorithm", "MangerRTC"));
-//        boost::shared_ptr<Filter> combiner(
-//            Filter::create("Combiner", "CombineAlgorithm", "MangerRTC"));
-
+        // construct filters and save in map for later identification
         std::map<std::string, boost::shared_ptr<Filter> > filterMap;
 
         filterMap["LowercaseFilter"] = boost::shared_ptr<Filter>(
@@ -595,13 +585,7 @@ int main(int argc, char *argv[])
         filterMap.find("TheSource")->second->getAlgorithm()->setInput(
             "StringOutput", input);
 
-        std::cerr
-                << boost::dynamic_pointer_cast<
-                        libpipe::rtc::SharedData<std::string> >(
-                    filterMap.find("TheSource")->second->getAlgorithm()->getPorts(
-                        "StringOutput"))->get()->c_str() << std::endl;
-
-        //connect output of creator to input of string filter
+        //Connect ports
         filterMap.find("TheSource")->second->getAlgorithm()->connect(
             filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
             "StringOutput");
@@ -617,6 +601,7 @@ int main(int argc, char *argv[])
         filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
             filterMap.find("Combiner")->second->getAlgorithm(), "StringInput1",
             "StringOutput");
+
         filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
             filterMap.find("Combiner")->second->getAlgorithm(), "StringInput2",
             "StringOutput");
@@ -625,29 +610,27 @@ int main(int argc, char *argv[])
             filterMap.find("LowercaseFilter")->second->getAlgorithm(),
             "StringInput", "StringOutput");
 
+
+        //Manager connect
         filterMap.find("Filter1")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("TheSource")->second));
+                filterMap.find("TheSource")->second);
 
         filterMap.find("ROTDecrypter")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("Filter1")->second));
+                filterMap.find("Filter1")->second);
 
         filterMap.find("ROTDecrypter1")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("ROTDecrypter")->second));
+                filterMap.find("ROTDecrypter")->second);
 
         filterMap.find("Combiner")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("ROTDecrypter")->second));
+            filterMap.find("ROTDecrypter")->second);
+
         filterMap.find("Combiner")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("ROTDecrypter1")->second));
+                filterMap.find("ROTDecrypter1")->second);
 
         filterMap.find("LowercaseFilter")->second->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(
-                filterMap.find("Combiner")->second));
+                filterMap.find("Combiner")->second);
 
+        // the filter that will be used outside the scope
         lowerFilter = filterMap.find("LowercaseFilter")->second;
     }
 

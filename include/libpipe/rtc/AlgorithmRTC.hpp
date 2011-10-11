@@ -117,11 +117,32 @@ class Algorithm
          */
         bool needUpdate() const;
 
-        boost::shared_ptr<LibpipeDataObject> getPorts(std::string const& portIdentifier) const;
+        /** Returns one concrete Port, to make use of it one need to
+         * make dynamic pointer cast to the actual Object stored
+         * \code
+         * boost::dynamic_pointer_cast<libpipe::rtc::SharedData<std::string> >(
+         *               this->getPorts("StringOutput"));
+         * \endcode
+         *
+         * @param portIdentifier A \c std::string which identifies the port one wants to use
+         * @return A shared_ptr to a LibpipeDataObject
+         */
+        boost::shared_ptr<LibpipeDataObject> getPort(std::string const& portIdentifier) const;
 
-        void setInput(std::string const& portIdentifier, boost::shared_ptr<LibpipeDataObject> db);
+        /** Sets the Port to a certain LibpipeDataObject
+         * @param portIdentifier A \c std::string which identifies the port one wants to set to
+         * the LibpipeDataObject dataObject
+         * @param dataObject The Object the Port will point to
+         */
+        void setInput(std::string const& portIdentifier, boost::shared_ptr<LibpipeDataObject> dataObject);
 
-        void connect(Algorithm* f, std::string const& inputPortIdentifier,
+        /** Connects the port of alg identified by inputPortIdentifier to the port of this algorithm
+         * identified by outputPortIdentifier
+         * @param alg Algorithm which port is connected to the port of this algorithm
+         * @param inputPortIdentifier Identifier of the port of alg
+         * @param outputPortIdentifier Identifier of the port of this algorithm
+         */
+        void connect(Algorithm* alg, std::string const& inputPortIdentifier,
             std::string const& outputPortIdentifier);
 
     protected:
@@ -129,8 +150,7 @@ class Algorithm
          */
         Algorithm();
 
-        /** Map of the ports and their string Identifier
-         *
+        /** Map of the ports and their \c std::string Identifier
          */
         std::map<std::string, boost::shared_ptr<LibpipeDataObject> > ports_;
 

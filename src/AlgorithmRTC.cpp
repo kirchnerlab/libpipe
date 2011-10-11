@@ -84,7 +84,7 @@ bool Algorithm::needUpdate() const
     return mTime_ == Algorithm::MAX_TIME;
 }
 
-boost::shared_ptr<LibpipeDataObject> Algorithm::getPorts(
+boost::shared_ptr<LibpipeDataObject> Algorithm::getPort(
     std::string const& portIdentifier) const
 {
     std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::const_iterator iter;
@@ -99,21 +99,21 @@ boost::shared_ptr<LibpipeDataObject> Algorithm::getPorts(
 }
 
 void Algorithm::setInput(std::string const& portIdentifier,
-    boost::shared_ptr<LibpipeDataObject> db)
+    boost::shared_ptr<LibpipeDataObject> dataObject)
 {
     std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::iterator iter;
     iter = ports_.find(portIdentifier);
 
     if (iter != ports_.end()) {
-        iter->second = db;
+        iter->second = dataObject;
     } else {
         std::cerr << "unknown type Input: "<<portIdentifier << std::endl;
     }
 }
 
-void Algorithm::connect(Algorithm* f, std::string const& inputPortIdentifier,
+void Algorithm::connect(Algorithm* alg, std::string const& inputPortIdentifier,
     std::string const& outputPortIdentifier)
 {
-    f->setInput(inputPortIdentifier, this->getPorts(outputPortIdentifier));
+    alg->setInput(inputPortIdentifier, this->getPort(outputPortIdentifier));
 }
 
