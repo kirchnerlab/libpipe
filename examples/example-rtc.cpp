@@ -558,67 +558,97 @@ int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
 
-    boost::shared_ptr<Filter> lowerFilter(
-        Filter::create("Lowercase Filter", "LowercaseAlgorithm", "MangerRTC"));
+    boost::shared_ptr<Filter> lowerFilter;
+
     {
-        boost::shared_ptr<Filter> stringCreator(
+        //boost::shared_ptr<Filter> stringCreator(
+        //  Filter::create("The Source", "Source", "MangerRTC"));
+        //boost::shared_ptr<Filter> stringFilter(
+        //  Filter::create("Filter #1", "UppercaseAlgorithm", "MangerRTC"));
+//        boost::shared_ptr<Filter> rotDecryper(
+//            Filter::create("ROT Decrypter", "ROT13Algorithm", "MangerRTC"));
+//        boost::shared_ptr<Filter> rotDecryper1(
+//            Filter::create("ROT Decrypter 1", "ROT13Algorithm", "MangerRTC"));
+//        boost::shared_ptr<Filter> combiner(
+//            Filter::create("Combiner", "CombineAlgorithm", "MangerRTC"));
+
+        std::map<std::string, boost::shared_ptr<Filter> > filterMap;
+
+        filterMap["LowercaseFilter"] = boost::shared_ptr<Filter>(
+            Filter::create("Lowercase Filter", "LowercaseAlgorithm",
+                "MangerRTC"));
+        filterMap["TheSource"] = boost::shared_ptr<Filter>(
             Filter::create("The Source", "Source", "MangerRTC"));
-        boost::shared_ptr<Filter> stringFilter(
+        filterMap["Filter1"] = boost::shared_ptr<Filter>(
             Filter::create("Filter #1", "UppercaseAlgorithm", "MangerRTC"));
-        boost::shared_ptr<Filter> rotDecryper(
+        filterMap["ROTDecrypter"] = boost::shared_ptr<Filter>(
             Filter::create("ROT Decrypter", "ROT13Algorithm", "MangerRTC"));
-        boost::shared_ptr<Filter> rotDecryper1(
+        filterMap["ROTDecrypter1"] = boost::shared_ptr<Filter>(
             Filter::create("ROT Decrypter 1", "ROT13Algorithm", "MangerRTC"));
-        boost::shared_ptr<Filter> combiner(
+        filterMap["Combiner"] = boost::shared_ptr<Filter>(
             Filter::create("Combiner", "CombineAlgorithm", "MangerRTC"));
 
         //sets input for first Filter
         boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input(
             new SharedData<std::string>());
         input->set(new std::string("Hello World!"));
-        stringCreator->getAlgorithm()->setInput("StringOutput", input);
+        filterMap.find("TheSource")->second->getAlgorithm()->setInput(
+            "StringOutput", input);
 
         std::cerr
                 << boost::dynamic_pointer_cast<
                         libpipe::rtc::SharedData<std::string> >(
-                    stringCreator->getAlgorithm()->getPorts("StringOutput"))->get()->c_str()
-                << std::endl;
+                    filterMap.find("TheSource")->second->getAlgorithm()->getPorts(
+                        "StringOutput"))->get()->c_str() << std::endl;
 
         //connect output of creator to input of string filter
-        stringCreator->getAlgorithm()->connect(stringFilter->getAlgorithm(),
+        filterMap.find("TheSource")->second->getAlgorithm()->connect(
+            filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
+            "StringOutput");
+
+        filterMap.find("Filter1")->second->getAlgorithm()->connect(
+            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
             "StringInput", "StringOutput");
 
-        stringFilter->getAlgorithm()->connect(rotDecryper->getAlgorithm(),
+        filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
+            filterMap.find("ROTDecrypter1")->second->getAlgorithm(),
             "StringInput", "StringOutput");
 
-        rotDecryper->getAlgorithm()->connect(rotDecryper1->getAlgorithm(),
+        filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
+            filterMap.find("Combiner")->second->getAlgorithm(), "StringInput1",
+            "StringOutput");
+        filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
+            filterMap.find("Combiner")->second->getAlgorithm(), "StringInput2",
+            "StringOutput");
+
+        filterMap.find("Combiner")->second->getAlgorithm()->connect(
+            filterMap.find("LowercaseFilter")->second->getAlgorithm(),
             "StringInput", "StringOutput");
 
-        rotDecryper->getAlgorithm()->connect(combiner->getAlgorithm(),
-            "StringInput1", "StringOutput");
-        rotDecryper1->getAlgorithm()->connect(combiner->getAlgorithm(),
-            "StringInput2", "StringOutput");
+        filterMap.find("Filter1")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("TheSource")->second));
 
-        combiner->getAlgorithm()->connect(lowerFilter->getAlgorithm(),
-            "StringInput", "StringOutput");
+        filterMap.find("ROTDecrypter")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("Filter1")->second));
 
-        stringFilter->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(stringCreator));
+        filterMap.find("ROTDecrypter1")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("ROTDecrypter")->second));
 
-        rotDecryper->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(stringFilter));
+        filterMap.find("Combiner")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("ROTDecrypter")->second));
+        filterMap.find("Combiner")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("ROTDecrypter1")->second));
 
-        rotDecryper1->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper));
+        filterMap.find("LowercaseFilter")->second->getManager()->connect(
+            boost::dynamic_pointer_cast<Filter>(
+                filterMap.find("Combiner")->second));
 
-        combiner->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper));
-        combiner->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper1));
-
-        lowerFilter->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(combiner));
-
+        lowerFilter = filterMap.find("LowercaseFilter")->second;
     }
 
     libpipe::Request req(libpipe::Request::UPDATE);
