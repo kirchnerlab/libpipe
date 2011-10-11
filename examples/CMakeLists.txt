@@ -11,7 +11,9 @@ ADD_EXECUTABLE(example-uppercase-strings example-uppercase-strings.cpp)
 TARGET_LINK_LIBRARIES(example-uppercase-strings pipe)
 ADD_EXECUTABLE(example-strings-mtime example-strings-mtime.cpp)
 TARGET_LINK_LIBRARIES(example-strings-mtime pipe)
-INSTALL(TARGETS example-strings-mtime example-uppercase-strings
+ADD_EXECUTABLE(example-rtc example-rtc.cpp)
+TARGET_LINK_LIBRARIES(example-rtc pipe)
+INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     ARCHIVE DESTINATION lib

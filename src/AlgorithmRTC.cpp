@@ -14,9 +14,7 @@
 
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
 
-
 using namespace libpipe::rtc;
-
 
 timeval Algorithm::initMaxTime()
 {
@@ -43,7 +41,7 @@ const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
 Algorithm::Algorithm() :
-    mTime_(Algorithm::MAX_TIME)
+        mTime_(Algorithm::MAX_TIME)
 {
 }
 
@@ -54,7 +52,7 @@ Algorithm::~Algorithm()
 libpipe::Request& Algorithm::processRequest(libpipe::Request& req)
 {
     req = this->update(req);
-    if(req.is(libpipe::Request::DELETE)){
+    if (req.is(libpipe::Request::DELETE)) {
         this->setMTime(Algorithm::MIN_TIME);
     }
     return req;
@@ -86,4 +84,36 @@ bool Algorithm::needUpdate() const
     return mTime_ == Algorithm::MAX_TIME;
 }
 
+boost::shared_ptr<LibpipeDataObject> Algorithm::getPorts(
+    std::string const& portIdentifier) const
+{
+    std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::const_iterator iter;
+    iter = ports_.find(portIdentifier);
+
+    if (iter != ports_.end()) {
+        return iter->second;
+    } else {
+        std::cerr << "unknown type Output "<<portIdentifier << std::endl;
+        return boost::shared_ptr<LibpipeDataObject>();
+    }
+}
+
+void Algorithm::setInput(std::string const& portIdentifier,
+    boost::shared_ptr<LibpipeDataObject> db)
+{
+    std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::iterator iter;
+    iter = ports_.find(portIdentifier);
+
+    if (iter != ports_.end()) {
+        iter->second = db;
+    } else {
+        std::cerr << "unknown type Input: "<<portIdentifier << std::endl;
+    }
+}
+
+void Algorithm::connect(Algorithm* f, std::string const& inputPortIdentifier,
+    std::string const& outputPortIdentifier)
+{
+    f->setInput(inputPortIdentifier, this->getPorts(outputPortIdentifier));
+}
 

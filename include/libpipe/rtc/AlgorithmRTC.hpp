@@ -11,8 +11,14 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/Request.hpp>
+#include <libpipe/rtc/LibpipeDataObject.hpp>
 #include <libpipe/rtc/LibpipeFactories.hpp>
 #include <sys/time.h> // for timeval
+#include <map>
+
+#include <boost/pointer_cast.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 /**
  * \namespace libpipe The Namespace for all libpipe classes.
@@ -22,7 +28,6 @@ namespace libpipe {
  * \namespace libpipe::rtc The Namespace where all classes are located which are used for the runtime configuration of libpipe
  */
 namespace rtc {
-
 
 /** Base class for all LIBPIPE Runtime configuration algorithms.
  */
@@ -112,10 +117,23 @@ class Algorithm
          */
         bool needUpdate() const;
 
+        boost::shared_ptr<LibpipeDataObject> getPorts(std::string const& portIdentifier) const;
+
+        void setInput(std::string const& portIdentifier, boost::shared_ptr<LibpipeDataObject> db);
+
+        void connect(Algorithm* f, std::string const& inputPortIdentifier,
+            std::string const& outputPortIdentifier);
+
     protected:
         /** Constructor.
          */
         Algorithm();
+
+        /** Map of the ports and their string Identifier
+         *
+         */
+        std::map<std::string, boost::shared_ptr<LibpipeDataObject> > ports_;
+
     private:
 
         /** Initializes the static constant \c MAX_TIME.
@@ -131,7 +149,6 @@ class Algorithm
         /** The last modification timestamp.
          */
         timeval mTime_;
-
 
 };
 } // namespace rtc
