@@ -93,41 +93,12 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             return req;
         }
 
-        /** Provides access to results.
-         * In contrast to more rigid pipeline implementations, LIBPIPE does not
-         * impose any constraints on what data types algorithms can share; this is
-         * simply done by keeping the request pipeline separate from the
-         * input/output flow of the algorithms. In most cases the user knows best
-         * which data type is suitable for a problem at hand; there is no reason to
-         * take this freedom (and the responsibility from her/him. Algorithms need
-         * to specify input and output functions, and it is recommended (but not
-         * required) to start the respective function names with 'setInput' and
-         * 'getOutput'.
-         *  @returns A handle to the output data of the algorithm.
-         */
-//        boost::shared_ptr<libpipe::rtc::SharedData<std::string> > getOutput()
-//        {
-//            return output_;
-//        }
-        /** Allows to connect the output of another algorithm with the input of
-         * this algorithm.
-         * @see getOutput
-         *
-         * @param[in] input A handle (in most cases a (smart) pointer to the data.
-         */
-//        void setInput(
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input)
-//        {
-//            input_ = input;
-//        }
     protected:
         /** Constructor.
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         UppercaseAlgorithm() :
-                libpipe::rtc::Algorithm()/*, output_(
-         boost::make_shared<libpipe::rtc::SharedData<std::string> >(
-         new std::string))*/
+                libpipe::rtc::Algorithm()
         {
             ports_["StringInput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >();
@@ -136,20 +107,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
 
         }
 
-        //  typedef boost::shared_ptr<libpipe::rtc::SharedData<std::string> > StringPtr;
-
-        /** A reference to the input data.
-         * This can be a weak pointer or some other kind of reference. In the
-         * majority of cases, the algorithm should not attempt to modify this data.
-         * There are exceptions (and hence constness is not enforced).
-         */
-        // StringPtr input_;
-        /** The output data.
-         * In most cases it is advisable that the memory consumed by this data is
-         * owned by the algorithm (or, at least, managed by it).
-         */
-        //  StringPtr output_;
-    private:
+       private:
         static const bool registerLoader()
         {
             std::string ids = "UppercaseAlgorithm";
@@ -239,9 +197,7 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         LowercaseAlgorithm() :
-                libpipe::rtc::Algorithm()/*, output_(
-         boost::make_shared<libpipe::rtc::SharedData<std::string> >(
-         new std::string))*/
+                libpipe::rtc::Algorithm()
         {
             ports_["StringInput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >();
