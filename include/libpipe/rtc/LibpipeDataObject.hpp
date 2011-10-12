@@ -14,10 +14,7 @@ namespace rtc {
 class LibpipeDataObject
 {
     public:
-        virtual ~LibpipeDataObject()
-        {
-        }
-        ;
+        virtual ~LibpipeDataObject(){};
 };
 
 }

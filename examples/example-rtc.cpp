@@ -541,10 +541,6 @@ int main(int argc, char *argv[])
             "StringOutput", input);
 
         //Connect ports
-//        filterMap.find("TheSource")->second->getAlgorithm()->connect(
-//            filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
-//            "StringOutput");
-
         filterMap.find("Filter1")->second->getAlgorithm()->connect(
             filterMap.find("TheSource")->second->getAlgorithm(),
             "StringOutput", "StringInput");
