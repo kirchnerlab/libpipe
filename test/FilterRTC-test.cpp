@@ -12,7 +12,7 @@
 #include "vigra/unittest.hxx"
 #define private public
 #define protected public
-#include <libpipe/rtc/FilterRTC.hpp>
+#include <libpipe/rtc/Filter.hpp>
 #undef private
 #undef protected
 #include <libpipe/rtc/LibpipeFactories.hpp>

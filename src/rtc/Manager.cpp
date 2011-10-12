@@ -5,9 +5,9 @@
  *               2011 David Sichau
  *
  */
-#include <libpipe/rtc/ManagerRTC.hpp>
-#include <libpipe/rtc/FilterRTC.hpp>
-#include <libpipe/rtc/AlgorithmRTC.hpp>
+#include <libpipe/rtc/Manager.hpp>
+#include <libpipe/rtc/Filter.hpp>
+#include <libpipe/rtc/Algorithm.hpp>
 
 using namespace libpipe::rtc;
 

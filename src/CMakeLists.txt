@@ -1,8 +1,8 @@
 
 SET(SRCS 
-    AlgorithmRTC.cpp
-    ManagerRTC.cpp
-    FilterRTC.cpp
+    rtc/Algorithm.cpp
+    rtc/Manager.cpp
+    rtc/Filter.cpp
     Algorithm.cpp
     Exception.cpp
     Filter.cpp

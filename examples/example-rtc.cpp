@@ -14,14 +14,14 @@
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
-#include <libpipe/rtc/AlgorithmRTC.hpp>
-#include <libpipe/rtc/FilterRTC.hpp>
-#include <libpipe/rtc/ManagerRTC.hpp>
+#include <libpipe/rtc/Algorithm.hpp>
+#include <libpipe/rtc/Filter.hpp>
+#include <libpipe/rtc/Manager.hpp>
 #include <libpipe/rtc/LibpipeFactories.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 #include <libpipe/BasicFilter.hpp>
-#include <libpipe/rtc/SharedDataRTC.hpp>
+#include <libpipe/rtc/SharedData.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write

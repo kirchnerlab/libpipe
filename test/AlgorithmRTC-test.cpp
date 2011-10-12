@@ -10,11 +10,11 @@
 
 #define private public
 #define protected public
-#include "libpipe/rtc/AlgorithmRTC.hpp"
+#include "libpipe/rtc/Algorithm.hpp"
 #undef private
 #undef protected
 #include "libpipe/rtc/LibpipeFactories.hpp"
-#include <libpipe/rtc/SharedDataRTC.hpp>
+#include <libpipe/rtc/SharedData.hpp>
 
 #include <limits>
 

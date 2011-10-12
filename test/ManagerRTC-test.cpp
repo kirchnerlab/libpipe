@@ -7,7 +7,7 @@
  */
 #define private public
 #define protected public
-#include <libpipe/rtc/ManagerRTC.hpp>
+#include <libpipe/rtc/Manager.hpp>
 #undef private
 #undef protected
 #include <iostream>
@@ -17,8 +17,8 @@
 #include <vector>
 #include <string>
 
-#include <libpipe/rtc/AlgorithmRTC.hpp>
-#include <libpipe/rtc/FilterRTC.hpp>
+#include <libpipe/rtc/Algorithm.hpp>
+#include <libpipe/rtc/Filter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 

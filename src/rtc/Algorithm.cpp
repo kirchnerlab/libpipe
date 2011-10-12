@@ -4,7 +4,7 @@
  * Copyright (c) 2010 Marc Kirchner
  *               2011 David Sichau
  */
-#include <libpipe/rtc/AlgorithmRTC.hpp>
+#include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/Exception.hpp>
 
 #include <limits>
