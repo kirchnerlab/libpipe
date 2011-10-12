@@ -5,15 +5,16 @@
  *               2011 David Sichau
  */
 #include <libpipe/rtc/AlgorithmRTC.hpp>
+#include <libpipe/Exception.hpp>
 
 #include <limits>
 #include <libpipe/Log.hpp>
+#include <string>
 
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
-
 using namespace libpipe::rtc;
 
 timeval Algorithm::initMaxTime()
@@ -93,8 +94,10 @@ boost::shared_ptr<LibpipeDataObject> Algorithm::getPort(
     if (iter != ports_.end()) {
         return iter->second;
     } else {
-        std::cerr << "unknown type Output "<<portIdentifier << std::endl;
-        return boost::shared_ptr<LibpipeDataObject>();
+        std::string message =
+                "Algorithm::getPort failed, the following port was not registered: ";
+        message += portIdentifier;
+        libpipe_fail(message);
     }
 }
 
@@ -107,13 +110,16 @@ void Algorithm::setInput(std::string const& portIdentifier,
     if (iter != ports_.end()) {
         iter->second = dataObject;
     } else {
-        std::cerr << "unknown type Input: "<<portIdentifier << std::endl;
+        std::string message =
+                "Algorithm::setInput failed, the following port was not registered: ";
+        message += portIdentifier;
+        libpipe_fail(message);
     }
 }
 
-void Algorithm::connect(Algorithm* alg, std::string const& inputPortIdentifier,
-    std::string const& outputPortIdentifier)
+void Algorithm::connect(Algorithm* alg, std::string const& algPortIdentifier,
+    std::string const& thisPortIdentifier)
 {
-    alg->setInput(inputPortIdentifier, this->getPort(outputPortIdentifier));
+    this->setInput(thisPortIdentifier, alg->getPort(algPortIdentifier));
 }
 

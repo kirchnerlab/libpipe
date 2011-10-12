@@ -136,14 +136,14 @@ class Algorithm
          */
         void setInput(std::string const& portIdentifier, boost::shared_ptr<LibpipeDataObject> dataObject);
 
-        /** Connects the port of alg identified by inputPortIdentifier to the port of this algorithm
-         * identified by outputPortIdentifier
+        /** Connects the port of this algorithm identified by thisPortIdentifier to the port of alg algorithm
+         * identified by algPortIdentifier
          * @param alg Algorithm which port is connected to the port of this algorithm
-         * @param inputPortIdentifier Identifier of the port of alg
-         * @param outputPortIdentifier Identifier of the port of this algorithm
+         * @param algPortIdentifier Identifier of the port of alg
+         * @param thisPortIdentifier Identifier of the port of this algorithm
          */
-        void connect(Algorithm* alg, std::string const& inputPortIdentifier,
-            std::string const& outputPortIdentifier);
+        void connect(Algorithm* alg, std::string const& algPortIdentifier,
+            std::string const& thisPortIdentifier);
 
     protected:
         /** Constructor.

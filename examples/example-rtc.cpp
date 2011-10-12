@@ -1,5 +1,5 @@
 /*
- * testFilters.cpp
+ * example-rtc.cpp
  * 
  * Copyright (c) 2010 Marc Kirchner
  *               2011 David Sichau
@@ -84,7 +84,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
@@ -104,10 +104,9 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                     libpipe::rtc::SharedData<std::string> >();
             ports_["StringOutput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >(new std::string);
-
         }
 
-       private:
+    private:
         static const bool registerLoader()
         {
             std::string ids = "UppercaseAlgorithm";
@@ -542,49 +541,52 @@ int main(int argc, char *argv[])
             "StringOutput", input);
 
         //Connect ports
-        filterMap.find("TheSource")->second->getAlgorithm()->connect(
-            filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
-            "StringOutput");
+//        filterMap.find("TheSource")->second->getAlgorithm()->connect(
+//            filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
+//            "StringOutput");
 
         filterMap.find("Filter1")->second->getAlgorithm()->connect(
-            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
-            "StringInput", "StringOutput");
+            filterMap.find("TheSource")->second->getAlgorithm(),
+            "StringOutput", "StringInput");
 
         filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
-            filterMap.find("ROTDecrypter1")->second->getAlgorithm(),
-            "StringInput", "StringOutput");
-
-        filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
-            filterMap.find("Combiner")->second->getAlgorithm(), "StringInput1",
-            "StringOutput");
+            filterMap.find("Filter1")->second->getAlgorithm(),
+            "StringOutput", "StringInput");
 
         filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
-            filterMap.find("Combiner")->second->getAlgorithm(), "StringInput2",
-            "StringOutput");
+            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
+            "StringOutput", "StringInput");
 
         filterMap.find("Combiner")->second->getAlgorithm()->connect(
-            filterMap.find("LowercaseFilter")->second->getAlgorithm(),
-            "StringInput", "StringOutput");
+            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
+            "StringOutput", "StringInput1");
 
+        filterMap.find("Combiner")->second->getAlgorithm()->connect(
+            filterMap.find("ROTDecrypter1")->second->getAlgorithm(),
+            "StringOutput", "StringInput2");
+
+        filterMap.find("LowercaseFilter")->second->getAlgorithm()->connect(
+            filterMap.find("Combiner")->second->getAlgorithm(),
+            "StringOutput", "StringInput");
 
         //Manager connect
         filterMap.find("Filter1")->second->getManager()->connect(
-                filterMap.find("TheSource")->second);
+            filterMap.find("TheSource")->second);
 
         filterMap.find("ROTDecrypter")->second->getManager()->connect(
-                filterMap.find("Filter1")->second);
+            filterMap.find("Filter1")->second);
 
         filterMap.find("ROTDecrypter1")->second->getManager()->connect(
-                filterMap.find("ROTDecrypter")->second);
+            filterMap.find("ROTDecrypter")->second);
 
         filterMap.find("Combiner")->second->getManager()->connect(
             filterMap.find("ROTDecrypter")->second);
 
         filterMap.find("Combiner")->second->getManager()->connect(
-                filterMap.find("ROTDecrypter1")->second);
+            filterMap.find("ROTDecrypter1")->second);
 
         filterMap.find("LowercaseFilter")->second->getManager()->connect(
-                filterMap.find("Combiner")->second);
+            filterMap.find("Combiner")->second);
 
         // the filter that will be used outside the scope
         lowerFilter = filterMap.find("LowercaseFilter")->second;

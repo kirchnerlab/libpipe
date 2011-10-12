@@ -4,18 +4,27 @@
  * Copyright (c) 2011 <+author+>
  *
  */
-
+//#include <utilsRTC.hpp>
 #include <iostream>
 #include "vigra/unittest.hxx"
 
+#define private public
+#define protected public
 #include "libpipe/rtc/AlgorithmRTC.hpp"
+#undef private
+#undef protected
 #include "libpipe/rtc/LibpipeFactories.hpp"
+#include <libpipe/rtc/SharedDataRTC.hpp>
 
 #include <limits>
 
+#include <cstring>
+#include <string>
+
+#include <boost/shared_ptr.hpp>
+#include <boost/pointer_cast.hpp>
+
 #include "libpipe/Algorithm.hpp" //for timeval comparisons
-
-
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
@@ -38,13 +47,26 @@ class MyAlgorithm : public Algorithm
         }
         virtual libpipe::Request& update(libpipe::Request& req)
         {
-            // dummy
+            LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
+
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > in_ =
+                    boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
+                        this->getPort("intInput"));
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > out_ =
+                    boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
+                        this->getPort("intOutput"));
+            out_ = in_;
+            this->updateMTime();
             return req;
         }
     private:
         MyAlgorithm() :
                 Algorithm()
         {
+            ports_["intInput"] = boost::make_shared<
+                    libpipe::rtc::SharedData<int> >(new int);
+            ports_["intOutput"] = boost::make_shared<
+                    libpipe::rtc::SharedData<int> >(new int);
         }
 
         /** Register Filter in the FilterFactory
@@ -80,6 +102,8 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             add(testCase(&AlgorithmRTCTestSuite::testNeedUpdate));
             add(testCase(&AlgorithmRTCTestSuite::testGetSet));
             add(testCase(&AlgorithmRTCTestSuite::testInitTime));
+            add(testCase(&AlgorithmRTCTestSuite::testports));
+
         }
 
         /** Test free operators
@@ -145,7 +169,6 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             delete a;
         }
 
-
         /** Test Algorithm::needUpdate().
          */
         void testNeedUpdate()
@@ -182,6 +205,67 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             tv.tv_sec = std::numeric_limits<time_t>::min();
             tv.tv_usec = std::numeric_limits<suseconds_t>::min();
             shouldEqual(tv, Algorithm::MIN_TIME);
+            Algorithm* a = AlgorithmFactory::instance().createObject(
+                "MyAlgorithm");
+            a->initMaxTime();
+            a->initMinTime();
+            delete a;
+        }
+
+        void testports()
+        {
+            Algorithm* a = AlgorithmFactory::instance().createObject(
+                "MyAlgorithm");
+            Algorithm* b = AlgorithmFactory::instance().createObject(
+                "MyAlgorithm");
+
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > i =
+                    boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
+                        a->getPort("intInput"));
+
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > input(
+                new SharedData<int>());
+            input->set(new int(10));
+            b->setInput("intOutput", input);
+
+            shouldEqual(
+                *boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(b->getPort("intOutput"))->get(),
+                10);
+
+            shouldEqual(
+                *boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(a->getPort("intInput"))->get()==10,
+                false);
+
+            a->connect(b, "intOutput", "intInput");
+
+            shouldEqual(
+                *boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(a->getPort("intInput"))->get(),
+                10);
+
+            bool thrown = false;
+            try {
+                a->getPort("blub");
+            } catch (libpipe::Exception& e) {
+                shouldEqual(
+                    strncmp(e.what(),"Algorithm::getPort failed, the following port was not registered: blub",70),
+                    0);
+                thrown = true;
+            }
+
+            shouldEqual(thrown, true);
+
+            thrown = false;
+            try {
+                a->setInput("blub", input);
+            } catch (libpipe::Exception& e) {
+                shouldEqual(
+                    strncmp(e.what(),"Algorithm::setInput failed, the following port was not registered: blub",70),
+                    0);
+                thrown = true;
+            }shouldEqual(thrown, true);
+
+            delete a;
+            delete b;
 
         }
 };

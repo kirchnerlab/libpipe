@@ -11,18 +11,19 @@
 
 #include <libpipe/rtc/AlgorithmRTC.hpp>
 #include <libpipe/rtc/ManagerRTC.hpp>
+#include <libpipe/rtc/SharedDataRTC.hpp>
 
 #include <set>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 
 #include <boost/shared_ptr.hpp>
+#include <boost/pointer_cast.hpp>
 
 #include <sstream>
 
 namespace libpipe {
 namespace rtc {
-
 
 /** An algorithm that does not change its input.
  */
@@ -40,29 +41,28 @@ class IdentityRTC : public Algorithm
         Request& update(Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
+
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > in_ =
+                    boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
+                        this->getPort("intInput"));
+            boost::shared_ptr<libpipe::rtc::SharedData<int> > out_ =
+                    boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
+                        this->getPort("intOutput"));
             out_ = in_;
             this->updateMTime();
             return req;
-        }
-        virtual int getOutput()
-        {
-            return out_;
-        }
-        virtual void setInput(int input)
-        {
-            if (in_ != input) {
-                in_ = input;
-                this->updateMTime();
-            }
         }
 
     private:
 
         IdentityRTC() :
-                Algorithm(), in_(0), out_(0)
+                Algorithm()
         {
+            ports_["intInput"] = boost::make_shared<
+                    libpipe::rtc::SharedData<int> >(new int);
+            ports_["intOutput"] = boost::make_shared<
+                    libpipe::rtc::SharedData<int> >(new int);
         }
-        int in_, out_;
 
         /** Register Filter in the FilterFactory
          *
