@@ -5,20 +5,102 @@
  *                    Marc Kirchner
  */
 
+#include <map>
+#include <list>
+#include <string>
+
+#include "Filter.hpp"
 #include "LibpipeCreator.hpp"
+#include "LibpipeConfig.hpp"
+
+#include <boost/shared_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
 
-LibpipeCreator::LibpipeCreator()
+LibpipeCreator::LibpipeCreator(std::string const& filepath)
 {
-    // TODO Auto-generated constructor stub
-
+    configuration_ = new LibpipeConfig(filepath);
 }
 
 LibpipeCreator::~LibpipeCreator()
 {
-    // TODO Auto-generated destructor stub
+
+}
+
+boost::shared_ptr<Filter> LibpipeCreator::getFilter(
+    std::string const& filtername)
+{
+    if (filterMap_.find(filtername) != filterMap_.end()) {
+        return filterMap_.find(filtername)->second;
+    } else {
+        std::string message =
+                " LibpipeCreator::getFilter failed, the following filter was not found: ";
+        message += filtername;
+        libpipe_fail(message);
+    }
+}
+
+void LibpipeCreator::generateFilters()
+{
+    std::list<FilterStruct>& filterList = configuration_->getFilters();
+
+    for (std::list<FilterStruct>::const_iterator it = filterList.begin();
+            it != filterList.end(); ++it) {
+
+        filterMap_[it->filtername] = boost::shared_ptr<Filter>(
+            Filter::create(it->filtername, it->algorithmName,
+                it->managerName));
+    }
+
+    // first all Filters need to be generated before they get connected
+    for (FilterMap::const_iterator it = filterMap_.begin();
+            it != filterMap_.end(); ++it) {
+        this->connectManagers(it->first);
+        this->connectAlgorithmPorts(it->first);
+    }
+}
+
+void LibpipeCreator::connectManagers(std::string const& filtername)
+{
+    std::list<PrecursorStruct> &precursors = configuration_->getPrecursorFilter(
+        filtername);
+
+    for (std::list<PrecursorStruct>::const_iterator it = precursors.begin();
+            it != precursors.end(); ++it) {
+
+        if (filterMap_.find(filtername) != filterMap_.end()) {
+            filterMap_.find(filtername)->second->getManager()->connect(
+                filterMap_.find(it->precursorName)->second);
+        } else {
+            std::string message =
+                    " LibpipeCreator::connectManagers failed, the following filter was not found: ";
+            message += filtername;
+            libpipe_fail(message);
+        }
+
+    }
+
+}
+
+void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
+{
+    std::list<PortStruct>& ports = configuration_->getPort(filtername);
+
+    for (std::list<PortStruct>::const_iterator it = ports.begin(); it != ports.end();
+            ++it) {
+        if (filterMap_.find(filtername) != filterMap_.end()) {
+            filterMap_.find(filtername)->second->getAlgorithm()->connect(
+                filterMap_.find(it->filterName)->second->getAlgorithm(),
+                it->portNameOfFilter, it->portNameOfThis);
+        } else {
+            std::string message =
+                    " LibpipeCreator::connectAlgorithmPorts failed, the following filter was not found: ";
+            message += filtername;
+            libpipe_fail(message);
+        }
+
+    }
 }
 
 } /* namespace rtc */
