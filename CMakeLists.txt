@@ -33,7 +33,6 @@ INCLUDE_DIRECTORIES(
     ${LIBPIPE_BINARY_DIR}/include
 )
 
-SET(CMAKE_EXE_LINKER_FLAGS "-L/usr/local/lib -lconfig++")
 
 #############################################################################
 # syncing docs
@@ -85,9 +84,10 @@ ENDIF (ENABLE_TESTING)
 # build lib
 #############################################################################
 
-#ADD_SUBDIRECTORY(lib)
+ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(src)
 
+SET(CMAKE_EXE_LINKER_FLAGS "-L${LIBPIPE_BINARY_DIR}/lib/libconfig/lib -lconfig++")
 
 
 ############################################################################
