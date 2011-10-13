@@ -39,10 +39,7 @@ class LibpipeConfig
 {
 
     public:
-        /** Constructor
-         * @param filepath Filepath to the configuration file
-         */
-        LibpipeConfig();
+
 
         virtual ~LibpipeConfig()
         {

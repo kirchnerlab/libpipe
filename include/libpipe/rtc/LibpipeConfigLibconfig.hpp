@@ -19,6 +19,7 @@ namespace rtc {
 class LibpipeConfigLibconfig : public LibpipeConfig
 {
     public:
+
         LibpipeConfigLibconfig(std::string const& fileName);
 
         ~LibpipeConfigLibconfig();

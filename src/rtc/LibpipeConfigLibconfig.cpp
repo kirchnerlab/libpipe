@@ -14,6 +14,7 @@
 namespace libpipe {
 namespace rtc {
 
+
 LibpipeConfigLibconfig::LibpipeConfigLibconfig(std::string const& fileName)
 {
     this->parseInputFile(fileName);
