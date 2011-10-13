@@ -25,7 +25,7 @@ struct PrecursorStruct
 
 struct FilterStruct
 {
-        std::string filtername;
+        std::string filterName;
         std::string algorithmName;
         std::string managerName;
         std::list<PrecursorStruct> precursors;
@@ -39,7 +39,7 @@ class LibpipeConfig
         /** Constructor
          * @param filepath Filepath to the configuration file
          */
-        LibpipeConfig(std::string const& filepath);
+        LibpipeConfig();
 
         virtual ~LibpipeConfig()
         {
@@ -50,7 +50,7 @@ class LibpipeConfig
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
          */
-        virtual std::list<FilterStruct> const& getFilters(){return std::list<FilterStruct>;};
+        virtual std::list<FilterStruct> const& getFilters() const = 0;
 
 
         /**
@@ -58,19 +58,13 @@ class LibpipeConfig
          * @return List of Precursors Filter filtername gets connected to
          */
         virtual std::list<PrecursorStruct> const& getPrecursorFilter(
-            std::string const& filtername) const
-        {
-            return std::list<PrecursorStruct>;
-        }
-        ;
+            std::string const& filtername) const = 0;
 
         /**
          * @param filtername The name of the Filter which ports are returned
          * @return list of all ports one Filter is connected to
          */
-        virtual std::list<PortStruct> const& getPort(std::string const& filtername) const{
-            return std::list<PortStruct>;
-        }
+        virtual std::list<PortStruct> const& getPort(std::string const& filtername) const = 0;
 
 };
 
