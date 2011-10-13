@@ -68,7 +68,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
     // Read the file. If there is an error, report it and exit.
     try {
-        cfg.readFile("example.cfg");
+        cfg.readFile(inputFileName.c_str());
     } catch (const libconfig::FileIOException &fioex) {
         libpipe_fail("I/O error while reading file.");
     } catch (const libconfig::ParseException &pex) {

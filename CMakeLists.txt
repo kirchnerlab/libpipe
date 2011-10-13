@@ -110,6 +110,13 @@ FIND_PACKAGE(Doxygen)
 # target for doxygen
 ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${LIBPIPE_BINARY_DIR}/doc/Doxyfile)
 
+
+
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFile.txt
+    @ONLY IMMEDIATE
+    )
 #############################################################################
 # installation
 #############################################################################

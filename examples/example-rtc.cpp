@@ -517,8 +517,11 @@ int main(int argc, char *argv[])
 
     boost::shared_ptr<Filter> lowerFilter;
 
-
-    LibpipeCreator* creator= new LibpipeCreator("inputFile.txt");
+    try {
+        LibpipeCreator* creator = new LibpipeCreator("inputFile.txt");
+    } catch (libpipe::Exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     {
         // construct filters and save in map for later identification
@@ -551,8 +554,8 @@ int main(int argc, char *argv[])
             "StringOutput", "StringInput");
 
         filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
-            filterMap.find("Filter1")->second->getAlgorithm(),
-            "StringOutput", "StringInput");
+            filterMap.find("Filter1")->second->getAlgorithm(), "StringOutput",
+            "StringInput");
 
         filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
             filterMap.find("ROTDecrypter")->second->getAlgorithm(),
@@ -567,8 +570,8 @@ int main(int argc, char *argv[])
             "StringOutput", "StringInput2");
 
         filterMap.find("LowercaseFilter")->second->getAlgorithm()->connect(
-            filterMap.find("Combiner")->second->getAlgorithm(),
-            "StringOutput", "StringInput");
+            filterMap.find("Combiner")->second->getAlgorithm(), "StringOutput",
+            "StringInput");
 
         //Manager connect
         filterMap.find("Filter1")->second->getManager()->connect(
