@@ -1,5 +1,7 @@
 
 SET(SRCS 
+    rtc/LibpipeConfigLibconfig.cpp
+    rtc/LibpipeCreator.cpp
     rtc/Algorithm.cpp
     rtc/Manager.cpp
     rtc/Filter.cpp
@@ -13,6 +15,7 @@ SET(SRCS
 
 ADD_LIBRARY(pipe ${SRCS})
 TARGET_LINK_LIBRARIES(pipe)
+
 
 INSTALL(TARGETS pipe
     LIBRARY DESTINATION lib

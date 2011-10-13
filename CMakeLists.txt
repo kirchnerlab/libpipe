@@ -31,6 +31,7 @@ OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 INCLUDE_DIRECTORIES(
     ${LIBPIPE_SOURCE_DIR}/include
     ${LIBPIPE_BINARY_DIR}/include
+    ${LIBPIPE_BINARY_DIR}/lib/libconfig/include
 )
 
 #############################################################################
@@ -72,10 +73,21 @@ IF (ENABLE_TESTING)
   ADD_SUBDIRECTORY(test)
 ENDIF (ENABLE_TESTING)
 
+
+ 
+
+
+# linker paths
+#LINK_DIRECTORIES(${LIBPIPE_BINARY_DIR}/lib/libconfig/lib) 
+
 #############################################################################
 # build lib
 #############################################################################
+
+#ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(src)
+
+
 
 ############################################################################
 # examples
