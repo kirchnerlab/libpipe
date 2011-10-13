@@ -9,9 +9,13 @@
 #include <list>
 #include <string>
 
-#include "Filter.hpp"
-#include "LibpipeCreator.hpp"
-#include "LibpipeConfig.hpp"
+#include "libpipe/rtc/Filter.hpp"
+#include "libpipe/rtc/Manager.hpp"
+#include "libpipe/rtc/Algorithm.hpp"
+
+#include "libpipe/rtc/LibpipeCreator.hpp"
+#include "libpipe/rtc/LibpipeConfig.hpp"
+#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
 
 #include <boost/shared_ptr.hpp>
 
@@ -20,7 +24,7 @@ namespace rtc {
 
 LibpipeCreator::LibpipeCreator(std::string const& filepath)
 {
-    configuration_ = new LibpipeConfig(filepath);
+    configuration_ = new LibpipeConfigLibconfig(filepath);
 }
 
 LibpipeCreator::~LibpipeCreator()
@@ -43,13 +47,13 @@ boost::shared_ptr<Filter> LibpipeCreator::getFilter(
 
 void LibpipeCreator::generateFilters()
 {
-    std::list<FilterStruct>& filterList = configuration_->getFilters();
+    std::list<FilterStruct> filterList = configuration_->getFilters();
 
     for (std::list<FilterStruct>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
 
-        filterMap_[it->filtername] = boost::shared_ptr<Filter>(
-            Filter::create(it->filtername, it->algorithmName,
+        filterMap_[it->filterName] = boost::shared_ptr<Filter>(
+            Filter::create(it->filterName, it->algorithmName,
                 it->managerName));
     }
 
@@ -63,7 +67,7 @@ void LibpipeCreator::generateFilters()
 
 void LibpipeCreator::connectManagers(std::string const& filtername)
 {
-    std::list<PrecursorStruct> &precursors = configuration_->getPrecursorFilter(
+    std::list<PrecursorStruct> precursors = configuration_->getPrecursorFilter(
         filtername);
 
     for (std::list<PrecursorStruct>::const_iterator it = precursors.begin();
@@ -85,7 +89,7 @@ void LibpipeCreator::connectManagers(std::string const& filtername)
 
 void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
 {
-    std::list<PortStruct>& ports = configuration_->getPort(filtername);
+    std::list<PortStruct> ports = configuration_->getPort(filtername);
 
     for (std::list<PortStruct>::const_iterator it = ports.begin(); it != ports.end();
             ++it) {

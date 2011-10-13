@@ -5,7 +5,7 @@
  *                    Marc Kirchner
  */
 
-#include "LibpipeConfigLibconfig.hpp"
+#include "Libpipe/rtc/LibpipeConfigLibconfig.hpp"
 #include <libpipe/Exception.hpp>
 
 #include <libconfig.h++>
@@ -25,12 +25,12 @@ LibpipeConfigLibconfig::~LibpipeConfigLibconfig()
     // TODO Auto-generated destructor stub
 }
 
-virtual std::list<FilterStruct> const& LibpipeConfigLibconfig::getFilters() const
+std::list<FilterStruct> const& LibpipeConfigLibconfig::getFilters() const
 {
     return filterList_;
 }
 
-virtual std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFilter(
+std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFilter(
     std::string const& filtername) const
 {
     for (std::list<FilterStruct>::const_iterator it = filterList_.begin();
@@ -45,7 +45,7 @@ virtual std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFi
     libpipe_fail(message);
 }
 
-virtual std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
+std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
     std::string const& filtername) const
 {
     for (std::list<FilterStruct>::const_iterator it = filterList_.begin();

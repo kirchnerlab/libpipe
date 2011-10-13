@@ -8,6 +8,9 @@
 #ifndef LIBPIPECONFIG_HPP_
 #define LIBPIPECONFIG_HPP_
 
+#include <string>
+#include <list>
+
 namespace libpipe {
 namespace rtc {
 

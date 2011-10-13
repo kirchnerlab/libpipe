@@ -11,6 +11,7 @@
 #include "LibpipeConfig.hpp"
 
 #include <list>
+#include <string>
 
 namespace libpipe {
 namespace rtc {

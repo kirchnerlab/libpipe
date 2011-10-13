@@ -23,6 +23,8 @@
 #include <libpipe/BasicFilter.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
+#include <libpipe/rtc/LibpipeCreator.hpp>
+
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
  * an LIBPIPE algorithm. Basically, there are only two requirements (and one
@@ -514,6 +516,9 @@ int main(int argc, char *argv[])
     using namespace libpipe::rtc;
 
     boost::shared_ptr<Filter> lowerFilter;
+
+
+    LibpipeCreator* creator= new LibpipeCreator("inputFile.txt");
 
     {
         // construct filters and save in map for later identification
