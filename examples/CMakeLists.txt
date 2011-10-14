@@ -2,8 +2,14 @@
 SET(Boost_USE_STATIC_LIBS OFF)
 SET(Boost_USE_MULTITHREAD OFF)
 FIND_PACKAGE(Boost COMPONENTS program_options system REQUIRED)
-INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
-LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
+INCLUDE_DIRECTORIES(
+                    ${Boost_INCLUDE_DIRS}
+                    ${LIBPIPE_BINARY_DIR}/lib/libconfig/include)
+LINK_DIRECTORIES(
+                    ${Boost_LIBRARY_DIRS}
+                    ${LIBPIPE_BINARY_DIR}/lib/libconfig/lib
+                 )
+
 # make sure the examples are debuggable
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Werror -ggdb3 -D_FILE_OFFSET_BITS=64")
 # compile and link
@@ -12,13 +18,15 @@ TARGET_LINK_LIBRARIES(example-uppercase-strings pipe)
 ADD_EXECUTABLE(example-strings-mtime example-strings-mtime.cpp)
 TARGET_LINK_LIBRARIES(example-strings-mtime pipe)
 ADD_EXECUTABLE(example-rtc example-rtc.cpp)
-TARGET_LINK_LIBRARIES(example-rtc pipe)
+TARGET_LINK_LIBRARIES(example-rtc pipe -lconfig++)
+
 INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
     ARCHIVE DESTINATION lib
     COMPONENT examples
 )
+
 
 
 
