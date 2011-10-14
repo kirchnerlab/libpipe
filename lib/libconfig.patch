@@ -1,0 +1,11 @@
+--- Makefile.am	2011-10-14 10:25:53.770346244 -0400
++++ Makefile.am.new	2011-10-14 10:26:32.687846095 -0400
+@@ -1,7 +1,7 @@
+ 
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-SUBDIRS = lib doc tinytest tests
++SUBDIRS = lib doc 
+ 
+ if BUILDEXAMPLES
+ SUBDIRS += examples

@@ -79,8 +79,8 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
         libpipe_fail("I/O error while reading file.");
     } catch (const libconfig::ParseException &pex) {
         std::ostringstream oss;
-        oss << "Parse error at " << pex.getFile() << ":" << pex.getLine()
-                << " - " << pex.getError();
+        oss << "Parse error at " << pex.getFile() << ":"
+            << pex.getLine() << " - " << pex.getError();
         libpipe_fail(oss.str());
     }
 
