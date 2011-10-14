@@ -5,7 +5,7 @@
  *                    Marc Kirchner
  */
 
-#include "Libpipe/rtc/LibpipeConfigLibconfig.hpp"
+#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
 #include <libpipe/Exception.hpp>
 
 #include <libconfig.h++>
