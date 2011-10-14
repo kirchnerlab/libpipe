@@ -13,7 +13,6 @@
 #include "Filter.hpp"
 #include "libpipe/Exception.hpp"
 
-
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
