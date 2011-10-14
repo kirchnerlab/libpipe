@@ -1,7 +1,7 @@
 PROJECT(LIBPIPE)
 
-# require at least cmake 2.6
-cmake_minimum_required(VERSION 2.6)
+# require at least cmake 2.8
+cmake_minimum_required(VERSION 2.8)
 # include macro definitions
 INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/require_out_of_src_build.cmake)
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
@@ -74,9 +74,6 @@ IF (ENABLE_TESTING)
 ENDIF (ENABLE_TESTING)
 
 
- 
-
-
 # linker paths
 #LINK_DIRECTORIES(${LIBPIPE_BINARY_DIR}/lib/libconfig/lib) 
 
@@ -86,9 +83,6 @@ ENDIF (ENABLE_TESTING)
 
 ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(src)
-
-SET(CMAKE_EXE_LINKER_FLAGS "-L${LIBPIPE_BINARY_DIR}/lib/libconfig/lib -lconfig++")
-
 
 ############################################################################
 # examples
