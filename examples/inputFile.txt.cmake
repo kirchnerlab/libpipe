@@ -87,15 +87,15 @@ filters =
 //Requests
 request = (
 		{filteName="LowercaseFilter";
-		requestType=0;
+		requestType="UPDATE";
 		requestRank=1;},
 		
 		{filteName="LowercaseFilter";
-		requestType=1;
+		requestType="DELETE";
 		requestRank=2;},
 		
 		{filteName="LowercaseFilter";
-		requestType=0;
+		requestType="UPDATE";
 		requestRank=3;}
 		
 

@@ -10,6 +10,7 @@
 
 #include <libconfig.h++>
 #include <string>
+#include <sstream>
 
 namespace libpipe {
 namespace rtc {
@@ -77,13 +78,10 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
     } catch (const libconfig::FileIOException &fioex) {
         libpipe_fail("I/O error while reading file.");
     } catch (const libconfig::ParseException &pex) {
-        std::string message = "Parse error at ";
-        message += pex.getFile();
-        message += ":";
-        message += pex.getLine();
-        message += " - ";
-        message += pex.getError();
-        libpipe_fail(message);
+        std::ostringstream oss;
+        oss << "Parse error at " << pex.getFile() << ":" << pex.getLine()
+                << " - " << pex.getError();
+        libpipe_fail(oss.str());
     }
 
     const libconfig::Setting& root = cfg.getRoot();
@@ -155,18 +153,25 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
             LibpipePipeStruct tempLibpipeRequest;
 
             // Only output the record if all of the expected fields are present.
-            std::string filterName;
+            std::string filterName, requestType;
             unsigned int requestRank;
-            int requestType;
 
             if (!(request.lookupValue("filteName", filterName)
                     && request.lookupValue("requestType", requestType)
-                    && request.lookupValue("requestRank", requestType)))
+                    && request.lookupValue("requestRank", requestRank)))
                 continue;
 
+            libpipe::Request::Type requestType2;
+            if(requestType=="UPDATE"){
+                requestType2 = libpipe::Request::Type::UPDATE;
+            }
+            else if( requestType=="DELETE"){
+                requestType2 = libpipe::Request::Type::DELETE;
+            }
+
             tempLibpipeRequest.filterName = filterName;
-            tempLibpipeRequest.requestType = requestType;
-            tempLibpipeRequest.requestType = requestType;
+            tempLibpipeRequest.requestType = requestType2;
+            tempLibpipeRequest.requestRank = requestRank;
 
             requestQueue_.push(tempLibpipeRequest);
         }
