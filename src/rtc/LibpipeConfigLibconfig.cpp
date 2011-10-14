@@ -10,6 +10,7 @@
 
 #include <libconfig.h++>
 #include <string>
+#include <sstream>
 
 namespace libpipe {
 namespace rtc {
@@ -72,13 +73,10 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
     } catch (const libconfig::FileIOException &fioex) {
         libpipe_fail("I/O error while reading file.");
     } catch (const libconfig::ParseException &pex) {
-        std::string message = "Parse error at ";
-        message += pex.getFile();
-        message += ":";
-        message += pex.getLine();
-        message += " - ";
-        message += pex.getError();
-        libpipe_fail(message);
+        std::ostringstream oss;
+        oss << "Parse error at " << pex.getFile() << ":"
+            << pex.getLine() << " - " << pex.getError();
+        libpipe_fail(oss.str());
     }
 
     const libconfig::Setting& root = cfg.getRoot();
