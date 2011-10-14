@@ -82,3 +82,21 @@ filters =
      )
    }
 );
+
+
+//Requests
+request = (
+		{filteName="LowercaseFilter";
+		requestType=0;
+		requestRank=1;},
+		
+		{filteName="LowercaseFilter";
+		requestType=1;
+		requestRank=2;},
+		
+		{filteName="LowercaseFilter";
+		requestType=0;
+		requestRank=3;}
+		
+
+);

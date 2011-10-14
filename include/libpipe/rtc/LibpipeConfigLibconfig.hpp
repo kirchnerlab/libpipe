@@ -12,6 +12,8 @@
 
 #include <list>
 #include <string>
+#include <queue>
+
 
 namespace libpipe {
 namespace rtc {
@@ -22,7 +24,7 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 
         LibpipeConfigLibconfig(std::string const& fileName);
 
-        ~LibpipeConfigLibconfig();
+        virtual ~LibpipeConfigLibconfig();
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -43,11 +45,22 @@ class LibpipeConfigLibconfig : public LibpipeConfig
         virtual std::list<PortStruct> const& getPort(
             std::string const& filtername) const;
 
+        /**
+         *
+         * @return A priority_queue where all elements are ordered after their request rank,
+         * the smallest comes first
+         */
+        virtual std::priority_queue<LibpipePipeStruct,
+                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> const& getLibpipePipe() const;
+
     private:
 
         void parseInputFile(std::string const& inputFileName);
 
         std::list<FilterStruct> filterList_;
+
+        std::priority_queue<LibpipePipeStruct,
+                        std::vector<LibpipePipeStruct>, LibpipePipeStructLess> requestQueue_;
 
 };
 

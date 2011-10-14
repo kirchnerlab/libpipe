@@ -14,7 +14,6 @@
 namespace libpipe {
 namespace rtc {
 
-
 LibpipeConfigLibconfig::LibpipeConfigLibconfig(std::string const& fileName)
 {
     this->parseInputFile(fileName);
@@ -61,6 +60,12 @@ std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
     libpipe_fail(message);
 }
 
+std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
+        LibpipePipeStructLess> const& LibpipeConfigLibconfig::getLibpipePipe() const
+{
+    return requestQueue_;
+}
+
 void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 {
 
@@ -83,7 +88,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
     const libconfig::Setting& root = cfg.getRoot();
 
-    // Output a list of all books in the inventory.
+    // generates the filters
     try {
         const libconfig::Setting &filters = root["filters"];
 
@@ -141,6 +146,34 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
         // Ignore.
     }
 
+    // generates the requests
+    try {
+        const libconfig::Setting &requests = root["request"];
+
+        for (int i = 0; i < requests.getLength(); ++i) {
+            const libconfig::Setting &request = requests[i];
+            LibpipePipeStruct tempLibpipeRequest;
+
+            // Only output the record if all of the expected fields are present.
+            std::string filterName;
+            unsigned int requestRank;
+            int requestType;
+
+            if (!(request.lookupValue("filteName", filterName)
+                    && request.lookupValue("requestType", requestType)
+                    && request.lookupValue("requestRank", requestType)))
+                continue;
+
+            tempLibpipeRequest.filterName = filterName;
+            tempLibpipeRequest.requestType = requestType;
+            tempLibpipeRequest.requestType = requestType;
+
+            requestQueue_.push(tempLibpipeRequest);
+        }
+
+    } catch (const libconfig::SettingNotFoundException &nfex) {
+        // Ignore.
+    }
 }
 
 } /* namespace rtc */
