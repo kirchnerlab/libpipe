@@ -41,7 +41,7 @@ struct FilterStruct
 struct LibpipePipeStruct
 {
         std::string filterName;
-        libpipe::Request::Type requestType;
+        std::string requestType;
         unsigned int requestRank;
 };
 

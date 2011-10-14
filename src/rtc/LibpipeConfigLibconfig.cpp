@@ -12,6 +12,8 @@
 #include <string>
 #include <sstream>
 
+
+
 namespace libpipe {
 namespace rtc {
 
@@ -23,7 +25,7 @@ LibpipeConfigLibconfig::LibpipeConfigLibconfig(std::string const& fileName)
 
 LibpipeConfigLibconfig::~LibpipeConfigLibconfig()
 {
-    // TODO Auto-generated destructor stub
+
 }
 
 std::list<FilterStruct> const& LibpipeConfigLibconfig::getFilters() const
@@ -161,17 +163,11 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
                     && request.lookupValue("requestRank", requestRank)))
                 continue;
 
-            libpipe::Request::Type requestType2;
-            if(requestType=="UPDATE"){
-                requestType2 = libpipe::Request::Type::UPDATE;
-            }
-            else if( requestType=="DELETE"){
-                requestType2 = libpipe::Request::Type::DELETE;
-            }
 
             tempLibpipeRequest.filterName = filterName;
-            tempLibpipeRequest.requestType = requestType2;
             tempLibpipeRequest.requestRank = requestRank;
+            tempLibpipeRequest.requestType = requestType;
+
 
             requestQueue_.push(tempLibpipeRequest);
         }
