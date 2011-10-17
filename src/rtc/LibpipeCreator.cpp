@@ -25,6 +25,7 @@ namespace rtc {
 LibpipeCreator::LibpipeCreator(std::string const& filepath)
 {
     configuration_ = new LibpipeConfigLibconfig(filepath);
+    this->generateFilters();
 }
 
 LibpipeCreator::~LibpipeCreator()
@@ -51,6 +52,7 @@ void LibpipeCreator::generateFilters()
 
     for (std::list<FilterStruct>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
+        std::cerr<<it->filterName<<std::endl;
 
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
@@ -60,9 +62,11 @@ void LibpipeCreator::generateFilters()
     // first all Filters need to be generated before they get connected
     for (FilterMap::const_iterator it = filterMap_.begin();
             it != filterMap_.end(); ++it) {
+        std::cerr<<it->second->getName()<<std::endl;
         this->connectManagers(it->first);
         this->connectAlgorithmPorts(it->first);
     }
+
 }
 
 void LibpipeCreator::connectManagers(std::string const& filtername)
