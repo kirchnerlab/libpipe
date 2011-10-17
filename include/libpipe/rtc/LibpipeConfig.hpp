@@ -59,10 +59,8 @@ class LibpipeConfig
 
     public:
 
-        virtual ~LibpipeConfig()
-        {
-        }
-        ;
+        virtual ~LibpipeConfig(){};
+
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters

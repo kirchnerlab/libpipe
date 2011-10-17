@@ -8,6 +8,8 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 
+#include "libpipe/rtc/LibpipeConfig.hpp"
+
 
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
@@ -19,14 +21,26 @@ struct LibpipeConfigTestSuite : vigra::test_suite {
      * case here.
      */
     LibpipeConfigTestSuite() : vigra::test_suite("rtc/LibpipeConfig") {
-        add(testCase(&LibpipeConfigTestSuite::fail));
+        add(testCase(&LibpipeConfigTestSuite::structComparison));
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete rtc/LibpipeConfig class has tests.
-     */
-    void fail() {
-        failTest("No unit tests for class rtc/LibpipeConfig!");
+
+
+    void structComparison(){
+        libpipe::rtc::LibpipePipeStruct s1;
+        libpipe::rtc::LibpipePipeStruct s2;
+
+        s1.requestRank = 2;
+        s2.requestRank = 3;
+
+        libpipe::rtc::LibpipePipeStructLess compFct;
+
+        shouldEqual(compFct(s1,s2), true);
+        shouldEqual(compFct(s2,s1), false);
+
+
+
+
     }
 };
 

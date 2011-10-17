@@ -38,12 +38,9 @@ void LibpipePipeline::run()
         Request tempReq = requestQueue_.front();
 
         LIBPIPE_REQUEST_TRACE(tempReq, "Starting.");
-        try {
-            pipelineQueue_.front()->getManager()->processRequest(tempReq);
 
-        } catch (libpipe::RequestException& e) {
-            std::cerr << e.what() << std::endl;
-        }
+        pipelineQueue_.front()->getManager()->processRequest(tempReq);
+
         std::vector<std::string> tempTrace;
         tempReq.getTrace(tempTrace);
         trace_.insert(trace_.end(), tempTrace.begin(), tempTrace.end() );
