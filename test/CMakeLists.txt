@@ -2,6 +2,15 @@
 # configure/build libpipe tests
 #
 
+IF(UNIX)
+    SET(LIBCONFIG_PATH libconfig) 
+ENDIF(UNIX)
+IF(APPLE)
+    SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
+ENDIF(APPLE)
+
+
+
 ##############################################################################
 # check if have valgrind
 ##############################################################################
@@ -19,7 +28,7 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     STRING(REGEX REPLACE "test_([^ ]+).*" "\\1" test "${exe}" )
     # build the test
     ADD_EXECUTABLE(${exe} ${src})
-    TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})
+    TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS} -lconfig++ )
     # add test to global list of unit test
     ADD_TEST(${name} ${exe})
     MESSAGE(STATUS "Adding test for ${name}: ${exe}.")
@@ -49,9 +58,16 @@ INCLUDE_DIRECTORIES(
     ${LIBPIPE_BINARY_DIR}/include
     ${LIBPIPE_BINARY_DIR}/test/include
     ${CMAKE_CURRENT_SOURCE_DIR}
+    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/include
+    
+)
+
+LINK_DIRECTORIES(
+    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/lib
 )
 
 #### Sources
+SET(SRCS_LIBPIPECONFIGLIBCONFIG rtc/LibpipeConfigLibconfig-test.cpp)
 SET(SRCS_LIBPIPECONFIG rtc/LibpipeConfig-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
 SET(SRCS_ALGORITHMRTC rtc/Algorithm-test.cpp)
@@ -74,6 +90,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("rtc/LibpipeConfigLibconfig" test_libpipeconfiglibconfig ${SRCS_LIBPIPECONFIGLIBCONFIG})
 ADD_LIBPIPE_TEST("rtc/LibpipeConfig" test_libpipeconfig ${SRCS_LIBPIPECONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})
 ADD_LIBPIPE_TEST("rtc/Algorithm" test_algorithmrtc ${SRCS_ALGORITHMRTC})
@@ -91,6 +108,8 @@ ADD_LIBPIPE_TEST("Log" test_log ${SRCS_LOG})
 ADD_LIBPIPE_TEST("Exception" test_exception ${SRCS_EXCEPTION})
 ADD_LIBPIPE_TEST("Algorithm" test_algorithm ${SRCS_ALGORITHM})
 
+
+
 LIST(LENGTH memtest_names numtests)
 IF(numtests GREATER 0)
     MATH(EXPR numtests ${numtests}-1)
@@ -102,4 +121,15 @@ IF(numtests GREATER 0)
             ${CMAKE_CURRENT_SOURCE_DIR}/memtest.py ${CMAKE_CURRENT_BINARY_DIR}/${exe} ${CMAKE_BINARY_DIR})
     ENDFOREACH(i RANGE 0 ${numtests}-1)
 ENDIF(numtests GREATER 0)
+
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFile.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFile.txt
+    @ONLY IMMEDIATE
+)
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/wrongInputFile.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/wrongInputFile.txt
+    @ONLY IMMEDIATE
+)
 

@@ -12,8 +12,6 @@
 #include <string>
 #include <sstream>
 
-
-
 namespace libpipe {
 namespace rtc {
 
@@ -81,8 +79,8 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
         libpipe_fail("I/O error while reading file.");
     } catch (const libconfig::ParseException &pex) {
         std::ostringstream oss;
-        oss << "Parse error at " << pex.getFile() << ":"
-            << pex.getLine() << " - " << pex.getError();
+        oss << "Parse error at " << pex.getFile() << ":" << pex.getLine()
+                << " - " << pex.getError();
         libpipe_fail(oss.str());
     }
 
@@ -100,8 +98,9 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
             if (!(filter.lookupValue("filterName", filterName)
                     && filter.lookupValue("algorithmName", algorithmName)
-                    && filter.lookupValue("managerName", managerName)))
+                    && filter.lookupValue("managerName", managerName))) {
                 continue;
+            }
 
             FilterStruct tempFilterStruct;
             tempFilterStruct.filterName = filterName;
@@ -114,8 +113,9 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
             for (int j = 0; j < precursors.getLength(); ++j) {
                 const libconfig::Setting &precursor = precursors[j];
                 std::string precursorName;
-                if (!(precursor.lookupValue("precursorName", precursorName)))
+                if (!(precursor.lookupValue("precursorName", precursorName))) {
                     continue;
+                }
 
                 tempPrecursor.precursorName = precursorName;
                 tempFilterStruct.precursors.push_back(tempPrecursor);
@@ -130,8 +130,9 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
                 if (!(port.lookupValue("filterName", filterName)
                         && port.lookupValue("portNameOfFilter",
                             portNameOfFilter)
-                        && port.lookupValue("portNameOfThis", portNameOfThis)))
+                        && port.lookupValue("portNameOfThis", portNameOfThis))) {
                     continue;
+                }
 
                 tempPorts.filterName = filterName;
                 tempPorts.portNameOfFilter = portNameOfFilter;
@@ -143,7 +144,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
         }
 
     } catch (const libconfig::SettingNotFoundException &nfex) {
-        // Ignore.
+        libpipe_fail("Problems with settings in the input file.");
     }
 
     // generates the requests
@@ -160,20 +161,18 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
             if (!(request.lookupValue("filteName", filterName)
                     && request.lookupValue("requestType", requestType)
-                    && request.lookupValue("requestRank", requestRank)))
+                    && request.lookupValue("requestRank", requestRank))) {
                 continue;
-
-
+            }
             tempLibpipeRequest.filterName = filterName;
             tempLibpipeRequest.requestRank = requestRank;
             tempLibpipeRequest.requestType = requestType;
-
 
             requestQueue_.push(tempLibpipeRequest);
         }
 
     } catch (const libconfig::SettingNotFoundException &nfex) {
-        // Ignore.
+        libpipe_fail("Problems with settings in the input file.");
     }
 }
 

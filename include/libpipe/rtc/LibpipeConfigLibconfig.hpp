@@ -7,7 +7,6 @@
 
 #ifndef LIBPIPECONFIGLIBCONFIG_HPP_
 #define LIBPIPECONFIGLIBCONFIG_HPP_
-
 #include "LibpipeConfig.hpp"
 
 #include <list>
