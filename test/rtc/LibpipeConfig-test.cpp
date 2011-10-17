@@ -1,7 +1,8 @@
 /*
  * rtc/LibpipeConfig-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 David Sichau
+ *                    Marc Kirchner
  *
  */
 

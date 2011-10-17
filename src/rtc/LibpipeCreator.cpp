@@ -57,13 +57,14 @@ void LibpipeCreator::generateFilters()
 {
     std::list<FilterStruct> filterList = configuration_->getFilters();
 
+
     for (std::list<FilterStruct>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
-
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
                 it->managerName));
     }
+
 
     // first all Filters need to be generated before they get connected
     for (FilterMap::const_iterator it = filterMap_.begin();
@@ -86,10 +87,7 @@ void LibpipeCreator::connectManagers(std::string const& filtername)
             filterMap_.find(filtername)->second->getManager()->connect(
                 filterMap_.find(it->precursorName)->second);
         } else {
-            std::string message =
-                    " LibpipeCreator::connectManagers failed, the following filter was not found: ";
-            message += filtername;
-            libpipe_fail(message);
+            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }
@@ -107,10 +105,7 @@ void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
                 filterMap_.find(it->filterName)->second->getAlgorithm(),
                 it->portNameOfFilter, it->portNameOfThis);
         } else {
-            std::string message =
-                    " LibpipeCreator::connectAlgorithmPorts failed, the following filter was not found: ";
-            message += filtername;
-            libpipe_fail(message);
+            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }
@@ -134,10 +129,7 @@ void LibpipeCreator::generatePipeline()
             tempReq.setTraceFlag(true);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else {
-            std::string message =
-                    " LibpipeCreator::generatePipeline failed, the following request Type was not found: ";
-            message += temp.requestType;
-            libpipe_fail(message);
+            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }

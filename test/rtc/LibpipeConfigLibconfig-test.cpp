@@ -1,7 +1,8 @@
 /*
  * rtc#LibpipeConfigLibconfig-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 David Sichau
+ *                    Marc Kirchner
  *
  */
 
@@ -65,15 +66,15 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
 
             LibpipeConfigLibconfig test("inputFile.txt");
 
-            shouldEqual(test.getFilters().size(), 6);
+            shouldEqual(int(test.getFilters().size()), 6);
 
-            shouldEqual(test.getPort("Combiner").size(), 2);
+            shouldEqual(int(test.getPort("Combiner").size()), 2);
 
-            shouldEqual(test.getPort("LowercaseFilter").size(), 1);
+            shouldEqual(int(test.getPort("LowercaseFilter").size()), 1);
 
-            shouldEqual(test.getPrecursorFilter("Combiner").size(), 2);
+            shouldEqual(int(test.getPrecursorFilter("Combiner").size()), 2);
 
-            shouldEqual(test.getLibpipePipe().size(), 3);
+            shouldEqual(int(test.getLibpipePipe().size()), 3);
 
             bool thrown = false;
             try {

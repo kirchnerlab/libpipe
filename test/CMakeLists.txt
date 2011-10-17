@@ -10,7 +10,6 @@ IF(APPLE)
 ENDIF(APPLE)
 
 
-
 ##############################################################################
 # check if have valgrind
 ##############################################################################
@@ -28,7 +27,14 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     STRING(REGEX REPLACE "test_([^ ]+).*" "\\1" test "${exe}" )
     # build the test
     ADD_EXECUTABLE(${exe} ${src})
-    TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS} -lconfig++ )
+    
+    SET(TEST_LIBS  
+        pipe
+        -lconfig++
+    )
+    
+    
+    TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})
     # add test to global list of unit test
     ADD_TEST(${name} ${exe})
     MESSAGE(STATUS "Adding test for ${name}: ${exe}.")
@@ -67,6 +73,7 @@ LINK_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_LIBPIPECREATOR rtc/LibpipeCreator-test.cpp)
 SET(SRCS_LIBPIPECONFIGLIBCONFIG rtc/LibpipeConfigLibconfig-test.cpp)
 SET(SRCS_LIBPIPECONFIG rtc/LibpipeConfig-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
@@ -90,6 +97,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("rtc/LibpipeCreator" test_libpipecreator ${SRCS_LIBPIPECREATOR})
 ADD_LIBPIPE_TEST("rtc/LibpipeConfigLibconfig" test_libpipeconfiglibconfig ${SRCS_LIBPIPECONFIGLIBCONFIG})
 ADD_LIBPIPE_TEST("rtc/LibpipeConfig" test_libpipeconfig ${SRCS_LIBPIPECONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})

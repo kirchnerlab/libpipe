@@ -1,7 +1,4 @@
 # require boost
-SET(Boost_USE_STATIC_LIBS OFF)
-SET(Boost_USE_MULTITHREAD OFF)
-
 
 IF(UNIX)
     SET(LIBCONFIG_PATH libconfig) 
@@ -10,13 +7,9 @@ IF(APPLE)
     SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
 ENDIF(APPLE)
 
-
-FIND_PACKAGE(Boost COMPONENTS program_options system REQUIRED)
 INCLUDE_DIRECTORIES(
-                    ${Boost_INCLUDE_DIRS}
                     ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/include)
 LINK_DIRECTORIES(
-                    ${Boost_LIBRARY_DIRS}
                     ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/lib
                  )
 
