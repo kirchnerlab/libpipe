@@ -73,6 +73,7 @@ LINK_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_LIBPIPEPIPELINE rtc/LibpipePipeline-test.cpp)
 SET(SRCS_LIBPIPECREATOR rtc/LibpipeCreator-test.cpp)
 SET(SRCS_LIBPIPECONFIGLIBCONFIG rtc/LibpipeConfigLibconfig-test.cpp)
 SET(SRCS_LIBPIPECONFIG rtc/LibpipeConfig-test.cpp)
@@ -97,6 +98,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("rtc/LibpipePipeline" test_libpipepipeline ${SRCS_LIBPIPEPIPELINE})
 ADD_LIBPIPE_TEST("rtc/LibpipeCreator" test_libpipecreator ${SRCS_LIBPIPECREATOR})
 ADD_LIBPIPE_TEST("rtc/LibpipeConfigLibconfig" test_libpipeconfiglibconfig ${SRCS_LIBPIPECONFIGLIBCONFIG})
 ADD_LIBPIPE_TEST("rtc/LibpipeConfig" test_libpipeconfig ${SRCS_LIBPIPECONFIG})
