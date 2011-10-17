@@ -19,7 +19,7 @@
 
 #include <typeinfo>
 
-#include "utilsRTC.hpp"
+#include "rtc/utils.hpp"
 
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 

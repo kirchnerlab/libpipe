@@ -28,7 +28,7 @@
 
 #include <boost/pointer_cast.hpp>
 
-#include "utilsRTC.hpp"
+#include "rtc/utils.hpp"
 
 
 using namespace libpipe::rtc;
