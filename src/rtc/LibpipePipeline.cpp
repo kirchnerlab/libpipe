@@ -5,7 +5,8 @@
  *                    Marc Kirchner
  */
 
-#include "LibpipePipeline.hpp"
+#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Manager.hpp"
 
 namespace libpipe {
 namespace rtc {

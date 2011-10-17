@@ -51,7 +51,7 @@ class LibpipeConfigLibconfig : public LibpipeConfig
          * the smallest comes first
          */
         virtual std::priority_queue<LibpipePipeStruct,
-                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> const& getLibpipePipe() const;
+                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const;
 
     private:
 

@@ -12,6 +12,7 @@
 
 #include "Filter.hpp"
 #include "libpipe/Exception.hpp"
+#include "libpipe/rtc/LibpipePipeline.hpp"
 
 #include <boost/shared_ptr.hpp>
 
@@ -38,6 +39,8 @@ class LibpipeCreator
         boost::shared_ptr<Filter> getFilter(std::string const& filtername);
 
 
+        LibpipePipeline const& getPipeline() const;
+
 
     private:
         LibpipeConfig* configuration_;
@@ -48,8 +51,13 @@ class LibpipeCreator
 
         void connectAlgorithmPorts(std::string const& filtername);
 
+        void generatePipeline();
+
         typedef std::map<std::string, boost::shared_ptr<Filter> > FilterMap;
+
         FilterMap filterMap_;
+
+        LibpipePipeline pipeline_;
 
 };
 

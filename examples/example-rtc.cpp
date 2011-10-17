@@ -516,131 +516,147 @@ int main(int argc, char *argv[])
     using namespace libpipe::rtc;
 
     boost::shared_ptr<Filter> lowerFilter;
-
+    LibpipeCreator* creator;
     try {
-        LibpipeCreator* creator = new LibpipeCreator("inputFile.txt");
+        creator = new LibpipeCreator("inputFile.txt");
+        lowerFilter = creator->getFilter("LowercaseFilter");
     } catch (libpipe::Exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
-    {
-        // construct filters and save in map for later identification
-        std::map<std::string, boost::shared_ptr<Filter> > filterMap;
+    LibpipePipeline pipeline = creator->getPipeline();
+    delete creator;
 
-        filterMap["LowercaseFilter"] = boost::shared_ptr<Filter>(
-            Filter::create("Lowercase Filter", "LowercaseAlgorithm",
-                "MangerRTC"));
-        filterMap["TheSource"] = boost::shared_ptr<Filter>(
-            Filter::create("The Source", "Source", "MangerRTC"));
-        filterMap["Filter1"] = boost::shared_ptr<Filter>(
-            Filter::create("Filter #1", "UppercaseAlgorithm", "MangerRTC"));
-        filterMap["ROTDecrypter"] = boost::shared_ptr<Filter>(
-            Filter::create("ROT Decrypter", "ROT13Algorithm", "MangerRTC"));
-        filterMap["ROTDecrypter1"] = boost::shared_ptr<Filter>(
-            Filter::create("ROT Decrypter 1", "ROT13Algorithm", "MangerRTC"));
-        filterMap["Combiner"] = boost::shared_ptr<Filter>(
-            Filter::create("Combiner", "CombineAlgorithm", "MangerRTC"));
+    /*
+     {
+     // construct filters and save in map for later identification
+     std::map<std::string, boost::shared_ptr<Filter> > filterMap;
 
-        //sets input for first Filter
-        boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input(
-            new SharedData<std::string>());
-        input->set(new std::string("Hello World!"));
-        filterMap.find("TheSource")->second->getAlgorithm()->setInput(
-            "StringOutput", input);
+     filterMap["LowercaseFilter"] = boost::shared_ptr<Filter>(
+     Filter::create("Lowercase Filter", "LowercaseAlgorithm",
+     "MangerRTC"));
+     filterMap["TheSource"] = boost::shared_ptr<Filter>(
+     Filter::create("The Source", "Source", "MangerRTC"));
+     filterMap["Filter1"] = boost::shared_ptr<Filter>(
+     Filter::create("Filter #1", "UppercaseAlgorithm", "MangerRTC"));
+     filterMap["ROTDecrypter"] = boost::shared_ptr<Filter>(
+     Filter::create("ROT Decrypter", "ROT13Algorithm", "MangerRTC"));
+     filterMap["ROTDecrypter1"] = boost::shared_ptr<Filter>(
+     Filter::create("ROT Decrypter 1", "ROT13Algorithm", "MangerRTC"));
+     filterMap["Combiner"] = boost::shared_ptr<Filter>(
+     Filter::create("Combiner", "CombineAlgorithm", "MangerRTC"));
 
-        //Connect ports
-        filterMap.find("Filter1")->second->getAlgorithm()->connect(
-            filterMap.find("TheSource")->second->getAlgorithm(),
-            "StringOutput", "StringInput");
+     //sets input for first Filter
+     boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input(
+     new SharedData<std::string>());
+     input->set(new std::string("Hello World!"));
+     filterMap.find("TheSource")->second->getAlgorithm()->setInput(
+     "StringOutput", input);
 
-        filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
-            filterMap.find("Filter1")->second->getAlgorithm(), "StringOutput",
-            "StringInput");
+     //Connect ports
+     filterMap.find("Filter1")->second->getAlgorithm()->connect(
+     filterMap.find("TheSource")->second->getAlgorithm(),
+     "StringOutput", "StringInput");
 
-        filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
-            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
-            "StringOutput", "StringInput");
+     filterMap.find("ROTDecrypter")->second->getAlgorithm()->connect(
+     filterMap.find("Filter1")->second->getAlgorithm(), "StringOutput",
+     "StringInput");
 
-        filterMap.find("Combiner")->second->getAlgorithm()->connect(
-            filterMap.find("ROTDecrypter")->second->getAlgorithm(),
-            "StringOutput", "StringInput1");
+     filterMap.find("ROTDecrypter1")->second->getAlgorithm()->connect(
+     filterMap.find("ROTDecrypter")->second->getAlgorithm(),
+     "StringOutput", "StringInput");
 
-        filterMap.find("Combiner")->second->getAlgorithm()->connect(
-            filterMap.find("ROTDecrypter1")->second->getAlgorithm(),
-            "StringOutput", "StringInput2");
+     filterMap.find("Combiner")->second->getAlgorithm()->connect(
+     filterMap.find("ROTDecrypter")->second->getAlgorithm(),
+     "StringOutput", "StringInput1");
 
-        filterMap.find("LowercaseFilter")->second->getAlgorithm()->connect(
-            filterMap.find("Combiner")->second->getAlgorithm(), "StringOutput",
-            "StringInput");
+     filterMap.find("Combiner")->second->getAlgorithm()->connect(
+     filterMap.find("ROTDecrypter1")->second->getAlgorithm(),
+     "StringOutput", "StringInput2");
 
-        //Manager connect
-        filterMap.find("Filter1")->second->getManager()->connect(
-            filterMap.find("TheSource")->second);
+     filterMap.find("LowercaseFilter")->second->getAlgorithm()->connect(
+     filterMap.find("Combiner")->second->getAlgorithm(), "StringOutput",
+     "StringInput");
 
-        filterMap.find("ROTDecrypter")->second->getManager()->connect(
-            filterMap.find("Filter1")->second);
+     //Manager connect
+     filterMap.find("Filter1")->second->getManager()->connect(
+     filterMap.find("TheSource")->second);
 
-        filterMap.find("ROTDecrypter1")->second->getManager()->connect(
-            filterMap.find("ROTDecrypter")->second);
+     filterMap.find("ROTDecrypter")->second->getManager()->connect(
+     filterMap.find("Filter1")->second);
 
-        filterMap.find("Combiner")->second->getManager()->connect(
-            filterMap.find("ROTDecrypter")->second);
+     filterMap.find("ROTDecrypter1")->second->getManager()->connect(
+     filterMap.find("ROTDecrypter")->second);
 
-        filterMap.find("Combiner")->second->getManager()->connect(
-            filterMap.find("ROTDecrypter1")->second);
+     filterMap.find("Combiner")->second->getManager()->connect(
+     filterMap.find("ROTDecrypter")->second);
 
-        filterMap.find("LowercaseFilter")->second->getManager()->connect(
-            filterMap.find("Combiner")->second);
+     filterMap.find("Combiner")->second->getManager()->connect(
+     filterMap.find("ROTDecrypter1")->second);
 
-        // the filter that will be used outside the scope
-        lowerFilter = filterMap.find("LowercaseFilter")->second;
-    }
+     filterMap.find("LowercaseFilter")->second->getManager()->connect(
+     filterMap.find("Combiner")->second);
 
-    libpipe::Request req(libpipe::Request::UPDATE);
-    req.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(req, "Starting.");
+     // the filter that will be used outside the scope
+     lowerFilter = filterMap.find("LowercaseFilter")->second;
+     }
+     */
 
-    try {
-        lowerFilter->getManager()->processRequest(req);
+    /*
+     libpipe::Request req(libpipe::Request::UPDATE);
+     req.setTraceFlag(true);
+     LIBPIPE_REQUEST_TRACE(req, "Starting.");
 
-    } catch (libpipe::RequestException& e) {
-        std::cerr << e.what() << std::endl;
-    }
+     try {
+     lowerFilter->getManager()->processRequest(req);
 
-    typedef std::vector<std::string> VS;
-    VS trace;
-    req.getTrace(trace);
-    for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
-        std::cout << *i << '\n';
-    }
+     } catch (libpipe::RequestException& e) {
+     std::cerr << e.what() << std::endl;
+     }
 
-    libpipe::Request reqDelete(libpipe::Request::DELETE);
-    reqDelete.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(reqDelete, "Starting with DELETE");
+     typedef std::vector<std::string> VS;
+     VS trace;
+     req.getTrace(trace);
+     for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
+     std::cout << *i << '\n';
+     }
 
-    lowerFilter->getManager()->processRequest(reqDelete);
+     libpipe::Request reqDelete(libpipe::Request::DELETE);
+     reqDelete.setTraceFlag(true);
+     LIBPIPE_REQUEST_TRACE(reqDelete, "Starting with DELETE");
 
-    VS traceDelete;
-    reqDelete.getTrace(traceDelete);
-    for (VS::const_iterator i = traceDelete.begin(); i != traceDelete.end();
-            ++i) {
-        std::cout << *i << '\n';
-    }
+     lowerFilter->getManager()->processRequest(reqDelete);
 
-    libpipe::Request req1(libpipe::Request::UPDATE);
-    req1.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(req1, "Starting.");
+     VS traceDelete;
+     reqDelete.getTrace(traceDelete);
+     for (VS::const_iterator i = traceDelete.begin(); i != traceDelete.end();
+     ++i) {
+     std::cout << *i << '\n';
+     }
 
-    try {
-        lowerFilter->getManager()->processRequest(req1);
+     libpipe::Request req1(libpipe::Request::UPDATE);
+     req1.setTraceFlag(true);
+     LIBPIPE_REQUEST_TRACE(req1, "Starting.");
 
-    } catch (libpipe::RequestException& e) {
-        std::cerr << e.what() << std::endl;
-    }
+     try {
+     lowerFilter->getManager()->processRequest(req1);
 
-    VS trace1;
-    req1.getTrace(trace1);
-    for (VS::const_iterator i = trace1.begin(); i != trace1.end(); ++i) {
+     } catch (libpipe::RequestException& e) {
+     std::cerr << e.what() << std::endl;
+     }
+
+     VS trace1;
+     req1.getTrace(trace1);
+     for (VS::const_iterator i = trace1.begin(); i != trace1.end(); ++i) {
+     std::cout << *i << '\n';
+     }
+     */
+
+    pipeline.run();
+
+    std::vector<std::string> trace;
+    pipeline.getTrace(trace);
+    for (std::vector<std::string>::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }
 
@@ -649,5 +665,6 @@ int main(int argc, char *argv[])
             << std::endl;
 
     return EXIT_SUCCESS;
+
 }
 

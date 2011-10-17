@@ -64,7 +64,7 @@ std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
 }
 
 std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
-        LibpipePipeStructLess> const& LibpipeConfigLibconfig::getLibpipePipe() const
+        LibpipePipeStructLess> LibpipeConfigLibconfig::getLibpipePipe() const
 {
     return requestQueue_;
 }

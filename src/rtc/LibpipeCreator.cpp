@@ -26,10 +26,12 @@ LibpipeCreator::LibpipeCreator(std::string const& filepath)
 {
     configuration_ = new LibpipeConfigLibconfig(filepath);
     this->generateFilters();
+    this->generatePipeline();
 }
 
 LibpipeCreator::~LibpipeCreator()
 {
+    delete configuration_;
 
 }
 
@@ -46,13 +48,17 @@ boost::shared_ptr<Filter> LibpipeCreator::getFilter(
     }
 }
 
+LibpipePipeline const& LibpipeCreator::getPipeline() const
+{
+    return pipeline_;
+}
+
 void LibpipeCreator::generateFilters()
 {
     std::list<FilterStruct> filterList = configuration_->getFilters();
 
     for (std::list<FilterStruct>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
-        std::cerr<<it->filterName<<std::endl;
 
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
@@ -62,7 +68,6 @@ void LibpipeCreator::generateFilters()
     // first all Filters need to be generated before they get connected
     for (FilterMap::const_iterator it = filterMap_.begin();
             it != filterMap_.end(); ++it) {
-        std::cerr<<it->second->getName()<<std::endl;
         this->connectManagers(it->first);
         this->connectAlgorithmPorts(it->first);
     }
@@ -95,8 +100,8 @@ void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
 {
     std::list<PortStruct> ports = configuration_->getPort(filtername);
 
-    for (std::list<PortStruct>::const_iterator it = ports.begin(); it != ports.end();
-            ++it) {
+    for (std::list<PortStruct>::const_iterator it = ports.begin();
+            it != ports.end(); ++it) {
         if (filterMap_.find(filtername) != filterMap_.end()) {
             filterMap_.find(filtername)->second->getAlgorithm()->connect(
                 filterMap_.find(it->filterName)->second->getAlgorithm(),
@@ -109,6 +114,34 @@ void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
         }
 
     }
+}
+
+void LibpipeCreator::generatePipeline()
+{
+    std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
+            LibpipePipeStructLess> queue = configuration_->getLibpipePipe();
+
+    while (!queue.empty()) {
+        LibpipePipeStruct temp = queue.top();
+        queue.pop();
+
+        if (temp.requestType == "UPDATE") {
+            Request tempReq(libpipe::Request::UPDATE);
+            tempReq.setTraceFlag(true);
+            pipeline_.push(tempReq, this->getFilter(temp.filterName));
+        } else if (temp.requestType == "DELETE") {
+            Request tempReq(libpipe::Request::DELETE);
+            tempReq.setTraceFlag(true);
+            pipeline_.push(tempReq, this->getFilter(temp.filterName));
+        } else {
+            std::string message =
+                    " LibpipeCreator::generatePipeline failed, the following request Type was not found: ";
+            message += temp.requestType;
+            libpipe_fail(message);
+        }
+
+    }
+
 }
 
 } /* namespace rtc */

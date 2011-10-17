@@ -89,7 +89,7 @@ class LibpipeConfig
          * the smallest comes first
          */
         virtual std::priority_queue<LibpipePipeStruct,
-                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> const& getLibpipePipe() const=0;
+                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const=0;
 
 };
 
