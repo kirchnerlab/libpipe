@@ -92,7 +92,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
          * case here.
          */
         AlgorithmRTCTestSuite() :
-                vigra::test_suite("AlgorithmRTC")
+                vigra::test_suite("rtc/Algorithm")
         {
             // add(testCase(&AlgorithmTestSuite::fail));
             add(testCase(&AlgorithmRTCTestSuite::testFreeOperators));

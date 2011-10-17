@@ -52,6 +52,7 @@ INCLUDE_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_RTC/LIBPIPECONFIG rtc/LibpipeConfig-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
 SET(SRCS_ALGORITHMRTC rtc/Algorithm-test.cpp)
 SET(SRCS_FILTERRTC rtc/Filter-test.cpp)
@@ -73,6 +74,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("rtc/LibpipeConfig" test_rtc/libpipeconfig ${SRCS_RTC/LIBPIPECONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})
 ADD_LIBPIPE_TEST("rtc/Algorithm" test_algorithmrtc ${SRCS_ALGORITHMRTC})
 ADD_LIBPIPE_TEST("rtc/Filter" test_filterrtc ${SRCS_FILTERRTC})

@@ -65,7 +65,7 @@ struct ObjectFactoryTestSuite : vigra::test_suite
          * case here.
          */
         ObjectFactoryTestSuite() :
-                vigra::test_suite("ObjectFactory")
+                vigra::test_suite("utilities/Factory")
         {
             add(testCase(&ObjectFactoryTestSuite::test));
             add(testCase(&ObjectFactoryTestSuite::testWrongType));

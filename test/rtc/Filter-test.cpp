@@ -34,7 +34,7 @@ struct FilterRTCTestSuite : vigra::test_suite
          * case here.
          */
         FilterRTCTestSuite() :
-                vigra::test_suite("FilterRTC")
+                vigra::test_suite("rtc/Filter")
         {
             add(testCase(&FilterRTCTestSuite::testConstructionAndDestruction));
             add(testCase(&FilterRTCTestSuite::testAlgorithm));

@@ -43,7 +43,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
          * case here.
          */
         ManagerRTCTestSuite() :
-                vigra::test_suite("ManagerRTC")
+                vigra::test_suite("rtc/Manager")
         {
             add(testCase(&ManagerRTCTestSuite::testSetAlgorithm));
             add(testCase(&ManagerRTCTestSuite::testSharedPtr));

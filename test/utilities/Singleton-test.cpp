@@ -16,7 +16,7 @@ class SingletonTest {
 };
 
 struct SingletonTestSuite : vigra::test_suite {
-    SingletonTestSuite() : vigra::test_suite("Singleton") {
+    SingletonTestSuite() : vigra::test_suite("utilities/Singleton") {
         add( testCase(&SingletonTestSuite::test));
     }
 

@@ -22,7 +22,7 @@ struct SharedDataTestSuite : vigra::test_suite
      * case here.
      */
     SharedDataTestSuite() :
-        vigra::test_suite("SharedData")
+        vigra::test_suite("rtc/SharedData")
     {
         add(testCase(&SharedDataTestSuite::instance));
     }
