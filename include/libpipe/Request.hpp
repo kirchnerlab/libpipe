@@ -53,6 +53,7 @@ public:
 
     /** Tests the type of a request.
      * @param[in] t A request type.
+     * @return true of t is of the same type as this
      */
     bool is(const Type& t);
 

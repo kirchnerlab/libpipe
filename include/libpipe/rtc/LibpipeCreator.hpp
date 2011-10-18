@@ -27,13 +27,20 @@ class LibpipeCreator
 {
     public:
 
-        LibpipeCreator(std::string const& hashInputFile, std::string const& inputFile);
+        /** Constructor
+         * @param hashInputFile The hash to specify the input file
+         * @param inputFile The name of the input file
+         */
+        LibpipeCreator(std::string const& hashInputFile,
+            std::string const& inputFile);
 
         /** Constructor
          * @param filename The name to the configuration file
          */
         LibpipeCreator(std::string const& filename);
 
+        /** Destructor
+         */
         ~LibpipeCreator();
 
         /** Returns a shared pointer to the requested Filter, throw an exception
@@ -43,13 +50,11 @@ class LibpipeCreator
          */
         boost::shared_ptr<Filter> getFilter(std::string const& filtername);
 
-
         /** Returns a LibpipePipeline object, where all information is stored to
          * run libpipe.
          * @return Reference to a LibpipePipeline.
          */
         LibpipePipeline const& getPipeline() const;
-
 
     private:
         /** Pointer to the configuration.
@@ -61,21 +66,29 @@ class LibpipeCreator
         void generateFilters();
 
         /** This function will connect the managers.
-        */
+         * @param filtername Name of the filter
+         */
         void connectManagers(std::string const& filtername);
 
         /** This function will connect the ports of the algorithms.
-        */
+         *          * @param filtername Name of the filter
+         */
         void connectAlgorithmPorts(std::string const& filtername);
 
         /** This function will generate the pipeline object
          */
         void generatePipeline();
 
+        /** Typedef of FilterMap
+         */
         typedef std::map<std::string, boost::shared_ptr<Filter> > FilterMap;
 
+        /** Map of the filters identified by their string
+         */
         FilterMap filterMap_;
 
+        /** The pipeline object
+         */
         LibpipePipeline pipeline_;
 
 };

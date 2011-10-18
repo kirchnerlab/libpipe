@@ -60,6 +60,7 @@ public:
     /** Runs the algorithm and updates the output data.
      * This is where all the algorithm implementation goes. 
      * @param[in,out] req The request object, forwarded from \c process request.
+     * @return The request
      */
     libpipe::Request& update(libpipe::Request& req)
     {
@@ -107,6 +108,8 @@ public:
     }
 
 protected:
+    /** A Pointer to string
+     */
     typedef boost::shared_ptr<std::string> StringPtr;
 
     /** A reference to the input data.
@@ -144,6 +147,9 @@ public:
     {
     }
 
+    /** Set the output
+     * @param s The new output
+     */
     void setParamString(const std::string& s)
     {
         *output_ = s;

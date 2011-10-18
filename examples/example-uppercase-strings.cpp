@@ -65,6 +65,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -108,6 +109,10 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         }
 
     protected:
+
+        /** Typedef for a shared Pointer to Shared Data object
+         *
+         */
         typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
@@ -167,6 +172,7 @@ class LowercaseAlgorithm : public libpipe::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -210,6 +216,9 @@ class LowercaseAlgorithm : public libpipe::Algorithm
         }
 
     protected:
+        /** Typedef for a shared Pointer to Shared Data object
+         *
+         */
         typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
@@ -255,6 +264,7 @@ class CombineAlgorithm : public libpipe::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return Reference to the request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -296,6 +306,10 @@ class CombineAlgorithm : public libpipe::Algorithm
             input1_ = input;
         }
 
+        /**
+         *
+         * @param input SharedData pointer
+         */
         void setInput2(
             boost::shared_ptr<libpipe::SharedData<std::string> > input)
         {
@@ -303,6 +317,10 @@ class CombineAlgorithm : public libpipe::Algorithm
         }
 
     protected:
+
+        /** Typedef for a shared Pointer to Shared Data object
+         *
+         */
         typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
@@ -311,6 +329,12 @@ class CombineAlgorithm : public libpipe::Algorithm
          * There are exceptions (and hence constness is not enforced).
          */
         StringPtr input1_;
+
+        /** A reference to the input data.
+         * This can be a weak pointer or some other kind of reference. In the
+         * majority of cases, the algorithm should not attempt to modify this data.
+         * There are exceptions (and hence constness is not enforced).
+         */
         StringPtr input2_;
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
@@ -318,6 +342,10 @@ class CombineAlgorithm : public libpipe::Algorithm
          */
         StringPtr output_;
     private:
+
+        /** Combines two strings
+         * @param result the resulting string
+         */
         void combine(
             boost::shared_ptr<libpipe::SharedData<std::string> > result)
         {
@@ -365,6 +393,7 @@ class ROT13Algorithm : public libpipe::Algorithm
          * If the request type is DELETE the input gets deleted.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -415,6 +444,9 @@ class ROT13Algorithm : public libpipe::Algorithm
         }
     protected:
 
+        /** Typedef for a shared Pointer to Shared Data object
+         *
+         */
         typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
@@ -479,12 +511,16 @@ class Source : public libpipe::Algorithm
         virtual ~Source()
         {
             std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_.get()->get() << "\e[m" << std::endl;
+                    << *output_->get() << "\e[m" << std::endl;
         }
 
+        /** Set the output to s
+         *
+         * @param s The string to which the output is set
+         */
         void setParamString(const std::string& s)
         {
-            *output_.get()->get() = s;
+            *output_->get() = s;
         }
 
         /** Provides access to the output.
@@ -527,15 +563,15 @@ int main(int argc, char *argv[])
         new StringFilterLow(std::string("Lowercase Filter")));
     {
         boost::shared_ptr<StringCreator> stringCreator(
-                    new StringCreator(std::string("The Source")));
+            new StringCreator(std::string("The Source")));
         boost::shared_ptr<StringFilterUp> stringFilter(
-                      new StringFilterUp(std::string("Filter #1")));
+            new StringFilterUp(std::string("Filter #1")));
         boost::shared_ptr<ROTDecrypter> rotDecryper(
-                        new ROTDecrypter(std::string("ROT Decrypter")));
+            new ROTDecrypter(std::string("ROT Decrypter")));
         boost::shared_ptr<ROTDecrypter> rotDecryper1(
-                        new ROTDecrypter(std::string("ROT Decrypter 1")));
+            new ROTDecrypter(std::string("ROT Decrypter 1")));
         boost::shared_ptr<Combiner> combiner(
-                       new Combiner(std::string("Combiner")));
+            new Combiner(std::string("Combiner")));
 
         stringCreator->getAlgorithm()->setParamString(
             "Hello World! I am a very long string to see how much memory is freed by deleting the objects");
@@ -593,7 +629,6 @@ int main(int argc, char *argv[])
     LIBPIPE_REQUEST_TRACE(reqDelete, "Starting with DELETE");
 
     lowerFilter->getManager()->processRequest(reqDelete);
-
 
     VS traceDelete;
     reqDelete.getTrace(traceDelete);

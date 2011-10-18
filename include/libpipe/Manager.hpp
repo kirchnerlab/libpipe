@@ -70,7 +70,7 @@ public:
      * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
      * \endcode
      *  
-     * @param[inout] f Pointer to a filter object on which the current manager
+     * @param [in,out] f Pointer to a filter object on which the current manager
      *                 should depend.
      */
     void connect(boost::shared_ptr<Filter> f);

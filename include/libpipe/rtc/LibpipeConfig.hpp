@@ -21,8 +21,14 @@ namespace rtc {
  */
 struct PortStruct
 {
+        /** Name of the filter which output port is used
+         */
         std::string filterName;
+        /** Name of the output port
+         */
         std::string portNameOfFilter;
+        /** Name of the input port of this filter
+         */
         std::string portNameOfThis;
 };
 
@@ -31,6 +37,8 @@ struct PortStruct
  */
 struct PrecursorStruct
 {
+        /** Name of the precursor Filter
+         */
         std::string precursorName;
 };
 
@@ -39,10 +47,22 @@ struct PrecursorStruct
  */
 struct FilterStruct
 {
+        /** Name of the filter
+         */
         std::string filterName;
+        /** Name of the filters algorithm
+         */
         std::string algorithmName;
+        /** Name of the filters manager
+         */
         std::string managerName;
+
+        /** List of precursors the filters manager is connected to
+         */
         std::list<PrecursorStruct> precursors;
+
+        /** List of ports the filters algorithm is connected to
+         */
         std::list<PortStruct> ports;
 };
 
@@ -51,18 +71,33 @@ struct FilterStruct
  */
 struct LibpipePipeStruct
 {
+        /** Name of the filter
+         */
         std::string filterName;
+        /** Name of type of request
+         */
         std::string requestType;
+        /** Boolean flag which will be true if a trace should be generated
+         */
         bool makeTrace;
+        /** rank of the request, the higher the later it will be carried out
+         */
         unsigned int requestRank;
 };
 
 /**
  * Comparison function to compare two LibpipePipeStructs
  */
+///\cond
 struct LibpipePipeStructLess : public std::binary_function<LibpipePipeStruct,
         LibpipePipeStruct, bool>
 {
+        ///\endcond
+        /** less than operator
+         * @param lhs lefthand side LibpipePipeStruct
+         * @param rhs righthand side LibpipePipeStruct
+         * @return true if lhs < rhs
+         */
         bool operator ()(const LibpipePipeStruct& lhs,
             LibpipePipeStruct& rhs) const
         {
@@ -124,7 +159,12 @@ class LibpipeConfig
         virtual bool checkFile() const =0;
 
     protected:
-        LibpipeConfig(){};
+        /** Constructor
+         */
+        LibpipeConfig()
+        {
+        }
+        ;
 
 };
 

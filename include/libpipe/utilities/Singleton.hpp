@@ -39,15 +39,40 @@ template<class T>
 class Singleton
 {
     public:
+        /** Returns exactly one instance of the object.
+         * @return An instance of the object
+         */
         static T& instance();
+
+        /** Destructor
+         */
         ~Singleton();
     private:
+        /** Constructor
+         */
         Singleton();
-        Singleton(const Singleton&);
-        Singleton& operator=(const Singleton&);
 
+        /** Constructor
+         * @param S A singleton
+         */
+        Singleton(const Singleton& S);
+
+        /** Assignment operator
+         * @param S A singleton
+         * @return The same singleton
+         */
+        Singleton& operator=(const Singleton& S);
+
+        /** Create methode
+         */
         static void create();
+
+        /** Pointer to the instance
+         */
         static T* pInstance_;
+
+        /** true if the singleton was destroyed
+         */
         static bool destroyed_;
 
 };

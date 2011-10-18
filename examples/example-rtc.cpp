@@ -26,7 +26,6 @@
 #include <libpipe/rtc/LibpipeLoader.hpp>
 #include <libpipe/rtc/LibpipeCreator.hpp>
 
-
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
  * an LIBPIPE algorithm. Basically, there are only two requirements (and one
@@ -75,6 +74,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -111,13 +111,17 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
         }
 
     private:
+
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
         static const bool registerLoader()
         {
             std::string ids = "UppercaseAlgorithm";
             return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
                 UppercaseAlgorithm::create);
         }
-
+        /// true is class is registered in Algorithm Factory
         static const bool registered_;
 
 };
@@ -171,6 +175,7 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -207,13 +212,16 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             ports_["StringOutput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >(new std::string);
         }
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
         static const bool registerLoader()
         {
             std::string ids = "LowercaseAlgorithm";
             return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
                 LowercaseAlgorithm::create);
         }
-
+        /// true is class is registered in Algorithm Factory
         static const bool registered_;
 
 };
@@ -256,6 +264,7 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -284,6 +293,9 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
     protected:
 
     private:
+        /** Combines two inputs
+         * @param result The result
+         */
         void combine(
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > result)
         {
@@ -317,13 +329,16 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                     libpipe::rtc::SharedData<std::string> >(new std::string);
 
         }
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
         static const bool registerLoader()
         {
             std::string ids = "CombineAlgorithm";
             return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
                 CombineAlgorithm::create);
         }
-
+        /// true is class is registered in Algorithm Factory
         static const bool registered_;
 
 };
@@ -371,6 +386,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          * If the request type is DELETE the input gets deleted.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return The request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -440,13 +456,16 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
             ports_["StringOutput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >(new std::string);
         }
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
         static const bool registerLoader()
         {
             std::string ids = "ROT13Algorithm";
             return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
                 ROT13Algorithm::create);
         }
-
+        /// true is class is registered in Algorithm Factory
         static const bool registered_;
 
 };
@@ -497,16 +516,19 @@ class Source : public libpipe::rtc::Algorithm
                 libpipe::rtc::Algorithm()
         {
             ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string("Hello World!"));
+                    libpipe::rtc::SharedData<std::string> >(
+                new std::string("Hello World!"));
         }
-
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
         static const bool registerLoader()
         {
             std::string ids = "Source";
             return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
                 Source::create);
         }
-
+        /// true is class is registered in Algorithm Factory
         static const bool registered_;
 
 };
@@ -518,18 +540,18 @@ int main(int argc, char *argv[])
     using namespace libpipe::rtc;
 
     LibpipeLoader loader(argc, argv);
-    LibpipePipeline pipeline= loader.getPipeline();
+    LibpipePipeline pipeline = loader.getPipeline();
 
     try {
         pipeline.run();
-    }
-    catch (libpipe::Exception& e){
-        std::cerr<< e.what() <<std::endl;
+    } catch (libpipe::Exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 
     std::vector<std::string> trace;
     pipeline.getTrace(trace);
-    for (std::vector<std::string>::const_iterator i = trace.begin(); i != trace.end(); ++i) {
+    for (std::vector<std::string>::const_iterator i = trace.begin();
+            i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }
 

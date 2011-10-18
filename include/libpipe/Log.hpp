@@ -72,6 +72,7 @@ namespace libpipe {
  * 15:50:57.979
  * @endcode
  * The exact presentation of the string is locale dependent.
+ * @return the actual time
  */
 inline std::string nowTime();
 
@@ -100,7 +101,8 @@ enum LogLevel
 class Output2FILE
 {
 public:
-    /** Returns the file handle of the logging stream traget..
+    /** Returns the file handle of the logging stream traget.
+     * @return the file handle
      */
     static FILE*& getRedirect();
 
@@ -211,7 +213,8 @@ private:
     /** Assignment operator.
      * Declared as private and never defined to disallow assignment.
      *  
-     * @param[in] rhs A right hand side @c Log object.
+     * @param [in] rhs A right hand side @c Log object.
+     * @return A Log Object
      */
     Log& operator=(const Log& rhs);
 };

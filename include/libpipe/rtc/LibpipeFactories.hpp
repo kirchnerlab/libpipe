@@ -22,11 +22,15 @@ class Algorithm;
 class Manager;
 class LibpipeConfig;
 
+/** The Algorithm Factory
+ */
 typedef utilities::Singleton<
         utilities::Factory<Algorithm, std::string> > AlgorithmFactory;
-
+/** The Manager Factory
+ */
 typedef utilities::Singleton<utilities::Factory<Manager, std::string> > ManagerFactory;
-
+/** The Input file Factory
+ */
 typedef utilities::Singleton<utilities::Factory<LibpipeConfig, std::string> > InputFactory;
 
 
