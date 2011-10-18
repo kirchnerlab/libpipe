@@ -9,16 +9,15 @@
 #include <libpipe/Exception.hpp>
 #include <libpipe/rtc/LibpipeFactories.hpp>
 
-
 #include <libconfig.h++>
 #include <string>
 #include <sstream>
 
-
 namespace libpipe {
 namespace rtc {
 
-LibpipeConfig* LibpipeConfigLibconfig::create(){
+LibpipeConfig* LibpipeConfigLibconfig::create()
+{
     return new LibpipeConfigLibconfig;
 }
 
@@ -45,10 +44,13 @@ std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFilter(
             return it->precursors;
         }
     }
-    std::string message =
-            "LibpipeConfigLibconfig::getPrecursorFilter failed, the following filter was not registered: ";
-    message += filtername;
-    libpipe_fail(message);
+
+    std::ostringstream oss;
+    oss
+            << "LibpipeConfigLibconfig::getPrecursorFilter failed, the following filter was not registered: "
+            << filtername;
+    libpipe_fail(oss.str());
+
 }
 
 std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
@@ -60,10 +62,12 @@ std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
             return it->ports;
         }
     }
-    std::string message =
-            "LibpipeConfigLibconfig::getPort failed, the following filter was not registered: ";
-    message += filtername;
-    libpipe_fail(message);
+
+    std::ostringstream oss;
+    oss
+            << "LibpipeConfigLibconfig::getPort failed, the following filter was not registered: "
+            << filtername;
+    libpipe_fail(oss.str());
 }
 
 std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
@@ -163,7 +167,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
             // Only output the record if all of the expected fields are present.
             std::string filterName, requestType;
             unsigned int requestRank;
-            bool trace=false;
+            bool trace = false;
 
             if (!(request.lookupValue("filteName", filterName)
                     && request.lookupValue("requestType", requestType)
@@ -184,8 +188,8 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
     }
 }
 
-
-bool LibpipeConfigLibconfig::checkFile() const{
+bool LibpipeConfigLibconfig::checkFile() const
+{
     return true;
     ///TODO implement test
 }
@@ -193,7 +197,8 @@ bool LibpipeConfigLibconfig::checkFile() const{
 const bool LibpipeConfigLibconfig::registerLoader()
 {
     std::string hash = "6dc0a277ae36db78b3494d0ddf32dd3d";
-    return InputFactory::instance().registerType(hash, LibpipeConfigLibconfig::create);
+    return InputFactory::instance().registerType(hash,
+        LibpipeConfigLibconfig::create);
 }
 
 const bool LibpipeConfigLibconfig::registered_ = registerLoader();

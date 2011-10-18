@@ -62,10 +62,13 @@ boost::shared_ptr<Filter> LibpipeCreator::getFilter(
     if (filterMap_.find(filtername) != filterMap_.end()) {
         return filterMap_.find(filtername)->second;
     } else {
-        std::string message =
-                " LibpipeCreator::getFilter failed, the following filter was not found: ";
-        message += filtername;
-        libpipe_fail(message);
+
+        std::ostringstream oss;
+        oss
+                << " LibpipeCreator::getFilter failed, the following filter was not found: "
+                << filtername;
+        libpipe_fail(oss.str());
+
     }
 }
 
