@@ -17,6 +17,10 @@
 namespace libpipe {
 namespace rtc {
 
+
+/**
+ * All information needed to connect the ports.
+ */
 struct PortStruct
 {
         std::string filterName;
@@ -24,11 +28,17 @@ struct PortStruct
         std::string portNameOfThis;
 };
 
+/**
+ * The information needed to connect the managers
+ */
 struct PrecursorStruct
 {
         std::string precursorName;
 };
 
+/**
+ * The information needed to generate filters and connect their algorithms and managers
+ */
 struct FilterStruct
 {
         std::string filterName;
@@ -38,6 +48,9 @@ struct FilterStruct
         std::list<PortStruct> ports;
 };
 
+/**
+ * The information needed to build the libpipe pipeline
+ */
 struct LibpipePipeStruct
 {
         std::string filterName;
@@ -45,6 +58,9 @@ struct LibpipePipeStruct
         unsigned int requestRank;
 };
 
+/**
+ * Comparison function to compare two LibpipePipeStructs
+ */
 struct LibpipePipeStructLess : public std::binary_function<LibpipePipeStruct,
 LibpipePipeStruct, bool>
 {
@@ -56,9 +72,10 @@ LibpipePipeStruct, bool>
 
 class LibpipeConfig
 {
-
     public:
-
+        /** Virtual Destructor to allow inheritance.
+         *
+         */
         virtual ~LibpipeConfig(){};
 
 

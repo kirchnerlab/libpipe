@@ -21,13 +21,16 @@ namespace rtc {
 
 class LibpipeConfig;
 
+/** Generates the objects needed by libpipe, it only relies on the LibpipeConfig interface. And
+ * not on the input file.
+ */
 class LibpipeCreator
 {
     public:
         /** Constructor
-         * @param filepath The path to the configuration file
+         * @param filename The name to the configuration file
          */
-        LibpipeCreator(std::string const& filepath);
+        LibpipeCreator(std::string const& filename);
 
         ~LibpipeCreator();
 
@@ -39,18 +42,32 @@ class LibpipeCreator
         boost::shared_ptr<Filter> getFilter(std::string const& filtername);
 
 
+        /** Returns a LibpipePipeline object, where all information is stored to
+         * run libpipe.
+         * @return Reference to a LibpipePipeline.
+         */
         LibpipePipeline const& getPipeline() const;
 
 
     private:
+        /** Pointer to the configuration.
+         */
         LibpipeConfig* configuration_;
 
+        /** This function will generate the filter objects.
+         */
         void generateFilters();
 
+        /** This function will connect the managers.
+        */
         void connectManagers(std::string const& filtername);
 
+        /** This function will connect the ports of the algorithms.
+        */
         void connectAlgorithmPorts(std::string const& filtername);
 
+        /** This function will generate the pipeline object
+         */
         void generatePipeline();
 
         typedef std::map<std::string, boost::shared_ptr<Filter> > FilterMap;

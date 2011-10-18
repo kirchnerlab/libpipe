@@ -21,9 +21,12 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 {
     public:
 
+        /** Constructor
+         * @param fileName The name of the input file used.
+         */
         LibpipeConfigLibconfig(std::string const& fileName);
 
-        virtual ~LibpipeConfigLibconfig();
+        ~LibpipeConfigLibconfig();
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -54,6 +57,9 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 
     private:
 
+        /** Parses the input file.
+         * @param inputFileName Name of the input file.
+         */
         void parseInputFile(std::string const& inputFileName);
 
         std::list<FilterStruct> filterList_;
