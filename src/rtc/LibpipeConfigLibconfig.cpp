@@ -13,7 +13,6 @@
 #include <libconfig.h++>
 #include <string>
 #include <sstream>
-#include <iostream>
 
 
 namespace libpipe {
@@ -194,7 +193,6 @@ bool LibpipeConfigLibconfig::checkFile() const{
 const bool LibpipeConfigLibconfig::registerLoader()
 {
     std::string hash = "6dc0a277ae36db78b3494d0ddf32dd3d";
-    std::cerr<<"registered"<<std::endl;
     return InputFactory::instance().registerType(hash, LibpipeConfigLibconfig::create);
 }
 

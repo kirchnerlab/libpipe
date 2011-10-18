@@ -9,6 +9,8 @@
 #include "libpipe/rtc/LibpipeCreator.hpp"
 
 #include <string>
+#include <iostream>
+#include <fstream>
 
 namespace libpipe {
 namespace rtc {
@@ -16,7 +18,7 @@ namespace rtc {
 LibpipeLoader::LibpipeLoader(int argc, char *argv[])
 {
     std::string filename = "inputFile.txt";
-    std::string inputFileHash = "6dc0a277ae36db78b3494d0ddf32dd3d";
+    std::string inputFileHash = this->getHash(filename);
 
     try {
         LibpipeCreator creator_(inputFileHash, filename);
@@ -30,10 +32,26 @@ LibpipeLoader::~LibpipeLoader()
 {
 }
 
-LibpipePipeline LibpipeLoader::getPipeline() const{
+LibpipePipeline LibpipeLoader::getPipeline() const
+{
     return pipeline_;
 }
 
+std::string LibpipeLoader::getHash(std::string const& filename) const
+{
+    std::fstream filestr;
+
+    filestr.open(filename.c_str(), std::fstream::in);
+
+    char name[256];
+    std::string returnValue;
+    filestr.getline(name, 256);
+    returnValue = name;
+    returnValue.erase(0, 1);
+    filestr.close();
+    return returnValue;
+
+}
 
 } /* namespace rtc */
 } /* namespace libpipe */
