@@ -55,6 +55,7 @@ struct LibpipePipeStruct
 {
         std::string filterName;
         std::string requestType;
+        bool makeTrace;
         unsigned int requestRank;
 };
 

@@ -88,15 +88,18 @@ filters =
 request = (
 		{filteName="LowercaseFilter";
 		requestType="UPDATE";
-		requestRank=1;},
+		requestRank=1;
+		makeTrace = true;},
 		
 		{filteName="LowercaseFilter";
 		requestType="DELETE";
-		requestRank=2;},
+		requestRank=2;
+		makeTrace=false;},
 		
 		{filteName="LowercaseFilter";
 		requestType="UPDATE";
-		requestRank=3;}
+		requestRank=3;
+		makeTrace=true;}
 		
 
 );

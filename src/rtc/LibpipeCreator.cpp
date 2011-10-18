@@ -122,11 +122,11 @@ void LibpipeCreator::generatePipeline()
 
         if (temp.requestType == "UPDATE") {
             Request tempReq(libpipe::Request::UPDATE);
-            tempReq.setTraceFlag(true);
+            tempReq.setTraceFlag(temp.makeTrace);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else if (temp.requestType == "DELETE") {
             Request tempReq(libpipe::Request::DELETE);
-            tempReq.setTraceFlag(true);
+            tempReq.setTraceFlag(temp.makeTrace);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else {
             libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");

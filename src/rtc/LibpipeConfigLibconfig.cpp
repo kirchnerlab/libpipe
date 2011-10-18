@@ -158,15 +158,18 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
             // Only output the record if all of the expected fields are present.
             std::string filterName, requestType;
             unsigned int requestRank;
+            bool trace=false;
 
             if (!(request.lookupValue("filteName", filterName)
                     && request.lookupValue("requestType", requestType)
-                    && request.lookupValue("requestRank", requestRank))) {
+                    && request.lookupValue("requestRank", requestRank)
+                    && request.lookupValue("makeTrace", trace))) {
                 continue;
             }
             tempLibpipeRequest.filterName = filterName;
             tempLibpipeRequest.requestRank = requestRank;
             tempLibpipeRequest.requestType = requestType;
+            tempLibpipeRequest.makeTrace = trace;
 
             requestQueue_.push(tempLibpipeRequest);
         }
