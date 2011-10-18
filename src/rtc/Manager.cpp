@@ -8,6 +8,8 @@
 #include <libpipe/rtc/Manager.hpp>
 #include <libpipe/rtc/Filter.hpp>
 #include <libpipe/rtc/Algorithm.hpp>
+#include <libpipe/rtc/LibpipeFactories.hpp>
+
 
 using namespace libpipe::rtc;
 

@@ -15,7 +15,6 @@
 #include <libpipe/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-#include <libpipe/rtc/LibpipeFactories.hpp>
 
 namespace libpipe {
 namespace rtc {

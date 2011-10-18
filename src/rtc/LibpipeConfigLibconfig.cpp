@@ -7,6 +7,8 @@
 
 #include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
 #include <libpipe/Exception.hpp>
+#include <libpipe/rtc/LibpipeFactories.hpp>
+
 
 #include <libconfig.h++>
 #include <string>
@@ -15,10 +17,12 @@
 namespace libpipe {
 namespace rtc {
 
-LibpipeConfigLibconfig::LibpipeConfigLibconfig(std::string const& fileName)
-{
-    this->parseInputFile(fileName);
+LibpipeConfig* LibpipeConfigLibconfig::create(){
+    return new LibpipeConfigLibconfig;
+}
 
+LibpipeConfigLibconfig::LibpipeConfigLibconfig()
+{
 }
 
 LibpipeConfigLibconfig::~LibpipeConfigLibconfig()
@@ -184,6 +188,15 @@ bool LibpipeConfigLibconfig::checkFile() const{
     return true;
     ///TODO implement test
 }
+
+
+const bool LibpipeConfigLibconfig::registerLoader()
+{
+    std::string hash = "6dc0a277ae36db78b3494d0ddf32dd3d";
+    return InputFactory::instance().registerType(hash, LibpipeConfigLibconfig::create);
+}
+
+const bool LibpipeConfigLibconfig::registered_ = registerLoader();
 
 } /* namespace rtc */
 } /* namespace libpipe */

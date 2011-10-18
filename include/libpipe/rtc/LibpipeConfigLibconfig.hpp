@@ -13,7 +13,6 @@
 #include <string>
 #include <queue>
 
-
 namespace libpipe {
 namespace rtc {
 
@@ -21,12 +20,18 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 {
     public:
 
-        /** Constructor
-         * @param fileName The name of the input file used.
+        /** static create Methode to generate InputFile Handler
+         * @param hash Hash of the input file
+         * @return a new Instance of LibpipeConfig
          */
-        LibpipeConfigLibconfig(std::string const& fileName);
+        static LibpipeConfig* create();
 
         ~LibpipeConfigLibconfig();
+
+        /** Parses the input file.
+         * @param inputFileName Name of the input file.
+         */
+        void parseInputFile(std::string const& inputFileName);
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -62,15 +67,22 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 
     private:
 
-        /** Parses the input file.
-         * @param inputFileName Name of the input file.
+        /** Constructor
+         * @param fileName The name of the input file used.
          */
-        void parseInputFile(std::string const& inputFileName);
+        LibpipeConfigLibconfig();
 
         std::list<FilterStruct> filterList_;
 
-        std::priority_queue<LibpipePipeStruct,
-                        std::vector<LibpipePipeStruct>, LibpipePipeStructLess> requestQueue_;
+        std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
+                LibpipePipeStructLess> requestQueue_;
+
+        /** Register Filter in the FilterFactory
+         *
+         */
+        static const bool registered_;
+
+        static const bool registerLoader();
 
 };
 
