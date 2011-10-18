@@ -4,7 +4,6 @@
  * Copyright (c) 2011 <+author+>
  *
  */
-
 #include <iostream>
 #include "vigra/unittest.hxx"
 #define private public

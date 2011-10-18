@@ -40,7 +40,8 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
         {
             bool thrown = false;
             try {
-                LibpipeConfigLibconfig test("blub.txt");
+                LibpipeConfigLibconfig test;
+                test.parseInputFile("blub.txt");
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -48,13 +49,15 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
             thrown = false;
 
             try {
-                LibpipeConfigLibconfig test("inputFile.txt");
+                LibpipeConfigLibconfig test;
+                test.parseInputFile("inputFile.txt");
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, false);
 
             try {
-                LibpipeConfigLibconfig test("wrongInputFile.txt");
+                LibpipeConfigLibconfig test;
+                test.parseInputFile("wrongInputFile.txt");
             } catch (...) {
                 thrown = true;
             }
@@ -64,7 +67,8 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
         void testGetters()
         {
 
-            LibpipeConfigLibconfig test("inputFile.txt");
+            LibpipeConfigLibconfig test;
+            test.parseInputFile("inputFile.txt");
 
             shouldEqual(int(test.getFilters().size()), 6);
 

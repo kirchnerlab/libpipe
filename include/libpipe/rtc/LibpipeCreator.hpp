@@ -10,8 +10,7 @@
 
 #include <map>
 
-#include "Filter.hpp"
-#include "libpipe/Exception.hpp"
+#include "libpipe/rtc/Filter.hpp"
 #include "libpipe/rtc/LibpipePipeline.hpp"
 
 #include <boost/shared_ptr.hpp>
@@ -27,11 +26,7 @@ class LibpipeConfig;
 class LibpipeCreator
 {
     public:
-        /** Constructor, when an new type of input file should be used,
-         * the pointer to the configuration file needs to be used.
-         * \code
-         * configuration_ = new ClassOfYourInputFile(filepath);
-         * \endcode
+        /** Constructor
          * @param filename The name to the configuration file
          */
         LibpipeCreator(std::string const& filename);

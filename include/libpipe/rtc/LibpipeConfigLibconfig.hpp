@@ -7,7 +7,7 @@
 
 #ifndef LIBPIPECONFIGLIBCONFIG_HPP_
 #define LIBPIPECONFIGLIBCONFIG_HPP_
-#include "LibpipeConfig.hpp"
+#include "libpipe/rtc/LibpipeConfig.hpp"
 
 #include <list>
 #include <string>
@@ -21,7 +21,6 @@ class LibpipeConfigLibconfig : public LibpipeConfig
     public:
 
         /** static create Methode to generate InputFile Handler
-         * @param hash Hash of the input file
          * @return a new Instance of LibpipeConfig
          */
         static LibpipeConfig* create();
@@ -31,7 +30,7 @@ class LibpipeConfigLibconfig : public LibpipeConfig
         /** Parses the input file.
          * @param inputFileName Name of the input file.
          */
-        void parseInputFile(std::string const& inputFileName);
+        virtual void parseInputFile(std::string const& inputFileName);
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -65,6 +64,9 @@ class LibpipeConfigLibconfig : public LibpipeConfig
          */
         virtual bool checkFile() const;
 
+
+        static const bool registered_;
+
     private:
 
         /** Constructor
@@ -80,11 +82,11 @@ class LibpipeConfigLibconfig : public LibpipeConfig
         /** Register Filter in the FilterFactory
          *
          */
-        static const bool registered_;
 
         static const bool registerLoader();
 
 };
+
 
 } /* namespace rtc */
 } /* namespace libpipe */

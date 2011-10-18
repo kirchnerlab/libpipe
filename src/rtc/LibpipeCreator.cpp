@@ -12,19 +12,23 @@
 #include "libpipe/rtc/Filter.hpp"
 #include "libpipe/rtc/Manager.hpp"
 #include "libpipe/rtc/Algorithm.hpp"
-
 #include "libpipe/rtc/LibpipeCreator.hpp"
+#include "libpipe/rtc/LibpipeFactories.hpp"
 #include "libpipe/rtc/LibpipeConfig.hpp"
-#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
+#include "LibpipeConfigLibconfig.cpp"
+
 
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
 
-LibpipeCreator::LibpipeCreator(std::string const& filepath)
+
+
+LibpipeCreator::LibpipeCreator(std::string const& inputFile)
 {
-    configuration_ = new LibpipeConfigLibconfig(filepath);
+    configuration_ = InputFactory::instance().createObject("6dc0a277ae36db78b3494d0ddf32dd3d");
+    configuration_->parseInputFile(inputFile);
     this->generateFilters();
     this->generatePipeline();
 }
@@ -32,7 +36,6 @@ LibpipeCreator::LibpipeCreator(std::string const& filepath)
 LibpipeCreator::~LibpipeCreator()
 {
     delete configuration_;
-
 }
 
 boost::shared_ptr<Filter> LibpipeCreator::getFilter(

@@ -10,13 +10,11 @@
 
 #include <string>
 #include <list>
-#include <libpipe/Request.hpp>
 #include <functional>
 #include <queue>
 
 namespace libpipe {
 namespace rtc {
-
 
 /**
  * All information needed to connect the ports.
@@ -63,9 +61,10 @@ struct LibpipePipeStruct
  * Comparison function to compare two LibpipePipeStructs
  */
 struct LibpipePipeStructLess : public std::binary_function<LibpipePipeStruct,
-LibpipePipeStruct, bool>
+        LibpipePipeStruct, bool>
 {
-        bool operator ()(const LibpipePipeStruct& lhs, LibpipePipeStruct& rhs) const
+        bool operator ()(const LibpipePipeStruct& lhs,
+            LibpipePipeStruct& rhs) const
         {
             return lhs.requestRank < rhs.requestRank;
         }
@@ -74,11 +73,24 @@ LibpipePipeStruct, bool>
 class LibpipeConfig
 {
     public:
+
+        /** create Methode which is registered in the InputFactory
+         * @return Pointer to the new generated Libconfig class, keep in mind to call delete on this generated pointer
+         */
+        static LibpipeConfig* create();
+
         /** Virtual Destructor to allow inheritance.
          *
          */
-        virtual ~LibpipeConfig(){};
+        virtual ~LibpipeConfig()
+        {
+        }
+        ;
 
+        /** Parses the input file
+         * @param inputFileName The name of the input file.
+         */
+        virtual void parseInputFile(std::string const& inputFileName) = 0;
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -110,6 +122,9 @@ class LibpipeConfig
          * @return True if the file is correct, otherwise false
          */
         virtual bool checkFile() const =0;
+
+    protected:
+        LibpipeConfig(){};
 
 };
 

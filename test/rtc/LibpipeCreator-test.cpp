@@ -18,8 +18,6 @@
 
 #include "rtc/utils.hpp"
 
-#include "libpipe/rtc/LibpipeFactories.hpp"
-
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */

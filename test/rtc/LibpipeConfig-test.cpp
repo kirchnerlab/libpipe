@@ -8,8 +8,11 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-
+#define private public
+#define protected public
 #include "libpipe/rtc/LibpipeConfig.hpp"
+#undef private
+#undef protected
 
 
 /** <+Short description of the test suite+>

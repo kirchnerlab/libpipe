@@ -63,7 +63,7 @@ class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
             }
             return onUnknownType(id);
         }
-    private:
+    public:
         typedef std::map<IdentifierType, ProductCreatorSignature> ProductMap;
         ProductMap productMap_;
 };
