@@ -27,7 +27,11 @@ class LibpipeConfig;
 class LibpipeCreator
 {
     public:
-        /** Constructor
+        /** Constructor, when an new type of input file should be used,
+         * the pointer to the configuration file needs to be used.
+         * \code
+         * configuration_ = new ClassOfYourInputFile(filepath);
+         * \endcode
          * @param filename The name to the configuration file
          */
         LibpipeCreator(std::string const& filename);
