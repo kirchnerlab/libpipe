@@ -514,18 +514,14 @@ const bool Source::registered_ = registerLoader();
 int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
-
-    boost::shared_ptr<Filter> lowerFilter;
-    LibpipeCreator* creator;
+    LibpipePipeline pipeline;
     try {
-        creator = new LibpipeCreator("inputFile.txt");
-        lowerFilter = creator->getFilter("LowercaseFilter");
+        LibpipeCreator creator("inputFile.txt");
+        pipeline = creator.getPipeline();
     } catch (libpipe::Exception& e) {
         std::cerr << e.what() << std::endl;
     }
 
-    LibpipePipeline pipeline = creator->getPipeline();
-    delete creator;
     try {
         pipeline.run();
     }
