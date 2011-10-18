@@ -15,8 +15,10 @@
 #include "libpipe/rtc/LibpipeCreator.hpp"
 #include "libpipe/rtc/LibpipeFactories.hpp"
 #include "libpipe/rtc/LibpipeConfig.hpp"
-#include "LibpipeConfigLibconfig.cpp"
 
+
+#include "LibpipeConfigLibconfig.cpp"
+///TODO why is this needed
 
 #include <boost/shared_ptr.hpp>
 
