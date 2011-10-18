@@ -8,6 +8,7 @@
 #include <map>
 #include <list>
 #include <string>
+#include <sstream>
 
 #include "libpipe/rtc/Filter.hpp"
 #include "libpipe/rtc/Manager.hpp"
@@ -15,7 +16,6 @@
 #include "libpipe/rtc/LibpipeCreator.hpp"
 #include "libpipe/rtc/LibpipeFactories.hpp"
 #include "libpipe/rtc/LibpipeConfig.hpp"
-
 
 #include "LibpipeConfigLibconfig.cpp"
 ///TODO why is this needed
@@ -25,8 +25,17 @@
 namespace libpipe {
 namespace rtc {
 
-LibpipeCreator::LibpipeCreator(std::string const& hashInputFile, std::string const& inputFile){
-    configuration_ = InputFactory::instance().createObject(hashInputFile);
+LibpipeCreator::LibpipeCreator(std::string const& hashInputFile,
+    std::string const& inputFile)
+{
+    try {
+        configuration_ = InputFactory::instance().createObject(hashInputFile);
+    } catch (...) {
+        std::ostringstream oss;
+        oss << "Hash was not registered in the InputFactory. Hash: "
+                << hashInputFile;
+        libpipe_fail(oss.str());
+    }
     configuration_->parseInputFile(inputFile);
     this->generateFilters();
     this->generatePipeline();
@@ -35,7 +44,8 @@ LibpipeCreator::LibpipeCreator(std::string const& hashInputFile, std::string con
 
 LibpipeCreator::LibpipeCreator(std::string const& inputFile)
 {
-    configuration_ = InputFactory::instance().createObject("6dc0a277ae36db78b3494d0ddf32dd3d");
+    configuration_ = InputFactory::instance().createObject(
+        "6dc0a277ae36db78b3494d0ddf32dd3d");
     configuration_->parseInputFile(inputFile);
     this->generateFilters();
     this->generatePipeline();
@@ -68,14 +78,12 @@ void LibpipeCreator::generateFilters()
 {
     std::list<FilterStruct> filterList = configuration_->getFilters();
 
-
     for (std::list<FilterStruct>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
                 it->managerName));
     }
-
 
     // first all Filters need to be generated before they get connected
     for (FilterMap::const_iterator it = filterMap_.begin();
@@ -98,7 +106,8 @@ void LibpipeCreator::connectManagers(std::string const& filtername)
             filterMap_.find(filtername)->second->getManager()->connect(
                 filterMap_.find(it->precursorName)->second);
         } else {
-            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
+            libpipe_fail(
+                "Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }
@@ -116,7 +125,8 @@ void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
                 filterMap_.find(it->filterName)->second->getAlgorithm(),
                 it->portNameOfFilter, it->portNameOfThis);
         } else {
-            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
+            libpipe_fail(
+                "Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }
@@ -140,7 +150,8 @@ void LibpipeCreator::generatePipeline()
             tempReq.setTraceFlag(temp.makeTrace);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else {
-            libpipe_fail("Something terrible must have occurred, as it should not be possible to call this");
+            libpipe_fail(
+                "Something terrible must have occurred, as it should not be possible to call this");
         }
 
     }
