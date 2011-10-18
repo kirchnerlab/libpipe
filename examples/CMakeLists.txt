@@ -32,8 +32,6 @@ INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
 
 
 
-
-
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile.txt.cmake
     ${LIBPIPE_BINARY_DIR}/examples/inputFile.txt
     @ONLY IMMEDIATE

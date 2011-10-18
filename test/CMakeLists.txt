@@ -93,7 +93,6 @@ SET(SRCS_LOG Log-test.cpp)
 SET(SRCS_EXCEPTION Exception-test.cpp)
 SET(SRCS_ALGORITHM Algorithm-test.cpp)
 
-SET(TEST_LIBS pipe)
 IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)

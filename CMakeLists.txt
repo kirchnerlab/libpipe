@@ -74,9 +74,6 @@ IF (ENABLE_TESTING)
 ENDIF (ENABLE_TESTING)
 
 
-# linker paths
-#LINK_DIRECTORIES(${LIBPIPE_BINARY_DIR}/lib/libconfig/lib) 
-
 #############################################################################
 # build lib
 #############################################################################
