@@ -55,6 +55,11 @@ class LibpipeConfigLibconfig : public LibpipeConfig
         virtual std::priority_queue<LibpipePipeStruct,
                 std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const;
 
+        /** Checks if the file is correct
+         * @return True if the file is correct, otherwise false
+         */
+        virtual bool checkFile() const;
+
     private:
 
         /** Parses the input file.

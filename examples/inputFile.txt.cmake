@@ -1,3 +1,4 @@
+#6dc0a277ae36db78b3494d0ddf32dd3d
 // An example configuration file that stores information Filters.
 
 // Store filters:

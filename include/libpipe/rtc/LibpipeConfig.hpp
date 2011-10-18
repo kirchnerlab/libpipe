@@ -100,12 +100,16 @@ class LibpipeConfig
             std::string const& filtername) const = 0;
 
         /**
-         *
          * @return A priority_queue where all elements are ordered after their request rank,
          * the smallest comes first
          */
         virtual std::priority_queue<LibpipePipeStruct,
                 std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const=0;
+
+        /** Checks if the file is correct
+         * @return True if the file is correct, otherwise false
+         */
+        virtual bool checkFile() const =0;
 
 };
 

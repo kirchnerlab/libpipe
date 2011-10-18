@@ -179,5 +179,11 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
     }
 }
 
+
+bool LibpipeConfigLibconfig::checkFile() const{
+    return true;
+    ///TODO implement test
+}
+
 } /* namespace rtc */
 } /* namespace libpipe */

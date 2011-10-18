@@ -495,7 +495,7 @@ class Source : public libpipe::rtc::Algorithm
                 libpipe::rtc::Algorithm()
         {
             ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string);
+                    libpipe::rtc::SharedData<std::string> >(new std::string("Hello World!"));
         }
 
         static const bool registerLoader()
