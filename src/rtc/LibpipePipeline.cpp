@@ -39,9 +39,9 @@ void LibpipePipeline::run()
         std::string tempStr;
         if (tempReq.getTraceFlag()) {
             if (tempReq.getType() == libpipe::Request::UPDATE) {
-                tempStr = "Starting Update Request";
+                tempStr = "\033[22;31m Starting Update Request\e[m";
             } else if (tempReq.getType() == libpipe::Request::DELETE) {
-                tempStr = "Starting Delete Request";
+                tempStr = "\033[22;31m Starting Delete Request\e[m";
             }
         }
 

@@ -94,7 +94,7 @@ request = (
 		{filteName="LowercaseFilter";
 		requestType="DELETE";
 		requestRank=2;
-		makeTrace=false;},
+		makeTrace=true;},
 		
 		{filteName="LowercaseFilter";
 		requestType="UPDATE";
