@@ -36,14 +36,22 @@ void LibpipePipeline::run()
 
     while (!pipelineQueue_.empty()) {
         Request tempReq = requestQueue_.front();
+        std::string tempStr;
+        if (tempReq.getTraceFlag()) {
+            if (tempReq.getType() == libpipe::Request::UPDATE) {
+                tempStr = "Starting Update Request";
+            } else if (tempReq.getType() == libpipe::Request::DELETE) {
+                tempStr = "Starting Delete Request";
+            }
+        }
 
-        LIBPIPE_REQUEST_TRACE(tempReq, "Starting.");
+        LIBPIPE_REQUEST_TRACE(tempReq, tempStr);
 
         pipelineQueue_.front()->getManager()->processRequest(tempReq);
 
         std::vector<std::string> tempTrace;
         tempReq.getTrace(tempTrace);
-        trace_.insert(trace_.end(), tempTrace.begin(), tempTrace.end() );
+        trace_.insert(trace_.end(), tempTrace.begin(), tempTrace.end());
 
         pipelineQueue_.pop();
         requestQueue_.pop();
