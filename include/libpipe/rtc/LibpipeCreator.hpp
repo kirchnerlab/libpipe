@@ -26,6 +26,9 @@ class LibpipeConfig;
 class LibpipeCreator
 {
     public:
+
+        LibpipeCreator(std::string const& hashInputFile, std::string const& inputFile);
+
         /** Constructor
          * @param filename The name to the configuration file
          */

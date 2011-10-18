@@ -25,7 +25,13 @@
 namespace libpipe {
 namespace rtc {
 
+LibpipeCreator::LibpipeCreator(std::string const& hashInputFile, std::string const& inputFile){
+    configuration_ = InputFactory::instance().createObject(hashInputFile);
+    configuration_->parseInputFile(inputFile);
+    this->generateFilters();
+    this->generatePipeline();
 
+}
 
 LibpipeCreator::LibpipeCreator(std::string const& inputFile)
 {

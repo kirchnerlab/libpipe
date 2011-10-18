@@ -23,7 +23,9 @@
 #include <libpipe/BasicFilter.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
+#include <libpipe/rtc/LibpipeLoader.hpp>
 #include <libpipe/rtc/LibpipeCreator.hpp>
+
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -514,13 +516,9 @@ const bool Source::registered_ = registerLoader();
 int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
-    LibpipePipeline pipeline;
-    try {
-        LibpipeCreator creator("inputFile.txt");
-        pipeline = creator.getPipeline();
-    } catch (libpipe::Exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
+
+    LibpipeLoader loader(argc, argv);
+    LibpipePipeline pipeline= loader.getPipeline();
 
     try {
         pipeline.run();
