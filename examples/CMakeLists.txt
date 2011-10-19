@@ -1,5 +1,3 @@
-# require boost
-
 IF(UNIX)
     SET(LIBCONFIG_PATH libconfig) 
 ENDIF(UNIX)

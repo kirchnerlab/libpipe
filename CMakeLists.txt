@@ -43,9 +43,10 @@ INCLUDE_DIRECTORIES(
 #############################################################################
 # code coverage analysis
 #############################################################################
+SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
 IF (ENABLE_COVERAGE)
-    SET (ENABLE_EXAMPLES ON)
-    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
+
+    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
     CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
         ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
         @ONLY IMMEDIATE

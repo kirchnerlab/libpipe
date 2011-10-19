@@ -12,6 +12,7 @@
 
 #include "libpipe/rtc/Filter.hpp"
 #include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/NonCopyable.hpp"
 
 #include <boost/shared_ptr.hpp>
 
@@ -23,7 +24,7 @@ class LibpipeConfig;
 /** Generates the objects needed by libpipe, it only relies on the LibpipeConfig interface. And
  * not on the input file.
  */
-class LibpipeCreator
+class LibpipeCreator : public libpipe::NonCopyable
 {
     public:
 
