@@ -31,6 +31,7 @@ OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 INCLUDE_DIRECTORIES(
     ${LIBPIPE_SOURCE_DIR}/include
     ${LIBPIPE_BINARY_DIR}/include
+    ${LIBPIPE_BINARY_DIR}/lib/libconfig/include
 )
 
 
