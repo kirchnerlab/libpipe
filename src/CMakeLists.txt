@@ -3,7 +3,7 @@ SET(SRCS
     rtc/ConfigLibconfig.cpp
     rtc/Controler.cpp
     rtc/Pipeline.cpp
-    rtc/LibpipeLoader.cpp
+    rtc/Loader.cpp
     rtc/Algorithm.cpp
     rtc/Manager.cpp
     rtc/Filter.cpp

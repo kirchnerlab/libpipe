@@ -1,11 +1,11 @@
 /*
- * LibpipeLoader.cpp
+ * Loader.cpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
 
-#include "libpipe/rtc/LibpipeLoader.hpp"
+#include "libpipe/rtc/Loader.hpp"
 #include "libpipe/rtc/Controler.hpp"
 
 #include <string>
@@ -15,7 +15,7 @@
 namespace libpipe {
 namespace rtc {
 
-LibpipeLoader::LibpipeLoader(int argc, char *argv[])
+Loader::Loader(int argc, char *argv[])
 {
     std::string filename = "inputFile.txt";
 
@@ -27,11 +27,11 @@ LibpipeLoader::LibpipeLoader(int argc, char *argv[])
     }
 }
 
-LibpipeLoader::~LibpipeLoader()
+Loader::~Loader()
 {
 }
 
-Pipeline LibpipeLoader::getPipeline() const
+Pipeline Loader::getPipeline() const
 {
     return pipeline_;
 }

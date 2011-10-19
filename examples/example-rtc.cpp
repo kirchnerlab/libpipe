@@ -23,7 +23,7 @@
 #include <libpipe/BasicFilter.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
-#include <libpipe/rtc/LibpipeLoader.hpp>
+#include <libpipe/rtc/Loader.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -538,7 +538,7 @@ int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
 
-    LibpipeLoader loader(argc, argv);
+    Loader loader(argc, argv);
     Pipeline pipeline = loader.getPipeline();
 
     try {

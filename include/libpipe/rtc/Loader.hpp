@@ -1,12 +1,12 @@
 /*
- * LibpipeLoader.hpp
+ * Loader.hpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPELOADER_HPP_
-#define LIBPIPELOADER_HPP_
+#ifndef LOADER_HPP_
+#define LOADER_HPP_
 
 #include "libpipe/rtc/Pipeline.hpp"
 
@@ -14,11 +14,11 @@ namespace libpipe {
 namespace rtc {
 
 
-class LibpipeLoader
+class Loader
 {
     public:
-        LibpipeLoader(int argc, char *argv[]);
-        ~LibpipeLoader();
+        Loader(int argc, char *argv[]);
+        ~Loader();
 
         Pipeline getPipeline() const;
 
