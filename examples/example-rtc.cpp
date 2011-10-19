@@ -17,10 +17,9 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/Filter.hpp>
 #include <libpipe/rtc/Manager.hpp>
-#include <libpipe/rtc/LibpipeFactories.hpp>
+#include <libpipe/rtc/ManagerFactory.hpp>
+#include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/Request.hpp>
-#include <libpipe/RequestException.hpp>
-#include <libpipe/BasicFilter.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
 #include <libpipe/rtc/Loader.hpp>

@@ -13,7 +13,7 @@
 #include "libpipe/rtc/Algorithm.hpp"
 #undef private
 #undef protected
-#include "libpipe/rtc/LibpipeFactories.hpp"
+#include "libpipe/rtc/AlgorithmFactory.hpp"
 #include <libpipe/rtc/SharedData.hpp>
 
 #include <limits>

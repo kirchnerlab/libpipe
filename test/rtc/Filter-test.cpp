@@ -15,7 +15,8 @@
 #include <libpipe/rtc/Filter.hpp>
 #undef private
 #undef protected
-#include <libpipe/rtc/LibpipeFactories.hpp>
+#include <libpipe/rtc/ManagerFactory.hpp>
+#include <libpipe/rtc/AlgorithmFactory.hpp>
 
 #include <typeinfo>
 

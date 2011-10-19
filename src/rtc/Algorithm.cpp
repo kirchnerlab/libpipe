@@ -6,6 +6,7 @@
  */
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/Exception.hpp>
+#include <libpipe/rtc/AlgorithmFactory.hpp>
 
 #include <limits>
 #include <libpipe/Log.hpp>

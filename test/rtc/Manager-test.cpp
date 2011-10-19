@@ -24,7 +24,7 @@
 
 
 
-#include <libpipe/rtc/LibpipeFactories.hpp>
+#include <libpipe/rtc/ManagerFactory.hpp>
 
 #include <boost/pointer_cast.hpp>
 

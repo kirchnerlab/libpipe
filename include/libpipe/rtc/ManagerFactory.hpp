@@ -1,31 +1,22 @@
 /*
- * libpipeFactories.hpp
+ * ManagerFactory.hpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPEFACTORIES_HPP_
-#define LIBPIPEFACTORIES_HPP_
+#ifndef MANAGERFACTORY_HPP_
+#define MANAGERFACTORY_HPP_
 
 #include "libpipe/utilities/Singleton.hpp"
 #include "libpipe/utilities/Factory.hpp"
 
 
-
-
-
 namespace libpipe {
 namespace rtc {
 
-class Algorithm;
 class Manager;
-class LibpipeConfig;
 
-/** The Algorithm Factory
- */
-typedef utilities::Singleton<
-        utilities::Factory<Algorithm, std::string> > AlgorithmFactory;
 /** The Manager Factory
  */
 typedef utilities::Singleton<utilities::Factory<Manager, std::string> > ManagerFactory;
@@ -34,4 +25,6 @@ typedef utilities::Singleton<utilities::Factory<Manager, std::string> > ManagerF
 
 } // namespace rtc
 } // namespace libpipe
-#endif /* LIBPIPEFACTORIES_HPP_ */
+
+
+#endif /* MANAGERFACTORY_HPP_ */

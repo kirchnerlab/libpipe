@@ -11,16 +11,21 @@
 
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/Manager.hpp>
+#include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/SharedData.hpp>
-
-#include <set>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
+
+#include <set>
+#include <iostream>
+#include <sstream>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/pointer_cast.hpp>
 
-#include <sstream>
+#include <boost/pointer_cast.hpp>
+#include <boost/shared_ptr.hpp>
+
 
 namespace libpipe {
 namespace rtc {
@@ -125,21 +130,6 @@ const bool RaiseExceptionAlg::registered_ = registerLoader();
 
 
 
-#include <stdlib.h>
-#include <exception>
-#include <iostream>
-#include <set>
-#include <boost/pointer_cast.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <libpipe/rtc/Algorithm.hpp>
-#include <libpipe/rtc/Filter.hpp>
-#include <libpipe/rtc/Manager.hpp>
-#include <libpipe/rtc/LibpipeFactories.hpp>
-#include <libpipe/Request.hpp>
-#include <libpipe/RequestException.hpp>
-#include <libpipe/BasicFilter.hpp>
-#include <libpipe/rtc/SharedData.hpp>
 
 
 /** Converts std::string input to uppercase.

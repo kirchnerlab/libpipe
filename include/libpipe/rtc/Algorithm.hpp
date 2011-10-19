@@ -12,7 +12,6 @@
 
 #include <libpipe/Request.hpp>
 #include <libpipe/rtc/Data.hpp>
-#include <libpipe/rtc/LibpipeFactories.hpp>
 #include <sys/time.h> // for timeval
 #include <map>
 
