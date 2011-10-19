@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef ALGORITHMFACTORY_HPP_
-#define ALGORITHMFACTORY_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_ALGORITHMFACTORY_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_ALGORITHMFACTORY_HPP__
 
 #include "libpipe/utilities/Singleton.hpp"
 #include "libpipe/utilities/Factory.hpp"
@@ -23,4 +23,4 @@ typedef utilities::Singleton<utilities::Factory<Algorithm, std::string> > Algori
 } // namespace rtc
 } // namespace libpipe
 
-#endif /* ALGORITHMFACTORY_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_ALGORITHMFACTORY_HPP__ */

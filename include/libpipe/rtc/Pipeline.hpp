@@ -1,12 +1,12 @@
 /*
- * LibpipePipeline.hpp
+ * Pipeline.hpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
 
-#ifndef PIPELINE_HPP_
-#define PIPELINE_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__
 
 #include "libpipe/Request.hpp"
 #include "libpipe/rtc/Filter.hpp"
@@ -49,4 +49,4 @@ class Pipeline
 
 } /* namespace rtc */
 } /* namespace libpipe */
-#endif /* LIBPIPEPIPELINE_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__ */

@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef MANAGERFACTORY_HPP_
-#define MANAGERFACTORY_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGERFACTORY_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGERFACTORY_HPP__
 
 #include "libpipe/utilities/Singleton.hpp"
 #include "libpipe/utilities/Factory.hpp"
@@ -27,4 +27,4 @@ typedef utilities::Singleton<utilities::Factory<Manager, std::string> > ManagerF
 } // namespace libpipe
 
 
-#endif /* MANAGERFACTORY_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGERFACTORY_HPP__ */

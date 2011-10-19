@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef CONTROLER_HPP_
-#define CONTROLER_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONTROLER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONTROLER_HPP__
 
 #include <map>
 
@@ -89,4 +89,4 @@ class Controler : public libpipe::NonCopyable
 
 } /* namespace rtc */
 } /* namespace libpipe */
-#endif /* LIBPIPECREATOR_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONTROLER_HPP__ */

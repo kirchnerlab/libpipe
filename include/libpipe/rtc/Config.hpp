@@ -1,12 +1,12 @@
 /*
- * LibpipeConfig.hpp
+ * Config.hpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
 
-#ifndef CONFIG_HPP_
-#define CONFIG_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIG_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIG_HPP__
 
 #include <string>
 #include <list>
@@ -164,4 +164,4 @@ class Config
 } /* namespace rtc */
 } /* namespace libpipe */
 
-#endif /* LIBPIPECONFIG_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIG_HPP__ */

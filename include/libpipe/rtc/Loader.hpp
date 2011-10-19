@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef LOADER_HPP_
-#define LOADER_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_LOADER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_LOADER_HPP__
 
 #include "libpipe/rtc/Pipeline.hpp"
 
@@ -29,4 +29,4 @@ class Loader
 
 } /* namespace rtc */
 } /* namespace libpipe */
-#endif /* LIBPIPELOADER_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_LOADER_HPP__ */

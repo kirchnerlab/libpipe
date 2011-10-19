@@ -25,8 +25,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef SINGLETON_HPP_
-#define SINGLETON_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_SINGLETON_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_SINGLETON_HPP__
 #include <exception>
 namespace utilities {
 /** Singleton holder template class.
@@ -113,4 +113,4 @@ template<class T> T* Singleton<T>::pInstance_ = 0;
 template<class T> bool Singleton<T>::destroyed_ = false;
 
 }
-#endif /* SINGLETON_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_SINGLETON_HPP__ */

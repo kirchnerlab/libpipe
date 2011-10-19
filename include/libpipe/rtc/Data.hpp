@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef DATA_HPP_
-#define DATA_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_DATA_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_DATA_HPP__
 
 namespace libpipe {
 namespace rtc {
@@ -19,4 +19,4 @@ class Data
 
 }
 }
-#endif /* DATA_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_DATA_HPP__ */

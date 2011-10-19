@@ -1,12 +1,13 @@
 /*
- * ObjectFactory.hpp
+ * Factory.hpp
  *
  *  Copyright (c) 2009 Marc Kirchner
+ *                     David Sichau
  *
  */
 
-#ifndef FACTORY_HPP_
-#define FACTORY_HPP_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_FACTORY_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_FACTORY_HPP__
 
 #include <map>
 #include <exception>
@@ -72,4 +73,4 @@ class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
 
 
 
-#endif /* OBJECTFACTORY_HPP_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_FACTORY_HPP__ */

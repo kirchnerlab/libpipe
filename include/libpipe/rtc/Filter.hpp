@@ -4,8 +4,8 @@
  * Copyright (c) 2010 Marc Kirchner 
  *               2011 David Sichau
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_FILTER_RTC_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_FILTER_RTC_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_FILTER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_FILTER_HPP__
 
 #include <libpipe/config.hpp>
 #include <string>
@@ -101,5 +101,5 @@ class Filter : public NonCopyable
 } // namespace rtc
 } // namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_RTC_FILTER_HPP__
 

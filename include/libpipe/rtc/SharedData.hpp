@@ -2,10 +2,11 @@
  * SharedData.hpp
  *
  * Copyright (c) 2011 Marc Kirchner
+ *                    David Sichau
  *
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_SHAREDDATA_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
 #include <libpipe/NonCopyable.hpp>
@@ -159,5 +160,5 @@ bool SharedData<T>::isNull()
 } //  namespace rtc
 } // namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_RTC_SHAREDDATA_HPP__
 

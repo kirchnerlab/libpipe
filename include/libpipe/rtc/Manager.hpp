@@ -6,8 +6,8 @@
  *               2011 David Sichau
  *
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_RTC_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_RTC_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGER_HPP__
 
 #include <libpipe/config.hpp>
 #include <set>
@@ -125,5 +125,5 @@ class Manager : private libpipe::NonCopyable
 } // namespace rtc
 } // namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGER_HPP__
 
