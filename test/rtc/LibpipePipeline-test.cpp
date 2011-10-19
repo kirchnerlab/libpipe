@@ -8,6 +8,7 @@
 #include "vigra/unittest.hxx"
 #define private public
 #define protected public
+#include "libpipe/rtc/Controler.hpp"
 #include "rtc/utils.hpp"
 #include "libpipe/rtc/LibpipePipeline.hpp"
 #include "libpipe/Request.hpp"
@@ -62,7 +63,7 @@ struct LibpipePipelineTestSuite : vigra::test_suite
 
         void testRunAndTrace()
         {
-            LibpipeCreator creator("inputFile.txt");
+            Controler creator("inputFile.txt");
 
             LibpipePipeline pipeline = creator.getPipeline();
             bool thrown = false;

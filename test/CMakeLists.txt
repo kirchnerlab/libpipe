@@ -74,7 +74,7 @@ LINK_DIRECTORIES(
 
 #### Sources
 SET(SRCS_LIBPIPEPIPELINE rtc/LibpipePipeline-test.cpp)
-SET(SRCS_LIBPIPECREATOR rtc/LibpipeCreator-test.cpp)
+SET(SRCS_CONTROLER rtc/Controler-test.cpp)
 SET(SRCS_CONFIGLIBCONFIG rtc/ConfigLibconfig-test.cpp)
 SET(SRCS_CONFIG rtc/Config-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
@@ -98,7 +98,7 @@ IF (ENABLE_COVERAGE)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
 ADD_LIBPIPE_TEST("rtc/LibpipePipeline" test_libpipepipeline ${SRCS_LIBPIPEPIPELINE})
-ADD_LIBPIPE_TEST("rtc/LibpipeCreator" test_libpipecreator ${SRCS_LIBPIPECREATOR})
+ADD_LIBPIPE_TEST("rtc/Controler" test_controler ${SRCS_CONTROLER})
 ADD_LIBPIPE_TEST("rtc/ConfigLibconfig" test_configlibconfig ${SRCS_CONFIGLIBCONFIG})
 ADD_LIBPIPE_TEST("rtc/Config" test_config ${SRCS_CONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})

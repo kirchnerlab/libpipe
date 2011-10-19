@@ -141,7 +141,6 @@ const bool RaiseExceptionAlg::registered_ = registerLoader();
 #include <libpipe/BasicFilter.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
-#include <libpipe/rtc/LibpipeCreator.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write

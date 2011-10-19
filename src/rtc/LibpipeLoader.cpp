@@ -6,7 +6,7 @@
  */
 
 #include "libpipe/rtc/LibpipeLoader.hpp"
-#include "libpipe/rtc/LibpipeCreator.hpp"
+#include "libpipe/rtc/Controler.hpp"
 
 #include <string>
 #include <iostream>
@@ -20,7 +20,7 @@ LibpipeLoader::LibpipeLoader(int argc, char *argv[])
     std::string filename = "inputFile.txt";
 
     try {
-        LibpipeCreator creator_(filename);
+        Controler creator_(filename);
         pipeline_ = creator_.getPipeline();
     } catch (libpipe::Exception& e) {
         std::cerr << e.what() << std::endl;

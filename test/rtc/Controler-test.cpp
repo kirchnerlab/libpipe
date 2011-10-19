@@ -1,5 +1,5 @@
 /*
- * rtc#LibpipeCreator-test.cpp
+ * rtc/Controler-test.cpp
  *
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
@@ -10,7 +10,7 @@
 #include "vigra/unittest.hxx"
 #define private public
 #define protected public
-#include "libpipe/rtc/LibpipeCreator.hpp"
+#include "libpipe/rtc/Controler.hpp"
 #include "libpipe/rtc/LibpipePipeline.hpp"
 #undef private
 #undef protected
@@ -23,32 +23,32 @@
  */
 
 using namespace libpipe::rtc;
-struct LibpipeCreatorTestSuite : vigra::test_suite
+struct ControlerTestSuite : vigra::test_suite
 {
         /** Constructor.
          * The rtc#LibpipeCreatorTestSuite constructor adds all rtc#LibpipeCreator tests to
          * the test suite. If you write an additional test, add the test
          * case here.
          */
-        LibpipeCreatorTestSuite() :
-                vigra::test_suite("rtc/LibpipeCreator")
+    ControlerTestSuite() :
+                vigra::test_suite("rtc/Controler")
         {
-            add(testCase(&LibpipeCreatorTestSuite::testMemory));
-            add(testCase(&LibpipeCreatorTestSuite::testWrongCalls));
-            add(testCase(&LibpipeCreatorTestSuite::testFilter));
-            add(testCase(&LibpipeCreatorTestSuite::testPipeline));
+            add(testCase(&ControlerTestSuite::testMemory));
+            add(testCase(&ControlerTestSuite::testWrongCalls));
+            add(testCase(&ControlerTestSuite::testFilter));
+            add(testCase(&ControlerTestSuite::testPipeline));
 
 
         }
 
         void testMemory()
         {
-            LibpipeCreator creator("inputFile.txt");
+            Controler creator("inputFile.txt");
         }
 
         void testWrongCalls()
         {
-            LibpipeCreator creator("inputFile.txt");
+            Controler creator("inputFile.txt");
 
             bool thrown = false;
             try {
@@ -74,13 +74,13 @@ struct LibpipeCreatorTestSuite : vigra::test_suite
         }
 
         void testFilter(){
-            LibpipeCreator creator("inputFile.txt");
+            Controler creator("inputFile.txt");
             boost::shared_ptr<Filter> f1 = creator.getFilter("LowercaseFilter");
             shouldEqual(f1->getName(), "LowercaseFilter");
         }
 
         void testPipeline(){
-            LibpipeCreator creator("inputFile.txt");
+            Controler creator("inputFile.txt");
             LibpipePipeline pipe=creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "LowercaseFilter");
         }
@@ -91,7 +91,7 @@ struct LibpipeCreatorTestSuite : vigra::test_suite
  */
 int main()
 {
-    LibpipeCreatorTestSuite test;
+    ControlerTestSuite test;
     int success = test.run();
     std::cout << test.report() << std::endl;
     return success;

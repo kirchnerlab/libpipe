@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPECREATOR_HPP_
-#define LIBPIPECREATOR_HPP_
+#ifndef CONTROLER_HPP_
+#define CONTROLER_HPP_
 
 #include <map>
 
@@ -21,21 +21,21 @@ namespace rtc {
 
 class Config;
 
-/** Generates the objects needed by libpipe, it only relies on the LibpipeConfig interface. And
+/** Generates the objects needed by libpipe, it only relies on the Config interface. And
  * not on the input file.
  */
-class LibpipeCreator : public libpipe::NonCopyable
+class Controler : public libpipe::NonCopyable
 {
     public:
 
         /** Constructor
          * @param filename The name to the configuration file
          */
-        LibpipeCreator(std::string const& filename);
+        Controler(std::string const& filename);
 
         /** Destructor
          */
-        ~LibpipeCreator();
+        ~Controler();
 
         /** Returns a shared pointer to the requested Filter, throw an exception
          * if the filter is not found
