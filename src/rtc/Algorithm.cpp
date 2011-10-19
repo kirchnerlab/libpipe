@@ -85,10 +85,10 @@ bool Algorithm::needUpdate() const
     return mTime_ == Algorithm::MAX_TIME;
 }
 
-boost::shared_ptr<LibpipeDataObject> Algorithm::getPort(
+boost::shared_ptr<Data> Algorithm::getPort(
     std::string const& portIdentifier) const
 {
-    std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::const_iterator iter;
+    std::map<std::string, boost::shared_ptr<Data> >::const_iterator iter;
     iter = ports_.find(portIdentifier);
 
     if (iter != ports_.end()) {
@@ -102,9 +102,9 @@ boost::shared_ptr<LibpipeDataObject> Algorithm::getPort(
 }
 
 void Algorithm::setInput(std::string const& portIdentifier,
-    boost::shared_ptr<LibpipeDataObject> dataObject)
+    boost::shared_ptr<Data> dataObject)
 {
-    std::map<std::string, boost::shared_ptr<LibpipeDataObject> >::iterator iter;
+    std::map<std::string, boost::shared_ptr<Data> >::iterator iter;
     iter = ports_.find(portIdentifier);
 
     if (iter != ports_.end()) {

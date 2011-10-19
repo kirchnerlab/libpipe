@@ -11,7 +11,7 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/Request.hpp>
-#include <libpipe/rtc/LibpipeDataObject.hpp>
+#include <libpipe/rtc/Data.hpp>
 #include <libpipe/rtc/LibpipeFactories.hpp>
 #include <sys/time.h> // for timeval
 #include <map>
@@ -128,14 +128,14 @@ class Algorithm
          * @param portIdentifier A \c std::string which identifies the port one wants to use
          * @return A shared_ptr to a LibpipeDataObject
          */
-        boost::shared_ptr<LibpipeDataObject> getPort(std::string const& portIdentifier) const;
+        boost::shared_ptr<Data> getPort(std::string const& portIdentifier) const;
 
         /** Sets the Port to a certain LibpipeDataObject
          * @param portIdentifier A \c std::string which identifies the port one wants to set to
          * the LibpipeDataObject dataObject
          * @param dataObject The Object the Port will point to
          */
-        void setInput(std::string const& portIdentifier, boost::shared_ptr<LibpipeDataObject> dataObject);
+        void setInput(std::string const& portIdentifier, boost::shared_ptr<Data> dataObject);
 
         /** Connects the port of this algorithm identified by thisPortIdentifier to the port of alg algorithm
          * identified by algPortIdentifier
@@ -153,7 +153,7 @@ class Algorithm
 
         /** Map of the ports and their \c std::string Identifier
          */
-        std::map<std::string, boost::shared_ptr<LibpipeDataObject> > ports_;
+        std::map<std::string, boost::shared_ptr<Data> > ports_;
 
     private:
 

@@ -91,7 +91,7 @@ namespace libpipe {
  * not.
  */
 template<typename T>
-class SharedData : private NonCopyable
+class SharedData : public NonCopyable
 {
 public:
     /** Constructor.

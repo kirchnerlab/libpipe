@@ -10,7 +10,7 @@
 #include <libpipe/config.hpp>
 #include <libpipe/NonCopyable.hpp>
 #include <memory>
-#include <libpipe/rtc/LibpipeDataObject.hpp>
+#include <libpipe/rtc/Data.hpp>
 
 namespace libpipe {
 
@@ -63,7 +63,7 @@ namespace rtc {
  * not.
  */
 template<typename T>
-class SharedData : private NonCopyable ,public LibpipeDataObject
+class SharedData : public NonCopyable ,public Data
 {
 public:
     /** Constructor.
