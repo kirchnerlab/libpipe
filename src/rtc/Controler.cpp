@@ -51,7 +51,7 @@ boost::shared_ptr<Filter> Controler::getFilter(
     }
 }
 
-LibpipePipeline const& Controler::getPipeline() const
+Pipeline const& Controler::getPipeline() const
 {
     return pipeline_;
 }

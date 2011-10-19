@@ -11,7 +11,7 @@
 #include <map>
 
 #include "libpipe/rtc/Filter.hpp"
-#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Pipeline.hpp"
 #include "libpipe/NonCopyable.hpp"
 
 #include <boost/shared_ptr.hpp>
@@ -48,7 +48,7 @@ class Controler : public libpipe::NonCopyable
          * run libpipe.
          * @return Reference to a LibpipePipeline.
          */
-        LibpipePipeline const& getPipeline() const;
+        Pipeline const& getPipeline() const;
 
     private:
         /** Pointer to the configuration.
@@ -83,7 +83,7 @@ class Controler : public libpipe::NonCopyable
 
         /** The pipeline object
          */
-        LibpipePipeline pipeline_;
+        Pipeline pipeline_;
 
 };
 

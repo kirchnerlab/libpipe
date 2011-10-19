@@ -11,7 +11,7 @@
 #define private public
 #define protected public
 #include "libpipe/rtc/Controler.hpp"
-#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Pipeline.hpp"
 #undef private
 #undef protected
 
@@ -81,7 +81,7 @@ struct ControlerTestSuite : vigra::test_suite
 
         void testPipeline(){
             Controler creator("inputFile.txt");
-            LibpipePipeline pipe=creator.getPipeline();
+            Pipeline pipe=creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "LowercaseFilter");
         }
 };

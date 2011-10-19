@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPEPIPELINE_HPP_
-#define LIBPIPEPIPELINE_HPP_
+#ifndef PIPELINE_HPP_
+#define PIPELINE_HPP_
 
 #include "libpipe/Request.hpp"
 #include "libpipe/rtc/Filter.hpp"
@@ -18,11 +18,11 @@
 namespace libpipe {
 namespace rtc {
 
-class LibpipePipeline
+class Pipeline
 {
     public:
-        LibpipePipeline();
-        ~LibpipePipeline();
+        Pipeline();
+        ~Pipeline();
 
         /** Add a filter and request on top of the queue.
          * @param req The Request which will be processed by the filter

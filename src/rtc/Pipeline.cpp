@@ -5,33 +5,33 @@
  *                    Marc Kirchner
  */
 
-#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Pipeline.hpp"
 #include "libpipe/rtc/Manager.hpp"
 
 namespace libpipe {
 namespace rtc {
 
-LibpipePipeline::LibpipePipeline()
+Pipeline::Pipeline()
 {
 }
 
-LibpipePipeline::~LibpipePipeline()
+Pipeline::~Pipeline()
 {
 }
 
-void LibpipePipeline::push(Request const & req,
+void Pipeline::push(Request const & req,
     boost::shared_ptr<Filter> filter)
 {
     pipelineQueue_.push(filter);
     requestQueue_.push(req);
 }
 
-void LibpipePipeline::getTrace(std::vector<std::string>& trace)
+void Pipeline::getTrace(std::vector<std::string>& trace)
 {
     trace = trace_;
 }
 
-void LibpipePipeline::run()
+void Pipeline::run()
 {
 
     while (!pipelineQueue_.empty()) {

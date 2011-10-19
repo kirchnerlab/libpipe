@@ -539,7 +539,7 @@ int main(int argc, char *argv[])
     using namespace libpipe::rtc;
 
     LibpipeLoader loader(argc, argv);
-    LibpipePipeline pipeline = loader.getPipeline();
+    Pipeline pipeline = loader.getPipeline();
 
     try {
         pipeline.run();

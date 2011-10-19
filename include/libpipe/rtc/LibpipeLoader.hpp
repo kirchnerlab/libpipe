@@ -8,7 +8,7 @@
 #ifndef LIBPIPELOADER_HPP_
 #define LIBPIPELOADER_HPP_
 
-#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Pipeline.hpp"
 
 namespace libpipe {
 namespace rtc {
@@ -20,10 +20,10 @@ class LibpipeLoader
         LibpipeLoader(int argc, char *argv[]);
         ~LibpipeLoader();
 
-        LibpipePipeline getPipeline() const;
+        Pipeline getPipeline() const;
 
     private:
-        LibpipePipeline pipeline_;
+        Pipeline pipeline_;
 
 };
 

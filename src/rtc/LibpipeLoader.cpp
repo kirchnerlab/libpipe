@@ -31,7 +31,7 @@ LibpipeLoader::~LibpipeLoader()
 {
 }
 
-LibpipePipeline LibpipeLoader::getPipeline() const
+Pipeline LibpipeLoader::getPipeline() const
 {
     return pipeline_;
 }

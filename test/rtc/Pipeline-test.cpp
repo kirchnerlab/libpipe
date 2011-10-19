@@ -1,7 +1,8 @@
 /*
- * rtc#LibpipePipeline-test.cpp
+ * rtc/Pipeline-test.cpp
  *
- * Copyright (c) 2011 <+author+>
+ * Copyright (c) 2011 David Sichau
+ *                    Marc Kirchner
  *
  */
 #include <iostream>
@@ -10,7 +11,7 @@
 #define protected public
 #include "libpipe/rtc/Controler.hpp"
 #include "rtc/utils.hpp"
-#include "libpipe/rtc/LibpipePipeline.hpp"
+#include "libpipe/rtc/Pipeline.hpp"
 #include "libpipe/Request.hpp"
 #undef private
 #undef protected
@@ -19,24 +20,24 @@
  * <+Longer description of the test suite+> 
  */
 using namespace libpipe::rtc;
-struct LibpipePipelineTestSuite : vigra::test_suite
+struct PipelineTestSuite : vigra::test_suite
 {
         /** Constructor.
          * The rtc#LibpipePipelineTestSuite constructor adds all rtc#LibpipePipeline tests to
          * the test suite. If you write an additional test, add the test
          * case here.
          */
-        LibpipePipelineTestSuite() :
-                vigra::test_suite("rtc/LibpipePipeline")
+        PipelineTestSuite() :
+                vigra::test_suite("rtc/Pipeline")
         {
-            add(testCase(&LibpipePipelineTestSuite::testPush));
-            add(testCase(&LibpipePipelineTestSuite::testRunAndTrace));
+            add(testCase(&PipelineTestSuite::testPush));
+            add(testCase(&PipelineTestSuite::testRunAndTrace));
         }
 
         void testPush()
         {
 
-            LibpipePipeline pipeline;
+            Pipeline pipeline;
 
             boost::shared_ptr<Filter> f(
                 libpipe::rtc::Filter::create("filter1", "IdentityRTC",
@@ -65,7 +66,7 @@ struct LibpipePipelineTestSuite : vigra::test_suite
         {
             Controler creator("inputFile.txt");
 
-            LibpipePipeline pipeline = creator.getPipeline();
+            Pipeline pipeline = creator.getPipeline();
             bool thrown = false;
             try {
                 pipeline.run();
@@ -85,7 +86,7 @@ struct LibpipePipelineTestSuite : vigra::test_suite
  */
 int main()
 {
-    LibpipePipelineTestSuite test;
+    PipelineTestSuite test;
     int success = test.run();
     std::cout << test.report() << std::endl;
     return success;
