@@ -4,18 +4,19 @@
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
+#include <libpipe/config.hpp>
 
 #include <map>
 #include <list>
 #include <string>
 #include <sstream>
 
-#include "libpipe/rtc/Filter.hpp"
-#include "libpipe/rtc/Manager.hpp"
-#include "libpipe/rtc/Algorithm.hpp"
-#include "libpipe/rtc/Controler.hpp"
-#include "libpipe/rtc/Config.hpp"
-#include "libpipe/rtc/ConfigLibconfig.hpp"
+#include <libpipe/rtc/Filter.hpp>
+#include <libpipe/rtc/Manager.hpp>
+#include <libpipe/rtc/Algorithm.hpp>
+#include <libpipe/rtc/Controler.hpp>
+#include <libpipe/rtc/Config.hpp>
+#include <libpipe/rtc/ConfigLibconfig.hpp>
 
 #include <boost/shared_ptr.hpp>
 

@@ -5,6 +5,8 @@
  *                    Marc Kirchner
  *
  */
+#include <libpipe/config.hpp>
+
 #include <iostream>
 #include "vigra/unittest.hxx"
 #define private public

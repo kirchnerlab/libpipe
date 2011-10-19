@@ -8,7 +8,9 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_LOADER_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_LOADER_HPP__
 
-#include "libpipe/rtc/Pipeline.hpp"
+#include <libpipe/config.hpp>
+
+#include <libpipe/rtc/Pipeline.hpp>
 
 namespace libpipe {
 namespace rtc {

@@ -4,9 +4,10 @@
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
+#include <libpipe/config.hpp>
 
-#include "libpipe/rtc/Pipeline.hpp"
-#include "libpipe/rtc/Manager.hpp"
+#include <libpipe/rtc/Pipeline.hpp>
+#include <libpipe/rtc/Manager.hpp>
 
 namespace libpipe {
 namespace rtc {

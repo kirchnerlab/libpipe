@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+
 #include <libpipe/RequestException.hpp>
 
 /** Macro that add an entry to a requests trace.

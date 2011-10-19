@@ -8,7 +8,9 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
+
 #include <libpipe/NonCopyable.hpp>
+
 #include <memory>
 
 namespace libpipe {

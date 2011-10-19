@@ -9,9 +9,11 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
+
 #include <libpipe/NonCopyable.hpp>
-#include <memory>
 #include <libpipe/rtc/Data.hpp>
+
+#include <memory>
 
 namespace libpipe {
 

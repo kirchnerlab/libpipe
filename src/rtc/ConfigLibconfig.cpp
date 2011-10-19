@@ -4,11 +4,13 @@
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
+#include <libpipe/config.hpp>
 
-#include "libpipe/rtc/ConfigLibconfig.hpp"
+#include <libpipe/rtc/ConfigLibconfig.hpp>
 #include <libpipe/Exception.hpp>
 
 #include <libconfig.h++>
+
 #include <string>
 #include <sstream>
 

@@ -8,7 +8,9 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
 
 #include <libpipe/config.hpp>
+
 #include <string>
+
 #include <libpipe/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
 

@@ -8,8 +8,10 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__
 
-#include "libpipe/Request.hpp"
-#include "libpipe/rtc/Filter.hpp"
+#include <libpipe/config.hpp>
+
+#include <libpipe/Request.hpp>
+#include <libpipe/rtc/Filter.hpp>
 
 #include <queue>
 

@@ -5,6 +5,7 @@
  *
  */
 #include <libpipe/utilities/Singleton.hpp>
+#include <libpipe/config.hpp>
 
 #include "vigra/unittest.hxx"
 

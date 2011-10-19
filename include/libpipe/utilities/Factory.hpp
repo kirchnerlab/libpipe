@@ -9,6 +9,8 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_FACTORY_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_FACTORY_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <map>
 #include <exception>
 #include <typeinfo>

@@ -8,6 +8,7 @@
  */
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
+#include <libpipe/config.hpp>
 
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/Manager.hpp>

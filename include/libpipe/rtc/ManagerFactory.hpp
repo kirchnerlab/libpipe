@@ -8,8 +8,10 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGERFACTORY_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGERFACTORY_HPP__
 
-#include "libpipe/utilities/Singleton.hpp"
-#include "libpipe/utilities/Factory.hpp"
+#include <libpipe/config.hpp>
+
+#include <libpipe/utilities/Singleton.hpp>
+#include <libpipe/utilities/Factory.hpp>
 
 
 namespace libpipe {

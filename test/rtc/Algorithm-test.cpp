@@ -5,6 +5,7 @@
  *
  */
 //#include <utilsRTC.hpp>
+#include <libpipe/config.hpp>
 #include <iostream>
 #include "vigra/unittest.hxx"
 

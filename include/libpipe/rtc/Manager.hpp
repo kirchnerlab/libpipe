@@ -10,7 +10,9 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_MANAGER_HPP__
 
 #include <libpipe/config.hpp>
+
 #include <set>
+
 #include <libpipe/Request.hpp>
 #include <libpipe/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>

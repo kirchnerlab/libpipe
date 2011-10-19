@@ -5,6 +5,7 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
+#include <libpipe/config.hpp>
 
 #include <iostream>
 #include "vigra/unittest.hxx"

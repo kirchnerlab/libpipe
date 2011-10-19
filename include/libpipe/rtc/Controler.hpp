@@ -8,11 +8,13 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONTROLER_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONTROLER_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <map>
 
-#include "libpipe/rtc/Filter.hpp"
-#include "libpipe/rtc/Pipeline.hpp"
-#include "libpipe/NonCopyable.hpp"
+#include <libpipe/rtc/Filter.hpp>
+#include <libpipe/rtc/Pipeline.hpp>
+#include <libpipe/NonCopyable.hpp>
 
 #include <boost/shared_ptr.hpp>
 

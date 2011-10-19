@@ -7,6 +7,8 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <exception>
 #include <string>
 

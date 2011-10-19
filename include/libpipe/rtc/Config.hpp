@@ -8,6 +8,8 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIG_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIG_HPP__
 
+#include <libpipe/config.hpp>
+
 #include <string>
 #include <list>
 #include <functional>

@@ -7,6 +7,8 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_NONCOPYABLE_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_NONCOPYABLE_HPP__
 
+#include <libpipe/config.hpp>
+
 namespace libpipe {
 
 /** Provides a base class from which classes that would explicitly like to

@@ -4,8 +4,8 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-
 #include <libpipe/config.hpp>
+
 #include <libpipe/Exception.hpp>
 
 using namespace libpipe;

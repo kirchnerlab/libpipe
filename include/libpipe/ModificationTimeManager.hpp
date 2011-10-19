@@ -8,6 +8,7 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
 
 #include <libpipe/config.hpp>
+
 #include <libpipe/Request.hpp>
 #include <libpipe/Manager.hpp>
 

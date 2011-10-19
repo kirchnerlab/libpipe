@@ -4,9 +4,10 @@
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
+#include <libpipe/config.hpp>
 
-#include "libpipe/rtc/Loader.hpp"
-#include "libpipe/rtc/Controler.hpp"
+#include <libpipe/rtc/Loader.hpp>
+#include <libpipe/rtc/Controler.hpp>
 
 #include <string>
 #include <iostream>

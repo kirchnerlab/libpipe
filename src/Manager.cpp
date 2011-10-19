@@ -5,6 +5,9 @@
  *               2011 David Sichau
  *
  */
+
+#include <libpipe/config.hpp>
+
 #include <libpipe/Manager.hpp>
 #include <libpipe/Filter.hpp>
 #include <libpipe/Algorithm.hpp>

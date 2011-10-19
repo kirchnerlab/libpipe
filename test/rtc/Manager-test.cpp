@@ -5,6 +5,8 @@
  *                    Marc Kirchner
  *
  */
+#include <libpipe/config.hpp>
+
 #define private public
 #define protected public
 #include <libpipe/rtc/Manager.hpp>

@@ -7,7 +7,11 @@
 
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIGLIBCONFIG_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIGLIBCONFIG_HPP__
-#include "libpipe/rtc/Config.hpp"
+
+#include <libpipe/config.hpp>
+
+
+#include <libpipe/rtc/Config.hpp>
 
 #include <list>
 #include <string>

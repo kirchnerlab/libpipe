@@ -4,6 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
+
+#include <libpipe/config.hpp>
+
 #include <libpipe/ModificationTimeManager.hpp>
 #include <libpipe/Filter.hpp>
 #include <libpipe/Algorithm.hpp>

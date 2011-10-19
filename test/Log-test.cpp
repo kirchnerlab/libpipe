@@ -5,6 +5,7 @@
  * Copyright (c) 2009 Bernhard Kausler
  *
  */
+#include <libpipe/config.hpp>
 
 #include <cstring>
 #include <iostream>

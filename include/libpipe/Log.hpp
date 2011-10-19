@@ -9,6 +9,9 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
 
+#include <libpipe/config.hpp>
+
+
 #include <ctime>
 #include <cstdio>
 #include <string>

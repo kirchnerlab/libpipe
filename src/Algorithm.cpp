@@ -4,6 +4,9 @@
  * Copyright (c) 2010 Marc Kirchner
  *               2011 David Sichau
  */
+
+#include <libpipe/config.hpp>
+
 #include <libpipe/Algorithm.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
