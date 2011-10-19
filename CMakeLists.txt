@@ -20,10 +20,10 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 # get path to libconfig library
 # Use UNIX before APPLE, as UNIX is also true for Mac OS X
 IF(UNIX)
-    SET(LIBCONFIG_PREFIX libconfig) 
+    SET(LIBCONFIG_PATH libconfig) 
 ENDIF(UNIX)
 IF(APPLE)
-    SET(LIBCONFIG_PREFIX libconfig/libconfig-1.4.8)    
+    SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
 ENDIF(APPLE)
 
 # require out-of-source build
