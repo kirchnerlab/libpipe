@@ -92,7 +92,7 @@ request = (
 		requestRank=1;
 		makeTrace = true;},
 		
-		{filteName="LowercaseFilter";
+		{filteName="ROTDecrypter";
 		requestType="DELETE";
 		requestRank=2;
 		makeTrace=true;},

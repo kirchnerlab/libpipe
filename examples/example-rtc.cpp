@@ -187,7 +187,7 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
@@ -280,7 +280,7 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
@@ -398,7 +398,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
                 LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
-                output_.get()->get()->clear();
+                output_->get()->clear();
                 LIBPIPE_REQUEST_TRACE(req,
                     "ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
@@ -491,7 +491,7 @@ class Source : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
             std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_.get()->get() << "\e[m" << std::endl;
+                    << *output_->get() << "\e[m" << std::endl;
         }
 
         /** Updates the output data (i.e. does nothing).
