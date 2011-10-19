@@ -11,7 +11,7 @@
 
 #define private public
 #define protected public
-#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
+#include "libpipe/rtc/ConfigLibconfig.hpp"
 #undef private
 #undef protected
 
@@ -21,26 +21,26 @@
 
 using namespace libpipe::rtc;
 
-struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
+struct ConfigLibconfigTestSuite : vigra::test_suite
 {
         /** Constructor.
          * The rtc#LibpipeConfigLibconfigTestSuite constructor adds all rtc#LibpipeConfigLibconfig tests to
          * the test suite. If you write an additional test, add the test
          * case here.
          */
-        LibpipeConfigLibconfigTestSuite() :
-                vigra::test_suite("rtc/LibpipeConfigLibconfig")
+        ConfigLibconfigTestSuite() :
+                vigra::test_suite("rtc/ConfigLibconfig")
         {
             add(
-                testCase(&LibpipeConfigLibconfigTestSuite::testInputFileHandling));
-            add(testCase(&LibpipeConfigLibconfigTestSuite::testGetters));
+                testCase(&ConfigLibconfigTestSuite::testInputFileHandling));
+            add(testCase(&ConfigLibconfigTestSuite::testGetters));
         }
 
         void testInputFileHandling()
         {
             bool thrown = false;
             try {
-                LibpipeConfigLibconfig test;
+                ConfigLibconfig test;
                 test.parseInputFile("blub.txt");
             } catch (...) {
                 thrown = true;
@@ -49,14 +49,14 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
             thrown = false;
 
             try {
-                LibpipeConfigLibconfig test;
+                ConfigLibconfig test;
                 test.parseInputFile("inputFile.txt");
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, false);
 
             try {
-                LibpipeConfigLibconfig test;
+                ConfigLibconfig test;
                 test.parseInputFile("wrongInputFile.txt");
             } catch (...) {
                 thrown = true;
@@ -67,7 +67,7 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
         void testGetters()
         {
 
-            LibpipeConfigLibconfig test;
+            ConfigLibconfig test;
             test.parseInputFile("inputFile.txt");
 
             shouldEqual(int(test.getFilters().size()), 6);
@@ -104,7 +104,7 @@ struct LibpipeConfigLibconfigTestSuite : vigra::test_suite
  */
 int main()
 {
-    LibpipeConfigLibconfigTestSuite test;
+    ConfigLibconfigTestSuite test;
     int success = test.run();
     std::cout << test.report() << std::endl;
     return success;

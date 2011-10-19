@@ -15,7 +15,7 @@
 #include "libpipe/rtc/Algorithm.hpp"
 #include "libpipe/rtc/LibpipeCreator.hpp"
 #include "libpipe/rtc/Config.hpp"
-#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
+#include "libpipe/rtc/ConfigLibconfig.hpp"
 
 #include <boost/shared_ptr.hpp>
 
@@ -24,7 +24,7 @@ namespace rtc {
 
 LibpipeCreator::LibpipeCreator(std::string const& inputFile)
 {
-    configuration_ = new LibpipeConfigLibconfig;
+    configuration_ = new ConfigLibconfig;
     configuration_->parseInputFile(inputFile);
     this->generateFilters();
     this->generatePipeline();

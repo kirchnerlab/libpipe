@@ -5,7 +5,7 @@
  *                    Marc Kirchner
  */
 
-#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
+#include "libpipe/rtc/ConfigLibconfig.hpp"
 #include <libpipe/Exception.hpp>
 
 #include <libconfig.h++>
@@ -16,21 +16,21 @@ namespace libpipe {
 namespace rtc {
 
 
-LibpipeConfigLibconfig::LibpipeConfigLibconfig()
+ConfigLibconfig::ConfigLibconfig()
 {
 }
 
-LibpipeConfigLibconfig::~LibpipeConfigLibconfig()
+ConfigLibconfig::~ConfigLibconfig()
 {
 
 }
 
-std::list<FilterDescription> const& LibpipeConfigLibconfig::getFilters() const
+std::list<FilterDescription> const& ConfigLibconfig::getFilters() const
 {
     return filterList_;
 }
 
-std::list<PrecursorDescription> const& LibpipeConfigLibconfig::getPrecursorFilter(
+std::list<PrecursorDescription> const& ConfigLibconfig::getPrecursorFilter(
     std::string const& filtername) const
 {
     for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
@@ -48,7 +48,7 @@ std::list<PrecursorDescription> const& LibpipeConfigLibconfig::getPrecursorFilte
 
 }
 
-std::list<PortDescription> const& LibpipeConfigLibconfig::getPort(
+std::list<PortDescription> const& ConfigLibconfig::getPort(
     std::string const& filtername) const
 {
     for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
@@ -66,12 +66,12 @@ std::list<PortDescription> const& LibpipeConfigLibconfig::getPort(
 }
 
 std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
-        PipelineDescriptionLess> LibpipeConfigLibconfig::getLibpipePipe() const
+        PipelineDescriptionLess> ConfigLibconfig::getLibpipePipe() const
 {
     return requestQueue_;
 }
 
-void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
+void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
 {
 
     libconfig::Config cfg;
@@ -183,7 +183,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
     }
 }
 
-bool LibpipeConfigLibconfig::checkFile() const
+bool ConfigLibconfig::checkFile() const
 {
     return true;
     ///TODO implement test

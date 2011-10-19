@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPECONFIGLIBCONFIG_HPP_
-#define LIBPIPECONFIGLIBCONFIG_HPP_
+#ifndef CONFIGLIBCONFIG_HPP_
+#define CONFIGLIBCONFIG_HPP_
 #include "libpipe/rtc/Config.hpp"
 
 #include <list>
@@ -16,17 +16,17 @@
 namespace libpipe {
 namespace rtc {
 
-class LibpipeConfigLibconfig : public Config
+class ConfigLibconfig : public Config
 {
     public:
 
         /** Constructor
          */
-        LibpipeConfigLibconfig();
+        ConfigLibconfig();
 
         /** Destructor
          */
-        ~LibpipeConfigLibconfig();
+        ~ConfigLibconfig();
 
         /** Parses the input file.
          * @param inputFileName Name of the input file.
@@ -76,4 +76,4 @@ class LibpipeConfigLibconfig : public Config
 
 } /* namespace rtc */
 } /* namespace libpipe */
-#endif /* LIBPIPECONFIGLIBCONFIG_HPP_ */
+#endif /* CONFIGLIBCONFIG_HPP_ */
