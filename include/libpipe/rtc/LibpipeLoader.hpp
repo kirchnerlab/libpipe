@@ -25,7 +25,6 @@ class LibpipeLoader
     private:
         LibpipePipeline pipeline_;
 
-        std::string getHash(std::string const& filename) const;
 };
 
 } /* namespace rtc */

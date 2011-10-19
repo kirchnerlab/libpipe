@@ -20,11 +20,12 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 {
     public:
 
-        /** static create Methode to generate InputFile Handler
-         * @return a new Instance of LibpipeConfig
+        /** Constructor
          */
-        static LibpipeConfig* create();
+        LibpipeConfigLibconfig();
 
+        /** Destructor
+         */
         ~LibpipeConfigLibconfig();
 
         /** Parses the input file.
@@ -64,29 +65,14 @@ class LibpipeConfigLibconfig : public LibpipeConfig
          */
         virtual bool checkFile() const;
 
-
-        static const bool registered_;
-
     private:
-
-        /** Constructor
-         * @param fileName The name of the input file used.
-         */
-        LibpipeConfigLibconfig();
 
         std::list<FilterStruct> filterList_;
 
         std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
                 LibpipePipeStructLess> requestQueue_;
 
-        /** Register Filter in the FilterFactory
-         *
-         */
-
-        static const bool registerLoader();
-
 };
-
 
 } /* namespace rtc */
 } /* namespace libpipe */

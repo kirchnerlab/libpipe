@@ -29,13 +29,6 @@ class LibpipeCreator : public libpipe::NonCopyable
     public:
 
         /** Constructor
-         * @param hashInputFile The hash to specify the input file
-         * @param inputFile The name of the input file
-         */
-        LibpipeCreator(std::string const& hashInputFile,
-            std::string const& inputFile);
-
-        /** Constructor
          * @param filename The name to the configuration file
          */
         LibpipeCreator(std::string const& filename);
@@ -72,7 +65,7 @@ class LibpipeCreator : public libpipe::NonCopyable
         void connectManagers(std::string const& filtername);
 
         /** This function will connect the ports of the algorithms.
-         *          * @param filtername Name of the filter
+         *  @param filtername Name of the filter
          */
         void connectAlgorithmPorts(std::string const& filtername);
 

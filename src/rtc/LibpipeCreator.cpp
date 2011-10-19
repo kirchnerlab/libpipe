@@ -14,38 +14,17 @@
 #include "libpipe/rtc/Manager.hpp"
 #include "libpipe/rtc/Algorithm.hpp"
 #include "libpipe/rtc/LibpipeCreator.hpp"
-#include "libpipe/rtc/LibpipeFactories.hpp"
 #include "libpipe/rtc/LibpipeConfig.hpp"
-
-#include "LibpipeConfigLibconfig.cpp"
-///TODO why is this needed
+#include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
 
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
 
-LibpipeCreator::LibpipeCreator(std::string const& hashInputFile,
-    std::string const& inputFile)
-{
-    try {
-        configuration_ = InputFactory::instance().createObject(hashInputFile);
-    } catch (...) {
-        std::ostringstream oss;
-        oss << "Hash was not registered in the InputFactory. Hash: "
-                << hashInputFile;
-        libpipe_fail(oss.str());
-    }
-    configuration_->parseInputFile(inputFile);
-    this->generateFilters();
-    this->generatePipeline();
-
-}
-
 LibpipeCreator::LibpipeCreator(std::string const& inputFile)
 {
-    configuration_ = InputFactory::instance().createObject(
-        "6dc0a277ae36db78b3494d0ddf32dd3d");
+    configuration_ = new LibpipeConfigLibconfig;
     configuration_->parseInputFile(inputFile);
     this->generateFilters();
     this->generatePipeline();
