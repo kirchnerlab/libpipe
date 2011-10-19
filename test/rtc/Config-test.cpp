@@ -10,7 +10,7 @@
 #include "vigra/unittest.hxx"
 #define private public
 #define protected public
-#include "libpipe/rtc/LibpipeConfig.hpp"
+#include "libpipe/rtc/Config.hpp"
 #undef private
 #undef protected
 
@@ -18,26 +18,26 @@
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
-struct LibpipeConfigTestSuite : vigra::test_suite {
+struct ConfigTestSuite : vigra::test_suite {
     /** Constructor.
      * The rtc/LibpipeConfigTestSuite constructor adds all rtc/LibpipeConfig tests to
      * the test suite. If you write an additional test, add the test
      * case here.
      */
-    LibpipeConfigTestSuite() : vigra::test_suite("rtc/LibpipeConfig") {
-        add(testCase(&LibpipeConfigTestSuite::structComparison));
+    ConfigTestSuite() : vigra::test_suite("rtc/LibpipeConfig") {
+        add(testCase(&ConfigTestSuite::structComparison));
     }
 
 
 
     void structComparison(){
-        libpipe::rtc::LibpipePipeStruct s1;
-        libpipe::rtc::LibpipePipeStruct s2;
+        libpipe::rtc::PipelineDescription s1;
+        libpipe::rtc::PipelineDescription s2;
 
         s1.requestRank = 2;
         s2.requestRank = 3;
 
-        libpipe::rtc::LibpipePipeStructLess compFct;
+        libpipe::rtc::PipelineDescriptionLess compFct;
 
         shouldEqual(compFct(s1,s2), true);
         shouldEqual(compFct(s2,s1), false);
@@ -54,7 +54,7 @@ struct LibpipeConfigTestSuite : vigra::test_suite {
  */
 int main()
 {
-    LibpipeConfigTestSuite test;
+    ConfigTestSuite test;
     int success = test.run();
     std::cout << test.report() << std::endl;
     return success;

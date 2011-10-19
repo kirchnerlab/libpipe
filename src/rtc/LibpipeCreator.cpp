@@ -14,7 +14,7 @@
 #include "libpipe/rtc/Manager.hpp"
 #include "libpipe/rtc/Algorithm.hpp"
 #include "libpipe/rtc/LibpipeCreator.hpp"
-#include "libpipe/rtc/LibpipeConfig.hpp"
+#include "libpipe/rtc/Config.hpp"
 #include "libpipe/rtc/LibpipeConfigLibconfig.hpp"
 
 #include <boost/shared_ptr.hpp>
@@ -58,9 +58,9 @@ LibpipePipeline const& LibpipeCreator::getPipeline() const
 
 void LibpipeCreator::generateFilters()
 {
-    std::list<FilterStruct> filterList = configuration_->getFilters();
+    std::list<FilterDescription> filterList = configuration_->getFilters();
 
-    for (std::list<FilterStruct>::const_iterator it = filterList.begin();
+    for (std::list<FilterDescription>::const_iterator it = filterList.begin();
             it != filterList.end(); ++it) {
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
@@ -78,10 +78,10 @@ void LibpipeCreator::generateFilters()
 
 void LibpipeCreator::connectManagers(std::string const& filtername)
 {
-    std::list<PrecursorStruct> precursors = configuration_->getPrecursorFilter(
+    std::list<PrecursorDescription> precursors = configuration_->getPrecursorFilter(
         filtername);
 
-    for (std::list<PrecursorStruct>::const_iterator it = precursors.begin();
+    for (std::list<PrecursorDescription>::const_iterator it = precursors.begin();
             it != precursors.end(); ++it) {
 
         if (filterMap_.find(filtername) != filterMap_.end()) {
@@ -98,9 +98,9 @@ void LibpipeCreator::connectManagers(std::string const& filtername)
 
 void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
 {
-    std::list<PortStruct> ports = configuration_->getPort(filtername);
+    std::list<PortDescription> ports = configuration_->getPort(filtername);
 
-    for (std::list<PortStruct>::const_iterator it = ports.begin();
+    for (std::list<PortDescription>::const_iterator it = ports.begin();
             it != ports.end(); ++it) {
         if (filterMap_.find(filtername) != filterMap_.end()) {
             filterMap_.find(filtername)->second->getAlgorithm()->connect(
@@ -116,11 +116,11 @@ void LibpipeCreator::connectAlgorithmPorts(std::string const& filtername)
 
 void LibpipeCreator::generatePipeline()
 {
-    std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
-            LibpipePipeStructLess> queue = configuration_->getLibpipePipe();
+    std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
+            PipelineDescriptionLess> queue = configuration_->getLibpipePipe();
 
     while (!queue.empty()) {
-        LibpipePipeStruct temp = queue.top();
+        PipelineDescription temp = queue.top();
         queue.pop();
 
         if (temp.requestType == "UPDATE") {

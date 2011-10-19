@@ -5,8 +5,8 @@
  *                    Marc Kirchner
  */
 
-#ifndef LIBPIPECONFIG_HPP_
-#define LIBPIPECONFIG_HPP_
+#ifndef CONFIG_HPP_
+#define CONFIG_HPP_
 
 #include <string>
 #include <list>
@@ -19,7 +19,7 @@ namespace rtc {
 /**
  * All information needed to connect the ports.
  */
-struct PortStruct
+struct PortDescription
 {
         /** Name of the filter which output port is used
          */
@@ -35,7 +35,7 @@ struct PortStruct
 /**
  * The information needed to connect the managers
  */
-struct PrecursorStruct
+struct PrecursorDescription
 {
         /** Name of the precursor Filter
          */
@@ -45,7 +45,7 @@ struct PrecursorStruct
 /**
  * The information needed to generate filters and connect their algorithms and managers
  */
-struct FilterStruct
+struct FilterDescription
 {
         /** Name of the filter
          */
@@ -59,17 +59,17 @@ struct FilterStruct
 
         /** List of precursors the filters manager is connected to
          */
-        std::list<PrecursorStruct> precursors;
+        std::list<PrecursorDescription> precursors;
 
         /** List of ports the filters algorithm is connected to
          */
-        std::list<PortStruct> ports;
+        std::list<PortDescription> ports;
 };
 
 /**
  * The information needed to build the libpipe pipeline
  */
-struct LibpipePipeStruct
+struct PipelineDescription
 {
         /** Name of the filter
          */
@@ -89,8 +89,8 @@ struct LibpipePipeStruct
  * Comparison function to compare two LibpipePipeStructs
  */
 ///\cond
-struct LibpipePipeStructLess : public std::binary_function<LibpipePipeStruct,
-        LibpipePipeStruct, bool>
+struct PipelineDescriptionLess : public std::binary_function<PipelineDescription,
+        PipelineDescription, bool>
 {
         ///\endcond
         /** less than operator
@@ -98,26 +98,26 @@ struct LibpipePipeStructLess : public std::binary_function<LibpipePipeStruct,
          * @param rhs righthand side LibpipePipeStruct
          * @return true if lhs < rhs
          */
-        bool operator ()(const LibpipePipeStruct& lhs,
-            LibpipePipeStruct& rhs) const
+        bool operator ()(const PipelineDescription& lhs,
+            PipelineDescription& rhs) const
         {
             return lhs.requestRank < rhs.requestRank;
         }
 };
 
-class LibpipeConfig
+class Config
 {
     public:
 
         /** create Methode which is registered in the InputFactory
          * @return Pointer to the new generated Libconfig class, keep in mind to call delete on this generated pointer
          */
-        static LibpipeConfig* create();
+        static Config* create();
 
         /** Virtual Destructor to allow inheritance.
          *
          */
-        virtual ~LibpipeConfig()
+        virtual ~Config()
         {
         }
         ;
@@ -130,41 +130,34 @@ class LibpipeConfig
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
          */
-        virtual std::list<FilterStruct> const& getFilters() const = 0;
+        virtual std::list<FilterDescription> const& getFilters() const = 0;
 
         /**
          * @param filtername The name of the Filter, which manager get connected to the Precursors
          * @return List of Precursors Filter filtername gets connected to
          */
-        virtual std::list<PrecursorStruct> const& getPrecursorFilter(
+        virtual std::list<PrecursorDescription> const& getPrecursorFilter(
             std::string const& filtername) const = 0;
 
         /**
          * @param filtername The name of the Filter which ports are returned
          * @return list of all ports one Filter is connected to
          */
-        virtual std::list<PortStruct> const& getPort(
+        virtual std::list<PortDescription> const& getPort(
             std::string const& filtername) const = 0;
 
         /**
          * @return A priority_queue where all elements are ordered after their request rank,
          * the smallest comes first
          */
-        virtual std::priority_queue<LibpipePipeStruct,
-                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const=0;
+        virtual std::priority_queue<PipelineDescription,
+                std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const=0;
 
         /** Checks if the file is correct
          * @return True if the file is correct, otherwise false
          */
         virtual bool checkFile() const =0;
 
-    protected:
-        /** Constructor
-         */
-        LibpipeConfig()
-        {
-        }
-        ;
 
 };
 

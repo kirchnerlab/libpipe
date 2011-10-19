@@ -19,7 +19,7 @@
 namespace libpipe {
 namespace rtc {
 
-class LibpipeConfig;
+class Config;
 
 /** Generates the objects needed by libpipe, it only relies on the LibpipeConfig interface. And
  * not on the input file.
@@ -53,7 +53,7 @@ class LibpipeCreator : public libpipe::NonCopyable
     private:
         /** Pointer to the configuration.
          */
-        LibpipeConfig* configuration_;
+        Config* configuration_;
 
         /** This function will generate the filter objects.
          */

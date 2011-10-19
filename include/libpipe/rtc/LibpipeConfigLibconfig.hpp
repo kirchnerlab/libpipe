@@ -7,7 +7,7 @@
 
 #ifndef LIBPIPECONFIGLIBCONFIG_HPP_
 #define LIBPIPECONFIGLIBCONFIG_HPP_
-#include "libpipe/rtc/LibpipeConfig.hpp"
+#include "libpipe/rtc/Config.hpp"
 
 #include <list>
 #include <string>
@@ -16,7 +16,7 @@
 namespace libpipe {
 namespace rtc {
 
-class LibpipeConfigLibconfig : public LibpipeConfig
+class LibpipeConfigLibconfig : public Config
 {
     public:
 
@@ -36,20 +36,20 @@ class LibpipeConfigLibconfig : public LibpipeConfig
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
          */
-        virtual std::list<FilterStruct> const& getFilters() const;
+        virtual std::list<FilterDescription> const& getFilters() const;
 
         /**
          * @param filtername The name of the Filter, which manager get connected to the Precursors
          * @return List of Precursors Filter filtername gets connected to
          */
-        virtual std::list<PrecursorStruct> const& getPrecursorFilter(
+        virtual std::list<PrecursorDescription> const& getPrecursorFilter(
             std::string const& filtername) const;
 
         /**
          * @param filtername The name of the Filter which ports are returned
          * @return list of all ports one Filter is connected to
          */
-        virtual std::list<PortStruct> const& getPort(
+        virtual std::list<PortDescription> const& getPort(
             std::string const& filtername) const;
 
         /**
@@ -57,8 +57,8 @@ class LibpipeConfigLibconfig : public LibpipeConfig
          * @return A priority_queue where all elements are ordered after their request rank,
          * the smallest comes first
          */
-        virtual std::priority_queue<LibpipePipeStruct,
-                std::vector<LibpipePipeStruct>, LibpipePipeStructLess> getLibpipePipe() const;
+        virtual std::priority_queue<PipelineDescription,
+                std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const;
 
         /** Checks if the file is correct
          * @return True if the file is correct, otherwise false
@@ -67,10 +67,10 @@ class LibpipeConfigLibconfig : public LibpipeConfig
 
     private:
 
-        std::list<FilterStruct> filterList_;
+        std::list<FilterDescription> filterList_;
 
-        std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
-                LibpipePipeStructLess> requestQueue_;
+        std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
+                PipelineDescriptionLess> requestQueue_;
 
 };
 

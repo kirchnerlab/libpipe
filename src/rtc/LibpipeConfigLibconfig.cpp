@@ -25,15 +25,15 @@ LibpipeConfigLibconfig::~LibpipeConfigLibconfig()
 
 }
 
-std::list<FilterStruct> const& LibpipeConfigLibconfig::getFilters() const
+std::list<FilterDescription> const& LibpipeConfigLibconfig::getFilters() const
 {
     return filterList_;
 }
 
-std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFilter(
+std::list<PrecursorDescription> const& LibpipeConfigLibconfig::getPrecursorFilter(
     std::string const& filtername) const
 {
-    for (std::list<FilterStruct>::const_iterator it = filterList_.begin();
+    for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
             it != filterList_.end(); ++it) {
         if (it->filterName == filtername) {
             return it->precursors;
@@ -48,10 +48,10 @@ std::list<PrecursorStruct> const& LibpipeConfigLibconfig::getPrecursorFilter(
 
 }
 
-std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
+std::list<PortDescription> const& LibpipeConfigLibconfig::getPort(
     std::string const& filtername) const
 {
-    for (std::list<FilterStruct>::const_iterator it = filterList_.begin();
+    for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
             it != filterList_.end(); ++it) {
         if (it->filterName == filtername) {
             return it->ports;
@@ -65,8 +65,8 @@ std::list<PortStruct> const& LibpipeConfigLibconfig::getPort(
     libpipe_fail(oss.str());
 }
 
-std::priority_queue<LibpipePipeStruct, std::vector<LibpipePipeStruct>,
-        LibpipePipeStructLess> LibpipeConfigLibconfig::getLibpipePipe() const
+std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
+        PipelineDescriptionLess> LibpipeConfigLibconfig::getLibpipePipe() const
 {
     return requestQueue_;
 }
@@ -106,14 +106,14 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
                 continue;
             }
 
-            FilterStruct tempFilterStruct;
+            FilterDescription tempFilterStruct;
             tempFilterStruct.filterName = filterName;
             tempFilterStruct.algorithmName = algorithmName;
             tempFilterStruct.managerName = managerName;
 
             // get precursors
             const libconfig::Setting &precursors = filter["precursors"];
-            PrecursorStruct tempPrecursor;
+            PrecursorDescription tempPrecursor;
             for (int j = 0; j < precursors.getLength(); ++j) {
                 const libconfig::Setting &precursor = precursors[j];
                 std::string precursorName;
@@ -127,7 +127,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
             //get ports
             const libconfig::Setting &ports = filter["ports"];
-            PortStruct tempPorts;
+            PortDescription tempPorts;
             for (int k = 0; k < ports.getLength(); ++k) {
                 const libconfig::Setting &port = ports[k];
                 std::string filterName, portNameOfFilter, portNameOfThis;
@@ -157,7 +157,7 @@ void LibpipeConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
         for (int i = 0; i < requests.getLength(); ++i) {
             const libconfig::Setting &request = requests[i];
-            LibpipePipeStruct tempLibpipeRequest;
+            PipelineDescription tempLibpipeRequest;
 
             // Only output the record if all of the expected fields are present.
             std::string filterName, requestType;
