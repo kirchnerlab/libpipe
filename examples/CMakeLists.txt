@@ -1,12 +1,5 @@
-IF(UNIX)
-    SET(LIBCONFIG_PATH libconfig) 
-ENDIF(UNIX)
-IF(APPLE)
-    SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
-ENDIF(APPLE)
 
-INCLUDE_DIRECTORIES(
-                    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/include)
+
 LINK_DIRECTORIES(
                     ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/lib
                  )
@@ -27,7 +20,6 @@ INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
     ARCHIVE DESTINATION lib
     COMPONENT examples
 )
-
 
 
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile.txt.cmake

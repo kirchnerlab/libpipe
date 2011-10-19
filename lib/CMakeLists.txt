@@ -1,10 +1,12 @@
+# Use UNIX before APPLE, as UNIX is also true for Mac OS X
+# Under Mac an additional folder for libconfig is generated and the linux patch did not work
 IF(UNIX)
     SET(LIBCONFIG_PREFIX libconfig) 
-    SET(LIBCONFIG_PATCH patch < ${CMAKE_CURRENT_SOURCE_DIR}/libconfig.patch)
+    SET(LIBCONFIG_PATCH patch < ${CMAKE_CURRENT_SOURCE_DIR}/libconfigLinux.patch)
 ENDIF(UNIX)
 IF(APPLE)
     SET(LIBCONFIG_PREFIX libconfig/libconfig-1.4.8)    
-    SET(LIBCONFIG_PATCH patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/test.patch)
+    SET(LIBCONFIG_PATCH patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/libconfigMacOS.patch)
 ENDIF(APPLE)
 
 

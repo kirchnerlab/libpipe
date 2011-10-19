@@ -2,14 +2,6 @@
 # configure/build libpipe tests
 #
 
-IF(UNIX)
-    SET(LIBCONFIG_PATH libconfig) 
-ENDIF(UNIX)
-IF(APPLE)
-    SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
-ENDIF(APPLE)
-
-
 ##############################################################################
 # check if have valgrind
 ##############################################################################
