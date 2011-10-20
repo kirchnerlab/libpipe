@@ -158,7 +158,7 @@ class Config
         /** Checks if the file is correct
          * @return True if the file is correct, otherwise false
          */
-        virtual bool checkFile() const =0;
+        virtual bool checkFile(const std::string& inputFileName) const =0;
 
 
 };

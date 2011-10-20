@@ -26,7 +26,13 @@ namespace rtc {
 Controler::Controler(std::string const& inputFile)
 {
     configuration_ = new ConfigLibconfig;
-    configuration_->parseInputFile(inputFile);
+    try{
+        configuration_->parseInputFile(inputFile);
+    } catch (libpipe::Exception& e){
+        // fix memory leak when the parsing throws an exception.
+        delete configuration_;
+        throw e;
+    }
     this->generateFilters();
     this->generatePipeline();
 }

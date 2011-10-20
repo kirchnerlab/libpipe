@@ -67,7 +67,7 @@ class ConfigLibconfig : public Config
         /** Checks if the file is correct
          * @return True if the file is correct, otherwise false
          */
-        virtual bool checkFile() const;
+        virtual bool checkFile(const std::string& inputFileName) const;
 
     private:
 

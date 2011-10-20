@@ -65,6 +65,12 @@ struct ConfigLibconfigTestSuite : vigra::test_suite
             shouldEqual(thrown, true);
         }
 
+        void testFileChecker(){
+            ConfigLibconfig test;
+            shouldEqual(test.checkFile("inputFile.txt"),true);
+
+        }
+
         void testGetters()
         {
 
