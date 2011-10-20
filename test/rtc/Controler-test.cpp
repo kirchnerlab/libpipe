@@ -76,14 +76,14 @@ struct ControlerTestSuite : vigra::test_suite
 
         void testFilter(){
             Controler creator("inputFile.txt");
-            boost::shared_ptr<Filter> f1 = creator.getFilter("LowercaseFilter");
-            shouldEqual(f1->getName(), "LowercaseFilter");
+            boost::shared_ptr<Filter> f1 = creator.getFilter("Lowercase");
+            shouldEqual(f1->getName(), "Lowercase");
         }
 
         void testPipeline(){
             Controler creator("inputFile.txt");
             Pipeline pipe=creator.getPipeline();
-            shouldEqual(pipe.pipelineQueue_.front()->getName(), "LowercaseFilter");
+            shouldEqual(pipe.pipelineQueue_.front()->getName(), "Lowercase");
         }
 };
 

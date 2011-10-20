@@ -75,7 +75,7 @@ struct ConfigLibconfigTestSuite : vigra::test_suite
 
             shouldEqual(int(test.getPort("Combiner").size()), 2);
 
-            shouldEqual(int(test.getPort("LowercaseFilter").size()), 1);
+            shouldEqual(int(test.getPort("Lowercase").size()), 1);
 
             shouldEqual(int(test.getPrecursorFilter("Combiner").size()), 2);
 
