@@ -35,26 +35,26 @@ class ConfigLibconfig : public Config
         /** Parses the input file.
          * @param inputFileName Name of the input file.
          */
-        virtual void parseInputFile(std::string const& inputFileName);
+        virtual void parseInputFile(const std::string& inputFileName);
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
          */
-        virtual std::list<FilterDescription> const& getFilters() const;
+        virtual const std::list<FilterDescription>& getFilters() const;
 
         /**
          * @param filtername The name of the Filter, which manager get connected to the Precursors
          * @return List of Precursors Filter filtername gets connected to
          */
-        virtual std::list<PrecursorDescription> const& getPrecursorFilter(
-            std::string const& filtername) const;
+        virtual const std::list<PrecursorDescription>& getPrecursorFilter(
+            const std::string& filtername) const;
 
         /**
          * @param filtername The name of the Filter which ports are returned
          * @return list of all ports one Filter is connected to
          */
-        virtual std::list<PortDescription> const& getPort(
-            std::string const& filtername) const;
+        virtual const std::list<PortDescription>& getPort(
+            const std::string& filtername) const;
 
         /**
          *

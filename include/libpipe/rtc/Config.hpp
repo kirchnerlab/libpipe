@@ -127,26 +127,26 @@ class Config
         /** Parses the input file
          * @param inputFileName The name of the input file.
          */
-        virtual void parseInputFile(std::string const& inputFileName) = 0;
+        virtual void parseInputFile(const std::string& inputFileName) = 0;
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
          */
-        virtual std::list<FilterDescription> const& getFilters() const = 0;
+        virtual const std::list<FilterDescription>& getFilters() const = 0;
 
         /**
          * @param filtername The name of the Filter, which manager get connected to the Precursors
          * @return List of Precursors Filter filtername gets connected to
          */
-        virtual std::list<PrecursorDescription> const& getPrecursorFilter(
-            std::string const& filtername) const = 0;
+        virtual const std::list<PrecursorDescription>& getPrecursorFilter(
+            const std::string& filtername) const = 0;
 
         /**
          * @param filtername The name of the Filter which ports are returned
          * @return list of all ports one Filter is connected to
          */
-        virtual std::list<PortDescription> const& getPort(
-            std::string const& filtername) const = 0;
+        virtual const std::list<PortDescription>& getPort(
+            const std::string& filtername) const = 0;
 
         /**
          * @return A priority_queue where all elements are ordered after their request rank,

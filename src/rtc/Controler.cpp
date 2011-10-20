@@ -23,7 +23,7 @@
 namespace libpipe {
 namespace rtc {
 
-Controler::Controler(std::string const& inputFile)
+Controler::Controler(const std::string& inputFile)
 {
     configuration_ = new ConfigLibconfig;
     try{
@@ -43,7 +43,7 @@ Controler::~Controler()
 }
 
 boost::shared_ptr<Filter> Controler::getFilter(
-    std::string const& filtername)
+    const std::string& filtername)
 {
     if (filterMap_.find(filtername) != filterMap_.end()) {
         return filterMap_.find(filtername)->second;
@@ -58,7 +58,7 @@ boost::shared_ptr<Filter> Controler::getFilter(
     }
 }
 
-Pipeline const& Controler::getPipeline() const
+const Pipeline& Controler::getPipeline() const
 {
     return pipeline_;
 }
@@ -83,7 +83,7 @@ void Controler::generateFilters()
 
 }
 
-void Controler::connectManagers(std::string const& filtername)
+void Controler::connectManagers(const std::string& filtername)
 {
     std::list<PrecursorDescription> precursors = configuration_->getPrecursorFilter(
         filtername);
@@ -103,7 +103,7 @@ void Controler::connectManagers(std::string const& filtername)
 
 }
 
-void Controler::connectAlgorithmPorts(std::string const& filtername)
+void Controler::connectAlgorithmPorts(const std::string& filtername)
 {
     std::list<PortDescription> ports = configuration_->getPort(filtername);
 

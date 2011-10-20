@@ -27,13 +27,13 @@ ConfigLibconfig::~ConfigLibconfig()
 
 }
 
-std::list<FilterDescription> const& ConfigLibconfig::getFilters() const
+const std::list<FilterDescription>& ConfigLibconfig::getFilters() const
 {
     return filterList_;
 }
 
-std::list<PrecursorDescription> const& ConfigLibconfig::getPrecursorFilter(
-    std::string const& filtername) const
+const std::list<PrecursorDescription>& ConfigLibconfig::getPrecursorFilter(
+    const std::string& filtername) const
 {
     for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
             it != filterList_.end(); ++it) {
@@ -50,8 +50,8 @@ std::list<PrecursorDescription> const& ConfigLibconfig::getPrecursorFilter(
 
 }
 
-std::list<PortDescription> const& ConfigLibconfig::getPort(
-    std::string const& filtername) const
+const std::list<PortDescription>& ConfigLibconfig::getPort(
+    const std::string& filtername) const
 {
     for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
             it != filterList_.end(); ++it) {
@@ -73,7 +73,7 @@ std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
     return requestQueue_;
 }
 
-void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
+void ConfigLibconfig::parseInputFile(const std::string& inputFileName)
 {
 
     libconfig::Config cfg;

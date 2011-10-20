@@ -90,7 +90,7 @@ bool Algorithm::needUpdate() const
 }
 
 boost::shared_ptr<Data> Algorithm::getPort(
-    std::string const& portIdentifier) const
+    const std::string& portIdentifier) const
 {
     std::map<std::string, boost::shared_ptr<Data> >::const_iterator iter;
     iter = ports_.find(portIdentifier);
@@ -105,7 +105,7 @@ boost::shared_ptr<Data> Algorithm::getPort(
     }
 }
 
-void Algorithm::setInput(std::string const& portIdentifier,
+void Algorithm::setInput(const std::string& portIdentifier,
     boost::shared_ptr<Data> dataObject)
 {
     std::map<std::string, boost::shared_ptr<Data> >::iterator iter;
@@ -121,8 +121,8 @@ void Algorithm::setInput(std::string const& portIdentifier,
     }
 }
 
-void Algorithm::connect(Algorithm* alg, std::string const& algPortIdentifier,
-    std::string const& thisPortIdentifier)
+void Algorithm::connect(Algorithm* alg, const std::string& algPortIdentifier,
+    const std::string& thisPortIdentifier)
 {
     this->setInput(thisPortIdentifier, alg->getPort(algPortIdentifier));
 }

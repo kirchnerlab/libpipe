@@ -33,7 +33,7 @@ class Controler : public libpipe::NonCopyable
         /** Constructor
          * @param filename The name to the configuration file
          */
-        Controler(std::string const& filename);
+        Controler(const std::string& filename);
 
         /** Destructor
          */
@@ -44,13 +44,13 @@ class Controler : public libpipe::NonCopyable
          * @param filtername The name of the filter one looks for
          * @return A shared_ptr to a Filter Object
          */
-        boost::shared_ptr<Filter> getFilter(std::string const& filtername);
+        boost::shared_ptr<Filter> getFilter(const std::string& filtername);
 
         /** Returns a LibpipePipeline object, where all information is stored to
          * run libpipe.
          * @return Reference to a LibpipePipeline.
          */
-        Pipeline const& getPipeline() const;
+        const Pipeline& getPipeline() const;
 
     private:
         /** Pointer to the configuration.
@@ -64,12 +64,12 @@ class Controler : public libpipe::NonCopyable
         /** This function will connect the managers.
          * @param filtername Name of the filter
          */
-        void connectManagers(std::string const& filtername);
+        void connectManagers(const std::string& filtername);
 
         /** This function will connect the ports of the algorithms.
          *  @param filtername Name of the filter
          */
-        void connectAlgorithmPorts(std::string const& filtername);
+        void connectAlgorithmPorts(const std::string& filtername);
 
         /** This function will generate the pipeline object
          */
