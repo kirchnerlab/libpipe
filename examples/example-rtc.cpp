@@ -537,7 +537,7 @@ int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
 
-    Loader loader(argc, argv);
+    Loader loader("inputFile.txt");
     Pipeline pipeline = loader.getPipeline();
 
     try {

@@ -11,6 +11,7 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/rtc/Pipeline.hpp>
+#include <string>
 
 namespace libpipe {
 namespace rtc {
@@ -19,7 +20,7 @@ namespace rtc {
 class Loader
 {
     public:
-        Loader(int argc, char *argv[]);
+        Loader(const std::string& filename);
         ~Loader();
 
         Pipeline getPipeline() const;

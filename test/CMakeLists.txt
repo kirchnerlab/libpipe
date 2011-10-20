@@ -64,6 +64,7 @@ LINK_DIRECTORIES(
 )
 
 #### Sources
+SET(SRCS_LOADER rtc/Loader-test.cpp)
 SET(SRCS_PIPELINE rtc/Pipeline-test.cpp)
 SET(SRCS_CONTROLER rtc/Controler-test.cpp)
 SET(SRCS_CONFIGLIBCONFIG rtc/ConfigLibconfig-test.cpp)
@@ -88,6 +89,7 @@ IF (ENABLE_COVERAGE)
     SET(TEST_LIBS ${TEST_LIBS} gcov)
 ENDIF(ENABLE_COVERAGE)
 #### Tests
+ADD_LIBPIPE_TEST("rtc/Loader" test_loader ${SRCS_LOADER})
 ADD_LIBPIPE_TEST("rtc/Pipeline" test_pipeline ${SRCS_PIPELINE})
 ADD_LIBPIPE_TEST("rtc/Controler" test_controler ${SRCS_CONTROLER})
 ADD_LIBPIPE_TEST("rtc/ConfigLibconfig" test_configlibconfig ${SRCS_CONFIGLIBCONFIG})

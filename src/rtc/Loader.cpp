@@ -16,9 +16,9 @@
 namespace libpipe {
 namespace rtc {
 
-Loader::Loader(int argc, char *argv[])
+Loader::Loader(const std::string& filename)
 {
-    std::string filename = "inputFile.txt";
+
 
     try {
         Controler creator_(filename);
