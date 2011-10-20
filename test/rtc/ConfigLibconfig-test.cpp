@@ -34,6 +34,7 @@ struct ConfigLibconfigTestSuite : vigra::test_suite
         {
             add(
                 testCase(&ConfigLibconfigTestSuite::testInputFileHandling));
+            add(testCase(&ConfigLibconfigTestSuite::testFileChecker));
             add(testCase(&ConfigLibconfigTestSuite::testGetters));
         }
 
