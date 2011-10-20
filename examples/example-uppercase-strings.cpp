@@ -20,6 +20,7 @@
 #include <libpipe/RequestException.hpp>
 #include <libpipe/BasicFilter.hpp>
 #include <libpipe/SharedData.hpp>
+#include <libpipe/Pipeline.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -512,8 +513,9 @@ class Source : public libpipe::Algorithm
 
 };
 
-int main(int argc, char *argv[])
+libpipe::Pipeline generatePipeline()
 {
+
     using namespace libpipe;
 
     typedef libpipe::BasicFilter<Source, libpipe::Manager> StringCreator;
@@ -524,103 +526,86 @@ int main(int argc, char *argv[])
 
     boost::shared_ptr<StringFilterLow> lowerFilter(
         new StringFilterLow(std::string("Lowercase Filter")));
-    {
-        boost::shared_ptr<StringCreator> stringCreator(
-                    new StringCreator(std::string("The Source")));
-        boost::shared_ptr<StringFilterUp> stringFilter(
-                      new StringFilterUp(std::string("Filter #1")));
-        boost::shared_ptr<ROTDecrypter> rotDecryper(
-                        new ROTDecrypter(std::string("ROT Decrypter")));
-        boost::shared_ptr<ROTDecrypter> rotDecryper1(
-                        new ROTDecrypter(std::string("ROT Decrypter 1")));
-        boost::shared_ptr<Combiner> combiner(
-                       new Combiner(std::string("Combiner")));
 
-        stringCreator->getAlgorithm()->setParamString(
-            "Hello World! I am a very long string to see how much memory is freed by deleting the objects");
+    boost::shared_ptr<StringCreator> stringCreator(
+        new StringCreator(std::string("The Source")));
+    boost::shared_ptr<StringFilterUp> stringFilter(
+        new StringFilterUp(std::string("Filter #1")));
+    boost::shared_ptr<ROTDecrypter> rotDecryper(
+        new ROTDecrypter(std::string("ROT Decrypter")));
+    boost::shared_ptr<ROTDecrypter> rotDecryper1(
+        new ROTDecrypter(std::string("ROT Decrypter 1")));
+    boost::shared_ptr<Combiner> combiner(
+        new Combiner(std::string("Combiner")));
 
-        stringFilter->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(stringCreator));
-        stringFilter->getAlgorithm()->setInput(
-            stringCreator->getAlgorithm()->getOutput());
+    stringCreator->getAlgorithm()->setParamString(
+        "Hello World! I am a very long string to see how much memory is freed by deleting the objects");
 
-        rotDecryper->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(stringFilter));
-        rotDecryper->getAlgorithm()->setInput(
-            stringFilter->getAlgorithm()->getOutput());
+    stringFilter->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(stringCreator));
+    stringFilter->getAlgorithm()->setInput(
+        stringCreator->getAlgorithm()->getOutput());
 
-        rotDecryper1->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper));
-        rotDecryper1->getAlgorithm()->setInput(
-            rotDecryper->getAlgorithm()->getOutput());
+    rotDecryper->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(stringFilter));
+    rotDecryper->getAlgorithm()->setInput(
+        stringFilter->getAlgorithm()->getOutput());
 
-        combiner->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper));
-        combiner->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(rotDecryper1));
-        combiner->getAlgorithm()->setInput1(
-            rotDecryper->getAlgorithm()->getOutput());
-        combiner->getAlgorithm()->setInput2(
-            rotDecryper1->getAlgorithm()->getOutput());
+    rotDecryper1->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(rotDecryper));
+    rotDecryper1->getAlgorithm()->setInput(
+        rotDecryper->getAlgorithm()->getOutput());
 
-        lowerFilter->getManager()->connect(
-            boost::dynamic_pointer_cast<Filter>(combiner));
-        lowerFilter->getAlgorithm()->setInput(
-            combiner->getAlgorithm()->getOutput());
-    }
+    combiner->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(rotDecryper));
+    combiner->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(rotDecryper1));
+    combiner->getAlgorithm()->setInput1(
+        rotDecryper->getAlgorithm()->getOutput());
+    combiner->getAlgorithm()->setInput2(
+        rotDecryper1->getAlgorithm()->getOutput());
+
+    lowerFilter->getManager()->connect(
+        boost::dynamic_pointer_cast<Filter>(combiner));
+    lowerFilter->getAlgorithm()->setInput(
+        combiner->getAlgorithm()->getOutput());
+
+
+    // generate the pipeline
+    Pipeline pipe;
 
     Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(req, "Starting.");
 
-    try {
-        lowerFilter->getManager()->processRequest(req);
-
-    } catch (libpipe::RequestException& e) {
-        std::cerr << e.what() << std::endl;
-    }
-
-    typedef std::vector<std::string> VS;
-    VS trace;
-    req.getTrace(trace);
-    for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
-        std::cout << *i << '\n';
-    }
+    pipe.push(req, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
     Request reqDelete(libpipe::Request::DELETE);
     reqDelete.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(reqDelete, "Starting with DELETE");
 
-    lowerFilter->getManager()->processRequest(reqDelete);
-
-
-    VS traceDelete;
-    reqDelete.getTrace(traceDelete);
-    for (VS::const_iterator i = traceDelete.begin(); i != traceDelete.end();
-            ++i) {
-        std::cout << *i << '\n';
-    }
+    pipe.push(reqDelete, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
     Request req1(libpipe::Request::UPDATE);
     req1.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(req1, "Starting.");
 
-    try {
-        lowerFilter->getManager()->processRequest(req1);
+    pipe.push(req1, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
-    } catch (libpipe::RequestException& e) {
-        std::cerr << e.what() << std::endl;
-    }
+    return pipe;
+}
 
-    VS trace1;
-    req1.getTrace(trace1);
-    for (VS::const_iterator i = trace1.begin(); i != trace1.end(); ++i) {
+int main(int argc, char *argv[])
+{
+    libpipe::Pipeline pipeline;
+
+    pipeline=generatePipeline();
+
+    pipeline.run();
+
+    typedef std::vector<std::string> VS;
+    VS trace;
+    pipeline.getTrace(trace);
+    for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }
-
-    std::cout
-            << "\033[22;35m All output after this is due to automatically called destructors. \e[m"
-            << std::endl;
 
     return EXIT_SUCCESS;
 }

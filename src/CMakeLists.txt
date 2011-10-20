@@ -3,6 +3,7 @@ SET(SRCS
     Exception.cpp
     Filter.cpp
     Manager.cpp
+    Pipeline.cpp
     Request.cpp
     ModificationTimeManager.cpp
 )
