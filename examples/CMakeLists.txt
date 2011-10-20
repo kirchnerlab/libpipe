@@ -26,3 +26,13 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile.txt.cmake
     ${LIBPIPE_BINARY_DIR}/examples/inputFile.txt
     @ONLY IMMEDIATE
     )
+    
+    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile2.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFile2.txt
+    @ONLY IMMEDIATE
+    )
+    
+    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile2Filter.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFile2Filter.txt
+    @ONLY IMMEDIATE
+    )
