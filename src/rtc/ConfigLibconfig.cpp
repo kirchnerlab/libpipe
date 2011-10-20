@@ -12,11 +12,11 @@
 #include <libconfig.h++>
 
 #include <string>
+#include <map>
 #include <sstream>
 
 namespace libpipe {
 namespace rtc {
-
 
 ConfigLibconfig::ConfigLibconfig()
 {
@@ -92,26 +92,41 @@ void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
 
     const libconfig::Setting& root = cfg.getRoot();
 
-    // generates the filters
+    std::map<std::string, std::string> algorithmMap;
+    std::map<std::string, std::string> managerMap;
+
     try {
         const libconfig::Setting &filters = root["filters"];
-
         for (int i = 0; i < filters.getLength(); ++i) {
             const libconfig::Setting &filter = filters[i];
+            std::string filterIdentifier, algorithmName, managerName;
 
-            // Only output the record if all of the expected fields are present.
-            std::string filterName, algorithmName, managerName;
-
-            if (!(filter.lookupValue("filterName", filterName)
+            if (!(filter.lookupValue("filterIdentifier", filterIdentifier)
                     && filter.lookupValue("algorithmName", algorithmName)
                     && filter.lookupValue("managerName", managerName))) {
+                continue;
+            }
+            algorithmMap[filterIdentifier] = algorithmName;
+            managerMap[filterIdentifier] = managerName;
+        }
+
+        const libconfig::Setting &connections = root["connections"];
+
+        for (int i = 0; i < connections.getLength(); ++i) {
+            const libconfig::Setting &filter = connections[i];
+
+            // Only output the record if all of the expected fields are present.
+            std::string filterName, identifier;
+
+            if (!(filter.lookupValue("filterName", filterName)
+                    && filter.lookupValue("identifier", identifier))) {
                 continue;
             }
 
             FilterDescription tempFilterStruct;
             tempFilterStruct.filterName = filterName;
-            tempFilterStruct.algorithmName = algorithmName;
-            tempFilterStruct.managerName = managerName;
+            tempFilterStruct.algorithmName = algorithmMap[identifier];
+            tempFilterStruct.managerName = managerMap[identifier];
 
             // get precursors
             const libconfig::Setting &precursors = filter["precursors"];
@@ -149,12 +164,8 @@ void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
             filterList_.push_back(tempFilterStruct);
         }
 
-    } catch (const libconfig::SettingNotFoundException &nfex) {
-        libpipe_fail("Problems with settings in the input file.");
-    }
+        // generates the requests
 
-    // generates the requests
-    try {
         const libconfig::Setting &requests = root["request"];
 
         for (int i = 0; i < requests.getLength(); ++i) {
@@ -166,7 +177,7 @@ void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
             unsigned int requestRank;
             bool trace = false;
 
-            if (!(request.lookupValue("filteName", filterName)
+            if (!(request.lookupValue("filterName", filterName)
                     && request.lookupValue("requestType", requestType)
                     && request.lookupValue("requestRank", requestRank)
                     && request.lookupValue("makeTrace", trace))) {
@@ -190,7 +201,6 @@ bool ConfigLibconfig::checkFile() const
     return true;
     ///TODO implement test
 }
-
 
 } /* namespace rtc */
 } /* namespace libpipe */

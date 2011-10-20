@@ -128,6 +128,11 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFile.txt.cmake
     @ONLY IMMEDIATE
 )
 
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFileFilter.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFileFilter.txt
+    @ONLY IMMEDIATE
+)
+
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/wrongInputFile.txt.cmake
     ${LIBPIPE_BINARY_DIR}/test/wrongInputFile.txt
     @ONLY IMMEDIATE

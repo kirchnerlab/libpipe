@@ -1,12 +1,11 @@
-#6dc0a277ae36db78b3494d0ddf32dd3d
 // An example configuration file that stores information Filters.
 
-// Store filters:
-filters =
+@include "inputFile2Filter.txt"
+// Connect Filters:
+connections =
 (
-   { filterName  = "LowercaseFilter";
-     algorithmName = "LowercaseAlgorithm";
-     managerName  = "MangerRTC";
+   { filterName  = "Lowercase";
+     identifier = "LowercaseFilter";
      precursors = ( {precursorName="Combiner"}
      )
      ports = (
@@ -17,20 +16,18 @@ filters =
      )
    },
    
-{ filterName  = "TheSource";
-     algorithmName = "Source";
-     managerName  = "MangerRTC";
+   { filterName  = "Source";
+     identifier = "SourceFilter";
      precursors = ()
      ports = ()
    },
    
-   { filterName  = "Filter1";
-     algorithmName = "UppercaseAlgorithm";
-     managerName  = "MangerRTC";
-     precursors = ( {precursorName="TheSource"}
+   { filterName  = "Uppercase";
+     identifier = "UppercaseFilter";
+     precursors = ( {precursorName="Source"}
      )
      ports = (
-     	{filterName="TheSource";
+     	{filterName="Source";
      	 portNameOfFilter="StringOutput";
      	 portNameOfThis="StringInput";
      	}
@@ -38,12 +35,11 @@ filters =
    },
    
    { filterName  = "ROTDecrypter";
-     algorithmName = "ROT13Algorithm";
-     managerName  = "MangerRTC";
-     precursors = ( {precursorName="Filter1"}
+     identifier = "ROTFilter";
+     precursors = ( {precursorName="Uppercase"}
      )
      ports = (
-     	{filterName="Filter1";
+     	{filterName="Uppercase";
      	 portNameOfFilter="StringOutput";
      	 portNameOfThis="StringInput";
      	}
@@ -51,8 +47,7 @@ filters =
    },     
    
    { filterName  = "ROTDecrypter1";
-     algorithmName = "ROT13Algorithm";
-     managerName  = "MangerRTC";
+     identifier = "ROTFilter";
      precursors = ( {precursorName="ROTDecrypter"}
      )
      ports = (
@@ -65,8 +60,7 @@ filters =
    
        
     { filterName  = "Combiner";
-     algorithmName = "CombineAlgorithm";
-     managerName  = "MangerRTC";
+     identifier = "CombinerFilter";
      precursors = (
       				{precursorName="ROTDecrypter"},
       				{precursorName="ROTDecrypter1"}
@@ -87,20 +81,18 @@ filters =
 
 //Requests
 request = (
-		{filteName="LowercaseFilter";
+		{filterName="Lowercase";
 		requestType="UPDATE";
 		requestRank=1;
 		makeTrace = true;},
 		
-		{filteName="ROTDecrypter";
+		{filterName="Lowercase";
 		requestType="DELETE";
 		requestRank=2;
 		makeTrace=true;},
 		
-		{filteName="LowercaseFilter";
+		{filterName="Lowercase";
 		requestType="UPDATE";
 		requestRank=3;
 		makeTrace=true;}
-		
-
 );
