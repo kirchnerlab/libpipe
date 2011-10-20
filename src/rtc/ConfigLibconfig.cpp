@@ -196,7 +196,7 @@ void ConfigLibconfig::parseInputFile(std::string const& inputFileName)
     }
 }
 
-bool ConfigLibconfig::checkFile() const
+bool ConfigLibconfig::checkFile(const std::string& inputFileName) const
 {
     return true;
     ///TODO implement test
