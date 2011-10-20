@@ -101,28 +101,17 @@ struct PipelineDescriptionLess : public std::binary_function<PipelineDescription
          * @return true if lhs < rhs
          */
         bool operator ()(const PipelineDescription& lhs,
-            PipelineDescription& rhs) const
-        {
-            return lhs.requestRank < rhs.requestRank;
-        }
+            PipelineDescription& rhs) const;
 };
 
 class Config
 {
     public:
 
-        /** create Methode which is registered in the InputFactory
-         * @return Pointer to the new generated Libconfig class, keep in mind to call delete on this generated pointer
-         */
-        static Config* create();
-
         /** Virtual Destructor to allow inheritance.
          *
          */
-        virtual ~Config()
-        {
-        }
-        ;
+        virtual ~Config() = 0;
 
         /** Parses the input file
          * @param inputFileName The name of the input file.
@@ -158,7 +147,7 @@ class Config
         /** Checks if the file is correct
          * @return True if the file is correct, otherwise false
          */
-        virtual bool checkFile(const std::string& inputFileName) const =0;
+        virtual bool checkFile(const std::string& inputFileName) const = 0;
 
 
 };

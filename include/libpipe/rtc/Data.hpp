@@ -16,7 +16,7 @@ namespace rtc {
 class Data
 {
     public:
-        virtual ~Data(){};
+        virtual ~Data()=0;
 };
 
 }

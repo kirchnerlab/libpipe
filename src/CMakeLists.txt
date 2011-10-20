@@ -1,5 +1,7 @@
 
 SET(SRCS 
+    rtc/Data.cpp
+    rtc/Config.cpp
     rtc/ConfigLibconfig.cpp
     rtc/Controler.cpp
     rtc/Pipeline.cpp
