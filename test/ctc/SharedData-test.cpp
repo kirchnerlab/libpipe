@@ -4,14 +4,13 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-#include <libpipe/config.hpp>
 
 #include <iostream>
 #include "vigra/unittest.hxx"
 
-#include <libpipe/rtc/SharedData.hpp>
+#include <libpipe/ctc/SharedData.hpp>
 
-using namespace libpipe::rtc;
+using namespace libpipe::ctc;
 
 /** Test suite for the SharedData template class
  */
@@ -23,7 +22,7 @@ struct SharedDataTestSuite : vigra::test_suite
      * case here.
      */
     SharedDataTestSuite() :
-        vigra::test_suite("rtc/SharedData")
+        vigra::test_suite("SharedData")
     {
         add(testCase(&SharedDataTestSuite::instance));
     }

@@ -10,7 +10,7 @@
 
 #include <libpipe/config.hpp>
 
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/rtc/Data.hpp>
 
 #include <memory>
@@ -66,7 +66,7 @@ namespace rtc {
  * not.
  */
 template<typename T>
-class SharedData : public NonCopyable ,public Data
+class SharedData : public utilities::NonCopyable ,public Data
 {
 public:
     /** Constructor.

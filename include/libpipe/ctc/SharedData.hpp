@@ -8,12 +8,11 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
-
-#include <libpipe/NonCopyable.hpp>
-
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <memory>
 
 namespace libpipe {
+namespace ctc {
 
 /** A template class used to hold data that is shared between algorithms.
  * Sometimes algorithm objects are not able to immediately instanciate a result
@@ -93,7 +92,7 @@ namespace libpipe {
  * not.
  */
 template<typename T>
-class SharedData : public NonCopyable
+class SharedData : private libpipe::utilities::NonCopyable
 {
 public:
     /** Constructor.
@@ -186,7 +185,8 @@ bool SharedData<T>::isNull()
     return ptr_.get() == 0;
 }
 
-} // namespace libpipe
+} // end namespace ctc
+} // end namespace libpipe
 
 #endif
 

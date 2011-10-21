@@ -14,7 +14,7 @@
 
 #include <libpipe/rtc/Filter.hpp>
 #include <libpipe/rtc/Pipeline.hpp>
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 
 #include <boost/shared_ptr.hpp>
 
@@ -26,7 +26,7 @@ class Config;
 /** Generates the objects needed by libpipe, it only relies on the Config interface. And
  * not on the input file.
  */
-class Controler : public libpipe::NonCopyable
+class Controler : public utilities::NonCopyable
 {
     public:
 

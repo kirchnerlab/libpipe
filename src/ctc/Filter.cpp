@@ -1,17 +1,14 @@
 /*
  * Filter.cpp
  * 
- * Copyright (c) 2010 Marc Kirchner
+ * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
+#include <libpipe/ctc/Filter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
-#include <libpipe/config.hpp>
-
-#include <libpipe/Filter.hpp>
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/Manager.hpp>
-
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 Filter::Filter(const std::string& name) :
     algorithm_(0), manager_(0), name_(name)
@@ -25,7 +22,7 @@ Filter::~Filter()
     delete manager_;
 }
 
-Request& Filter::processRequest(Request& req)
+libpipe::Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");

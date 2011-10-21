@@ -1,8 +1,7 @@
 /*
  * Algorithm.hpp
  * 
- * Copyright (c) 2010 Marc Kirchner
- *               2011 David Sichau
+ * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__
@@ -11,6 +10,7 @@
 #include <libpipe/config.hpp>
 
 #include <string>
+#include <map>
 #include <libpipe/Request.hpp>
 #include <sys/time.h> // for timeval
 #include <ostream>
@@ -28,6 +28,11 @@ bool operator<=(const timeval& lhs, const timeval& rhs);
 std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 namespace libpipe {
+
+/**
+ * @namespace ctc All classes which are needed for compile time configration
+ */
+namespace ctc {
 
 /** Base class for all LIBPIPE algorithms.
  */
@@ -59,7 +64,7 @@ public:
     /** Processes the current request object.
      * Depending on the information contained in the request object,  this will
      * call the \c update function 
-     * @param [in,out] req A request object.
+     * @param[inout] req A request object.
      * @return A (potentially modified) request object.
      */
     virtual Request& processRequest(Request& req);
@@ -69,10 +74,9 @@ public:
      * after calling the update function the modification time is fixed to
      * \c Algorithm::MIN_TIME.
      * Users must overload this method (this is where the beef goes).
-     * @param [in,out] req The request object (useful for logging/tracing
+     * @param[in,out] req The request object (useful for logging/tracing
      *                   purposes). Also useful to get the type of request
      *                   (Update of Delete), so that the input can be deleted.
-     * @return Request object
      */
     virtual Request& update(Request& req) = 0;
 
@@ -133,6 +137,7 @@ private:
     timeval mTime_;
 };
 
+} // end namespace ctc
 } // namespace libpipe
 
 #endif

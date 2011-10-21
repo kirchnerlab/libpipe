@@ -8,11 +8,11 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
 
 #include <libpipe/config.hpp>
-
 #include <libpipe/Request.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
 namespace libpipe {
+namespace ctc {
 
 /** A manager class that makes use of the modification time information of 
  * the algoritms it manages.
@@ -32,13 +32,14 @@ public:
 
     /** Processes a request, taking into account the current modification time
      * of the \c Manager's algorithm.
-     * @param [in,out] req The request object.
+     * @param[inout] req The request object.
      * @return A (potentially modified) request object.
      */
-    virtual Request& processRequest(Request& req);
+    virtual libpipe::Request& processRequest(libpipe::Request& req);
 };
 
-}
+} // end namespace ctc
+} // end namespace libpipe
 
 #endif   
 

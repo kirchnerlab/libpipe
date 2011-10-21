@@ -4,22 +4,21 @@
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-#include <libpipe/config.hpp>
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include "vigra/unittest.hxx"
 
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/BasicFilter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
-#include <libpipe/ModificationTimeManager.hpp>
+#include <libpipe/ctc/ModificationTimeManager.hpp>
 
-#include "utils.hpp"
+#include "ctc/utils.hpp"
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** Test suitre for the ModificationTime
  */
@@ -43,11 +42,11 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
     {
         ModificationTimeManager mtm;
         // no algorithm defined, needs to throw an exception
-        Request req(Request::UPDATE);
+        libpipe::Request req(libpipe::Request::UPDATE);
         bool thrown = false;
         try {
             req = mtm.processRequest(req);
-        } catch (RequestException& e) {
+        } catch (libpipe::RequestException& e) {
             thrown = true;
         }
         shouldEqual(thrown, true);
@@ -62,7 +61,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         thrown = false;
         try {
             req = mtm.processRequest(req);
-        } catch (RequestException& e) {
+        } catch (libpipe::RequestException& e) {
             thrown = true;
         }
         shouldEqual(thrown, false);
@@ -71,7 +70,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         thrown = false;
         try {
             req = mtm.processRequest(req);
-        } catch (RequestException& e) {
+        } catch (libpipe::RequestException& e) {
             // only catching the RequestException also ensures that exceptions
             // are encapsulated (RaiseExceptionAlg throws a std::exception)
             thrown = true;
@@ -102,7 +101,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         i1->getAlgorithm()->setMTime(Algorithm::MAX_TIME);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 0);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 0);
-        Request req(Request::UPDATE);
+        libpipe::Request req(libpipe::Request::UPDATE);
         req.setTraceFlag(true);
         req = i2->processRequest(req);
         /*         typedef std::vector<std::string> VS;

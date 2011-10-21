@@ -8,17 +8,17 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/rtc/Algorithm.hpp>
-#include <libpipe/Exception.hpp>
+#include <libpipe/utilities/Exception.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 
 #include <limits>
-#include <libpipe/Log.hpp>
+#include <libpipe/utilities/Log.hpp>
 #include <string>
 
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
-#include "libpipe/Algorithm.hpp" //for timeval comparisons
+#include "libpipe/ctc/Algorithm.hpp" //for timeval comparisons
 using namespace libpipe::rtc;
 
 timeval Algorithm::initMaxTime()

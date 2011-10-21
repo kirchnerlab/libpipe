@@ -542,7 +542,7 @@ int main(int argc, char *argv[])
 
     try {
         pipeline.run();
-    } catch (libpipe::Exception& e) {
+    } catch (libpipe::utilities::Exception& e) {
         std::cerr << e.what() << std::endl;
     }
 

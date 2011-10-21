@@ -6,10 +6,10 @@
  */
 #include <libpipe/config.hpp>
 
-#include <libpipe/Pipeline.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
-namespace libpipe {
+using namespace libpipe::ctc;
 
 Pipeline::Pipeline()
 {
@@ -59,4 +59,3 @@ void Pipeline::run()
 
 }
 
-} /* namespace libpipe */

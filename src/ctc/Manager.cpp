@@ -2,17 +2,13 @@
  * Manager.cpp
  *
  * Copyright (c) 2010 Marc Kirchner
- *               2011 David Sichau
  *
  */
+#include <libpipe/ctc/Manager.hpp>
+#include <libpipe/ctc/Filter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
 
-#include <libpipe/config.hpp>
-
-#include <libpipe/Manager.hpp>
-#include <libpipe/Filter.hpp>
-#include <libpipe/Algorithm.hpp>
-
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 Manager::Manager() :
         algorithm_(0)
@@ -35,7 +31,7 @@ void Manager::setAlgorithm(Algorithm* alg)
     algorithm_ = alg;
 }
 
-Request& Manager::processRequest(Request& req)
+libpipe::Request& Manager::processRequest(Request& req)
 {
     if (req.is(Request::UPDATE)) {
         if (!algorithm_) {

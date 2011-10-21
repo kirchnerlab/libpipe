@@ -72,7 +72,7 @@ struct PipelineTestSuite : vigra::test_suite
             bool thrown = false;
             try {
                 pipeline.run();
-            } catch (libpipe::Exception& e) {
+            } catch (libpipe::utilities::Exception& e) {
                 thrown = true;
             }shouldEqual(thrown, false);
 

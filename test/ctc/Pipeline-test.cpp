@@ -6,15 +6,13 @@
  */
 
 #include <iostream>
-
 #define private public
 #define protected public
-#include <libpipe/Pipeline.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 #undef private
 #undef protected
 #include "vigra/unittest.hxx"
-
-#include "utils.hpp"
+#include "ctc/utils.hpp"
 
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
@@ -22,6 +20,9 @@
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
+
+using namespace libpipe::ctc;
+
 struct PipelineTestSuite : vigra::test_suite
 {
         /** Constructor.
@@ -37,9 +38,8 @@ struct PipelineTestSuite : vigra::test_suite
         }
         void testPush()
         {
-
-            libpipe::Pipeline pipeline;
-            typedef libpipe::BasicFilter<libpipe::Identity, libpipe::TestManager> IdentityFilter;
+            Pipeline pipeline;
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
 
             boost::shared_ptr<IdentityFilter> f(
                 new IdentityFilter(std::string("bla")));
@@ -50,7 +50,7 @@ struct PipelineTestSuite : vigra::test_suite
             libpipe::Request reqDel(libpipe::Request::DELETE);
             libpipe::Request reqUpd(libpipe::Request::UPDATE);
 
-            pipeline.push(reqDel, boost::dynamic_pointer_cast<libpipe::Filter>(f));
+            pipeline.push(reqDel, boost::dynamic_pointer_cast<Filter>(f));
 
             shouldEqual(
                 f->getName() == pipeline.pipelineQueue_.front()->getName(),
@@ -65,19 +65,19 @@ struct PipelineTestSuite : vigra::test_suite
 
         void testRunAndTrace()
         {
-            libpipe::Pipeline pipeline;
-            typedef libpipe::BasicFilter<libpipe::Identity, libpipe::TestManager> IdentityFilter;
+            Pipeline pipeline;
+            typedef BasicFilter<Identity, TestManager> IdentityFilter;
             boost::shared_ptr<IdentityFilter> f(
                 new IdentityFilter(std::string("bla")));
 
             libpipe::Request reqUpd(libpipe::Request::UPDATE);
 
-            pipeline.push(reqUpd, boost::dynamic_pointer_cast<libpipe::Filter>(f));
+            pipeline.push(reqUpd, boost::dynamic_pointer_cast<Filter>(f));
 
             bool thrown = false;
             try {
                 pipeline.run();
-            } catch (libpipe::Exception& e) {
+            } catch (libpipe::utilities::Exception& e) {
                 thrown = true;
             }
 

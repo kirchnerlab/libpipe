@@ -12,6 +12,7 @@
 #include <libpipe/config.hpp>
 
 #include <exception>
+namespace libpipe {
 namespace utilities {
 /** Singleton holder template class.
  * Template class to create singletons. A singleton of type SinglImpl is
@@ -96,5 +97,6 @@ template<class T> void Singleton<T>::create()
 template<class T> T* Singleton<T>::pInstance_ = 0;
 template<class T> bool Singleton<T>::destroyed_ = false;
 
+}
 }
 #endif /* __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_SINGLETON_HPP__ */

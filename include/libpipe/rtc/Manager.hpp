@@ -14,7 +14,7 @@
 #include <set>
 
 #include <libpipe/Request.hpp>
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
 
@@ -31,7 +31,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager : private libpipe::NonCopyable
+class Manager : private utilities::NonCopyable
 {
     public:
 

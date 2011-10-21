@@ -1,16 +1,14 @@
 /*
  * Log.hpp
  *
+ * Copyright (c) 2011 David Sichau
  * Copyright (c) 2010 Marc Kirchner
  * Copyright (c) 2009 Bernhard Kausler
  *
  */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_LOG_HPP__
-
-#include <libpipe/config.hpp>
-
+#ifndef __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
+#define __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
 
 #include <ctime>
 #include <cstdio>
@@ -68,6 +66,8 @@
 
 namespace libpipe {
 
+namespace utilities {
+
 /** Returns a std::string representation of the current time, in millisecond
  * resolution.
  * Returns a strng representation of the current system time:
@@ -75,7 +75,6 @@ namespace libpipe {
  * 15:50:57.979
  * @endcode
  * The exact presentation of the string is locale dependent.
- * @return the actual time
  */
 inline std::string nowTime();
 
@@ -104,8 +103,7 @@ enum LogLevel
 class Output2FILE
 {
 public:
-    /** Returns the file handle of the logging stream traget.
-     * @return the file handle
+    /** Returns the file handle of the logging stream traget..
      */
     static FILE*& getRedirect();
 
@@ -216,8 +214,7 @@ private:
     /** Assignment operator.
      * Declared as private and never defined to disallow assignment.
      *  
-     * @param [in] rhs A right hand side @c Log object.
-     * @return A Log Object
+     * @param[in] rhs A right hand side @c Log object.
      */
     Log& operator=(const Log& rhs);
 };
@@ -323,7 +320,7 @@ class FILELog : public Log<Output2FILE>
  * the code.
  */
 
-#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logDEBUG4
+#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::utilities::logDEBUG4
 #endif
 
 /** Default LIBPIPE logging macro.
@@ -340,8 +337,8 @@ class FILELog : public Log<Output2FILE>
  */
 #define LIBPIPE_LOG(level) \
     if (level > LIBPIPE_FILELOG_MAX_LOGGING_LEVEL) ;\
-    else if (level > libpipe::FILELog::getReportingLevel() || !libpipe::Output2FILE::getRedirect()) ; \
-    else libpipe::FILELog().get(level)
+    else if (level > libpipe::utilities::FILELog::getReportingLevel() || !libpipe::utilities::Output2FILE::getRedirect()) ; \
+    else libpipe::utilities::FILELog().get(level)
 
 // We have to do the following yaketiyak, because the standard <ctime> is not thread safe.
 // (It is using static internal buffers in some functions like ctime() .)
@@ -381,10 +378,12 @@ inline std::string nowTime()
 }
 #else /* not on a windows system */
 } // Temporarily close ms namespace to inclue header files.
+}
 #include <sys/time.h>
 
 // reopen the LIBPIPE namespace
 namespace libpipe {
+namespace utilities {
 
 inline std::string nowTime()
 {
@@ -416,7 +415,8 @@ inline std::string nowTime()
     return result;
 }
 #endif //WIN32
-} // namespace libpipe
+} // end namespace utilities
+} // end namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
 

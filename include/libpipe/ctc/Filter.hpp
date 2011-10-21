@@ -8,13 +8,12 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
 
 #include <libpipe/config.hpp>
-
 #include <string>
-
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
 
 namespace libpipe {
+namespace ctc {
 
 // forward declarations
 class Algorithm;
@@ -23,7 +22,7 @@ class Manager;
 /** The base class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
-class Filter : private NonCopyable
+class Filter : private libpipe::utilities::NonCopyable
 {
 public:
     /** Constructor.
@@ -86,7 +85,8 @@ private:
     std::string name_;
 };
 
-} // namespace libpipe
+} // end namespace ctc
+} // end namespace libpipe
 
 #endif
 

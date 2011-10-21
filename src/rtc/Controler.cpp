@@ -28,7 +28,7 @@ Controler::Controler(const std::string& inputFile)
     configuration_ = new ConfigLibconfig;
     try{
         configuration_->parseInputFile(inputFile);
-    } catch (libpipe::Exception& e){
+    } catch (utilities::Exception& e){
         // fix memory leak when the parsing throws an exception.
         delete configuration_;
         throw e;

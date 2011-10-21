@@ -22,7 +22,7 @@ struct SingletonTestSuite : vigra::test_suite {
     }
 
     void test() {
-        typedef utilities::Singleton<SingletonTest> ST;
+        typedef libpipe::utilities::Singleton<SingletonTest> ST;
         SingletonTest& u = ST::instance();
         SingletonTest& v = ST::instance();
         should(&u == &v);

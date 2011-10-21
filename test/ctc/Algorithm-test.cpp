@@ -4,14 +4,13 @@
  * Copyright (c) 2011 Marc Kirchner.
  *
  */
-#include <libpipe/config.hpp>
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#include "libpipe/Algorithm.hpp"
+#include "libpipe/ctc/Algorithm.hpp"
 #include <sys/time.h> // for gettimeofday
 #include <limits>
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** Test suite for the libpipe::Algorithm base class.
  * The basic setup is: derive from Algorithm and test all inherited functions. 
@@ -31,7 +30,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         ~MyAlgorithm()
         {
         }
-        virtual Request& update(Request& req)
+        virtual libpipe::Request& update(libpipe::Request& req)
         {
             // dummy
             return req;
@@ -96,7 +95,7 @@ struct AlgorithmTestSuite : vigra::test_suite
      */
     void testProcessRequest(){
         MyAlgorithm a;
-        Request req(Request::DELETE);
+        libpipe::Request req(libpipe::Request::DELETE);
         a.processRequest(req);
         shouldEqual(a.getMTime(), Algorithm::MIN_TIME);
 

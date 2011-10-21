@@ -9,11 +9,11 @@
 
 #include <libpipe/config.hpp>
 
-#include <libpipe/Exception.hpp>
+#include <libpipe/utilities/Exception.hpp>
 
 namespace libpipe {
 
-class RequestException : public Exception
+class RequestException : public utilities::Exception
 {
 public:
     RequestException(const char* msg) :

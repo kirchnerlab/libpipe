@@ -9,9 +9,11 @@
 
 #include <libpipe/config.hpp>
 #include <string>
-#include <libpipe/Filter.hpp>
+#include <libpipe/ctc/Filter.hpp>
 
 namespace libpipe {
+
+namespace ctc {
 
 /** Wraps an algorithm and a manager into a Filter.
  * This is the preferred way of creating a filter type from given \c Algorithm
@@ -97,7 +99,8 @@ M* BasicFilter<A, M>::getManager()
     return dynamic_cast<M*> (Filter::getManager());
 }
 
-} // namespace libpipe
+} // end namspace ctc
+} // end namespace libpipe
 
 #endif
 

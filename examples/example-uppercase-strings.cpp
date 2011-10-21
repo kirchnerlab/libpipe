@@ -13,15 +13,14 @@
 #include <set>
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/Filter.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/Filter.hpp>
+#include <libpipe/ctc/Manager.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
-#include <libpipe/BasicFilter.hpp>
-#include <libpipe/SharedData.hpp>
-#include <libpipe/Pipeline.hpp>
+#include <libpipe/ctc/BasicFilter.hpp>
+#include <libpipe/ctc/SharedData.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -40,15 +39,15 @@
  * structural imprint that LIBPIPE leaves on applications allows easy cross-suite
  * interfacing and allows for a more rapid algorithmic development cycle.
  */
-class UppercaseAlgorithm : public libpipe::Algorithm
+class UppercaseAlgorithm : public libpipe::ctc::Algorithm
 {
     public:
         /** Constructor.
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         UppercaseAlgorithm() :
-                libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(
+            libpipe::ctc::Algorithm(), output_(
+                    boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
         }
@@ -70,7 +69,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
@@ -91,7 +90,7 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          * 'getOutput'.
          *  @returns A handle to the output data of the algorithm.
          */
-        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > getOutput()
         {
             return output_;
         }
@@ -103,13 +102,13 @@ class UppercaseAlgorithm : public libpipe::Algorithm
          * @param[in] input A handle (in most cases a (smart) pointer to the data.
          */
         void setInput(
-            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
             input_ = input;
         }
 
     protected:
-        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+        typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
          * This can be a weak pointer or some other kind of reference. In the
@@ -142,15 +141,15 @@ class UppercaseAlgorithm : public libpipe::Algorithm
  * structural imprint that LIBPIPE leaves on applications allows easy cross-suite
  * interfacing and allows for a more rapid algorithmic development cycle.
  */
-class LowercaseAlgorithm : public libpipe::Algorithm
+class LowercaseAlgorithm : public libpipe::ctc::Algorithm
 {
     public:
         /** Constructor.
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         LowercaseAlgorithm() :
-                libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(
+            libpipe::ctc::Algorithm(), output_(
+                    boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
         }
@@ -172,7 +171,7 @@ class LowercaseAlgorithm : public libpipe::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
@@ -193,7 +192,7 @@ class LowercaseAlgorithm : public libpipe::Algorithm
          * 'getOutput'.
          *  @returns A handle to the output data of the algorithm.
          */
-        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > getOutput()
         {
             return output_;
         }
@@ -205,13 +204,13 @@ class LowercaseAlgorithm : public libpipe::Algorithm
          * @param[in] input A handle (in most cases a (smart) pointer to the data.
          */
         void setInput(
-            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
             input_ = input;
         }
 
     protected:
-        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+        typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
          * This can be a weak pointer or some other kind of reference. In the
@@ -230,15 +229,15 @@ class LowercaseAlgorithm : public libpipe::Algorithm
 /** Combines the input strings to one string.
  *
  */
-class CombineAlgorithm : public libpipe::Algorithm
+class CombineAlgorithm : public libpipe::ctc::Algorithm
 {
     public:
         /** Constructor.
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         CombineAlgorithm() :
-                libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(
+                libpipe::ctc::Algorithm(), output_(
+                    boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
         }
@@ -260,7 +259,7 @@ class CombineAlgorithm : public libpipe::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
-            output_.get()->get()->clear();
+            output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
@@ -280,7 +279,7 @@ class CombineAlgorithm : public libpipe::Algorithm
          * 'getOutput'.
          *  @returns A handle to the output data of the algorithm.
          */
-        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > getOutput()
         {
             return output_;
         }
@@ -292,19 +291,19 @@ class CombineAlgorithm : public libpipe::Algorithm
          * @param[in] input A handle (in most cases a (smart) pointer to the data.
          */
         void setInput1(
-            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
             input1_ = input;
         }
 
         void setInput2(
-            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
             input2_ = input;
         }
 
     protected:
-        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+        typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
          * This can be a weak pointer or some other kind of reference. In the
@@ -320,7 +319,7 @@ class CombineAlgorithm : public libpipe::Algorithm
         StringPtr output_;
     private:
         void combine(
-            boost::shared_ptr<libpipe::SharedData<std::string> > result)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > result)
         {
             result->get()->append(*input1_->get());
             result->get()->append(*input2_->get());
@@ -332,7 +331,7 @@ class CombineAlgorithm : public libpipe::Algorithm
  *
  */
 
-class ROT13Algorithm : public libpipe::Algorithm
+class ROT13Algorithm : public libpipe::ctc::Algorithm
 {
     public:
 
@@ -340,8 +339,8 @@ class ROT13Algorithm : public libpipe::Algorithm
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         ROT13Algorithm() :
-                libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(
+                libpipe::ctc::Algorithm(), output_(
+                    boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
         }
@@ -398,7 +397,7 @@ class ROT13Algorithm : public libpipe::Algorithm
          *  @returns A handle to the output data of the algorithm.
          */
 
-        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > getOutput()
         {
             return output_;
         }
@@ -410,13 +409,13 @@ class ROT13Algorithm : public libpipe::Algorithm
          * @param[in] input A handle (in most cases a (smart) pointer to the data.)
          */
         void setInput(
-            boost::shared_ptr<libpipe::SharedData<std::string> > input)
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
             input_ = input;
         }
     protected:
 
-        typedef boost::shared_ptr<libpipe::SharedData<std::string> > StringPtr;
+        typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
          * owned by the algorithm (or, at least, managed by it).
@@ -437,8 +436,8 @@ class ROT13Algorithm : public libpipe::Algorithm
          * @param[in] str A handle to the input string
          * @param[out] result A handle to the ciphered input
          */
-        void rot13(boost::shared_ptr<libpipe::SharedData<std::string> > str,
-            boost::shared_ptr<libpipe::SharedData<std::string> > result)
+        void rot13(boost::shared_ptr<libpipe::ctc::SharedData<std::string> > str,
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > result)
         {
             static std::string const lcalph = "abcdefghijklmnopqrstuvwxyz",
                     ucalph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -463,14 +462,14 @@ class ROT13Algorithm : public libpipe::Algorithm
  * This is an example of a 'source'. The \c Source algorithm does not require
  * any input and will always provide a predefined string as its output.
  */
-class Source : public libpipe::Algorithm
+class Source : public libpipe::ctc::Algorithm
 {
     public:
         /** Constructor.
          */
         Source() :
-                libpipe::Algorithm(), output_(
-                    boost::make_shared<libpipe::SharedData<std::string> >(
+                libpipe::ctc::Algorithm(), output_(
+                    boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
         }
@@ -480,18 +479,18 @@ class Source : public libpipe::Algorithm
         virtual ~Source()
         {
             std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_.get()->get() << "\e[m" << std::endl;
+                    << *output_->get() << "\e[m" << std::endl;
         }
 
         void setParamString(const std::string& s)
         {
-            *output_.get()->get() = s;
+            *output_->get() = s;
         }
 
         /** Provides access to the output.
          * @return A handle to the output.
          */
-        boost::shared_ptr<libpipe::SharedData<std::string> > getOutput()
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > getOutput()
         {
             return output_;
         }
@@ -510,20 +509,20 @@ class Source : public libpipe::Algorithm
     protected:
         /** Holds the output string.
          */
-        boost::shared_ptr<libpipe::SharedData<std::string> > output_;
+        boost::shared_ptr<libpipe::ctc::SharedData<std::string> > output_;
 
 };
 
-libpipe::Pipeline generatePipeline()
+libpipe::ctc::Pipeline generatePipeline()
 {
 
-    using namespace libpipe;
+    using namespace libpipe::ctc;
 
-    typedef libpipe::BasicFilter<Source, libpipe::Manager> StringCreator;
-    typedef libpipe::BasicFilter<UppercaseAlgorithm, libpipe::Manager> StringFilterUp;
-    typedef libpipe::BasicFilter<ROT13Algorithm, libpipe::Manager> ROTDecrypter;
-    typedef libpipe::BasicFilter<CombineAlgorithm, libpipe::Manager> Combiner;
-    typedef libpipe::BasicFilter<LowercaseAlgorithm, libpipe::Manager> StringFilterLow;
+    typedef BasicFilter<Source, Manager> StringCreator;
+    typedef BasicFilter<UppercaseAlgorithm, Manager> StringFilterUp;
+    typedef BasicFilter<ROT13Algorithm, Manager> ROTDecrypter;
+    typedef BasicFilter<CombineAlgorithm, Manager> Combiner;
+    typedef BasicFilter<LowercaseAlgorithm, Manager> StringFilterLow;
 
     boost::shared_ptr<StringFilterLow> lowerFilter(
         new StringFilterLow(std::string("Lowercase Filter")));
@@ -575,17 +574,17 @@ libpipe::Pipeline generatePipeline()
     // generate the pipeline
     Pipeline pipe;
 
-    Request req(libpipe::Request::UPDATE);
+    libpipe::Request req(libpipe::Request::UPDATE);
     req.setTraceFlag(true);
 
     pipe.push(req, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
-    Request reqDelete(libpipe::Request::DELETE);
+    libpipe::Request reqDelete(libpipe::Request::DELETE);
     reqDelete.setTraceFlag(true);
 
     pipe.push(reqDelete, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
-    Request req1(libpipe::Request::UPDATE);
+    libpipe::Request req1(libpipe::Request::UPDATE);
     req1.setTraceFlag(true);
 
     pipe.push(req1, boost::dynamic_pointer_cast<Filter>(lowerFilter));
@@ -595,7 +594,7 @@ libpipe::Pipeline generatePipeline()
 
 int main(int argc, char *argv[])
 {
-    libpipe::Pipeline pipeline;
+    libpipe::ctc::Pipeline pipeline;
 
     pipeline=generatePipeline();
     pipeline.run();

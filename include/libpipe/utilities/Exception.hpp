@@ -1,18 +1,18 @@
 /*
  * Exception.hpp
  *
+ * Copyright (c) 2011 David Sichau
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_EXCEPTION_HPP__
-
-#include <libpipe/config.hpp>
+#ifndef __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_EXCEPTION_HPP__
+#define __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_EXCEPTION_HPP__
 
 #include <exception>
 #include <string>
 
 namespace libpipe {
+namespace utilities {
 
 /** libpipe expection base class.
  */
@@ -52,9 +52,10 @@ protected:
 
 /** Convenience macros.
  */
-#define libpipe_fail(ERROR_MESSAGE) throw libpipe::Exception(ERROR_MESSAGE)
+#define libpipe_fail(ERROR_MESSAGE) throw libpipe::utilities::Exception(ERROR_MESSAGE)
 
-} // namespace libpipe
+} // end namespace utilities
+} // end namespace libpipe
 
-#endif 
+#endif //__LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_EXCEPTION_HPP__
 

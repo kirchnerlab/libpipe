@@ -25,7 +25,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/pointer_cast.hpp>
 
-#include "libpipe/Algorithm.hpp" //for timeval comparisons
+#include "libpipe/ctc/Algorithm.hpp" //for timeval comparisons
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
@@ -246,7 +246,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             bool thrown = false;
             try {
                 a->getPort("blub");
-            } catch (libpipe::Exception& e) {
+            } catch (libpipe::utilities::Exception& e) {
                 shouldEqual(
                     strncmp(e.what(),"Algorithm::getPort failed, the following port was not registered: blub",70),
                     0);
@@ -258,7 +258,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             thrown = false;
             try {
                 a->setInput("blub", input);
-            } catch (libpipe::Exception& e) {
+            } catch (libpipe::utilities::Exception& e) {
                 shouldEqual(
                     strncmp(e.what(),"Algorithm::setInput failed, the following port was not registered: blub",70),
                     0);

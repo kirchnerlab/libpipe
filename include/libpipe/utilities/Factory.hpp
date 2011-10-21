@@ -15,6 +15,7 @@
 #include <exception>
 #include <typeinfo>
 
+namespace libpipe {
 /**
  * \namespace utilities The Namespace where all classes are located which are used for different general usages
  */
@@ -71,7 +72,8 @@ class Factory : public FactoryErrorPolicy<IdentifierType, AbstractProduct>
         ProductMap productMap_;
 };
 
-}
+} //end namespace utilities
+} //end namespace libpipe
 
 
 

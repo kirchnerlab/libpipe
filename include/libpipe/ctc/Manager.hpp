@@ -2,23 +2,21 @@
 
  * Manager.hpp
  * 
- * Copyright (c) 2010 Marc Kirchner
- *               2011 David Sichau
+ * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
  *
  */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_MANAGER_HPP__
 
 #include <libpipe/config.hpp>
-
 #include <set>
-
 #include <libpipe/Request.hpp>
-#include <libpipe/NonCopyable.hpp>
-
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 
 namespace libpipe {
+namespace ctc {
 
 // forward declaration
 class Algorithm;
@@ -30,7 +28,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager : private NonCopyable
+class Manager : private libpipe::utilities::NonCopyable
 {
 public:
     /** Constructor.
@@ -59,7 +57,7 @@ public:
      *                information)
      * @return The (potentially modified) request object.
      */
-    virtual Request& processRequest(Request& req);
+    virtual libpipe::Request& processRequest(libpipe::Request& req);
 
     /** Connect the manager to a filter it depends on. Each call connects the
      * Manager to the specified filter; duplicates will be ignored.
@@ -73,7 +71,7 @@ public:
      * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
      * \endcode
      *  
-     * @param [in,out] f Pointer to a filter object on which the current manager
+     * @param[inout] f Pointer to a filter object on which the current manager
      *                 should depend.
      */
     void connect(boost::shared_ptr<Filter> f);
@@ -100,7 +98,8 @@ protected:
     void disconnect();
 };
 
-} // namespace libpipe
+} // end namespace ctc
+} // end namespace libpipe
 
 #endif
 

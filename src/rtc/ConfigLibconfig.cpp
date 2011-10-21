@@ -7,7 +7,7 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/rtc/ConfigLibconfig.hpp>
-#include <libpipe/Exception.hpp>
+#include <libpipe/utilities/Exception.hpp>
 
 #include <libconfig.h++>
 

@@ -1,17 +1,14 @@
 /*
  * Algorithm.cpp
  * 
- * Copyright (c) 2010 Marc Kirchner
- *               2011 David Sichau
+ * Copyright (c) 2010 Marc Kirchner <mail@marc-kirchner.de>
+ *
  */
-
-#include <libpipe/config.hpp>
-
-#include <libpipe/Algorithm.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>
-#include <libpipe/Log.hpp>
+#include <libpipe/utilities/Log.hpp>
 
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
@@ -38,7 +35,8 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv)
     return os;
 }
 
-using namespace libpipe;
+using namespace libpipe::ctc;
+
 
 timeval Algorithm::initMaxTime()
 {
@@ -73,7 +71,7 @@ Algorithm::~Algorithm()
 {
 }
 
-Request& Algorithm::processRequest(Request& req)
+libpipe::Request& Algorithm::processRequest(Request& req)
 {
     req = this->update(req);
     if(req.is(Request::DELETE)){

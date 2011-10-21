@@ -11,7 +11,7 @@
 
 #include <string>
 
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
 
 namespace libpipe {
@@ -24,7 +24,7 @@ class Manager;
 /** The only class for all LIBPIPE runtime configuration filters. Filters are non-copyable by
  * default. You should not inherit from this class.
  */
-class Filter : public NonCopyable
+class Filter : public utilities::NonCopyable
 {
     public:
 

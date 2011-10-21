@@ -5,17 +5,16 @@
  * Copyright (c) 2009 Bernhard Kausler
  *
  */
-#include <libpipe/config.hpp>
 
 #include <cstring>
 #include <iostream>
 #include <ostream>
 #include <cstdio>
 
-#include <libpipe/Log.hpp>
+#include <libpipe/utilities/Log.hpp>
 #include "vigra/unittest.hxx"
 
-using namespace libpipe;
+using namespace libpipe::utilities;
 
 struct LogTestSuite : vigra::test_suite
 {
