@@ -4,12 +4,12 @@
  * Copyright (c) 2010 Marc Kirchner
  *
  */
-#include <libpipe/ModificationTimeManager.hpp>
-#include <libpipe/Filter.hpp>
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/Log.hpp>
+#include <libpipe/ctc/ModificationTimeManager.hpp>
+#include <libpipe/ctc/Filter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/utilities/Log.hpp>
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 ModificationTimeManager::ModificationTimeManager() :
     Manager()
@@ -21,7 +21,7 @@ ModificationTimeManager::~ModificationTimeManager()
 }
 
 libpipe::Request& ModificationTimeManager::processRequest(
-    libpipe::Request& req)
+    Request& req)
 {
     // make sure we have been set up correctly
     if (!algorithm_) {

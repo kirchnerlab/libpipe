@@ -9,9 +9,9 @@
 #include "vigra/unittest.hxx"
 #include <cstring>
 #include <string>
-#include <libpipe/Exception.hpp>
+#include <libpipe/utilities/Exception.hpp>
 
-using namespace libpipe;
+using namespace libpipe::utilities;
 
 /** Test suite for the Exception class.
  */

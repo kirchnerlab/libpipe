@@ -9,17 +9,17 @@
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
 
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/BasicFilter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
 #include <boost/shared_ptr.hpp>
 
 #include <sstream>
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** An algorithm that does not change its input.
  */
@@ -33,7 +33,7 @@ public:
     ~Identity()
     {
     }
-    Request& update(Request& req)
+    libpipe::Request& update(libpipe::Request& req)
     {
         LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
         out_ = in_;
@@ -71,7 +71,7 @@ public:
     {
         delete out_;
     }
-    Request& update(Request& req)
+    libpipe::Request& update(libpipe::Request& req)
     {
         std::ostringstream oss;
         *out_ = (*in_) + 1;
@@ -111,7 +111,7 @@ public:
     ~RaiseExceptionAlg()
     {
     }
-    Request& update(Request& req)
+    libpipe::Request& update(libpipe::Request& req)
     {
         // deliberately raise a non-libpipe exception
         throw std::exception();

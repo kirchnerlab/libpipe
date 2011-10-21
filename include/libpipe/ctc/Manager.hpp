@@ -11,11 +11,12 @@
 #include <libpipe/config.hpp>
 #include <set>
 #include <libpipe/Request.hpp>
-#include <libpipe/NonCopyable.hpp>
+#include <libpipe/utilities/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
 namespace libpipe {
+namespace ctc {
 
 // forward declaration
 class Algorithm;
@@ -27,7 +28,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager : private NonCopyable
+class Manager : private libpipe::utilities::NonCopyable
 {
 public:
     /** Constructor.
@@ -56,7 +57,7 @@ public:
      *                information)
      * @return The (potentially modified) request object.
      */
-    virtual Request& processRequest(Request& req);
+    virtual libpipe::Request& processRequest(libpipe::Request& req);
 
     /** Connect the manager to a filter it depends on. Each call connects the
      * Manager to the specified filter; duplicates will be ignored.
@@ -97,7 +98,8 @@ protected:
     void disconnect();
 };
 
-} // namespace libpipe
+} // end namespace ctc
+} // end namespace libpipe
 
 #endif
 

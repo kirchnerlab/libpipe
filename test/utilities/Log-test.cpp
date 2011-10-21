@@ -11,10 +11,10 @@
 #include <ostream>
 #include <cstdio>
 
-#include <libpipe/Log.hpp>
+#include <libpipe/utilities/Log.hpp>
 #include "vigra/unittest.hxx"
 
-using namespace libpipe;
+using namespace libpipe::utilities;
 
 struct LogTestSuite : vigra::test_suite
 {

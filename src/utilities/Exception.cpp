@@ -6,9 +6,9 @@
  */
 
 #include <libpipe/config.hpp>
-#include <libpipe/Exception.hpp>
+#include <libpipe/utilities/Exception.hpp>
 
-using namespace libpipe;
+using namespace libpipe::utilities;
 
 Exception::Exception(const char* message) :
     msg_(message)

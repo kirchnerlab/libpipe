@@ -8,9 +8,9 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 
-#include <libpipe/SharedData.hpp>
+#include <libpipe/ctc/SharedData.hpp>
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** Test suite for the SharedData template class
  */

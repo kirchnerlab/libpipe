@@ -29,6 +29,11 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 namespace libpipe {
 
+/**
+ * @namespace ctc All classes which are needed for compile time configration
+ */
+namespace ctc {
+
 /** Base class for all LIBPIPE algorithms.
  */
 class Algorithm
@@ -132,6 +137,7 @@ private:
     timeval mTime_;
 };
 
+} // end namespace ctc
 } // namespace libpipe
 
 #endif

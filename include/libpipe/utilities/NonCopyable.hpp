@@ -1,13 +1,15 @@
 /*
  * NonCopyable.hpp
  *
+ * Copyright (c) 2011 David Sichau
  * Copyright (c) 2011 Marc Kirchner
  *
  */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_NONCOPYABLE_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_NONCOPYABLE_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_NONCOPYABLE_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_NONCOPYABLE_HPP__
 
 namespace libpipe {
+namespace utilities {
 
 /** Provides a base class from which classes that would explicitly like to
  * disallow copy construction and assignment can derive. If you derive, use
@@ -30,7 +32,8 @@ private:
     const NonCopyable& operator=(const NonCopyable&);
 };
 
-} // namespace libpipe
+} // end namespace utilities
+} // end namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_NONCOPYABLE_HPP__
 

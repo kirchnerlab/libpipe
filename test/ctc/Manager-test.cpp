@@ -13,17 +13,17 @@
 #include <vector>
 #include <string>
 
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/BasicFilter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
 #include <boost/pointer_cast.hpp>
 
-#include "utils.hpp"
+#include "ctc/utils.hpp"
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** Test suite for the simple manager.
  */
@@ -109,13 +109,13 @@ struct ManagerTestSuite : vigra::test_suite
         {
             // make sure we fail if there is no algorithm setup
             TestManager tm;
-            Request req(Request::UPDATE);
+            libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
             // FIXME: we should have different error classes to distinguish
             //        between different errors.
             try {
                 req = tm.processRequest(req);
-            } catch (RequestException& e) {
+            } catch (libpipe::RequestException& e) {
                 thrown = true;
             }
             shouldEqual(thrown, true);
@@ -126,7 +126,7 @@ struct ManagerTestSuite : vigra::test_suite
         void testProcessRequestNoSources()
         {
             TestManager tm;
-            Request req(Request::UPDATE);
+            libpipe::Request req(libpipe::Request::UPDATE);
             req.setTraceFlag(true);
             // the following algorithm should not throw any exceptions
             Identity* a = new Identity;
@@ -145,7 +145,7 @@ struct ManagerTestSuite : vigra::test_suite
             bool thrown = false;
             try {
                 req = tm.processRequest(req);
-            } catch (RequestException& e) {
+            } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
             delete b;
@@ -156,7 +156,7 @@ struct ManagerTestSuite : vigra::test_suite
         void testProcessRequestFailingSources()
         {
             TestManager tm;
-            Request req(Request::UPDATE);
+            libpipe::Request req(libpipe::Request::UPDATE);
             Algorithm* a = new Identity;
             tm.setAlgorithm(a);
 
@@ -177,7 +177,7 @@ struct ManagerTestSuite : vigra::test_suite
             bool thrown = false;
             try {
                 req = tm.processRequest(req);
-            } catch (RequestException& e) {
+            } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
 
@@ -188,7 +188,7 @@ struct ManagerTestSuite : vigra::test_suite
         void testProcessRequestFailingSourcesDelete()
         {
             TestManager tm;
-            Request req(Request::DELETE);
+            libpipe::Request req(libpipe::Request::DELETE);
             Algorithm* a = new Identity;
             tm.setAlgorithm(a);
 

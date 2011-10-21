@@ -8,15 +8,15 @@
 #include <iostream>
 #include <cstring>
 #include "vigra/unittest.hxx"
-#include <libpipe/Algorithm.hpp>
-#include <libpipe/BasicFilter.hpp>
+#include <libpipe/ctc/Algorithm.hpp>
+#include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
-#include <libpipe/Manager.hpp>
+#include <libpipe/ctc/Manager.hpp>
 
-#include "utils.hpp"
+#include "ctc/utils.hpp"
 
-using namespace libpipe;
+using namespace libpipe::ctc;
 
 /** Test for the Filter base class.
  * Derives from the Filter base class and tests the standard implementations. 
@@ -50,11 +50,11 @@ struct FilterTestSuite : vigra::test_suite
         // filter and raise an exception.
         typedef BasicFilter<RaiseExceptionAlg, TestManager> FailFilter;
         Filter* f = new FailFilter("Fail!");
-        Request req(Request::UPDATE);
+        libpipe::Request req(libpipe::Request::UPDATE);
         bool thrown = false;
         try {
             req = f->processRequest(req);
-        } catch (RequestException& e) {
+        } catch (libpipe::RequestException& e) {
             thrown = true;
         }
         shouldEqual(thrown, true);

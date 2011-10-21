@@ -1,11 +1,11 @@
 SET(SRCS 
-    Algorithm.cpp
-    Exception.cpp
-    Filter.cpp
-    Manager.cpp
-    Pipeline.cpp
+    ctc/Algorithm.cpp
+    ctc/ModificationTimeManager.cpp
+    ctc/Filter.cpp
+    ctc/Manager.cpp
+    ctc/Pipeline.cpp
+    utilities/Exception.cpp
     Request.cpp
-    ModificationTimeManager.cpp
 )
 
 ADD_LIBRARY(pipe ${SRCS})

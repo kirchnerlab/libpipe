@@ -11,13 +11,14 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/Request.hpp>
-#include <libpipe/Filter.hpp>
+#include <libpipe/ctc/Filter.hpp>
 
 #include <queue>
 
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
+namespace ctc {
 
 class Pipeline
 {
@@ -48,5 +49,6 @@ class Pipeline
        std::vector<std::string> trace_;
 };
 
-} /* namespace libpipe */
+} // end namespace ctc
+} // end namespace libpipe
 #endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__ */
