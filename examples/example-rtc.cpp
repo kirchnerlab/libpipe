@@ -19,6 +19,7 @@
 #include <libpipe/rtc/Manager.hpp>
 #include <libpipe/rtc/ManagerFactory.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
+#include <libpipe/utilities/Exception.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 
