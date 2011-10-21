@@ -10,6 +10,7 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/utilities/Exception.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
+#include <libpipe/utilities/Exception.hpp>
 
 #include <limits>
 #include <libpipe/utilities/Log.hpp>

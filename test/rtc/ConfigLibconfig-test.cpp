@@ -16,6 +16,8 @@
 #undef private
 #undef protected
 
+
+
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
