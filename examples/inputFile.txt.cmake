@@ -1,6 +1,6 @@
 // An example configuration file that stores information Filters.
 
-@include "inputFile2Filter.txt"
+@include "inputFileFilter.txt"
 // Connect Filters:
 connections =
 (
