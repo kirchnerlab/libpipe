@@ -24,8 +24,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_BASICFILTER_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_BASICFILTER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_BASICFILTER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_BASICFILTER_HPP__
 
 #include <libpipe/config.hpp>
 #include <string>
@@ -122,5 +122,5 @@ M* BasicFilter<A, M>::getManager()
 } // end namspace ctc
 } // end namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_CTC_BASICFILTER_HPP__
 

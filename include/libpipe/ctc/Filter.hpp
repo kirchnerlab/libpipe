@@ -24,8 +24,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_FILTER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_FILTER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_FILTER_HPP__
 
 #include <libpipe/config.hpp>
 #include <string>
@@ -108,5 +108,5 @@ private:
 } // end namespace ctc
 } // end namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_CTC_FILTER_HPP__
 

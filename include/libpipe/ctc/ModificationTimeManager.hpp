@@ -24,8 +24,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_MODIFICATIONTIMEMANAGER_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_MODIFICATIONTIMEMANAGER_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_MODIFICATIONTIMEMANAGER_HPP__
 
 #include <libpipe/config.hpp>
 #include <libpipe/Request.hpp>
@@ -61,5 +61,5 @@ public:
 } // end namespace ctc
 } // end namespace libpipe
 
-#endif   
+#endif   //__LIBPIPE_INCLUDE_LIBPIPE_CTC_MODIFICATIONTIMEMANAGER_HPP__
 

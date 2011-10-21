@@ -25,8 +25,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
-#define __LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_LOG_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_LOG_HPP__
 
 #include <ctime>
 #include <cstdio>
@@ -436,5 +436,5 @@ inline std::string nowTime()
 } // end namespace utilities
 } // end namespace libpipe
 
-#endif //__LIBPIPE_INCLUDE_UTILITIES_LIBPIPE_LOG_HPP__
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_LOG_HPP__
 

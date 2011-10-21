@@ -24,8 +24,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_ALGORITHM_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_ALGORITHM_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_ALGORITHM_HPP__
 
 #include <libpipe/config.hpp>
 
@@ -160,5 +160,5 @@ private:
 } // end namespace ctc
 } // namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_CTC_ALGORITHM_HPP__
 

@@ -24,8 +24,8 @@
 * THE SOFTWARE.
 */
 
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_PIPELINE_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_PIPELINE_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_PIPELINE_HPP__
 
 #include <libpipe/config.hpp>
 
@@ -70,4 +70,4 @@ class Pipeline
 
 } // end namespace ctc
 } // end namespace libpipe
-#endif /* __LIBPIPE_INCLUDE_LIBPIPE_RTC_PIPELINE_HPP__ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_CTC_PIPELINE_HPP__ */

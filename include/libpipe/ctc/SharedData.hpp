@@ -23,8 +23,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-#ifndef __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
-#define __LIBPIPE_INCLUDE_LIBPIPE_SHAREDDATA_HPP__
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
 #include <libpipe/utilities/NonCopyable.hpp>
@@ -207,5 +207,5 @@ bool SharedData<T>::isNull()
 } // end namespace ctc
 } // end namespace libpipe
 
-#endif
+#endif //__LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 
