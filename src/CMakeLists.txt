@@ -2,7 +2,7 @@
 SET(SRCS 
     rtc/Data.cpp
     rtc/Config.cpp
-    rtc/ConfigLibconfig.cpp
+    rtc/ConfigJSON.cpp
     rtc/Controler.cpp
     rtc/Pipeline.cpp
     rtc/Loader.cpp
@@ -19,8 +19,7 @@ SET(SRCS
 )
 
 ADD_LIBRARY(pipe ${SRCS})
-ADD_DEPENDENCIES(pipe libconfig)
-TARGET_LINK_LIBRARIES(pipe config)
+TARGET_LINK_LIBRARIES(pipe ${Boost_LIBRARIES})
 
 
 INSTALL(TARGETS pipe

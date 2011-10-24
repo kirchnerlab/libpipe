@@ -37,10 +37,16 @@ struct LoaderTestSuite : vigra::test_suite
 
         void testConstruction()
         {
-            libpipe::rtc::Loader loader("inputFile.txt");
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            libpipe::rtc::Loader loader(inputFiles);
             bool thrown=false;
             try{
-                libpipe::rtc::Loader loader("blub");
+                std::vector<std::string> inputFiles;
+                inputFiles.push_back("bla.txt");
+                libpipe::rtc::Loader loader(inputFiles);
             }catch (...){
                 thrown=true;
             }
@@ -50,7 +56,11 @@ struct LoaderTestSuite : vigra::test_suite
 
         void testGetter()
         {
-            libpipe::rtc::Loader loader("inputFile.txt");
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            libpipe::rtc::Loader loader(inputFiles);
             libpipe::rtc::Pipeline pipe = loader.getPipeline();
             //indirect test of equality
             shouldEqual(sizeof(loader.pipeline_), sizeof(pipe));

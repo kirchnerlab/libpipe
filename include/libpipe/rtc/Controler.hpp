@@ -31,9 +31,14 @@ class Controler : public utilities::NonCopyable
     public:
 
         /** Constructor
-         * @param filename The name to the configuration file
+         * @param filename The names to the configurations file. Order is important.
+         * for JSON:
+         * \li 1. file: Filter Configuration
+         * \li 2. file: Connection Configurations
+         * \li 3. file: Pipeline configuration
+         *
          */
-        Controler(const std::string& filename);
+        Controler(const std::vector<std::string>& filename);
 
         /** Destructor
          */

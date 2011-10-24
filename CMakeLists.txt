@@ -12,19 +12,15 @@ SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 # require boost
 SET(Boost_USE_STATIC_LIBS OFF)
 SET(Boost_USE_MULTITHREAD OFF)
-FIND_PACKAGE(Boost COMPONENTS program_options system REQUIRED)
+#make sure that at least version 1.47.0 is used
+SET(BOOST_MIN_VERSION "1.46.0")
+FIND_PACKAGE(Boost ${BOOST_MIN_VERSION} REQUIRED)
+
+
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
 
-# get path to libconfig library
-# Use UNIX before APPLE, as UNIX is also true for Mac OS X
-IF(UNIX)
-    SET(LIBCONFIG_PATH libconfig) 
-ENDIF(UNIX)
-IF(APPLE)
-    SET(LIBCONFIG_PATH libconfig/libconfig-1.4.8)    
-ENDIF(APPLE)
 
 # require out-of-source build
 MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
@@ -47,7 +43,6 @@ OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 INCLUDE_DIRECTORIES(
     ${LIBPIPE_SOURCE_DIR}/include
     ${LIBPIPE_BINARY_DIR}/include
-    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/include
 )
 
 
@@ -96,7 +91,6 @@ ENDIF (ENABLE_TESTING)
 # build lib
 #############################################################################
 
-ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(src)
 
 ############################################################################

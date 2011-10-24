@@ -21,7 +21,6 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     
     SET(TEST_LIBS  
         pipe
-        -lconfig++
     )
     
     
@@ -55,19 +54,15 @@ INCLUDE_DIRECTORIES(
     ${LIBPIPE_BINARY_DIR}/include
     ${LIBPIPE_BINARY_DIR}/test/include
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/include
     
 )
 
-LINK_DIRECTORIES(
-    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/lib
-)
 
 #### Sources
 SET(SRCS_LOADER rtc/Loader-test.cpp)
 SET(SRCS_RTC_PIPELINE rtc/Pipeline-test.cpp)
 SET(SRCS_CONTROLER rtc/Controler-test.cpp)
-SET(SRCS_CONFIGLIBCONFIG rtc/ConfigLibconfig-test.cpp)
+SET(SRCS_CONFIGJSON rtc/ConfigJSON-test.cpp)
 SET(SRCS_CONFIG rtc/Config-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
 SET(SRCS_ALGORITHMRTC rtc/Algorithm-test.cpp)
@@ -95,7 +90,7 @@ ENDIF(ENABLE_COVERAGE)
 ADD_LIBPIPE_TEST("rtc/Loader" test_loader ${SRCS_LOADER})
 ADD_LIBPIPE_TEST("rtc/Pipeline" test_rtc_pipeline ${SRCS_RTC_PIPELINE})
 ADD_LIBPIPE_TEST("rtc/Controler" test_controler ${SRCS_CONTROLER})
-ADD_LIBPIPE_TEST("rtc/ConfigLibconfig" test_configlibconfig ${SRCS_CONFIGLIBCONFIG})
+ADD_LIBPIPE_TEST("rtc/ConfigJSON" test_configJSON ${SRCS_CONFIGJSON})
 ADD_LIBPIPE_TEST("rtc/Config" test_config ${SRCS_CONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})
 ADD_LIBPIPE_TEST("rtc/Algorithm" test_algorithmrtc ${SRCS_ALGORITHMRTC})
@@ -129,18 +124,23 @@ IF(numtests GREATER 0)
 ENDIF(numtests GREATER 0)
 
 
-CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFile.txt.cmake
-    ${LIBPIPE_BINARY_DIR}/test/inputFile.txt
-    @ONLY IMMEDIATE
-)
-
-CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFileFilter.txt.cmake
-    ${LIBPIPE_BINARY_DIR}/test/inputFileFilter.txt
-    @ONLY IMMEDIATE
-)
 
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/wrongInputFile.txt.cmake
     ${LIBPIPE_BINARY_DIR}/test/wrongInputFile.txt
     @ONLY IMMEDIATE
 )
 
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFileFilterJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFileFilterJSON.txt
+    @ONLY IMMEDIATE
+)
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFileConnectionJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFileConnectionJSON.txt
+    @ONLY IMMEDIATE
+)
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFilePipelineJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFilePipelineJSON.txt
+    @ONLY IMMEDIATE
+)

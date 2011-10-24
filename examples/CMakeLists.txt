@@ -1,9 +1,3 @@
-
-
-LINK_DIRECTORIES(
-                    ${LIBPIPE_BINARY_DIR}/lib/${LIBCONFIG_PATH}/lib
-                 )
-
 # make sure the examples are debuggable
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Werror -ggdb3 -D_FILE_OFFSET_BITS=64")
 # compile and link
@@ -12,7 +6,7 @@ TARGET_LINK_LIBRARIES(example-uppercase-strings pipe)
 ADD_EXECUTABLE(example-strings-mtime example-strings-mtime.cpp)
 TARGET_LINK_LIBRARIES(example-strings-mtime pipe)
 ADD_EXECUTABLE(example-rtc example-rtc.cpp)
-TARGET_LINK_LIBRARIES(example-rtc pipe -lconfig++)
+TARGET_LINK_LIBRARIES(example-rtc pipe )
 
 INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
     LIBRARY DESTINATION lib
@@ -21,14 +15,18 @@ INSTALL(TARGETS example-strings-mtime example-uppercase-strings example-rtc
     COMPONENT examples
 )
 
-
-CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFile.txt.cmake
-    ${LIBPIPE_BINARY_DIR}/examples/inputFile.txt
-    @ONLY IMMEDIATE
-    )
-
     
-CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileFilter.txt.cmake
-    ${LIBPIPE_BINARY_DIR}/examples/inputFileFilter.txt
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileFilterJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFileFilterJSON.txt
     @ONLY IMMEDIATE
     )
+    
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFilePipelineJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFilePipelineJSON.txt
+    @ONLY IMMEDIATE
+    )        
+    
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileConnectionJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFileConnectionJSON.txt
+    @ONLY IMMEDIATE
+    )    

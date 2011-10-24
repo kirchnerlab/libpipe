@@ -20,12 +20,28 @@ namespace rtc {
 class Loader
 {
     public:
-        Loader(const std::string& filename);
+        /** Constructor
+         * @param filename Name of the input files, order is important. For JSON:
+         * \li 1. file: Filter Configuration
+         * \li 2. file: Connection Configurations
+         * \li 3. file: Pipeline configuration
+         */
+        Loader(const std::vector<std::string>& filename);
+        /**
+         * Destructor
+         */
         ~Loader();
 
+        /**
+         * Returns the pipeline object
+         * @return A pipeline Object
+         */
         Pipeline getPipeline() const;
 
     private:
+        /**
+         * The pipeline Object
+         */
         Pipeline pipeline_;
 
 };

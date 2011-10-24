@@ -17,10 +17,8 @@
 namespace libpipe {
 namespace rtc {
 
-Loader::Loader(const std::string& filename)
+Loader::Loader(const std::vector<std::string>& filename)
 {
-
-
     try {
         Controler creator_(filename);
         pipeline_ = creator_.getPipeline();
@@ -37,7 +35,6 @@ Pipeline Loader::getPipeline() const
 {
     return pipeline_;
 }
-
 
 } /* namespace rtc */
 } /* namespace libpipe */

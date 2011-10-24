@@ -44,13 +44,19 @@ struct ControlerTestSuite : vigra::test_suite
 
         void testMemory()
         {
-            Controler creator("inputFile.txt");
-        }
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            Controler creator(inputFiles);        }
 
         void testWrongCalls()
         {
-            Controler creator("inputFile.txt");
-
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            Controler creator(inputFiles);
             bool thrown = false;
             try {
                 creator.connectManagers("blubblub");
@@ -75,14 +81,21 @@ struct ControlerTestSuite : vigra::test_suite
         }
 
         void testFilter(){
-            Controler creator("inputFile.txt");
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            Controler creator(inputFiles);
             boost::shared_ptr<Filter> f1 = creator.getFilter("Lowercase");
             shouldEqual(f1->getName(), "Lowercase");
         }
 
         void testPipeline(){
-            Controler creator("inputFile.txt");
-            Pipeline pipe=creator.getPipeline();
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            Controler creator(inputFiles);            Pipeline pipe=creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "Lowercase");
         }
 };

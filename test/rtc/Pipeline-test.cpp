@@ -66,7 +66,11 @@ struct PipelineTestSuite : vigra::test_suite
 
         void testRunAndTrace()
         {
-            Controler creator("inputFile.txt");
+            std::vector<std::string> inputFiles;
+            inputFiles.push_back("inputFileFilterJSON.txt");
+            inputFiles.push_back("inputFileConnectionJSON.txt");
+            inputFiles.push_back("inputFilePipelineJSON.txt");
+            Controler creator(inputFiles);
 
             Pipeline pipeline = creator.getPipeline();
             bool thrown = false;

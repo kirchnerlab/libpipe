@@ -91,8 +91,8 @@ struct PipelineDescription
  * Comparison function to compare two LibpipePipeStructs
  */
 ///\cond
-struct PipelineDescriptionLess : public std::binary_function<PipelineDescription,
-        PipelineDescription, bool>
+struct PipelineDescriptionLess : public std::binary_function<
+        PipelineDescription, PipelineDescription, bool>
 {
         ///\endcond
         /** less than operator
@@ -113,10 +113,10 @@ class Config
          */
         virtual ~Config() = 0;
 
-        /** Parses the input file
-         * @param inputFileName The name of the input file.
+        /** Parses the input files. Order is important!
+         * @param filename Names of the input files
          */
-        virtual void parseInputFile(const std::string& inputFileName) = 0;
+        virtual void parseInputFile(const std::vector<std::string>& filename) = 0;
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -144,11 +144,10 @@ class Config
         virtual std::priority_queue<PipelineDescription,
                 std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const=0;
 
-        /** Checks if the file is correct
-         * @return True if the file is correct, otherwise false
+        /** Checks the input files. Order is important!
+         * @param filename Names of the input files
          */
-        virtual bool checkFile(const std::string& inputFileName) const = 0;
-
+        virtual bool checkFile(const std::vector<std::string>& filename) const = 0;
 
 };
 

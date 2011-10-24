@@ -16,16 +16,17 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/Controler.hpp>
 #include <libpipe/rtc/Config.hpp>
-#include <libpipe/rtc/ConfigLibconfig.hpp>
+#include <libpipe/rtc/ConfigJSON.hpp>
+
 
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
 
-Controler::Controler(const std::string& inputFile)
+Controler::Controler(const std::vector<std::string>& inputFile)
 {
-    configuration_ = new ConfigLibconfig;
+    configuration_ = new ConfigJSON;
     try{
         configuration_->parseInputFile(inputFile);
     } catch (utilities::Exception& e){
