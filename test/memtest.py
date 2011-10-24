@@ -20,8 +20,10 @@ def garbage(line):
 
 def memcheck(test):
     ''' run valgrind-memcheck on test in testdir. return xml output as string '''
-    v = find_valgrind()
-    cmd = v+" --tool=memcheck --child-silent-after-fork=yes --leak-check=full --xml=yes --xml-fd=3 --num-callers=50 " + test + " 3>memcheck.tmp"
+#    v = find_valgrind()
+#    cmd = v+" --tool=memcheck --child-silent-after-fork=yes --leak-check=full --xml=yes --xml-fd=3 --num-callers=50 " + test + " 3>memcheck.tmp"
+    cmd = "/usr/local/bin/valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --xml=yes --xml-fd=3 --num-callers=50 " + test + " 3>memcheck.tmp"
+
     #print cmd
     system(cmd)
     out = open("memcheck.tmp").readlines()
@@ -115,7 +117,6 @@ def which (filename):
     else:
         p = environ['PATH']
 
-    print(p)
     pathlist = p.split (pathsep)
     
 
