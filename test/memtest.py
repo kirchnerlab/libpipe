@@ -109,35 +109,20 @@ def parse_errors(out):
     return errors_
 
 #from: http://mail.python.org/pipermail/python-list/2002-August/157829.html
-#def which (filename):
-#    if not environ.has_key('PATH') or environ['PATH'] == '':
-#        p = defpath
-#    else:
-#        p = environ['PATH']
-#
-#    pathlist = p.split (pathsep)
-#
-#    for thepath in pathlist:
-#        f = thepath+sep+filename
-#        if access(f, X_OK):
-#            return f
-#    return None
-
-def which(program):
-    import os
-    def is_exe(fpath):
-        return os.path.exists(fpath) and os.access(fpath, os.X_OK)
-
-    fpath, fname = os.path.split(program)
-    if fpath:
-        if is_exe(program):
-            return program
+def which (filename):
+    if not environ.has_key('PATH') or environ['PATH'] == '':
+        p = defpath
     else:
-        for path in os.environ["PATH"].split(os.pathsep):
-            exe_file = os.path.join(path, program)
-            if is_exe(exe_file):
-                return exe_file
+        p = environ['PATH']
 
+    print(p)
+    pathlist = p.split (pathsep)
+    
+
+    for thepath in pathlist:
+        f = thepath+sep+filename
+        if access(f, X_OK):
+            return f
     return None
 
 
