@@ -20,8 +20,8 @@ def garbage(line):
 
 def memcheck(test):
     ''' run valgrind-memcheck on test in testdir. return xml output as string '''
-#    v = find_valgrind()
-    cmd = "/usr/local/bin/valgrind --tool=memcheck --child-silent-after-fork=yes --leak-check=full --xml=yes --xml-fd=3 --num-callers=50 " + test + " 3>memcheck.tmp"
+    v = find_valgrind()
+    cmd = v+" --tool=memcheck --child-silent-after-fork=yes --leak-check=full --xml=yes --xml-fd=3 --num-callers=50 " + test + " 3>memcheck.tmp"
     #print cmd
     system(cmd)
     out = open("memcheck.tmp").readlines()
@@ -109,19 +109,37 @@ def parse_errors(out):
     return errors_
 
 #from: http://mail.python.org/pipermail/python-list/2002-August/157829.html
-def which (filename):
-    if not environ.has_key('PATH') or environ['PATH'] == '':
-        p = defpath
+#def which (filename):
+#    if not environ.has_key('PATH') or environ['PATH'] == '':
+#        p = defpath
+#    else:
+#        p = environ['PATH']
+#
+#    pathlist = p.split (pathsep)
+#
+#    for thepath in pathlist:
+#        f = thepath+sep+filename
+#        if access(f, X_OK):
+#            return f
+#    return None
+
+def which(program):
+    import os
+    def is_exe(fpath):
+        return os.path.exists(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
     else:
-        p = environ['PATH']
+        for path in os.environ["PATH"].split(os.pathsep):
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
 
-    pathlist = p.split (pathsep)
-
-    for thepath in pathlist:
-        f = thepath+sep+filename
-        if access(f, X_OK):
-            return f
     return None
+
 
 def find_valgrind():
     valgrind = which('valgrind')
