@@ -21,6 +21,7 @@ lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
      -capture --output-file @LIBPIPE_BINARY_DIR@/test/coverage_$1/$1.info
 lcov --extract @LIBPIPE_BINARY_DIR@/test/coverage_$1/$1.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/test/coverage_$1/$1x.info
 cd @LIBPIPE_BINARY_DIR@/test/coverage_$1
+gcovr -x > coverageTest.xml
 genhtml --demangle-cpp $1x.info
 
 cd $prev
