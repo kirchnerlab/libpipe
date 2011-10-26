@@ -27,7 +27,9 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
-#include <boost/utility.hpp>#include <memory>
+#include <boost/noncopyable.hpp>
+
+#include <memory>
 
 namespace libpipe {
 namespace ctc {
