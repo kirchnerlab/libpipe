@@ -31,7 +31,7 @@
 #include <string>
 #include <libpipe/Request.hpp>
 
-#include <boost/utility.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace libpipe {
 namespace ctc {

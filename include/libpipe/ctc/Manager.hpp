@@ -32,7 +32,7 @@
 #include <libpipe/Request.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/utility.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace libpipe {
 namespace ctc {
