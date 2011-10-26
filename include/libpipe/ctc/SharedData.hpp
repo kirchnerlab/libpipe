@@ -27,8 +27,7 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 
 #include <libpipe/config.hpp>
-#include <libpipe/utilities/NonCopyable.hpp>
-#include <memory>
+#include <boost/utility.hpp>#include <memory>
 
 namespace libpipe {
 namespace ctc {
@@ -111,7 +110,7 @@ namespace ctc {
  * not.
  */
 template<typename T>
-class SharedData : private utilities::NonCopyable
+class SharedData : boost::noncopyable
 {
 public:
     /** Constructor.
