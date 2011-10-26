@@ -10,9 +10,9 @@
 
 #include <libpipe/config.hpp>
 
-#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/rtc/Data.hpp>
 
+#include <boost/noncopyable.hpp>
 #include <memory>
 
 namespace libpipe {
@@ -66,7 +66,7 @@ namespace rtc {
  * not.
  */
 template<typename T>
-class SharedData : public utilities::NonCopyable ,public Data
+class SharedData : boost::noncopyable ,public Data
 {
 public:
     /** Constructor.

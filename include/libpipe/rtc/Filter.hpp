@@ -11,8 +11,9 @@
 
 #include <string>
 
-#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
+
+#include <boost/noncopyable.hpp>
 
 namespace libpipe {
 namespace rtc {
@@ -24,7 +25,7 @@ class Manager;
 /** The only class for all LIBPIPE runtime configuration filters. Filters are non-copyable by
  * default. You should not inherit from this class.
  */
-class Filter : public utilities::NonCopyable
+class Filter : boost::noncopyable
 {
     public:
 
