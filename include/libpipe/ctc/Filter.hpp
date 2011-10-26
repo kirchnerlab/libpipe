@@ -29,8 +29,9 @@
 
 #include <libpipe/config.hpp>
 #include <string>
-#include <libpipe/utilities/NonCopyable.hpp>
 #include <libpipe/Request.hpp>
+
+#include <boost/utility.hpp>
 
 namespace libpipe {
 namespace ctc {
@@ -42,7 +43,7 @@ class Manager;
 /** The base class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
-class Filter : private utilities::NonCopyable
+class Filter : private boost::noncopyable
 {
 public:
     /** Constructor.

@@ -30,9 +30,9 @@
 #include <libpipe/config.hpp>
 #include <set>
 #include <libpipe/Request.hpp>
-#include <libpipe/utilities/NonCopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/utility.hpp>
 
 namespace libpipe {
 namespace ctc {
@@ -47,7 +47,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager : private utilities::NonCopyable
+class Manager :  boost::noncopyable
 {
 public:
     /** Constructor.
