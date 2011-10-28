@@ -22,14 +22,7 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     SET(TEST_LIBS  
         pipe
     )
-    # link agains gcov if coverage is enabled
-    IF (ENABLE_COVERAGE)
-        SET(TEST_LIBS 
-            ${TEST_LIBS} 
-            gcov
-        )
-    ENDIF(ENABLE_COVERAGE)
-    
+
     TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})
     # add test to global list of unit test
     ADD_TEST(${name} ${exe})
@@ -54,8 +47,7 @@ INCLUDE_DIRECTORIES(
     ${LIBPIPE_SOURCE_DIR}/include
     ${LIBPIPE_BINARY_DIR}/include
     ${LIBPIPE_BINARY_DIR}/test/include
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    
+    ${CMAKE_CURRENT_SOURCE_DIR}   
 )
 
 

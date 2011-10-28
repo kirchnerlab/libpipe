@@ -57,6 +57,7 @@ INCLUDE_DIRECTORIES(
 #############################################################################
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
 IF (ENABLE_COVERAGE)
+    MESSAGE(STATUS, "Coverage enabled")
 
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
     CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
