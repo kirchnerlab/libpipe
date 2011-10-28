@@ -22,7 +22,13 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     SET(TEST_LIBS  
         pipe
     )
-    
+    # link agains gcov if coverage is enabled
+    IF (ENABLE_COVERAGE)
+        SET(TEST_LIBS 
+            ${TEST_LIBS} 
+            gcov
+        )
+    ENDIF(ENABLE_COVERAGE)
     
     TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})
     # add test to global list of unit test
@@ -77,10 +83,6 @@ SET(SRCS_ALGORITHM ctc/Algorithm-test.cpp)
 SET(SRCS_REQUESTEXCEPTION RequestException-test.cpp)
 SET(SRCS_REQUEST Request-test.cpp)
 
-
-IF (ENABLE_COVERAGE)
-    SET(TEST_LIBS ${TEST_LIBS} gcov)
-ENDIF(ENABLE_COVERAGE)
 #### Tests
 ADD_LIBPIPE_TEST("rtc/Loader" test_loader ${SRCS_LOADER})
 ADD_LIBPIPE_TEST("rtc/Pipeline" test_rtc_pipeline ${SRCS_RTC_PIPELINE})
