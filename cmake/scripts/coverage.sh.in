@@ -1,14 +1,29 @@
 #!/bin/bash
 
 mkdir -p @LIBPIPE_BINARY_DIR@/coverage
-gcovr -r @LIBPIPE_BINARY_DIR@ -f '.*libpipe' -e '.*test' -x > @LIBPIPE_BINARY_DIR@/coverage/coverage.xml
-lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
-     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
-     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
-     -capture --output-file @LIBPIPE_BINARY_DIR@/coverage/pipe.info
-lcov --extract @LIBPIPE_BINARY_DIR@/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted
-pushd @LIBPIPE_BINARY_DIR@/coverage/
-genhtml --demangle-cpp --legend --show-details pipe.info.extracted
-popd
+
+#check if gcovr exists
+hash gcovr &> /dev/null
+if [ $? -eq 1 ]; 
+	then     echo >&2 "gcovr not found. Therfore no xml coverage output can be generated"; 
+else
+	gcovr -r @LIBPIPE_BINARY_DIR@ -f '.*libpipe' -e '.*test' -x > @LIBPIPE_BINARY_DIR@/coverage/coverage.xml
+fi
+
+#check if genhtml exists
+hash genhtml &> /dev/null
+if [ $? -eq 1 ]; 
+	then     echo >&2 "genhtml not found. Therfore no html coverage output can be generated"; 
+else
+
+	lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
+	     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
+	     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
+	     -capture --output-file @LIBPIPE_BINARY_DIR@/coverage/pipe.info
+	lcov --extract @LIBPIPE_BINARY_DIR@/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted
+	pushd @LIBPIPE_BINARY_DIR@/coverage/
+	genhtml --demangle-cpp --legend --show-details pipe.info.extracted
+	popd
+fi
  
  
