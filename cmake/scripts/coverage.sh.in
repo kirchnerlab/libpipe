@@ -20,9 +20,10 @@ else
 	     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
 	     --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
 	     -capture --output-file @LIBPIPE_BINARY_DIR@/coverage/pipe.info
-	lcov --extract @LIBPIPE_BINARY_DIR@/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted
+	lcov --extract @LIBPIPE_BINARY_DIR@/coverage/pipe.info '*libpipe*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted
+	lcov --remove @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted '*test*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted2
 	pushd @LIBPIPE_BINARY_DIR@/coverage/
-	genhtml --demangle-cpp --legend --show-details pipe.info.extracted
+	genhtml --demangle-cpp --legend --show-details pipe.info.extracted2
 	popd
 fi
  
