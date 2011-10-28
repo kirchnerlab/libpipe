@@ -42,10 +42,11 @@ struct ConfigJSONTestSuite : vigra::test_suite
             bool thrown = false;
             try {
                 ConfigJSON test;
-                std::vector<std::string> inputFiles;
-                inputFiles.push_back("bla.txt");
-                inputFiles.push_back("inputFileConnectionJSON.txt");
-                inputFiles.push_back("inputFilePipelineJSON.txt");
+
+                std::map<std::string, std::string> inputFiles;
+                inputFiles["sda"] = "inputFileFilterJSON.txt";
+                inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+                inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
@@ -55,23 +56,26 @@ struct ConfigJSONTestSuite : vigra::test_suite
 
             try {
                 ConfigJSON test;
-                std::vector<std::string> inputFiles;
-                inputFiles.push_back("inputFileFilterJSON.txt");
-                inputFiles.push_back("inputFileConnectionJSON.txt");
-                inputFiles.push_back("inputFilePipelineJSON.txt");
+
+                std::map<std::string, std::string> inputFiles;
+                inputFiles["FilterInput"]="wrongInputFile.txt";
+                inputFiles["ConnectionInput"]="inputFileConnectionJSON.txt";
+                inputFiles["PipelineInput"]="inputFilePipelineJSON.txt";
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
-            }shouldEqual(thrown, false);
+            }
+            shouldEqual(thrown, true);
 
         }
 
         void testFileChecker()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"]="inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"]="inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"]="inputFilePipelineJSON.txt";
             ConfigJSON test;
             shouldEqual(test.checkFile(inputFiles), true);
 
@@ -79,10 +83,11 @@ struct ConfigJSONTestSuite : vigra::test_suite
 
         void testGetters()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"]="inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"]="inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"]="inputFilePipelineJSON.txt";
             ConfigJSON test;
             test.parseInputFile(inputFiles);
 

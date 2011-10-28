@@ -538,10 +538,10 @@ int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
 
-    std::vector<std::string> inputFiles;
-    inputFiles.push_back("inputFileFilterJSON.txt");
-    inputFiles.push_back("inputFileConnectionJSON.txt");
-    inputFiles.push_back("inputFilePipelineJSON.txt");
+    std::map<std::string, std::string> inputFiles;
+    inputFiles["FilterInput"]="inputFileFilterJSON.txt";
+    inputFiles["ConnectionInput"]="inputFileConnectionJSON.txt";
+    inputFiles["PipelineInput"]="inputFilePipelineJSON.txt";
 
     Loader loader(inputFiles);
     Pipeline pipeline = loader.getPipeline();

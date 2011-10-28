@@ -30,14 +30,10 @@ class Controler
     public:
 
         /** Constructor
-         * @param filename The names to the configurations file. Order is important.
-         * for JSON:
-         * \li 1. file: Filter Configuration
-         * \li 2. file: Connection Configurations
-         * \li 3. file: Pipeline configuration
+         * @param filename The names to the configurations file. Identified by a string key.
          *
          */
-        Controler(const std::vector<std::string>& filename);
+        Controler(const std::map<std::string, std::string>& filename);
 
         /** Destructor
          */

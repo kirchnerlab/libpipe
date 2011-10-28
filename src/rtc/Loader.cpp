@@ -17,7 +17,7 @@
 namespace libpipe {
 namespace rtc {
 
-Loader::Loader(const std::vector<std::string>& filename)
+Loader::Loader(const std::map<std::string, std::string>& filename)
 {
     try {
         Controler creator_(filename);

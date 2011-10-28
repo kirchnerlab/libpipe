@@ -12,6 +12,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 #include <functional>
 #include <queue>
 
@@ -114,9 +115,9 @@ class Config
         virtual ~Config() = 0;
 
         /** Parses the input files. Order is important!
-         * @param filename Names of the input files
+         * @param filename Names of the input files. Identifed by a string key
          */
-        virtual void parseInputFile(const std::vector<std::string>& filename) = 0;
+        virtual void parseInputFile(const std::map<std::string, std::string>& filename) = 0;
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -145,9 +146,9 @@ class Config
                 std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const=0;
 
         /** Checks the input files. Order is important!
-         * @param filename Names of the input files
+         * @param filename Names of the input files. Identified by a string key.
          */
-        virtual bool checkFile(const std::vector<std::string>& filename) const = 0;
+        virtual bool checkFile(const std::map<std::string, std::string>& filename) const = 0;
 
 };
 

@@ -24,7 +24,7 @@
 namespace libpipe {
 namespace rtc {
 
-Controler::Controler(const std::vector<std::string>& inputFile)
+Controler::Controler(const std::map<std::string, std::string>& inputFile)
 {
     configuration_ = new ConfigJSON;
     try{

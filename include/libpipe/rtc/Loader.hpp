@@ -12,6 +12,7 @@
 
 #include <libpipe/rtc/Pipeline.hpp>
 #include <string>
+#include <map>
 
 namespace libpipe {
 namespace rtc {
@@ -21,12 +22,9 @@ class Loader
 {
     public:
         /** Constructor
-         * @param filename Name of the input files, order is important. For JSON:
-         * \li 1. file: Filter Configuration
-         * \li 2. file: Connection Configurations
-         * \li 3. file: Pipeline configuration
+         * @param filename Name of the input files. With a key.
          */
-        Loader(const std::vector<std::string>& filename);
+        Loader(const std::map<std::string, std::string>& filename);
         /**
          * Destructor
          */

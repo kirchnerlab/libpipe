@@ -44,18 +44,18 @@ struct ControlerTestSuite : vigra::test_suite
 
         void testMemory()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             Controler creator(inputFiles);        }
 
         void testWrongCalls()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             Controler creator(inputFiles);
             bool thrown = false;
             try {
@@ -81,20 +81,20 @@ struct ControlerTestSuite : vigra::test_suite
         }
 
         void testFilter(){
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             Controler creator(inputFiles);
             boost::shared_ptr<Filter> f1 = creator.getFilter("Lowercase");
             shouldEqual(f1->getName(), "Lowercase");
         }
 
         void testPipeline(){
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             Controler creator(inputFiles);            Pipeline pipe=creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "Lowercase");
         }

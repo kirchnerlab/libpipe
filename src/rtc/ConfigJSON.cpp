@@ -75,7 +75,7 @@ std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
     return requestQueue_;
 }
 
-void ConfigJSON::parseInputFile(const std::vector<std::string>& filename)
+void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filename)
 {
 
     boost::property_tree::ptree ptFilter;
@@ -84,7 +84,7 @@ void ConfigJSON::parseInputFile(const std::vector<std::string>& filename)
 
     // Read the file. If there is an error, report it and exit.
     try {
-        boost::property_tree::read_json(filename.at(0), ptFilter);
+        boost::property_tree::read_json(filename.find("FilterInput")->second, ptFilter);
     } catch (std::exception& e) {
         std::ostringstream oss;
         oss << "I/O error while reading Filter file. With exception: "
@@ -106,7 +106,7 @@ void ConfigJSON::parseInputFile(const std::vector<std::string>& filename)
             }
 // Read the file. If there is an error, report it and exit.
     try {
-        boost::property_tree::read_json(filename.at(1),
+        boost::property_tree::read_json(filename.find("ConnectionInput")->second,
             ptConnections);
     } catch (std::exception& e) {
         std::ostringstream oss;
@@ -156,7 +156,7 @@ void ConfigJSON::parseInputFile(const std::vector<std::string>& filename)
     // generates the pipeline
     // Read the file. If there is an error, report it and exit.
     try {
-        boost::property_tree::read_json(filename.at(2),
+        boost::property_tree::read_json(filename.find("PipelineInput")->second,
             ptPipeline);
     } catch (std::exception& e) {
         std::ostringstream oss;
@@ -184,7 +184,7 @@ void ConfigJSON::parseInputFile(const std::vector<std::string>& filename)
 
 }
 
-bool ConfigJSON::checkFile(const std::vector<std::string>& filename) const
+bool ConfigJSON::checkFile(const std::map<std::string, std::string>& filename) const
 {
     return true;
     ///TODO implement test

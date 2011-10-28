@@ -37,15 +37,17 @@ struct LoaderTestSuite : vigra::test_suite
 
         void testConstruction()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             libpipe::rtc::Loader loader(inputFiles);
             bool thrown=false;
             try{
-                std::vector<std::string> inputFiles;
-                inputFiles.push_back("bla.txt");
+                std::map<std::string, std::string> inputFiles;
+                inputFiles["FilterInput"] = "bla.txt";
+                inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+                inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
                 libpipe::rtc::Loader loader(inputFiles);
             }catch (...){
                 thrown=true;
@@ -56,10 +58,10 @@ struct LoaderTestSuite : vigra::test_suite
 
         void testGetter()
         {
-            std::vector<std::string> inputFiles;
-            inputFiles.push_back("inputFileFilterJSON.txt");
-            inputFiles.push_back("inputFileConnectionJSON.txt");
-            inputFiles.push_back("inputFilePipelineJSON.txt");
+            std::map<std::string, std::string> inputFiles;
+            inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+            inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+            inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             libpipe::rtc::Loader loader(inputFiles);
             libpipe::rtc::Pipeline pipe = loader.getPipeline();
             //indirect test of equality

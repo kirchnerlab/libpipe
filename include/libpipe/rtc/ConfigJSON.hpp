@@ -32,12 +32,12 @@ class ConfigJSON : public Config
         ~ConfigJSON();
 
         /** Parses the input files.
-         * \li 1. file: Filter Configuration
-         * \li 2. file: Connection Configurations
-         * \li 3. file: Pipeline configuration
+         * \li key: "FilterInput" Input file with the Filter Configuration
+         * \li key: "ConnectionInput" Input file with the Connection Configurations
+         * \li key: "PipelineInput" Input file with the Pipeline configuration
          * @param filename Names of the input files
          */
-        virtual void parseInputFile(const std::vector<std::string>& filename);
+        virtual void parseInputFile(const std::map<std::string, std::string>& filename);
 
         /** Gives a list of all Filters that need to be generated
          * @return A list of Filters
@@ -69,7 +69,7 @@ class ConfigJSON : public Config
         /** Checks the input files. Order is important!
          * @param filename Names of the input files
          */
-        virtual bool checkFile(const std::vector<std::string>& filename) const;
+        virtual bool checkFile(const std::map<std::string, std::string>& filename) const;
 
     private:
 
