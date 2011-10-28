@@ -27,7 +27,9 @@ MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
 
 # more warnings against everything
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wall" )
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX0X_FLAGS}" )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX0X_FLAGS}")
+SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
+
 
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/include/libpipe/config.hpp.cmake 
@@ -47,18 +49,10 @@ INCLUDE_DIRECTORIES(
 
 
 #############################################################################
-# syncing docs
-#############################################################################
-#ADD_CUSTOM_TARGET(syncdocs COMMAND ${LIBPIPE_SOURCE_DIR}/scripts/sync-docs-gh-pages.sh ${LIBPIPE_SOURCE_DIR} ${LIBPIPE_BINARY_DIR})
-#ADD_DEPENDENCIES(syncdocs doc)
-
-#############################################################################
 # code coverage analysis
 #############################################################################
-SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
 IF (ENABLE_COVERAGE)
     MESSAGE(STATUS "Coverage enabled")
-
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
     CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
         ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
