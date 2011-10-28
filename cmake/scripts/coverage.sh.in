@@ -1,19 +1,14 @@
 #!/bin/bash
 
-lcov --directory @LIBPIPE_BINARY_DIR@ --zerocounters
-#find @LIBPIPE_BINARY_DIR@ -name *.gcno -print0 | xargs -0 rm -f
-find @LIBPIPE_BINARY_DIR@ -name *.gcda -print0 | xargs -0 rm -f
-
-make -f @LIBPIPE_BINARY_DIR@/Makefile
-
-mkdir -p @LIBPIPE_BINARY_DIR@/test/coverage
-make -f @LIBPIPE_BINARY_DIR@/Makefile test
+mkdir -p @LIBPIPE_BINARY_DIR@/coverage
+gcovr -r @LIBPIPE_BINARY_DIR@ -f '.*libpipe' -e '.*test' -x > @LIBPIPE_BINARY_DIR@/coverage/coverage.xml
 lcov --directory @LIBPIPE_BINARY_DIR@/test/CMakeFiles \
      --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles/pipe.dir \
      --directory @LIBPIPE_BINARY_DIR@/src/CMakeFiles \
-     -capture --output-file @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info
-lcov --extract @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/test/coverage/pipe.info.extracted
-pushd @LIBPIPE_BINARY_DIR@/test/coverage/
-gcovr -x > coverage.xml
-#genhtml --demangle-cpp pipe.info.extracted
-popd 
+     -capture --output-file @LIBPIPE_BINARY_DIR@/coverage/pipe.info
+lcov --extract @LIBPIPE_BINARY_DIR@/coverage/pipe.info '*libpipe/src*' '*libpipe/include/libpipe*' -o @LIBPIPE_BINARY_DIR@/coverage/pipe.info.extracted
+pushd @LIBPIPE_BINARY_DIR@/coverage/
+genhtml --demangle-cpp pipe.info.extracted
+popd
+ 
+ 

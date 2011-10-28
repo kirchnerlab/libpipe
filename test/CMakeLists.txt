@@ -39,11 +39,6 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
         #Add target for the memory test
         ADD_CUSTOM_TARGET(${memtest_name} COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/memcheck.py ${CMAKE_CURRENT_BINARY_DIR}/${exe})
     ENDIF (HAVE_VALGRIND) 
-    #Add target for the gcov coverage report for this test
-    IF(ENABLE_COVERAGE)
-        STRING(REGEX REPLACE "test_([^ ]+).*" "gcov_\\1" gcov_target "${exe}" )
-        ADD_CUSTOM_TARGET(${gcov_target} COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/scripts/for_cmake/unit_coverage.sh ${test})
-    ENDIF(ENABLE_COVERAGE)
 ENDMACRO(ADD_LIBPIPE_TEST name exe src)
 
 
