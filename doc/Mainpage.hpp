@@ -29,10 +29,6 @@ CMAKE_INSTALL_PREFIX [Default: /usr/bin/local/]
 </dt>
 <dd>allows to specify the installation path</dd>
 <dt>
--DENABLE_THREAD [Default: FALSE]
-</dt>
-<dd>If set to TRUE threading is enabled</dd>
-<dt>
 CMAKE_BUILD_TYPE
 </dt>
 <dd>controls the type of build
