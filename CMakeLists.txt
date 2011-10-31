@@ -31,15 +31,18 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX0X_FLAGS}")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
 
 
+
+
+# switches
+OPTION(ENABLE_TESTING "Compile tests" ON)
+OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
+OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
+OPTION(ENABLE_THREAD "Enable threads in libpipe" FALSE)
+
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/include/libpipe/config.hpp.cmake 
     ${LIBPIPE_BINARY_DIR}/include/libpipe/config.hpp
 )
-
-# add subdirs
-OPTION(ENABLE_TESTING "Compile tests" ON)
-OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
-OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 
 # global include dirs
 INCLUDE_DIRECTORIES(
