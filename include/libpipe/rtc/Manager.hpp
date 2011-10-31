@@ -108,6 +108,11 @@ class Manager : boost::noncopyable
          */
         void disconnect();
 
+    private:
+        /** Returns the Filter Manager is dependent on
+         * @return A Set of shared_ptr to Filters
+         */
+        std::set<boost::shared_ptr<Filter> > getSources();
         /** Register Filter in the FilterFactory
          *
          */
@@ -117,12 +122,6 @@ class Manager : boost::noncopyable
          * @return true if successful
          */
         static const bool registerLoader();
-
-    private:
-        /** Returns the Filter Manager is dependent on
-         * @return A Set of shared_ptr to Filters
-         */
-        std::set<boost::shared_ptr<Filter> > getSources();
 };
 
 } // namespace rtc
