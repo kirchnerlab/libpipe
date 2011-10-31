@@ -62,6 +62,14 @@ void Request::getTrace(std::vector<std::string>& trace)
     trace = trace_;
 }
 
+Request::Request& Request::operator+=(Request const& rhs){
+    if(this->traceFlag_==rhs.traceFlag_ and this->type_==rhs.type_){
+        trace_.insert( trace_.end(), rhs.trace_.begin(), rhs.trace_.end() );
+    }
+    return this;
+}
+
+
 void Request::addTrace(const std::string& t)
 {
     time_t rawtime;

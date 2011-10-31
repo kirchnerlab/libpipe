@@ -109,6 +109,12 @@ public:
      */
     void clearTrace();
 
+    /** Adds the trace to the current request type if the type and flag are the same.
+     * @param rhs Request which trace is added to the Request
+     * @return the combined request
+     */
+    Request& operator+=(Request const& rhs);
+
 protected:
 
     /** The request type.
