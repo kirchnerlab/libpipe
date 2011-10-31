@@ -64,9 +64,9 @@ void Request::getTrace(std::vector<std::string>& trace)
 
 Request::Request& Request::operator+=(Request const& rhs){
     if(this->traceFlag_==rhs.traceFlag_ and this->type_==rhs.type_){
-        trace_.insert( trace_.end(), rhs.trace_.begin(), rhs.trace_.end() );
+        this->trace_.insert(this->trace_.end(), rhs.trace_.begin(), rhs.trace_.end() );
     }
-    return this;
+    return *this;
 }
 
 
