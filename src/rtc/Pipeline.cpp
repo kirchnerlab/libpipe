@@ -67,8 +67,7 @@ void Pipeline::run()
         }
 
         LIBPIPE_REQUEST_TRACE(tempReq, tempStr);
-
-        pipelineQueue_.front()->getManager()->processRequest(tempReq);
+        pipelineQueue_.front()->processRequest(tempReq);
 
         std::vector<std::string> tempTrace;
         tempReq.getTrace(tempTrace);
