@@ -98,7 +98,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
 
     protected:
         /** Constructor.
-         * Make sure to call the \c libpipe::Algorithm constructor.
+         * Make sure to call the \c libpipe::rtc::Algorithm constructor.
          */
         UppercaseAlgorithm() :
                 libpipe::rtc::Algorithm()

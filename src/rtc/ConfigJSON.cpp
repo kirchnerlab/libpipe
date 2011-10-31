@@ -95,7 +95,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
     std::map<std::string, std::string> algorithmMap;
     std::map<std::string, std::string> managerMap;
 
-    BOOST_FOREACH(boost::property_tree::ptree::value_type & v,
+    BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptFilter.get_child("filters"))
             {
                 algorithmMap[v.second.get<std::string>("filterIdentifier")] =
@@ -115,7 +115,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
         libpipe_fail(oss.str());
     }
 
-    BOOST_FOREACH(boost::property_tree::ptree::value_type & v,
+    BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptConnections.get_child("connections"))
             {
 
@@ -129,7 +129,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
                         std::string>("identifier")];
 
                 PrecursorDescription tempPrecursor;
-                BOOST_FOREACH(boost::property_tree::ptree::value_type & t,
+                BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
                         v.second.get_child("precursors"))
                         {
                             tempPrecursor.precursorName = t.second.get<
@@ -139,7 +139,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
                         }
 
                 PortDescription tempPorts;
-                BOOST_FOREACH(boost::property_tree::ptree::value_type & t,
+                BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
                         v.second.get_child("ports"))
                         {
                             tempPorts.filterName = t.second.get<std::string>(
@@ -165,7 +165,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
         libpipe_fail(oss.str());
     }
 
-    BOOST_FOREACH(boost::property_tree::ptree::value_type & v,
+    BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptPipeline.get_child("pipeline"))
             {
                 PipelineDescription tempLibpipeRequest;

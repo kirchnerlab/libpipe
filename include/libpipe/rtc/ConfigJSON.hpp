@@ -4,7 +4,7 @@
  * Copyright (c) 2011 David Sichau
  *                    Marc Kirchner
  */
-
+/// TODO have uninitialised values
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIGJSON_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_RTC_CONFIGJSON_HPP__
 
