@@ -140,6 +140,8 @@ class Manager : boost::noncopyable
          * @return true if successful
          */
         static const bool registerLoader();
+
+
 };
 
 } // namespace rtc

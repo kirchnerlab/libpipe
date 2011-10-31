@@ -34,6 +34,7 @@
 #include <libpipe/Request.hpp>
 
 #include <boost/noncopyable.hpp>
+#include <boost/thread.hpp>
 
 namespace libpipe {
 namespace rtc {
@@ -118,6 +119,12 @@ class Filter : boost::noncopyable
         /** Holds the name of the filter.
          */
         std::string name_;
+
+        /** Mutex for the filter class to make sure only one thread at a time is
+         * accessing processrequest
+         */
+        boost::mutex filterMutex_;
+
 
 };
 
