@@ -87,6 +87,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+            std::cout<<boost::this_thread::get_id()<<std::endl;
             output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
@@ -189,6 +190,8 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
 
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
+            std::cout<<boost::this_thread::get_id()<<std::endl;
+
             LIBPIPE_REQUEST_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
@@ -282,6 +285,8 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
+            std::cout<<boost::this_thread::get_id()<<std::endl;
+
             LIBPIPE_REQUEST_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
@@ -403,6 +408,8 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                 LIBPIPE_REQUEST_TRACE(req,
                     "ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
+                std::cout<<boost::this_thread::get_id()<<std::endl;
+
                 LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
@@ -503,6 +510,8 @@ class Source : public libpipe::rtc::Algorithm
         libpipe::Request& update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "providing input.");
+            std::cout<<boost::this_thread::get_id()<<std::endl;
+
             return req;
         }
 

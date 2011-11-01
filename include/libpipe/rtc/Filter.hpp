@@ -68,7 +68,10 @@ class Filter : boost::noncopyable
          * @param[in] req The request object.
          * @return The request object with processing information filled out.
          */
-        Request& processRequest(Request& req);
+        libpipe::Request& processRequest(libpipe::Request& req);
+
+        void processRequestThread(libpipe::Request& req);
+
 
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.

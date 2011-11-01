@@ -32,7 +32,7 @@
 #include <libpipe/rtc/ManagerFactory.hpp>
 
 #include <boost/thread.hpp>
-#include <boost/lambda/lambda.hpp>
+#include <boost/bind.hpp>
 
 using namespace libpipe::rtc;
 
@@ -64,6 +64,7 @@ void Manager::setAlgorithm(Algorithm* alg)
 
 libpipe::Request& Manager::processRequest(libpipe::Request& req)
 {
+//    boost::unique_lock<boost::mutex> lock(managerMutex_);
     if (req.is(libpipe::Request::UPDATE)) {
         if (!algorithm_) {
             throw libpipe::RequestException(
@@ -77,10 +78,8 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
                 if (ENABLE_THREAD) {
-                    libpipe::Request ret(req.getType());
                     thread.add_thread(new boost::thread(
-                        boost::lambda::var(ret) = (*i)->processRequest(req)));
-                    req+=ret;
+                        &Filter::processRequestThread,(*i),req));
                 } else {
                     req = (*i)->processRequest(req);
                 }

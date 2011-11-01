@@ -35,6 +35,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <boost/noncopyable.hpp>
+#include <boost/thread.hpp>
 
 
 namespace libpipe {
@@ -140,6 +141,7 @@ class Manager : boost::noncopyable
          * @return true if successful
          */
         static const bool registerLoader();
+
 
 
 };

@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <libpipe/config.hpp>
 
@@ -43,14 +43,11 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 
-
-
 #include <libpipe/rtc/ManagerFactory.hpp>
 
 #include <boost/pointer_cast.hpp>
 
 #include "rtc/utils.hpp"
-
 
 using namespace libpipe::rtc;
 /** <+Short description of the test suite+>
@@ -86,7 +83,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
                 "IdentityRTC");
             Manager* m = ManagerFactory::instance().createObject("MangerRTC");
             m->setAlgorithm(a);
-            std::cout<<m->getAlgorithm()<<"b"<<a<<std::endl;
+            std::cout << m->getAlgorithm() << "b" << a << std::endl;
             // make sure the pointers point at the same location
             shouldEqual(m->getAlgorithm(), a);
             delete a;
@@ -121,8 +118,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
         void testConnect()
         {
             // Use a derived class to gain access to the source list.
-            Manager* tm = ManagerFactory::instance().createObject(
-                "MangerRTC");
+            Manager* tm = ManagerFactory::instance().createObject("MangerRTC");
             shouldEqual(tm->getSources().size(), static_cast<size_t>(0));
 
             boost::shared_ptr<Filter> fi(
@@ -146,8 +142,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
         void testProcessRequestNoAlgorithmSetup()
         {
             // make sure we fail if there is no algorithm setup
-            Manager* tm = ManagerFactory::instance().createObject(
-                "MangerRTC");
+            Manager* tm = ManagerFactory::instance().createObject("MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
             // FIXME: we should have different error classes to distinguish
@@ -165,8 +160,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
          */
         void testProcessRequestNoSources()
         {
-            Manager* tm = ManagerFactory::instance().createObject(
-                "MangerRTC");
+            Manager* tm = ManagerFactory::instance().createObject("MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             req.setTraceFlag(true);
             // the following algorithm should not throw any exceptions
@@ -198,8 +192,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
          */
         void testProcessRequestFailingSources()
         {
-            Manager* tm = ManagerFactory::instance().createObject(
-                "MangerRTC");
+            Manager* tm = ManagerFactory::instance().createObject("MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
 
             Algorithm* a = AlgorithmFactory::instance().createObject(
@@ -216,18 +209,22 @@ struct ManagerRTCTestSuite : vigra::test_suite
 
             req = tm->processRequest(req);
 
-            // now add the failing source
+            // now add the failing source only if not threading is enabled
+            if (!ENABLE_THREAD) {
+                boost::shared_ptr<Filter> ff(
+                    Filter::create("FailFilter", "RaiseExceptionAlg",
+                        "MangerRTC"));
 
-            boost::shared_ptr<Filter> ff(Filter::create("FailFilter","RaiseExceptionAlg", "MangerRTC"));
+                tm->connect(ff);
 
-            tm->connect(ff);
-
-            bool thrown = false;
-            try {
-                req = tm->processRequest(req);
-            } catch (libpipe::RequestException& e) {
-                thrown = true;
-            }shouldEqual(thrown, true);
+                bool thrown = false;
+                try {
+                    req = tm->processRequest(req);
+                } catch (libpipe::RequestException& e) {
+                    thrown = true;
+                }
+                shouldEqual(thrown, true);
+            }
 
             delete a;
             delete tm;
@@ -237,8 +234,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
          */
         void testProcessRequestFailingSourcesDelete()
         {
-            Manager* tm = ManagerFactory::instance().createObject(
-                "MangerRTC");
+            Manager* tm = ManagerFactory::instance().createObject("MangerRTC");
             libpipe::Request req(libpipe::Request::DELETE);
             Algorithm* a = AlgorithmFactory::instance().createObject(
                 "IdentityRTC");

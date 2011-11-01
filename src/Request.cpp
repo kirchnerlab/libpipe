@@ -26,6 +26,7 @@
 #include <libpipe/config.hpp>
 #include <libpipe/Request.hpp>
 
+#include <boost/thread.hpp>
 using namespace libpipe;
 
 Request::Request(const Request::Type& t) :
@@ -78,7 +79,9 @@ void Request::addTrace(const std::string& t)
     timeinfo = localtime(&rawtime);
     static char buffer[40];
     strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
-    trace_.push_back(std::string(buffer) + t);
+    std::ostringstream thread;
+    thread <<"thread: "<<boost::this_thread::get_id() <<"\t";
+    trace_.push_back(thread.str() + std::string(buffer) + t);
 }
 
 void Request::clearTrace()
