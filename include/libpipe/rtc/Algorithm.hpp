@@ -37,6 +37,7 @@
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/thread.hpp>
 
 /**
  * \namespace libpipe The Namespace for all libpipe classes.
@@ -188,6 +189,11 @@ class Algorithm
         /** The last modification timestamp.
          */
         timeval mTime_;
+
+        /** Mutex for the algorithm class to make sure only one thread at a time is
+         * writing to data
+         */
+        boost::mutex algorithmMutex_;
 
 };
 } // namespace rtc
