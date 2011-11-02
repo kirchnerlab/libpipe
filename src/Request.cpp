@@ -57,7 +57,7 @@ void Request::setTraceFlag(const bool tf)
     traceFlag_ = tf;
 }
 
-void Request::getTrace(std::vector<std::string>& trace)
+void Request::getTrace(std::vector<std::string>& trace) const
 {
     trace = trace_;
 }
@@ -77,4 +77,6 @@ void Request::clearTrace()
 {
     trace_.clear();
 }
+
+std::vector<std::string> Request::trace_;
 

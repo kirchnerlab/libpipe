@@ -97,7 +97,7 @@ public:
     /** Returns all traces collected in the Request object.
      * @param[out] trace All collected trace information.
      */
-    void getTrace(std::vector<std::string>& trace);
+    void getTrace(std::vector<std::string>& trace) const;
 
     /** Add trace information to the request object.
      * Currently the request object simply collects std::strings.
@@ -125,7 +125,7 @@ protected:
 
     /** Trace information.
      */
-    std::vector<std::string> trace_;
+    static std::vector<std::string> trace_;
 };
 
 } // namespace libpipe
