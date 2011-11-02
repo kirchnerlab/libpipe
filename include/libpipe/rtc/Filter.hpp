@@ -72,7 +72,6 @@ class Filter : boost::noncopyable
 
         void processRequestThread(libpipe::Request& req);
 
-
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
          */
@@ -92,6 +91,10 @@ class Filter : boost::noncopyable
          * @param[in] name The name of the filter.
          */
         void setName(const std::string& name);
+
+        libpipe::Request getRequest() const;
+
+        void setRequest(const libpipe::Request& req);
 
     private:
         /** Constructor.
@@ -127,6 +130,8 @@ class Filter : boost::noncopyable
          * accessing processrequest
          */
         boost::mutex filterMutex_;
+
+        libpipe::Request request_;
 
 
 };

@@ -33,6 +33,7 @@
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
+#include <boost/lambda/lambda.hpp>
 
 using namespace libpipe::rtc;
 
@@ -74,12 +75,16 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
         // iterate over all sources
 
         boost::thread_group thread;
-
+        std::vector<libpipe::Request> retValues;
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
                 if (ENABLE_THREAD) {
-                    thread.add_thread(new boost::thread(
-                        &Filter::processRequestThread,(*i),req));
+                    retValues.push_back(libpipe::Request(req.getType()));
+                    retValues.back().setTraceFlag(req.getTraceFlag());
+                    thread.add_thread(
+                        new boost::thread(&Filter::processRequestThread, (*i),
+                            boost::ref(retValues.back())));
+
                 } else {
                     req = (*i)->processRequest(req);
                 }
@@ -88,7 +93,10 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
             }
         }
         if (ENABLE_THREAD) {
+
             thread.join_all();
+
+
         }
         try {
             req = algorithm_->processRequest(req);
