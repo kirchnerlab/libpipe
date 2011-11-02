@@ -71,7 +71,7 @@ struct LoaderTestSuite : vigra::test_suite
             }catch (...){
                 thrown=true;
             }
-            shouldEqual(thrown,false);
+            shouldEqual(thrown,true);
 
         }
 
