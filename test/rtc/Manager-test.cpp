@@ -210,21 +210,22 @@ struct ManagerRTCTestSuite : vigra::test_suite
             tm->processRequest(req);
 
             // now add the failing source only if not threading is enabled
-#ifndef ENABLE_THREAD
             boost::shared_ptr<Filter> ff(
                 Filter::create("FailFilter", "RaiseExceptionAlg",
                     "MangerRTC"));
+            bool thrown;
+            thrown = false;
+
+#ifndef ENABLE_THREADING
 
             tm->connect(ff);
 
-            bool thrown = false;
             try {
                 tm->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
 
-#endif
             tm->connect(ff);
 
             thrown = false;
@@ -233,6 +234,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
+#endif
 
             delete a;
             delete tm;
