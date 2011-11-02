@@ -66,17 +66,13 @@ void Filter::processRequest(libpipe::Request& req)
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
 }
 
-Algorithm* Filter::getAlgorithm()
+Algorithm* Filter::getAlgorithm() const
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
     return algorithm_;
 }
 
 void Filter::setAlgorithm(Algorithm* alg)
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
     if (algorithm_ != alg) {
         if (algorithm_) {
             delete algorithm_;
@@ -88,17 +84,15 @@ void Filter::setAlgorithm(Algorithm* alg)
     }
 }
 
-Manager* Filter::getManager()
+Manager* Filter::getManager() const
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
+    boost::shared_lock<boost::shared_mutex> lock(managerMutex_);
 
     return manager_;
 }
 
 void Filter::setManager(Manager* manager)
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
     if (manager_ != manager) {
         if (manager_) {
             delete manager_;
@@ -107,17 +101,15 @@ void Filter::setManager(Manager* manager)
     }
 }
 
-std::string Filter::getName()
+std::string Filter::getName() const
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
+    boost::shared_lock<boost::shared_mutex> lock(nameMutex_);
     return name_;
 }
 
 void Filter::setName(const std::string& name)
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
+    boost::unique_lock<boost::shared_mutex> lock(nameMutex_);
     name_ = name;
 }
 
