@@ -14,7 +14,7 @@ SET(Boost_USE_STATIC_LIBS OFF)
 SET(Boost_USE_MULTITHREAD OFF)
 #make sure that at least version 1.47.0 is used
 SET(BOOST_MIN_VERSION "1.46.0")
-FIND_PACKAGE(Boost ${BOOST_MIN_VERSION} COMPONENTS thread REQUIRED)
+FIND_PACKAGE(Boost ${BOOST_MIN_VERSION} REQUIRED)
 
 
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
@@ -40,6 +40,8 @@ CONFIGURE_FILE(
 OPTION(ENABLE_TESTING "Compile tests" ON)
 OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
 OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
+OPTION(ENABLE_THREADING "Enable threading" FALSE)
+
 
 # global include dirs
 INCLUDE_DIRECTORIES(

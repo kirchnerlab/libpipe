@@ -78,63 +78,64 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
         std::vector<libpipe::Request> retValues;
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
-                if (ENABLE_THREAD) {
-                    retValues.push_back(libpipe::Request(req.getType()));
-                    retValues.back().setTraceFlag(req.getTraceFlag());
-                    thread.add_thread(
-                        new boost::thread(&Filter::processRequestThread, (*i),
-                            boost::ref(retValues.back())));
+#ifdef ENABLE_THREADING
 
-                } else {
-                    req = (*i)->processRequest(req);
-                }
+                retValues.push_back(libpipe::Request(req.getType()));
+                retValues.back().setTraceFlag(req.getTraceFlag());
+                thread.add_thread(
+                    new boost::thread(&Filter::processRequestThread, (*i),
+                        boost::ref(retValues.back())));
+
+#else
+                req = (*i)->processRequest(req);
+#endif
             } catch (libpipe::RequestException& e) {
                 throw;
             }
         }
-        if (ENABLE_THREAD) {
+#ifdef ENABLE_THREADING
+        thread.join_all();
+#endif
 
-            thread.join_all();
-
-
-        }
-        try {
-            req = algorithm_->processRequest(req);
-        } catch (std::exception& e) {
-            std::string str(e.what());
-            throw libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
-                        + str);
-        } catch (...) {
-            throw libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
-        }
-    } else if (req.is(libpipe::Request::DELETE)) {
-        req = algorithm_->processRequest(req);
-        this->disconnect();
     }
-    return req;
+    try {
+        req = algorithm_->processRequest(req);
+    } catch (std::exception& e) {
+        std::string str(e.what());
+        throw libpipe::RequestException(
+            "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+                    + str);
+    } catch (...) {
+        throw libpipe::RequestException(
+            "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
+    }
+}
+else if (req.is(libpipe::Request::DELETE)) {
+    req = algorithm_->processRequest(req);
+    this->disconnect();
+}
+return req;
 }
 
 void Manager::connect(boost::shared_ptr<Filter> f)
 {
-    sources_.insert(f);
+sources_.insert(f);
 }
 
 void Manager::disconnect()
 {
-    sources_.clear();
+sources_.clear();
 }
 
 const bool Manager::registerLoader()
 {
-    std::string ids = "MangerRTC";
-    return ManagerFactory::instance().registerType(ids, Manager::create);
+std::string ids = "MangerRTC";
+return ManagerFactory::instance().registerType(ids, Manager::create);
 }
 
 std::set<boost::shared_ptr<Filter> > Manager::getSources()
 {
-    return sources_;
+return sources_;
 }
 
 const bool Manager::registered_ = registerLoader();

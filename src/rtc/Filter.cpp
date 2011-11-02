@@ -60,7 +60,6 @@ libpipe::Request& Filter::processRequest(libpipe::Request& req)
     // forward algorithm handle and request to manager allow only one
     //thread at a time.
 
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
 
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
@@ -70,18 +69,17 @@ libpipe::Request& Filter::processRequest(libpipe::Request& req)
 
 void Filter::processRequestThread(libpipe::Request& req)
 {
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-
     setRequest(req);
     processRequest(request_);
 }
 
-libpipe::Request Filter::getRequest() const
+libpipe::Request Filter::getRequest()
 {
     boost::unique_lock<boost::mutex> lock(filterMutex_);
-
     return request_;
+
 }
+
 
 void Filter::setRequest(const libpipe::Request& req)
 {
@@ -130,7 +128,7 @@ void Filter::setManager(Manager* manager)
     }
 }
 
-std::string Filter::getName() const
+std::string Filter::getName()
 {
     boost::unique_lock<boost::mutex> lock(filterMutex_);
 

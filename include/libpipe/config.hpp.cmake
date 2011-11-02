@@ -25,7 +25,7 @@
 */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_CONFIG_HPP__
 
-    #define ENABLE_THREAD "${ENABLE_THREAD}"
+    #cmakedefine ENABLE_THREADING
 
 #endif
 

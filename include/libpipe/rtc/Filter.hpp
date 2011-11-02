@@ -85,14 +85,14 @@ class Filter : boost::noncopyable
         /** Returns the name of the filter.
          * @return The name of the filter.
          */
-        std::string getName() const;
+        std::string getName();
 
         /** Set the name of the filter.
          * @param[in] name The name of the filter.
          */
         void setName(const std::string& name);
 
-        libpipe::Request getRequest() const;
+        libpipe::Request getRequest();
 
         void setRequest(const libpipe::Request& req);
 
