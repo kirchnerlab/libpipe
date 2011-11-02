@@ -52,7 +52,7 @@ Controler::Controler(const std::map<std::string, std::string>& inputFile)
     } catch (utilities::Exception& e){
         // fix memory leak when the parsing throws an exception.
         delete configuration_;
-        throw e;
+        throw;
     }
     this->generateFilters();
     this->generatePipeline();

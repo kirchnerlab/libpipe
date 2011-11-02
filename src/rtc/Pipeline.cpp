@@ -67,6 +67,7 @@ void Pipeline::run()
         }
 
         LIBPIPE_REQUEST_TRACE(tempReq, tempStr);
+
         pipelineQueue_.front()->processRequest(tempReq);
 
         std::vector<std::string> tempTrace;
