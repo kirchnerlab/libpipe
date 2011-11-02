@@ -80,9 +80,8 @@ class Manager : boost::noncopyable
          *
          * @param[in] req The request object, non-const (good for e.g. adding trace
          *                information)
-         * @return The (potentially modified) request object.
          */
-        virtual Request& processRequest(Request& req);
+        virtual void processRequest(Request& req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.

@@ -80,21 +80,19 @@ class Algorithm
          * Depending on the information contained in the request object,  this will
          * call the \c update function
          * @param [in,out] req A request object.
-         * @return A (potentially modified) request object.
          */
-        virtual Request& processRequest(Request& req);
+        void processRequest(Request& req);
 
         /** Runs the algorithm and updates the output data, if the Request
          * Type is \c Request::Update. If the request Type is \c Request::DELETE
          * after calling the update function the modification time is fixed to
          * \c Algorithm::MIN_TIME.
          * Users must overload this method (this is where the beef goes).
-         * @param [in,out] req The request object (useful for logging/tracing
+         * @param [in] req The request object (useful for logging/tracing
          *                   purposes). Also useful to get the type of request
          *                   (Update of Delete), so that the input can be deleted.
-         * @return The Request
          */
-        virtual Request& update(Request& req)=0;
+        virtual void update(Request& req)=0;
 
         /** Return the last modification timestamp.
          * @return The last modification timestamp.

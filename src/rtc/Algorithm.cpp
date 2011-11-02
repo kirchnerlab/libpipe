@@ -74,14 +74,14 @@ Algorithm::~Algorithm()
 {
 }
 
-libpipe::Request& Algorithm::processRequest(libpipe::Request& req)
+void Algorithm::processRequest(libpipe::Request& req)
 {
     boost::unique_lock<boost::mutex> lock(algorithmMutex_);
-    req = this->update(req);
+    this->update(req);
+
     if (req.is(libpipe::Request::DELETE)) {
         this->setMTime(Algorithm::MIN_TIME);
     }
-    return req;
 }
 
 const timeval& Algorithm::getMTime() const

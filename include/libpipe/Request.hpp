@@ -100,10 +100,11 @@ class Request
          */
         void setTraceFlag(const bool tf);
 
+
         /** Returns all traces collected in the Request object.
          * @param[out] trace All collected trace information.
          */
-        void getTrace(std::vector<std::string>& trace);
+        void getTrace(std::vector<std::string>& trace) const;
 
         /** Add trace information to the request object.
          * Currently the request object simply collects std::strings.
@@ -137,9 +138,10 @@ class Request
 
         /** Trace information.
          */
-        std::vector<std::string> trace_;
+        static std::vector<std::string> trace_;
 
         static boost::mutex requestMutex_;
+
 
 };
 

@@ -65,7 +65,7 @@ class MyAlgorithm : public Algorithm
         ~MyAlgorithm()
         {
         }
-        virtual libpipe::Request& update(libpipe::Request& req)
+        virtual void update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
 
@@ -77,7 +77,6 @@ class MyAlgorithm : public Algorithm
                         this->getPort("intOutput"));
             out_ = in_;
             this->updateMTime();
-            return req;
         }
     private:
         MyAlgorithm() :

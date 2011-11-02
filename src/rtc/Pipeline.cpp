@@ -70,9 +70,7 @@ void Pipeline::run()
 
         pipelineQueue_.front()->processRequest(tempReq);
 
-        std::vector<std::string> tempTrace;
-        tempReq.getTrace(tempTrace);
-        trace_.insert(trace_.end(), tempTrace.begin(), tempTrace.end());
+        tempReq.getTrace(trace_);
 
         pipelineQueue_.pop();
         requestQueue_.pop();

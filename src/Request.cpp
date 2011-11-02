@@ -67,7 +67,7 @@ void Request::setTraceFlag(const bool tf)
     traceFlag_ = tf;
 }
 
-void Request::getTrace(std::vector<std::string>& trace)
+void Request::getTrace(std::vector<std::string>& trace) const
 {
     boost::unique_lock<boost::mutex> lock(requestMutex_);
     trace = trace_;
@@ -106,4 +106,7 @@ void Request::clearTrace()
 }
 
 boost::mutex Request::requestMutex_;
+
+std::vector<std::string> Request::trace_;
+
 

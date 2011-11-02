@@ -55,7 +55,7 @@ Filter::~Filter()
     delete manager_;
 }
 
-libpipe::Request& Filter::processRequest(libpipe::Request& req)
+void Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager allow only one
     //thread at a time.
@@ -64,27 +64,6 @@ libpipe::Request& Filter::processRequest(libpipe::Request& req)
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
     LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
-    return req;
-}
-
-void Filter::processRequestThread(libpipe::Request& req)
-{
-    setRequest(req);
-    processRequest(request_);
-}
-
-libpipe::Request Filter::getRequest()
-{
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-    return request_;
-
-}
-
-
-void Filter::setRequest(const libpipe::Request& req)
-{
-    boost::unique_lock<boost::mutex> lock(filterMutex_);
-    request_ = req;
 }
 
 Algorithm* Filter::getAlgorithm()
@@ -141,4 +120,6 @@ void Filter::setName(const std::string& name)
 
     name_ = name;
 }
+
+
 
