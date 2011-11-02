@@ -65,7 +65,6 @@ class Filter : boost::noncopyable
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
-         * @return The request object with processing information filled out.
          */
         void processRequest(Request& req);
 

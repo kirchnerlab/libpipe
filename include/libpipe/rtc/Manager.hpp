@@ -79,7 +79,6 @@ class Manager : boost::noncopyable
          *
          * @param[in] req The request object, non-const (good for e.g. adding trace
          *                information)
-         * @return The (potentially modified) request object.
          */
         virtual void processRequest(Request& req);
 

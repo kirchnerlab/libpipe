@@ -87,7 +87,7 @@ class Algorithm
          * after calling the update function the modification time is fixed to
          * \c Algorithm::MIN_TIME.
          * Users must overload this method (this is where the beef goes).
-         * @param [in,out] req The request object (useful for logging/tracing
+         * @param [in] req The request object (useful for logging/tracing
          *                   purposes). Also useful to get the type of request
          *                   (Update of Delete), so that the input can be deleted.
          */
