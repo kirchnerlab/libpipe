@@ -34,6 +34,8 @@
 #include <boost/noncopyable.hpp>
 #include <memory>
 
+#include <boost/thread.hpp>
+
 namespace libpipe {
 
 namespace rtc {
@@ -136,6 +138,8 @@ private:
     /** Pointer to the \c T instance.
      */
     std::auto_ptr<T> ptr_;
+
+    mutable boost::shared_mutex ptrMutex_;
 };
 
 //
@@ -161,12 +165,14 @@ SharedData<T>::~SharedData()
 template<typename T>
 T* SharedData<T>::get() const
 {
+    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
     return ptr_.get();
 }
 
 template<typename T>
 void SharedData<T>::set(T* ptr)
 {
+    boost::unique_lock<boost::shared_mutex> lock(ptrMutex_);
     if (ptr != ptr_.get()) {
         ptr_.reset(ptr);
     }
@@ -175,6 +181,7 @@ void SharedData<T>::set(T* ptr)
 template<typename T>
 bool SharedData<T>::isNull()
 {
+    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
     return ptr_.get() == 0;
 }
 
