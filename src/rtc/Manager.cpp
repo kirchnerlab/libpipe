@@ -60,7 +60,7 @@ void Manager::setAlgorithm(Algorithm* alg)
     algorithm_ = alg;
 }
 
-libpipe::Request& Manager::processRequest(libpipe::Request& req)
+void Manager::processRequest(libpipe::Request& req)
 {
     if (req.is(libpipe::Request::UPDATE)) {
         if (!algorithm_) {
@@ -71,13 +71,13 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
         // iterate over all sources
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
-                req = (*i)->processRequest(req);
+                (*i)->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 throw;
             }
         }
         try {
-            req = algorithm_->processRequest(req);
+            algorithm_->processRequest(req);
         } catch (std::exception& e) {
             std::string str(e.what());
             throw libpipe::RequestException(
@@ -88,10 +88,9 @@ libpipe::Request& Manager::processRequest(libpipe::Request& req)
                 "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
         }
     } else if (req.is(libpipe::Request::DELETE)) {
-        req = algorithm_->processRequest(req);
+        algorithm_->processRequest(req);
         this->disconnect();
     }
-    return req;
 }
 
 void Manager::connect(boost::shared_ptr<Filter> f)

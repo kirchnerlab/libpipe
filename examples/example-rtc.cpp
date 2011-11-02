@@ -75,7 +75,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return The request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
@@ -93,7 +93,6 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
-            return req;
         }
 
     protected:
@@ -176,7 +175,7 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return The request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
@@ -194,7 +193,6 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: end.");
-            return req;
         }
 
     protected:
@@ -265,7 +263,7 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return The request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
 
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
@@ -286,7 +284,6 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: end.");
-            return req;
         }
 
     protected:
@@ -387,7 +384,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return The request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
                     boost::dynamic_pointer_cast<
@@ -410,7 +407,6 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                 LIBPIPE_REQUEST_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
-            return req;
         }
 
     protected:
@@ -500,10 +496,9 @@ class Source : public libpipe::rtc::Algorithm
          * @param[in] req The request object.
          * @return The request object.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "providing input.");
-            return req;
         }
 
     protected:

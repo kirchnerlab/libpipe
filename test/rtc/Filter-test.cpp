@@ -122,7 +122,7 @@ struct FilterRTCTestSuite : vigra::test_suite
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
             try {
-                req = f->processRequest(req);
+                f->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);

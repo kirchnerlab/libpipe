@@ -153,7 +153,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
             // FIXME: we should have different error classes to distinguish
             //        between different errors.
             try {
-                req = tm->processRequest(req);
+                tm->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -174,7 +174,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
                 "IdentityRTC");
             tm->setAlgorithm(a);
             shouldEqual(tm->getSources().size(), static_cast<size_t>(0));
-            req = tm->processRequest(req);
+            tm->processRequest(req);
             delete a;
             std::vector<std::string> trace;
             req.getTrace(trace);
@@ -185,7 +185,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
             tm->setAlgorithm(b);
             bool thrown = false;
             try {
-                req = tm->processRequest(req);
+                tm->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -214,7 +214,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
 
             // this is the ok source
 
-            req = tm->processRequest(req);
+            tm->processRequest(req);
 
             // now add the failing source
 
@@ -224,7 +224,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
 
             bool thrown = false;
             try {
-                req = tm->processRequest(req);
+                tm->processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -251,7 +251,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
 
             // make sure that the filters are deleted
             shouldEqual(tm->getSources().size(), static_cast<size_t>(1));
-            req = tm->processRequest(req);
+            tm->processRequest(req);
             shouldEqual(tm->getSources().size(), static_cast<size_t>(0));
             shouldEqual(tm->getAlgorithm()->needUpdate(), false);
 

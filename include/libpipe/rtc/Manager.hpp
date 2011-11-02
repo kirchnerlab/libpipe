@@ -81,7 +81,7 @@ class Manager : boost::noncopyable
          *                information)
          * @return The (potentially modified) request object.
          */
-        virtual Request& processRequest(Request& req);
+        virtual void processRequest(Request& req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.
