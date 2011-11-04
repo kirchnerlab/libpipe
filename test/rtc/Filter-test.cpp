@@ -121,8 +121,9 @@ struct FilterRTCTestSuite : vigra::test_suite
                 "RaiseExceptionAlg", "MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
+            boost::exception_ptr error;
             try {
-                f->processRequest(req);
+                f->processRequest(req, error);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);

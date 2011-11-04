@@ -81,7 +81,7 @@ class Manager : boost::noncopyable
          * @param[in] req The request object, non-const (good for e.g. adding trace
          *                information)
          */
-        virtual void processRequest(Request& req);
+        virtual void processRequest(Request req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.
@@ -140,6 +140,13 @@ class Manager : boost::noncopyable
          * @return true if successful
          */
         static const bool registerLoader();
+
+        boost::mutex processRequestMutex_;
+
+        boost::shared_mutex algorithmMutex_;
+
+        boost::shared_mutex sourcesMutex_;
+
 
 
 

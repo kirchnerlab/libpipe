@@ -35,6 +35,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/thread.hpp>
+#include <boost/exception_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
@@ -67,31 +68,28 @@ class Filter : boost::noncopyable
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
          */
-        void processRequest(Request& req);
+        void processRequest(libpipe::Request req, boost::exception_ptr & error);
 
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
          */
-        Algorithm* getAlgorithm();
+        Algorithm* getAlgorithm() const;
 
         /** Returns a  pointer to the Manager object.
          * @return A pointer to the Manager object.
          */
-        Manager* getManager();
+        Manager* getManager() const;
 
         /** Returns the name of the filter.
          * @return The name of the filter.
          */
-        std::string getName();
+        std::string getName() const;
 
         /** Set the name of the filter.
          * @param[in] name The name of the filter.
          */
         void setName(const std::string& name);
 
-        libpipe::Request getRequest();
-
-        void setRequest(const libpipe::Request& req);
 
     private:
         /** Constructor.
@@ -123,10 +121,12 @@ class Filter : boost::noncopyable
          */
         std::string name_;
 
-        /** Mutex for the filter class to make sure only one thread at a time is
-         * accessing processrequest
+        /** Mutex for the filter class
+         *
          */
-        boost::mutex filterMutex_;
+        mutable boost::shared_mutex nameMutex_;
+        mutable boost::shared_mutex algorithmMutex_;
+        mutable boost::shared_mutex managerMutex_;
 
 
 

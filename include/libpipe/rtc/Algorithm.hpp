@@ -81,7 +81,7 @@ class Algorithm
          * call the \c update function
          * @param [in,out] req A request object.
          */
-        void processRequest(Request& req);
+        void processRequest(Request req);
 
         /** Runs the algorithm and updates the output data, if the Request
          * Type is \c Request::Update. If the request Type is \c Request::DELETE
@@ -191,7 +191,10 @@ class Algorithm
         /** Mutex for the algorithm class to make sure only one thread at a time is
          * writing to data
          */
-        boost::mutex algorithmMutex_;
+        boost::mutex processRequestMutex_;
+
+
+
 
 };
 } // namespace rtc

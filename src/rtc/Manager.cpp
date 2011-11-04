@@ -67,37 +67,42 @@ void Manager::setAlgorithm(Algorithm* alg)
 void Manager::processRequest(libpipe::Request req)
 {
     boost::unique_lock<boost::mutex> lock(processRequestMutex_);
+
     if (req.is(libpipe::Request::UPDATE)) {
-        if (!algorithm_) {
-            throw libpipe::RequestException(
-                "Cannot process request. No algorithm setup available.");
-        }
+//        if (!algorithm_) {
+//            throw boost::enable_current_exception(
+//                libpipe::RequestException(
+//                    "Cannot process request. No algorithm setup available."));
+//        }
         typedef FilterSet::iterator MSI;
         // iterate over all sources
 
         boost::thread_group thread;
         std::vector<boost::exception_ptr> error;
+        boost::unique_lock<boost::shared_mutex> lock2(sourcesMutex_);
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
-            try {
+
 #ifdef ENABLE_THREADING
-                error.push_back(boost::exception_ptr());
-                thread.add_thread(
-                    new boost::thread(&Filter::processRequest, (*i), req,
-                        boost::ref(error.back())));
+            error.push_back(boost::exception_ptr());
+            thread.add_thread(
+                new boost::thread(&Filter::processRequest, (*i), req,
+                    boost::ref(error.back())));
 #else
+            try {
                 (*i)->processRequest(req);
-#endif
             } catch (libpipe::RequestException& e) {
-                throw;
+                throw boost::enable_current_exception(e);
             }
+#endif
+
         }
 #ifdef ENABLE_THREADING
         thread.join_all();
-        for (std::vector<boost::exception_ptr>::iterator it = error.begin();
-                it != error.end(); it++) {
-            if ((*it))
-                boost::rethrow_exception((*it));
-        }
+//        for (std::vector<boost::exception_ptr>::iterator it = error.begin();
+//                it != error.end(); it++) {
+//            if ((*it))
+//                boost::rethrow_exception((*it));
+//        }
 
 #endif
 
@@ -105,12 +110,14 @@ void Manager::processRequest(libpipe::Request req)
             algorithm_->processRequest(req);
         } catch (std::exception& e) {
             std::string str(e.what());
-            throw libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
-                        + str);
+//            throw boost::enable_current_exception(
+//                libpipe::RequestException(
+//                    "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+//                            + str));
         } catch (...) {
-            throw libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
+//            throw boost::enable_current_exception(
+//                libpipe::RequestException(
+//                    "ModificationTimeManager: Cannot process request: algorithm execution caused exception."));
         }
     } else if (req.is(libpipe::Request::DELETE)) {
         algorithm_->processRequest(req);
@@ -141,8 +148,6 @@ const bool Manager::registerLoader()
     std::string ids = "MangerRTC";
     return ManagerFactory::instance().registerType(ids, Manager::create);
 }
-
-
 
 const bool Manager::registered_ = registerLoader();
 

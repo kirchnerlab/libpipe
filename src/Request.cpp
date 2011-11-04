@@ -45,48 +45,34 @@ Request::~Request()
 
 bool Request::is(const Type& t)
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
     return t == type_;
 }
 
 Request::Type Request::getType() const
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
     return type_;
 }
 
 bool Request::getTraceFlag() const
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
     return traceFlag_;
 }
 
 void Request::setTraceFlag(const bool tf)
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
     traceFlag_ = tf;
 }
 
 void Request::getTrace(std::vector<std::string>& trace) const
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
+    boost::unique_lock<boost::mutex> lock(traceMutex_);
     trace = trace_;
 }
 
-Request& Request::operator+=(Request const& rhs)
-{
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
-
-    if (this->traceFlag_ == rhs.traceFlag_ and this->type_ == rhs.type_) {
-        this->trace_.insert(this->trace_.end(), rhs.trace_.begin(),
-            rhs.trace_.end());
-    }
-    return *this;
-}
 
 void Request::addTrace(const std::string& t)
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
+    boost::unique_lock<boost::mutex> lock(traceMutex_);
 
     time_t rawtime;
     struct tm* timeinfo;
@@ -101,11 +87,11 @@ void Request::addTrace(const std::string& t)
 
 void Request::clearTrace()
 {
-    boost::unique_lock<boost::mutex> lock(requestMutex_);
+    boost::unique_lock<boost::mutex> lock(traceMutex_);
     trace_.clear();
 }
 
-boost::mutex Request::requestMutex_;
+boost::mutex Request::traceMutex_;
 
 std::vector<std::string> Request::trace_;
 

@@ -74,9 +74,9 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::processRequest(libpipe::Request& req)
+void Algorithm::processRequest(libpipe::Request req)
 {
-    boost::unique_lock<boost::mutex> lock(algorithmMutex_);
+    boost::unique_lock<boost::mutex> lock(processRequestMutex_);
     this->update(req);
 
     if (req.is(libpipe::Request::DELETE)) {
@@ -113,6 +113,7 @@ bool Algorithm::needUpdate() const
 boost::shared_ptr<Data> Algorithm::getPort(
     const std::string& portIdentifier) const
 {
+
     std::map<std::string, boost::shared_ptr<Data> >::const_iterator iter;
     iter = ports_.find(portIdentifier);
 
@@ -124,6 +125,7 @@ boost::shared_ptr<Data> Algorithm::getPort(
         message += portIdentifier;
         libpipe_fail(message);
     }
+
 }
 
 void Algorithm::setInput(const std::string& portIdentifier,

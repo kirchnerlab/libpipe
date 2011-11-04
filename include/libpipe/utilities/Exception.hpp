@@ -71,7 +71,7 @@ protected:
 
 /** Convenience macros.
  */
-#define libpipe_fail(ERROR_MESSAGE) throw libpipe::utilities::Exception(ERROR_MESSAGE)
+#define libpipe_fail(ERROR_MESSAGE) throw boost::enable_current_exception(libpipe::utilities::Exception(ERROR_MESSAGE))
 
 } // end namespace utilities
 } // end namespace libpipe

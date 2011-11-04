@@ -116,11 +116,6 @@ class Request
          */
         void clearTrace();
 
-        /** Adds the trace to the current request type if the type and flag are the same.
-         * @param rhs Request which trace is added to the Request
-         * @return the combined request
-         */
-        Request& operator+=(Request const& rhs);
 
     protected:
 
@@ -140,7 +135,7 @@ class Request
          */
         static std::vector<std::string> trace_;
 
-        static boost::mutex requestMutex_;
+        static boost::mutex traceMutex_;
 
 
 };

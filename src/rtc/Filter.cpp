@@ -51,28 +51,41 @@ Filter::Filter(const std::string& name, Algorithm* algorithm, Manager* manager) 
 Filter::~Filter()
 {
     // the filter owns its members!
-    delete algorithm_;
-    delete manager_;
+    boost::unique_lock<boost::shared_mutex> lock(algorithmMutex_);
+    boost::unique_lock<boost::shared_mutex> lock2(managerMutex_);
+    if(algorithm_)
+        delete algorithm_;
+    if(manager_)
+        delete manager_;
 }
 
-void Filter::processRequest(libpipe::Request& req)
+void Filter::processRequest(libpipe::Request req, boost::exception_ptr & error)
 {
     // forward algorithm handle and request to manager allow only one
     //thread at a time.
 
-
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
-    this->getManager()->processRequest(req);
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
+    try {
+        LIBPIPE_REQUEST_TRACE(req,
+            this->getName() + "::processRequest: start.");
+        this->getManager()->processRequest(req);
+        LIBPIPE_REQUEST_TRACE(req,
+            this->getName() + "::processRequest: stop.");
+        //error = boost::exception_ptr();
+    } catch (...) {
+       // error = boost::current_exception();
+    }
 }
 
 Algorithm* Filter::getAlgorithm() const
 {
+    boost::shared_lock<boost::shared_mutex> lock(algorithmMutex_);
     return algorithm_;
 }
 
 void Filter::setAlgorithm(Algorithm* alg)
 {
+    boost::unique_lock<boost::shared_mutex> lock(managerMutex_);
+    boost::unique_lock<boost::shared_mutex> lock2(algorithmMutex_);
     if (algorithm_ != alg) {
         if (algorithm_) {
             delete algorithm_;
@@ -93,6 +106,7 @@ Manager* Filter::getManager() const
 
 void Filter::setManager(Manager* manager)
 {
+    boost::unique_lock<boost::shared_mutex> lock(managerMutex_);
     if (manager_ != manager) {
         if (manager_) {
             delete manager_;
@@ -112,6 +126,4 @@ void Filter::setName(const std::string& name)
     boost::unique_lock<boost::shared_mutex> lock(nameMutex_);
     name_ = name;
 }
-
-
 

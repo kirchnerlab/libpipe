@@ -56,18 +56,18 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
         virtual ~UppercaseAlgorithm()
         {
 
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout
-                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
-                    << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringInput"));
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringOutput"));
+//            std::cout
+//                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
+//                    << *input_->get() << "\t and output: " << *output_->get()
+//                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -87,7 +87,7 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
 
             LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-            std::cout<<boost::this_thread::get_id()<<"\t Uppercase"<<std::endl;
+//            std::cout<<boost::this_thread::get_id()<<"\t Uppercase"<<std::endl;
             output_->get()->clear();
             LIBPIPE_REQUEST_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
@@ -156,19 +156,19 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~LowercaseAlgorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-
-            std::cout
-                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
-                    << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringInput"));
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringOutput"));
+//
+//            std::cout
+//                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
+//                    << *input_->get() << "\t and output: " << *output_->get()
+//                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -189,7 +189,7 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
 
             LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
-            std::cout<<boost::this_thread::get_id()<<"\t Lowercase"<<std::endl;
+//            std::cout<<boost::this_thread::get_id()<<"\t Lowercase"<<std::endl;
 
             LIBPIPE_REQUEST_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
@@ -243,22 +243,22 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~CombineAlgorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput1"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput2"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
-                    << *input1_->get() << " and " << *input2_->get()
-                    << "\t and output: " << *output_->get() << "\e[m"
-                    << std::endl;
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringInput1"));
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringInput2"));
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringOutput"));
+//            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
+//                    << *input1_->get() << " and " << *input2_->get()
+//                    << "\t and output: " << *output_->get() << "\e[m"
+//                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -283,7 +283,7 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
             LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
-            std::cout<<boost::this_thread::get_id()<<"\t Combine"<<std::endl;
+//            std::cout<<boost::this_thread::get_id()<<"\t Combine"<<std::endl;
 
             LIBPIPE_REQUEST_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
@@ -363,23 +363,23 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            if (input_) {
-                std::cout << "\033[22;32m ROT13 destroyed with input: "
-                        << *input_->get() << "\t and output: "
-                        << *output_->get() << "\e[m" << std::endl;
-            } else {
-                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
-                        << "\t and output: " << *output_->get() << "\e[m"
-                        << std::endl;
-            }
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringInput"));
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringOutput"));
+//            if (input_) {
+//                std::cout << "\033[22;32m ROT13 destroyed with input: "
+//                        << *input_->get() << "\t and output: "
+//                        << *output_->get() << "\e[m" << std::endl;
+//            } else {
+//                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
+//                        << "\t and output: " << *output_->get() << "\e[m"
+//                        << std::endl;
+//            }
 
         }
 
@@ -405,7 +405,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                 LIBPIPE_REQUEST_TRACE(req,
                     "ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
-                std::cout<<boost::this_thread::get_id()<<"\t Rot13"<<std::endl;
+//                std::cout<<boost::this_thread::get_id()<<"\t Rot13"<<std::endl;
 
                 LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
 
@@ -490,12 +490,12 @@ class Source : public libpipe::rtc::Algorithm
          */
         virtual ~Source()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_->get() << "\e[m" << std::endl;
+//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+//                    boost::dynamic_pointer_cast<
+//                            libpipe::rtc::SharedData<std::string> >(
+//                        this->getPort("StringOutput"));
+//            std::cout << "\033[22;32m Source destroyed with output: "
+//                    << *output_->get() << "\e[m" << std::endl;
         }
 
         /** Updates the output data (i.e. does nothing).
@@ -506,7 +506,7 @@ class Source : public libpipe::rtc::Algorithm
         void update(libpipe::Request& req)
         {
             LIBPIPE_REQUEST_TRACE(req, "providing input.");
-            std::cout<<boost::this_thread::get_id()<<"\t Source"<<std::endl;
+//            std::cout<<boost::this_thread::get_id()<<"\t Source"<<std::endl;
 
         }
 
@@ -571,6 +571,8 @@ int main(int argc, char *argv[])
     std::cout
             << "\033[22;35m All output after this is due to automatically called destructors. \e[m"
             << std::endl;
+
+
 
     return EXIT_SUCCESS;
 

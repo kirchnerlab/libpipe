@@ -216,8 +216,6 @@ struct ManagerRTCTestSuite : vigra::test_suite
             bool thrown;
             thrown = false;
 
-#ifndef ENABLE_THREADING
-
             tm->connect(ff);
 
             try {
@@ -234,7 +232,6 @@ struct ManagerRTCTestSuite : vigra::test_suite
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
-#endif
 
             delete a;
             delete tm;
