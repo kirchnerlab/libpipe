@@ -92,13 +92,6 @@ struct ObjectFactoryTestSuite : vigra::test_suite
 
         }
 
-        /** Test that is guaranteed to fail.
-         * Leave this in until the complete ObjectFactory class has tests.
-         */
-        void fail()
-        {
-            failTest("No unit tests for class ObjectFactory!");
-        }
 
         void test()
         {

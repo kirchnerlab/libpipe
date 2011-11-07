@@ -189,9 +189,17 @@ class Algorithm
         timeval mTime_;
 
         /** Mutex for the algorithm class to make sure only one thread at a time is
-         * writing to data
+         * calling update methode from processRequest
          */
         boost::mutex processRequestMutex_;
+
+        /** Mutex to secure ports_
+         */
+        mutable boost::shared_mutex portMutex_;
+
+        /** Mutex to secure mTime_
+         */
+        mutable boost::shared_mutex mTimeMutex_;
 
 
 
