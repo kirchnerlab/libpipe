@@ -78,10 +78,11 @@ void Manager::processRequest(libpipe::Request req)
         // iterate over all sources
 
         boost::thread_group thread;
+        // catch errors, to rethrow the exceptions
         std::vector<boost::exception_ptr> error;
         boost::unique_lock<boost::shared_mutex> lock2(sourcesMutex_);
         error.resize(sources_.size());
-        std::vector<boost::exception_ptr>::iterator errorIt=error.begin();
+        std::vector<boost::exception_ptr>::iterator errorIt = error.begin();
         for (MSI i = sources_.begin(); i != sources_.end(); ++i, ++errorIt) {
 #ifdef ENABLE_THREADING
             thread.add_thread(
@@ -98,29 +99,28 @@ void Manager::processRequest(libpipe::Request req)
         }
 #ifdef ENABLE_THREADING
         thread.join_all();
+        //rethrow all exceptions
         for (std::vector<boost::exception_ptr>::iterator it = error.begin();
                 it != error.end(); it++) {
             if ((*it))
                 boost::rethrow_exception((*it));
         }
-
 #endif
-
-        try {
-            algorithm_->processRequest(req);
-        } catch (std::exception& e) {
-            std::string str(e.what());
-            throw boost::enable_current_exception(
-                libpipe::RequestException(
-                    "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
-                            + str));
-        } catch (...) {
-            throw boost::enable_current_exception(
-                libpipe::RequestException(
-                    "ModificationTimeManager: Cannot process request: algorithm execution caused exception."));
-        }
-    } else if (req.is(libpipe::Request::DELETE)) {
+    }
+    try {
         algorithm_->processRequest(req);
+    } catch (std::exception& e) {
+        std::string str(e.what());
+        throw boost::enable_current_exception(
+            libpipe::RequestException(
+                "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+                        + str));
+    } catch (...) {
+        throw boost::enable_current_exception(
+            libpipe::RequestException(
+                "ModificationTimeManager: Cannot process request: algorithm execution caused exception."));
+    }
+    if (req.is(libpipe::Request::DELETE)) {
         this->disconnect();
     }
 }
