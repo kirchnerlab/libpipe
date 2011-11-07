@@ -139,6 +139,8 @@ private:
      */
     std::auto_ptr<T> ptr_;
 
+    /** Mutex to secure ptr_
+     */
     mutable boost::shared_mutex ptrMutex_;
 };
 
