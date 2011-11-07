@@ -66,6 +66,11 @@ struct RequestTestSuite : vigra::test_suite
             // make sure this compiles
             Request reqU(Request::UPDATE);
             Request reqD(Request::DELETE);
+            Request req;
+
+            Request* req2;
+            req2 =  new Request(reqD);
+            delete req2;
         }
 
         /** Check request copy constructors.
