@@ -70,9 +70,10 @@ void Filter::processRequest(libpipe::Request req, boost::exception_ptr & error)
         this->getManager()->processRequest(req);
         LIBPIPE_REQUEST_TRACE(req,
             this->getName() + "::processRequest: stop.");
-        //error = boost::exception_ptr();
+        // this throws segmentation fault????
+       // error = boost::exception_ptr();
     } catch (...) {
-       // error = boost::current_exception();
+        error = boost::current_exception();
     }
 }
 

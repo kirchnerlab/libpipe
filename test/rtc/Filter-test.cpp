@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <libpipe/config.hpp>
 
@@ -67,8 +67,8 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testConstructionAndDestruction()
         {
 
-            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
-                "filter1", "IdentityRTC", "MangerRTC");
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create("filter1",
+                "IdentityRTC", "MangerRTC");
             libpipe::rtc::Algorithm* iA =
                     libpipe::rtc::AlgorithmFactory::instance().createObject(
                         "IdentityRTC");
@@ -80,17 +80,18 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testAlgorithm()
         {
             // getset
-            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
-                "filter1", "RaiseExceptionAlg", "MangerRTC");
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create("filter1",
+                "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::Algorithm* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
             // switch algorithm
 
-            Algorithm* c = AlgorithmFactory::instance().createObject("IdentityRTC");
+            Algorithm* c = AlgorithmFactory::instance().createObject(
+                "IdentityRTC");
 
             bf->setAlgorithm(c);
 
-            shouldEqual(bf->getAlgorithm(),c);
+            shouldEqual(bf->getAlgorithm(), c);
 
             delete bf;
 
@@ -99,14 +100,14 @@ struct FilterRTCTestSuite : vigra::test_suite
         void testManager()
         {
             // getset
-            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create(
-                            "filter1", "RaiseExceptionAlg", "MangerRTC");
+            libpipe::rtc::Filter* bf = libpipe::rtc::Filter::create("filter1",
+                "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::Manager* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
 
             Manager* m = ManagerFactory::instance().createObject("MangerRTC");
             bf->setManager(m);
-            shouldEqual(bf->getManager(),m);
+            shouldEqual(bf->getManager(), m);
 
             delete bf;
         }
@@ -117,14 +118,14 @@ struct FilterRTCTestSuite : vigra::test_suite
             // tests if the filter calls its managers process request function
             // the manager will then call the process request function of the fail
             // filter and raise an exception.
-            Filter* f = Filter::create("fail Filter",
-                "RaiseExceptionAlg", "MangerRTC");
+            Filter* f = Filter::create("fail Filter", "RaiseExceptionAlg",
+                "MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
             boost::exception_ptr error;
-            try {
-                f->processRequest(req, error);
-            } catch (libpipe::RequestException& e) {
+
+            f->processRequest(req, error);
+            if (error) {
                 thrown = true;
             }shouldEqual(thrown, true);
             delete f;
