@@ -25,7 +25,11 @@
 */
 #include <iostream>
 #include "vigra/unittest.hxx"
+#define private public
+#define protected public
 #include "libpipe/ctc/Algorithm.hpp"
+#undef private
+#undef protected
 #include <sys/time.h> // for gettimeofday
 #include <limits>
 using namespace libpipe::ctc;
@@ -71,6 +75,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
         add(testCase(&AlgorithmTestSuite::testInitTime));
+
     }
 
     /** Test free operators
@@ -170,6 +175,9 @@ struct AlgorithmTestSuite : vigra::test_suite
         tv.tv_sec = std::numeric_limits<time_t>::min();
         tv.tv_usec = std::numeric_limits<suseconds_t>::min();
         shouldEqual(tv,Algorithm::MIN_TIME);
+        MyAlgorithm a;
+        a.initMaxTime();
+        a.initMinTime();
 
     }
 };
