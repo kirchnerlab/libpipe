@@ -61,18 +61,16 @@ Filter::~Filter()
 
 void Filter::processRequest(libpipe::Request req, boost::exception_ptr & error)
 {
-    // forward algorithm handle and request to manager allow only one
-    //thread at a time.
-
     try {
         LIBPIPE_REQUEST_TRACE(req,
             this->getName() + "::processRequest: start.");
         this->getManager()->processRequest(req);
         LIBPIPE_REQUEST_TRACE(req,
             this->getName() + "::processRequest: stop.");
-        // this throws segmentation fault????
-       // error = boost::exception_ptr();
     } catch (...) {
+        /** need to catch exception here, as they need to be handled inside the
+         * same thread. They are rethrown later
+         */
         error = boost::current_exception();
     }
 }
@@ -101,7 +99,6 @@ void Filter::setAlgorithm(Algorithm* alg)
 Manager* Filter::getManager() const
 {
     boost::shared_lock<boost::shared_mutex> lock(managerMutex_);
-
     return manager_;
 }
 

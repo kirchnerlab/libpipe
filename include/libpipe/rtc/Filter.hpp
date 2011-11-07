@@ -68,7 +68,8 @@ class Filter : boost::noncopyable
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
          */
-        void processRequest(libpipe::Request req, boost::exception_ptr & error);
+        void processRequest(libpipe::Request req,
+            boost::exception_ptr & error);
 
         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
@@ -89,7 +90,6 @@ class Filter : boost::noncopyable
          * @param[in] name The name of the filter.
          */
         void setName(const std::string& name);
-
 
     private:
         /** Constructor.
@@ -121,14 +121,15 @@ class Filter : boost::noncopyable
          */
         std::string name_;
 
-        /** Mutex for the filter class
-         *
+        /** Mutex for the name_
          */
         mutable boost::shared_mutex nameMutex_;
+        /** Mutex for the algorithm_
+         */
         mutable boost::shared_mutex algorithmMutex_;
+        /** Mutex for the manager_
+         */
         mutable boost::shared_mutex managerMutex_;
-
-
 
 };
 
