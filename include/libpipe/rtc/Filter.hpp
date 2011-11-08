@@ -67,11 +67,18 @@ class Filter : boost::noncopyable
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
+         * @param[out] error A Pointer to a thrown exception.
          */
         void processRequest(libpipe::Request req,
             boost::exception_ptr & error);
 
-        /** Returns a  pointer to the algorithm object.
+        /** Processes a request.
+         * This method forwards the request to the Algorithm and Manager objects.
+         * @param[in] req The request object.
+         */
+         void processRequest(libpipe::Request req);
+
+         /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
          */
         Algorithm* getAlgorithm() const;

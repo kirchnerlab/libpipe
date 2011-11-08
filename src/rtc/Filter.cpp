@@ -53,26 +53,31 @@ Filter::~Filter()
     // the filter owns its members!
     boost::unique_lock<boost::shared_mutex> lock(algorithmMutex_);
     boost::unique_lock<boost::shared_mutex> lock2(managerMutex_);
-    if(algorithm_)
+    if (algorithm_)
         delete algorithm_;
-    if(manager_)
+    if (manager_)
         delete manager_;
 }
 
 void Filter::processRequest(libpipe::Request req, boost::exception_ptr & error)
 {
     try {
-        LIBPIPE_REQUEST_TRACE(req,
-            this->getName() + "::processRequest: start.");
-        this->getManager()->processRequest(req);
-        LIBPIPE_REQUEST_TRACE(req,
-            this->getName() + "::processRequest: stop.");
+        this->processRequest(req);
     } catch (...) {
         /** need to catch exception here, as they need to be handled inside the
          * same thread. They are rethrown later
          */
         error = boost::current_exception();
     }
+}
+
+void Filter::processRequest(libpipe::Request req)
+{
+
+    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
+    this->getManager()->processRequest(req);
+    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
+
 }
 
 Algorithm* Filter::getAlgorithm() const
