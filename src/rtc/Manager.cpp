@@ -72,21 +72,20 @@ void Manager::processRequest(libpipe::Request req)
         if (!algorithm_) {
             throw boost::enable_current_exception(
                 libpipe::RequestException(
-                    "Cannot process request. No algorithm setup available."));
+                    "Cannot process request. No algorithm instance available."));
         }
-        typedef FilterSet::iterator MSI;
-        // iterate over all sources
 
         boost::thread_group thread;
+        boost::unique_lock<boost::shared_mutex> lockSources(sourcesMutex_);
         // catch errors, to rethrow the exceptions
-        std::vector<boost::exception_ptr> error;
-        boost::unique_lock<boost::shared_mutex> lock2(sourcesMutex_);
-        error.resize(sources_.size());
+        std::vector<boost::exception_ptr> error(sources_.size());
         std::vector<boost::exception_ptr>::iterator errorIt = error.begin();
+        typedef FilterSet::iterator MSI;
+        // iterate over all sources
         for (MSI i = sources_.begin(); i != sources_.end(); ++i, ++errorIt) {
 #ifdef ENABLE_THREADING
             thread.add_thread(
-                new boost::thread(&Filter::processRequestThread, (*i), req,
+                new boost::thread(&Filter::processThreadedRequest, (*i), req,
                     boost::ref(*errorIt)));
 #else
             try {

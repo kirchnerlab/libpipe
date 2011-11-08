@@ -25,6 +25,11 @@ ENABLE_COVERAGE [Default: FALSE]
 </dt>
 <dd>allows to generate a coverage report</dd>
 <dt>
+<dt>
+ENABLE_THREADING [Default: FALSE]
+</dt>
+<dd>generate multithreaded libpipe</dd>
+<dt>
 CMAKE_INSTALL_PREFIX [Default: /usr/bin/local/]
 </dt>
 <dd>allows to specify the installation path</dd>
