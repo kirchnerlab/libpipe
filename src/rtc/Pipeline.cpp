@@ -28,6 +28,7 @@
 
 #include <libpipe/rtc/Pipeline.hpp>
 #include <libpipe/rtc/Manager.hpp>
+#include <ctime>
 
 namespace libpipe {
 namespace rtc {

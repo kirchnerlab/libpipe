@@ -27,12 +27,8 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_REQUEST_HPP__
 
 #include <libpipe/config.hpp>
-
-#include <vector>
-#include <string>
-#include <ctime>
-
 #include <libpipe/RequestException.hpp>
+
 
 
 
