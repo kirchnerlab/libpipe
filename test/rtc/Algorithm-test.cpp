@@ -33,8 +33,9 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #undef private
 #undef protected
-#include "libpipe/rtc/AlgorithmFactory.hpp"
+#include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/SharedData.hpp>
+#include <libpipe/rtc/Pipeline.hpp>
 
 #include <limits>
 
@@ -67,7 +68,7 @@ class MyAlgorithm : public Algorithm
         }
         virtual void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
+            LIBPIPE_PIPELINE_TRACE(req, "Identity: copying value.");
 
             boost::shared_ptr<libpipe::rtc::SharedData<int> > in_ =
                     boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(

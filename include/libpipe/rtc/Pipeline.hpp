@@ -36,6 +36,14 @@
 
 #include <boost/shared_ptr.hpp>
 
+
+/** Macro that add an entry to a requests trace.
+ * This is just for convenience.
+ */
+#define LIBPIPE_PIPELINE_TRACE(req, str) \
+  if (libpipe::rtc::Pipeline::getTraceFlag()) \
+  libpipe::rtc::Pipeline::addTrace(std::string(__FUNCTION__) + ": " + str)
+
 namespace libpipe {
 namespace rtc {
 
@@ -58,14 +66,49 @@ class Pipeline
         /** Returns the trace.
          * @param trace [out] The trace of this libpipe pipeline.
          */
-        void getTrace(std::vector<std::string>& trace);
+        static void getTrace(std::vector<std::string>& trace);
+        /** Returns the state of the trace flag.
+         * If the trace flag is on, clients should add trace information
+         * while processing the request, using addTrace().
+         * @return The state if the trace flag (true == on).
+         */
+        static bool getTraceFlag();
 
+        /** Set the state of the trace flag.
+         * This allows to switch tracing on and off.
+         * @param[in] tf The new trace flag setting (true == on).
+         */
+        static void setTraceFlag(const bool tf);
+
+        /** Returns all traces collected in the Request object.
+         * @param[out] trace All collected trace information.
+         */
+        static std::vector<std::string>& getTrace();
+
+        /** Add trace information to the request object.
+         * Currently the request object simply collects std::strings.
+         * @param[in] t Trace information.
+         */
+        static void addTrace(const std::string& t);
+
+        /** Clears all trace information from the Request object.
+         */
+        static void clearTrace();
     private:
         std::queue<boost::shared_ptr<Filter> > pipelineQueue_;
 
         std::queue<Request> requestQueue_;
 
-        std::vector<std::string> trace_;
+        /** Trace status.
+         * If true, clients receiving the request should store
+         * trace information using addTrace().
+         * @see addTrace
+         */
+        static bool traceFlag_;
+
+        /** Trace information.
+         */
+        static std::vector<std::string> trace_;
 };
 
 } /* namespace rtc */

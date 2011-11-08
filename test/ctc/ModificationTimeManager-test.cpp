@@ -34,6 +34,7 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 #include <libpipe/ctc/ModificationTimeManager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 #include "ctc/utils.hpp"
 
@@ -121,7 +122,8 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 0);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 0);
         libpipe::Request req(libpipe::Request::UPDATE);
-        req.setTraceFlag(true);
+        libpipe::ctc::Pipeline pipe;
+        pipe.setTraceFlag(true);
         req = i2->processRequest(req);
         /*         typedef std::vector<std::string> VS;
          *         VS trace;
@@ -139,7 +141,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         // if we re-run, nothing should happen because the source (i1) has
         // an mTime different from Algorithm::MAX_TIME and the dependent
         // algorithm (i2) has an mTime that is younger than the source.
-        req.clearTrace();
+        pipe.clearTrace();
         req = i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
@@ -151,14 +153,14 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         *src = 1335;
         i1->getAlgorithm()->updateMTime();
         *(i1->getAlgorithm()->getOutput()) = 110;
-        req.clearTrace();
+        pipe.clearTrace();
         req = i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 110);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 111);
 
         // close the circle: fake a source update
         i1->getAlgorithm()->setMTime(Algorithm::MAX_TIME);
-        req.clearTrace();
+        pipe.clearTrace();
         req = i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 1336);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 1337);

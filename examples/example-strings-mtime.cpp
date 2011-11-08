@@ -41,6 +41,7 @@
 #include <libpipe/RequestException.hpp>
 #include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/ctc/ModificationTimeManager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
@@ -84,16 +85,16 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          */
         libpipe::Request& update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->clear();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->begin(), input_->end(),
                 std::back_inserter(*output_), toupper);
             this->updateMTime();
             std::ostringstream oss;
             oss << this->getMTime();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "UppercaseAlgorithm::update: end at " + oss.str().c_str());
             return req;
         }
@@ -190,12 +191,12 @@ class Source : public libpipe::ctc::Algorithm
          */
         libpipe::Request& update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "Source::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "Source::update: start.");
             // simply update the modification time. Done.
             this->updateMTime();
             std::ostringstream oss;
             oss << this->getMTime();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "Source::update: end at " + oss.str().c_str());
             return req;
         }
@@ -226,15 +227,16 @@ int main(int argc, char *argv[])
         stringCreator->getAlgorithm()->getOutput());
 
     libpipe::Request req(libpipe::Request::UPDATE);
-    req.setTraceFlag(true);
-    LIBPIPE_REQUEST_TRACE(req, "Starting.");
+    Pipeline pipe;
+    pipe.setTraceFlag(true);
+    LIBPIPE_PIPELINE_TRACE(req, "Starting.");
     try {
         // round 1
         stringFilter->processRequest(req);
         stringFilter->processRequest(req);
         typedef std::vector<std::string> VS;
         VS trace;
-        req.getTrace(trace);
+        trace=pipe.getTrace();
         for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
             std::cout << *i << '\n';
         }
@@ -244,11 +246,11 @@ int main(int argc, char *argv[])
                 << *(stringFilter->getAlgorithm()->getOutput()) << std::endl;
 
         // round 2
-        req.clearTrace();
+        pipe.clearTrace();
         stringCreator->getAlgorithm()->setParamString("Let's do that again!");
         stringFilter->processRequest(req);
         stringFilter->processRequest(req);
-        req.getTrace(trace);
+        trace=pipe.getTrace();
         for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
             std::cout << *i << '\n';
         }

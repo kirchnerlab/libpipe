@@ -99,11 +99,7 @@ void Algorithm::updateMTime()
 
 bool Algorithm::needUpdate() const
 {
-    /*
-     LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "."
-     << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
-     << Algorithm::MAX_TIME.tv_usec;
-     */
+
     return mTime_ == Algorithm::MAX_TIME;
 }
 

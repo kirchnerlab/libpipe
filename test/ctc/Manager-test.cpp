@@ -36,6 +36,7 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 #include <libpipe/ctc/Manager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 #include <boost/pointer_cast.hpp>
 
@@ -145,7 +146,8 @@ struct ManagerTestSuite : vigra::test_suite
         {
             TestManager tm;
             libpipe::Request req(libpipe::Request::UPDATE);
-            req.setTraceFlag(true);
+            libpipe::ctc::Pipeline pipeline;
+            pipeline.setTraceFlag(true);
             // the following algorithm should not throw any exceptions
             Identity* a = new Identity;
             tm.setAlgorithm(a);
@@ -155,7 +157,7 @@ struct ManagerTestSuite : vigra::test_suite
             shouldEqual(a->getOutput(), 42);
             delete a;
             std::vector<std::string> trace;
-            req.getTrace(trace);
+            trace=pipeline.getTrace();
             shouldEqual(trace.size(), static_cast<size_t>(1));
             // now let the algorithm throw an exception
             RaiseExceptionAlg* b = new RaiseExceptionAlg;

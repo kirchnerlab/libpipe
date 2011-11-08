@@ -56,7 +56,7 @@ void Pipeline::run()
     while (!pipelineQueue_.empty()) {
         Request tempReq = requestQueue_.front();
         std::string tempStr;
-        if (tempReq.getTraceFlag()) {
+        if (Pipeline::getTraceFlag()) {
             if (tempReq.getType() == libpipe::Request::UPDATE) {
                 tempStr = "\033[22;31m Starting Update Request\e[m";
             } else if (tempReq.getType() == libpipe::Request::DELETE) {
@@ -64,17 +64,49 @@ void Pipeline::run()
             }
         }
 
-        LIBPIPE_REQUEST_TRACE(tempReq, tempStr);
+        LIBPIPE_PIPELINE_TRACE(tempReq, tempStr);
 
         pipelineQueue_.front()->getManager()->processRequest(tempReq);
-
-        std::vector<std::string> tempTrace;
-        tempReq.getTrace(tempTrace);
-        trace_.insert(trace_.end(), tempTrace.begin(), tempTrace.end());
 
         pipelineQueue_.pop();
         requestQueue_.pop();
     }
 
 }
+
+
+bool Pipeline::getTraceFlag()
+{
+    return traceFlag_;
+}
+
+void Pipeline::setTraceFlag(const bool tf)
+{
+    traceFlag_ = tf;
+}
+
+std::vector<std::string>& Pipeline::getTrace()
+{
+    return trace_;
+}
+
+void Pipeline::addTrace(const std::string& t)
+{
+    time_t rawtime;
+    struct tm* timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    static char buffer[40];
+    strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
+    trace_.push_back(std::string(buffer) + t);
+}
+
+void Pipeline::clearTrace()
+{
+    trace_.clear();
+}
+
+std::vector<std::string> Pipeline::trace_;
+
+bool Pipeline::traceFlag_;
 

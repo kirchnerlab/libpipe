@@ -42,6 +42,7 @@
 #include <libpipe/rtc/Filter.hpp>
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
+#include <libpipe/rtc/Pipeline.hpp>
 
 
 
@@ -168,7 +169,8 @@ struct ManagerRTCTestSuite : vigra::test_suite
             Manager* tm = ManagerFactory::instance().createObject(
                 "MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
-            req.setTraceFlag(true);
+            libpipe::rtc::Pipeline pipeline;
+            pipeline.setTraceFlag(true);
             // the following algorithm should not throw any exceptions
             Algorithm* a = AlgorithmFactory::instance().createObject(
                 "IdentityRTC");
@@ -177,7 +179,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
             tm->processRequest(req);
             delete a;
             std::vector<std::string> trace;
-            req.getTrace(trace);
+            trace=pipeline.getTrace();
             shouldEqual(trace.size(), static_cast<size_t>(1));
             // now let the algorithm throw an exception
             Algorithm* b = AlgorithmFactory::instance().createObject(

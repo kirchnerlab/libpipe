@@ -29,7 +29,7 @@
 using namespace libpipe;
 
 Request::Request(const Request::Type& t) :
-        type_(t), traceFlag_(false)
+        type_(t)
 {
 }
 
@@ -47,36 +47,6 @@ Request::Type Request::getType() const
     return type_;
 }
 
-bool Request::getTraceFlag() const
-{
-    return traceFlag_;
-}
 
-void Request::setTraceFlag(const bool tf)
-{
-    traceFlag_ = tf;
-}
 
-void Request::getTrace(std::vector<std::string>& trace) const
-{
-    trace = trace_;
-}
-
-void Request::addTrace(const std::string& t)
-{
-    time_t rawtime;
-    struct tm* timeinfo;
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    static char buffer[40];
-    strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
-    trace_.push_back(std::string(buffer) + t);
-}
-
-void Request::clearTrace()
-{
-    trace_.clear();
-}
-
-std::vector<std::string> Request::trace_;
 

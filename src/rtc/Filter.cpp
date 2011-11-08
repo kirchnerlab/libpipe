@@ -31,6 +31,7 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/ManagerFactory.hpp>
+#include <libpipe/rtc/Pipeline.hpp>
 
 
 using namespace libpipe::rtc;
@@ -63,9 +64,9 @@ Filter::~Filter()
 void Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: stop.");
 }
 
 Algorithm* Filter::getAlgorithm()

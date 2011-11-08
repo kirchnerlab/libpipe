@@ -26,6 +26,7 @@
 #include <libpipe/ctc/Filter.hpp>
 #include <libpipe/ctc/Algorithm.hpp>
 #include <libpipe/ctc/Manager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 using namespace libpipe::ctc;
 
@@ -44,9 +45,9 @@ Filter::~Filter()
 libpipe::Request& Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: stop.");
     return req;
 }
 

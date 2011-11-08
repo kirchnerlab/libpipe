@@ -153,11 +153,11 @@ void PipelineLoader::generatePipeline()
 
         if (temp.requestType == "UPDATE") {
             Request tempReq(libpipe::Request::UPDATE);
-            tempReq.setTraceFlag(temp.makeTrace);
+            pipeline_.setTraceFlag(temp.makeTrace);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else if (temp.requestType == "DELETE") {
             Request tempReq(libpipe::Request::DELETE);
-            tempReq.setTraceFlag(temp.makeTrace);
+            pipeline_.setTraceFlag(temp.makeTrace);
             pipeline_.push(tempReq, this->getFilter(temp.filterName));
         } else {
             libpipe_fail(
