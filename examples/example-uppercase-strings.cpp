@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <libpipe/config.hpp>
 #include <stdlib.h>
@@ -64,7 +64,7 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         UppercaseAlgorithm() :
-            libpipe::ctc::Algorithm(), output_(
+                libpipe::ctc::Algorithm(), output_(
                     boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
@@ -83,6 +83,7 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return the Request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -126,6 +127,8 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
         }
 
     protected:
+        /** Typedef of input pointers
+         */
         typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
@@ -166,7 +169,7 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
          * Make sure to call the \c libpipe::Algorithm constructor.
          */
         LowercaseAlgorithm() :
-            libpipe::ctc::Algorithm(), output_(
+                libpipe::ctc::Algorithm(), output_(
                     boost::make_shared<libpipe::ctc::SharedData<std::string> >(
                         new std::string))
         {
@@ -185,6 +188,7 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return the Request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -228,6 +232,8 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
         }
 
     protected:
+        /** Typedef of input pointers
+         */
         typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
@@ -273,6 +279,7 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
         /** Runs the algorithm and updates the output data.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return the request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -313,7 +320,12 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
         {
             input1_ = input;
         }
-
+        /** Allows to connect the output of another algorithm with the input2 of
+         * this algorithm.
+         * @see getOutput
+         *
+         * @param[in] input A handle (in most cases a (smart) pointer to the data.
+         */
         void setInput2(
             boost::shared_ptr<libpipe::ctc::SharedData<std::string> > input)
         {
@@ -321,14 +333,18 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
         }
 
     protected:
+        /** Typedef of input pointers
+         */
         typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
 
         /** A reference to the input data.
-         * This can be a weak pointer or some other kind of reference. In the
+         * This should be a shared_ptr. In the
          * majority of cases, the algorithm should not attempt to modify this data.
          * There are exceptions (and hence constness is not enforced).
          */
         StringPtr input1_;
+        /** A reference to input2
+         */
         StringPtr input2_;
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
@@ -336,6 +352,9 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
          */
         StringPtr output_;
     private:
+        /** combines tow functions
+         * @param result the combined inputs
+         */
         void combine(
             boost::shared_ptr<libpipe::ctc::SharedData<std::string> > result)
         {
@@ -383,6 +402,7 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
          * If the request type is DELETE the input gets deleted.
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
+         * @return the Request
          */
         libpipe::Request& update(libpipe::Request& req)
         {
@@ -432,7 +452,8 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
             input_ = input;
         }
     protected:
-
+        /** Typedef of input pointers
+         */
         typedef boost::shared_ptr<libpipe::ctc::SharedData<std::string> > StringPtr;
         /** The output data.
          * In most cases it is advisable that the memory consumed by this data is
@@ -454,7 +475,8 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
          * @param[in] str A handle to the input string
          * @param[out] result A handle to the ciphered input
          */
-        void rot13(boost::shared_ptr<libpipe::ctc::SharedData<std::string> > str,
+        void rot13(
+            boost::shared_ptr<libpipe::ctc::SharedData<std::string> > str,
             boost::shared_ptr<libpipe::ctc::SharedData<std::string> > result)
         {
             static std::string const lcalph = "abcdefghijklmnopqrstuvwxyz",
@@ -500,6 +522,9 @@ class Source : public libpipe::ctc::Algorithm
                     << *output_->get() << "\e[m" << std::endl;
         }
 
+        /** Set the output.
+         * @param s the new Output
+         */
         void setParamString(const std::string& s)
         {
             *output_->get() = s;
@@ -588,7 +613,6 @@ libpipe::ctc::Pipeline generatePipeline()
     lowerFilter->getAlgorithm()->setInput(
         combiner->getAlgorithm()->getOutput());
 
-
     // generate the pipeline
     Pipeline pipe;
 
@@ -614,7 +638,7 @@ int main(int argc, char *argv[])
 {
     libpipe::ctc::Pipeline pipeline;
 
-    pipeline=generatePipeline();
+    pipeline = generatePipeline();
     pipeline.run();
 
     typedef std::vector<std::string> VS;

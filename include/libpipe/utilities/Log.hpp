@@ -121,7 +121,8 @@ enum LogLevel
 class Output2FILE
 {
 public:
-    /** Returns the file handle of the logging stream traget..
+    /** Returns the file handle of the logging stream target.
+     * @return The File handle of the logging stream target
      */
     static FILE*& getRedirect();
 
@@ -233,6 +234,7 @@ private:
      * Declared as private and never defined to disallow assignment.
      *  
      * @param[in] rhs A right hand side @c Log object.
+     * @return A Reference to the new log
      */
     Log& operator=(const Log& rhs);
 };

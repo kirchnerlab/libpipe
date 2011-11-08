@@ -135,6 +135,8 @@ class Request
          */
         static std::vector<std::string> trace_;
 
+        /** Mutex to secure the trace flag.
+         */
         static boost::mutex traceMutex_;
 
 

@@ -59,7 +59,7 @@ For testing you can run the included test and measure the coverage of the tests.
 <ol>
 <li> Call cmake with ENABLE_TESTING true. If you want a coverage report also set ENABLE_COVERAGE to true.
 \code \code cmake path_to_libpipe_src -DENABLE_COVERAGE=TRUE -DENABLE_TESTING=TRUE -DCMAKE_BUILD_TYPE=RelWithDebInfo \endcode
-\endcode </li>
+</li>
 <li> To execute the tests run:
 
 \code make test \endcode
