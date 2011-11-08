@@ -86,7 +86,7 @@ void Manager::processRequest(libpipe::Request req)
         for (MSI i = sources_.begin(); i != sources_.end(); ++i, ++errorIt) {
 #ifdef ENABLE_THREADING
             thread.add_thread(
-                new boost::thread(&Filter::processRequest, (*i), req,
+                new boost::thread(&Filter::processRequestThread, (*i), req,
                     boost::ref(*errorIt)));
 #else
             try {

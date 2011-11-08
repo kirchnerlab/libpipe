@@ -59,7 +59,7 @@ Filter::~Filter()
         delete manager_;
 }
 
-void Filter::processRequest(libpipe::Request req, boost::exception_ptr & error)
+void Filter::processRequestThread(libpipe::Request req, boost::exception_ptr & error)
 {
     try {
         this->processRequest(req);

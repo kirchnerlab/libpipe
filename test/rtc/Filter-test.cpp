@@ -122,12 +122,21 @@ struct FilterRTCTestSuite : vigra::test_suite
                 "MangerRTC");
             libpipe::Request req(libpipe::Request::UPDATE);
             bool thrown = false;
+#ifdef ENABLE_THREADING
             boost::exception_ptr error;
 
-            f->processRequest(req, error);
+            f->processRequestThread(req, error);
             if (error) {
                 thrown = true;
             }shouldEqual(thrown, true);
+#else
+            try {
+                f->processRequest(req);
+            } catch(...) {
+                thrown =true;
+            }
+
+#endif
             delete f;
         }
 

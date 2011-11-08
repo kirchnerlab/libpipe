@@ -67,11 +67,15 @@ void Pipeline::run()
         }
 
         LIBPIPE_REQUEST_TRACE(tempReq, tempStr);
+#ifdef ENABLE_THREADING
         boost::exception_ptr error;
-        pipelineQueue_.front()->processRequest(tempReq, error);
+        pipelineQueue_.front()->processRequestThread(tempReq, error);
         if(error){
             boost::rethrow_exception(error);
         }
+#else
+        pipelineQueue_.front()->processRequest(tempReq);
+#endif
 
         tempReq.getTrace(trace_);
 

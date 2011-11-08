@@ -69,7 +69,7 @@ class Filter : boost::noncopyable
          * @param[in] req The request object.
          * @param[out] error A Pointer to a thrown exception.
          */
-        void processRequest(libpipe::Request req,
+        void processRequestThread(libpipe::Request req,
             boost::exception_ptr & error);
 
         /** Processes a request.
