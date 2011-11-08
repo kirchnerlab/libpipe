@@ -4,7 +4,10 @@ PROJECT(LIBPIPE)
 cmake_minimum_required(VERSION 2.8)
 # include macro definitions
 INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/require_out_of_src_build.cmake)
-SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros)
+include(GetGitRevisionDescription)
+get_git_head_revision(GIT_REFSPEC LIBPIPE_VERSION)
+MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
 
 #############################################################################
 # build libraries
@@ -26,8 +29,7 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
 
 # more warnings against everything
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wall" )
-SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
+SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -Wconversion -ggdb3 -D_FILE_OFFSET_BITS=64")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
 
@@ -146,7 +148,7 @@ INSTALL(DIRECTORY ${LIBPIPE_BINARY_DIR}/doc
 #
 set(CPACK_PACKAGE_NAME "libpipe")
 set(CPACK_PACKAGE_VENDOR "massquito.net")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The pipelining library.")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The pipelining library. Git Commit: "$LIBPIPE_VERSION)
 
 # CPack version strings
 SET(CPACK_PACKAGE_VERSION_MAJOR 1)
