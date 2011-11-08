@@ -105,7 +105,7 @@ struct PipelineTestSuite : vigra::test_suite
             shouldEqual(thrown, false);
 
             std::vector<std::string> trace;
-            pipeline.getTrace(trace);
+            trace=pipeline.getTrace();
 
             shouldEqual(trace.size(), pipeline.trace_.size());
         }
@@ -133,6 +133,7 @@ struct PipelineTestSuite : vigra::test_suite
         void testTrace()
         {
             Pipeline pipe;
+            pipe.clearTrace();
             std::vector<std::string> trace;
             // make sure we initially have an empty trace
             trace=pipe.getTrace();

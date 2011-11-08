@@ -45,10 +45,6 @@ void Pipeline::push(Request const & req,
     requestQueue_.push(req);
 }
 
-void Pipeline::getTrace(std::vector<std::string>& trace)
-{
-    trace = trace_;
-}
 
 void Pipeline::run()
 {

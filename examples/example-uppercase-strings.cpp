@@ -619,7 +619,7 @@ int main(int argc, char *argv[])
 
     typedef std::vector<std::string> VS;
     VS trace;
-    pipeline.getTrace(trace);
+    trace=pipeline.getTrace();
     for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }

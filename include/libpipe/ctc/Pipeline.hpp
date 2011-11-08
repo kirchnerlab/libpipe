@@ -59,10 +59,6 @@ class Pipeline
          */
         void run();
 
-        /** Returns the trace.
-         * @param trace [out] The trace of this libpipe pipeline.
-         */
-        static void getTrace(std::vector<std::string>& trace);
         /** Returns the state of the trace flag.
          * If the trace flag is on, clients should add trace information
          * while processing the request, using addTrace().
