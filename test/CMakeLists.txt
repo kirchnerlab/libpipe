@@ -52,9 +52,8 @@ INCLUDE_DIRECTORIES(
 
 
 #### Sources
-SET(SRCS_LOADER rtc/Loader-test.cpp)
 SET(SRCS_RTC_PIPELINE rtc/Pipeline-test.cpp)
-SET(SRCS_CONTROLER rtc/Controler-test.cpp)
+SET(SRCS_PIPELINE_LOADER rtc/PipelineLoader-test.cpp)
 SET(SRCS_CONFIGJSON rtc/ConfigJSON-test.cpp)
 SET(SRCS_CONFIG rtc/Config-test.cpp)
 SET(SRCS_MANAGERRTC rtc/Manager-test.cpp)
@@ -76,11 +75,10 @@ SET(SRCS_REQUESTEXCEPTION RequestException-test.cpp)
 SET(SRCS_REQUEST Request-test.cpp)
 
 #### Tests
-ADD_LIBPIPE_TEST("rtc/Loader" test_loader ${SRCS_LOADER})
 ADD_LIBPIPE_TEST("rtc/Pipeline" test_rtc_pipeline ${SRCS_RTC_PIPELINE})
-ADD_LIBPIPE_TEST("rtc/Controler" test_controler ${SRCS_CONTROLER})
-ADD_LIBPIPE_TEST("rtc/ConfigJSON" test_configJSON ${SRCS_CONFIGJSON})
-ADD_LIBPIPE_TEST("rtc/Config" test_config ${SRCS_CONFIG})
+ADD_LIBPIPE_TEST("rtc/PipelineLoader" test_rtc_pipelineLoader ${SRCS_PIPELINE_LOADER})
+ADD_LIBPIPE_TEST("rtc/ConfigJSON" test_rtc_configJSON ${SRCS_CONFIGJSON})
+ADD_LIBPIPE_TEST("rtc/Config" test_rtc_config ${SRCS_CONFIG})
 ADD_LIBPIPE_TEST("rtc/Manager" test_managerrtc ${SRCS_MANAGERRTC})
 ADD_LIBPIPE_TEST("rtc/Algorithm" test_algorithmrtc ${SRCS_ALGORITHMRTC})
 ADD_LIBPIPE_TEST("rtc/Filter" test_filterrtc ${SRCS_FILTERRTC})
