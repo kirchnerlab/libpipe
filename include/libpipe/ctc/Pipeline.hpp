@@ -73,7 +73,7 @@ class Pipeline
         static void setTraceFlag(const bool tf);
 
         /** Returns all traces collected in the Request object.
-         * @param[out] trace All collected trace information.
+         * @return trace All collected trace information.
          */
         static std::vector<std::string>& getTrace();
 
