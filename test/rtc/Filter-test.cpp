@@ -125,7 +125,7 @@ struct FilterRTCTestSuite : vigra::test_suite
 #ifdef ENABLE_THREADING
             boost::exception_ptr error;
 
-            f->processRequestThread(req, error);
+            f->processThreadedRequest(req, error);
             if (error) {
                 thrown = true;
             }shouldEqual(thrown, true);

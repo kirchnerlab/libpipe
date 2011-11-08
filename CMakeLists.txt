@@ -27,9 +27,9 @@ MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
 
 # more warnings against everything
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wconversion -Wall" )
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX0X_FLAGS}")
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -ggdb3 -D_FILE_OFFSET_BITS=64")
-
+SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
+SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
 
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/include/libpipe/config.hpp.cmake 
@@ -54,8 +54,14 @@ INCLUDE_DIRECTORIES(
 # code coverage analysis
 #############################################################################
 IF (ENABLE_COVERAGE)
-    MESSAGE(STATUS "Coverage enabled")
-    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
+    string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
+    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+        MESSAGE(STATUS "Coverage enabled")
+        SET (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
+    ELSE()
+        MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
+    ENDIF()
+ 
     CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
         ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
         @ONLY IMMEDIATE
@@ -64,6 +70,7 @@ IF (ENABLE_COVERAGE)
         coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
     )
 ENDIF(ENABLE_COVERAGE)
+
 
 #############################################################################
 # regression tests
@@ -165,5 +172,3 @@ set(CPACK_COMPONENT_EXAMPLES_DESCRIPTION
     "Compiled examples.")
 
 INCLUDE(CPack)
-
-MESSAGE(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")

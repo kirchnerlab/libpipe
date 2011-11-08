@@ -1,5 +1,3 @@
-# make sure the examples are debuggable
-SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Werror -ggdb3 -D_FILE_OFFSET_BITS=64")
 # compile and link
 ADD_EXECUTABLE(example-uppercase-strings example-uppercase-strings.cpp)
 TARGET_LINK_LIBRARIES(example-uppercase-strings pipe)
