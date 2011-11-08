@@ -30,7 +30,7 @@
 #include "vigra/unittest.hxx"
 #define private public
 #define protected public
-#include "libpipe/rtc/Controler.hpp"
+#include "libpipe/rtc/PipelineLoader.hpp"
 #include "rtc/utils.hpp"
 #include "libpipe/rtc/Pipeline.hpp"
 #include "libpipe/Request.hpp"
@@ -89,7 +89,7 @@ struct PipelineTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
-            Controler creator(inputFiles);
+            PipelineLoader creator(inputFiles);
 
             Pipeline pipeline = creator.getPipeline();
             bool thrown = false;

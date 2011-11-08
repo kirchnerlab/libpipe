@@ -3,9 +3,8 @@ SET(SRCS
     rtc/Data.cpp
     rtc/Config.cpp
     rtc/ConfigJSON.cpp
-    rtc/Controler.cpp
     rtc/Pipeline.cpp
-    rtc/Loader.cpp
+    rtc/PipelineLoader.cpp
     rtc/Algorithm.cpp
     rtc/Manager.cpp
     rtc/Filter.cpp  

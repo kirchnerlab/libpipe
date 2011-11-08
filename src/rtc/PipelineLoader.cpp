@@ -34,7 +34,7 @@
 #include <libpipe/rtc/Filter.hpp>
 #include <libpipe/rtc/Manager.hpp>
 #include <libpipe/rtc/Algorithm.hpp>
-#include <libpipe/rtc/Controler.hpp>
+#include <libpipe/rtc/PipelineLoader.hpp>
 #include <libpipe/rtc/Config.hpp>
 #include <libpipe/rtc/ConfigJSON.hpp>
 
@@ -44,7 +44,7 @@
 namespace libpipe {
 namespace rtc {
 
-Controler::Controler(const std::map<std::string, std::string>& inputFile)
+PipelineLoader::PipelineLoader(const std::map<std::string, std::string>& inputFile)
 {
     configuration_ = new ConfigJSON;
     try{
@@ -58,12 +58,12 @@ Controler::Controler(const std::map<std::string, std::string>& inputFile)
     this->generatePipeline();
 }
 
-Controler::~Controler()
+PipelineLoader::~PipelineLoader()
 {
     delete configuration_;
 }
 
-boost::shared_ptr<Filter> Controler::getFilter(
+boost::shared_ptr<Filter> PipelineLoader::getFilter(
     const std::string& filtername)
 {
     if (filterMap_.find(filtername) != filterMap_.end()) {
@@ -79,12 +79,12 @@ boost::shared_ptr<Filter> Controler::getFilter(
     }
 }
 
-const Pipeline& Controler::getPipeline() const
+const Pipeline& PipelineLoader::getPipeline() const
 {
     return pipeline_;
 }
 
-void Controler::generateFilters()
+void PipelineLoader::generateFilters()
 {
     std::list<FilterDescription> filterList = configuration_->getFilters();
 
@@ -104,7 +104,7 @@ void Controler::generateFilters()
 
 }
 
-void Controler::connectManagers(const std::string& filtername)
+void PipelineLoader::connectManagers(const std::string& filtername)
 {
     std::list<PrecursorDescription> precursors = configuration_->getPrecursorFilter(
         filtername);
@@ -124,7 +124,7 @@ void Controler::connectManagers(const std::string& filtername)
 
 }
 
-void Controler::connectAlgorithmPorts(const std::string& filtername)
+void PipelineLoader::connectAlgorithmPorts(const std::string& filtername)
 {
     std::list<PortDescription> ports = configuration_->getPort(filtername);
 
@@ -142,7 +142,7 @@ void Controler::connectAlgorithmPorts(const std::string& filtername)
     }
 }
 
-void Controler::generatePipeline()
+void PipelineLoader::generatePipeline()
 {
     std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
             PipelineDescriptionLess> queue = configuration_->getLibpipePipe();

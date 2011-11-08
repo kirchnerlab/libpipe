@@ -27,7 +27,6 @@
 #include <cstring> // for memset
 #include <sys/time.h> // for gettimeofday
 #include <limits>
-#include <libpipe/utilities/Log.hpp>
 
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
 #define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO

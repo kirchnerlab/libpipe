@@ -26,7 +26,6 @@
 #include <libpipe/ctc/ModificationTimeManager.hpp>
 #include <libpipe/ctc/Filter.hpp>
 #include <libpipe/ctc/Algorithm.hpp>
-#include <libpipe/utilities/Log.hpp>
 
 using namespace libpipe::ctc;
 

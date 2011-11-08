@@ -44,7 +44,7 @@ class Config;
 /** Generates the objects needed by libpipe, it only relies on the Config interface. And
  * not on the input file.
  */
-class Controler
+class PipelineLoader
 {
     public:
 
@@ -52,11 +52,11 @@ class Controler
          * @param filename The names to the configurations file. Identified by a string key.
          *
          */
-        Controler(const std::map<std::string, std::string>& filename);
+        PipelineLoader(const std::map<std::string, std::string>& filename);
 
         /** Destructor
          */
-        ~Controler();
+        ~PipelineLoader();
 
         /** Returns a shared pointer to the requested Filter, throw an exception
          * if the filter is not found

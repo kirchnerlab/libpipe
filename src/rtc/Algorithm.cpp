@@ -32,7 +32,6 @@
 #include <libpipe/utilities/Exception.hpp>
 
 #include <limits>
-#include <libpipe/utilities/Log.hpp>
 #include <string>
 
 #undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
