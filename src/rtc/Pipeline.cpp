@@ -50,7 +50,6 @@ void Pipeline::push(Request const & req, boost::shared_ptr<Filter> filter)
 
 void Pipeline::run()
 {
-
     while (!pipelineQueue_.empty()) {
         Request tempReq = requestQueue_.front();
         std::string tempStr;
@@ -81,21 +80,25 @@ void Pipeline::run()
 
 bool Pipeline::getTraceFlag()
 {
+    boost::shared_lock<boost::shared_mutex> lock(traceFlagMutex_);
     return traceFlag_;
 }
 
 void Pipeline::setTraceFlag(const bool tf)
 {
+    boost::unique_lock<boost::shared_mutex> lock(traceFlagMutex_);
     traceFlag_ = tf;
 }
 
 std::vector<std::string>& Pipeline::getTrace()
 {
+    boost::shared_lock<boost::shared_mutex> lock(traceMutex_);
     return trace_;
 }
 
 void Pipeline::addTrace(const std::string& t)
 {
+    boost::unique_lock<boost::shared_mutex> lock(traceMutex_);
     time_t rawtime;
     struct tm* timeinfo;
     time(&rawtime);
@@ -110,12 +113,18 @@ void Pipeline::addTrace(const std::string& t)
 
 void Pipeline::clearTrace()
 {
+    boost::unique_lock<boost::shared_mutex> lock(traceMutex_);
     trace_.clear();
 }
 
 std::vector<std::string> Pipeline::trace_;
 
 bool Pipeline::traceFlag_;
+
+boost::shared_mutex Pipeline::traceMutex_;
+boost::shared_mutex Pipeline::traceFlagMutex_;
+
+
 
 } /* namespace rtc */
 } /* namespace libpipe */
