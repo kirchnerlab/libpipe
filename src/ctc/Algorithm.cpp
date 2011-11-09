@@ -89,13 +89,12 @@ Algorithm::~Algorithm()
 {
 }
 
-libpipe::Request& Algorithm::processRequest(Request& req)
+void Algorithm::processRequest(Request& req)
 {
-    req = this->update(req);
+    this->update(req);
     if(req.is(Request::DELETE)){
         this->setMTime(Algorithm::MIN_TIME);
     }
-    return req;
 }
 
 const timeval& Algorithm::getMTime() const

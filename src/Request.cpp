@@ -30,12 +30,12 @@
 using namespace libpipe;
 
 Request::Request(const Request::Type& t) :
-        type_(t), traceFlag_(false)
+        type_(t)
 {
 }
 
 Request::Request() :
-        type_(Request::UPDATE), traceFlag_(false)
+        type_(Request::UPDATE)
 {
 }
 
@@ -53,46 +53,5 @@ Request::Type Request::getType() const
     return type_;
 }
 
-bool Request::getTraceFlag() const
-{
-    return traceFlag_;
-}
-
-void Request::setTraceFlag(const bool tf)
-{
-    traceFlag_ = tf;
-}
-
-void Request::getTrace(std::vector<std::string>& trace) const
-{
-    boost::unique_lock<boost::mutex> lock(traceMutex_);
-    trace = trace_;
-}
-
-
-void Request::addTrace(const std::string& t)
-{
-    boost::unique_lock<boost::mutex> lock(traceMutex_);
-
-    time_t rawtime;
-    struct tm* timeinfo;
-    time(&rawtime);
-    timeinfo = localtime(&rawtime);
-    static char buffer[40];
-    strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
-    std::ostringstream thread;
-    thread << "thread: " << boost::this_thread::get_id() << "\t";
-    trace_.push_back(thread.str() + std::string(buffer) + t);
-}
-
-void Request::clearTrace()
-{
-    boost::unique_lock<boost::mutex> lock(traceMutex_);
-    trace_.clear();
-}
-
-boost::mutex Request::traceMutex_;
-
-std::vector<std::string> Request::trace_;
 
 

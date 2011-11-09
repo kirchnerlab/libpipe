@@ -85,16 +85,15 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return the Request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
-            return req;
+            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -190,16 +189,15 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return the Request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
-            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: end.");
-            return req;
+            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -281,15 +279,14 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return the request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
-            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: end.");
-            return req;
+            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -404,22 +401,21 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
          * @param[in,out] req The request object, forwarded from \c process request.
          * @return the Request
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
-                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
+                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
-                LIBPIPE_REQUEST_TRACE(req,
+                LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
-                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
+                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
-                LIBPIPE_REQUEST_TRACE(req,
+                LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
-            return req;
         }
 
         /** Provides access to results.
@@ -543,10 +539,9 @@ class Source : public libpipe::ctc::Algorithm
          * @param[in] req The request object.
          * @return The request object.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "providing input.");
-            return req;
+            LIBPIPE_PIPELINE_TRACE(req, "providing input.");
         }
 
     protected:
@@ -617,17 +612,17 @@ libpipe::ctc::Pipeline generatePipeline()
     Pipeline pipe;
 
     libpipe::Request req(libpipe::Request::UPDATE);
-    req.setTraceFlag(true);
+    pipe.setTraceFlag(true);
 
     pipe.push(req, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
     libpipe::Request reqDelete(libpipe::Request::DELETE);
-    reqDelete.setTraceFlag(true);
+    pipe.setTraceFlag(true);
 
     pipe.push(reqDelete, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
     libpipe::Request req1(libpipe::Request::UPDATE);
-    req1.setTraceFlag(true);
+    pipe.setTraceFlag(true);
 
     pipe.push(req1, boost::dynamic_pointer_cast<Filter>(lowerFilter));
 
@@ -643,7 +638,7 @@ int main(int argc, char *argv[])
 
     typedef std::vector<std::string> VS;
     VS trace;
-    pipeline.getTrace(trace);
+    trace=pipeline.getTrace();
     for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }

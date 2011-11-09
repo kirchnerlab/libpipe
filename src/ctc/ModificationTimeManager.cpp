@@ -38,7 +38,7 @@ ModificationTimeManager::~ModificationTimeManager()
 {
 }
 
-libpipe::Request& ModificationTimeManager::processRequest(
+void ModificationTimeManager::processRequest(
     Request& req)
 {
     // make sure we have been set up correctly
@@ -52,7 +52,7 @@ libpipe::Request& ModificationTimeManager::processRequest(
     typedef FilterSet::iterator FSI;
     for (FSI i = sources_.begin(); i != sources_.end(); ++i) {
         try {
-            req = (*i)->processRequest(req);
+            (*i)->processRequest(req);
         } catch (RequestException& e) {
             throw;
         }
@@ -65,7 +65,7 @@ libpipe::Request& ModificationTimeManager::processRequest(
     // update, if necessary
     if (needUpdate) {
         try {
-            req = algorithm_->processRequest(req);
+            algorithm_->processRequest(req);
         } catch (std::exception& e) {
             std::string str(e.what());
             throw RequestException(
@@ -76,6 +76,5 @@ libpipe::Request& ModificationTimeManager::processRequest(
                 "ModificationTimeManager.cpp: Cannot process request: algorithm execution caused exception.");
         }
     }
-    return req;
 }
 

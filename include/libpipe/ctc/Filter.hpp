@@ -59,7 +59,7 @@ public:
      * @param[in] req The request object.
      * @return The request object with processing information filled out.
      */
-    virtual Request& processRequest(Request& req);
+    virtual void processRequest(Request& req);
 
     /** Returns a  pointer to the algorithm object.
      * @return A pointer to the algorithm object.

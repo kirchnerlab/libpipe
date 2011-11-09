@@ -31,6 +31,7 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/ManagerFactory.hpp>
+#include <libpipe/rtc/Pipeline.hpp>
 
 using namespace libpipe::rtc;
 
@@ -73,11 +74,10 @@ void Filter::processThreadedRequest(libpipe::Request req, boost::exception_ptr& 
 
 void Filter::processRequest(libpipe::Request req)
 {
-
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: start.");
+    // forward algorithm handle and request to manager
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    LIBPIPE_REQUEST_TRACE(req, this->getName() + "::processRequest: stop.");
-
+    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: stop.");
 }
 
 Algorithm* Filter::getAlgorithm() const

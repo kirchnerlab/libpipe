@@ -86,14 +86,13 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
 
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: start.");
-//            std::cout<<boost::this_thread::get_id()<<"\t Uppercase"<<std::endl;
+            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
-            LIBPIPE_REQUEST_TRACE(req, "UppercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
         }
 
     protected:
@@ -187,15 +186,14 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
 
-            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
-//            std::cout<<boost::this_thread::get_id()<<"\t Lowercase"<<std::endl;
 
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
-            LIBPIPE_REQUEST_TRACE(req, "LowercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
         }
 
     protected:
@@ -281,14 +279,13 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
-//            std::cout<<boost::this_thread::get_id()<<"\t Combine"<<std::endl;
 
-            LIBPIPE_REQUEST_TRACE(req,
+            LIBPIPE_PIPELINE_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
-            LIBPIPE_REQUEST_TRACE(req, "CombineAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
         }
 
     protected:
@@ -400,18 +397,17 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
-                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: start.");
+                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_->get()->clear();
-                LIBPIPE_REQUEST_TRACE(req,
+                LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
-//                std::cout<<boost::this_thread::get_id()<<"\t Rot13"<<std::endl;
 
-                LIBPIPE_REQUEST_TRACE(req, "ROT13Algorithm::update: end.");
+                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
-                LIBPIPE_REQUEST_TRACE(req,
+                LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
         }
@@ -505,9 +501,8 @@ class Source : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_REQUEST_TRACE(req, "providing input.");
-//            std::cout<<boost::this_thread::get_id()<<"\t Source"<<std::endl;
 
+            LIBPIPE_PIPELINE_TRACE(req, "providing input.");
         }
 
     protected:
@@ -562,7 +557,7 @@ int main(int argc, char *argv[])
     }
 
     std::vector<std::string> trace;
-    pipeline.getTrace(trace);
+    trace = pipeline.getTrace();
     for (std::vector<std::string>::const_iterator i = trace.begin();
             i != trace.end(); ++i) {
         std::cout << *i << '\n';
@@ -571,8 +566,6 @@ int main(int argc, char *argv[])
     std::cout
             << "\033[22;35m All output after this is due to automatically called destructors. \e[m"
             << std::endl;
-
-
 
     return EXIT_SUCCESS;
 

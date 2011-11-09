@@ -31,6 +31,7 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/RequestException.hpp>
 #include <libpipe/ctc/Manager.hpp>
+#include <libpipe/ctc/Pipeline.hpp>
 
 #include <boost/shared_ptr.hpp>
 
@@ -50,12 +51,11 @@ public:
     ~Identity()
     {
     }
-    libpipe::Request& update(libpipe::Request& req)
+    void update(libpipe::Request& req)
     {
-        LIBPIPE_REQUEST_TRACE(req, "Identity: copying value.");
+        LIBPIPE_PIPELINE_TRACE(req, "Identity: copying value.");
         out_ = in_;
         this->updateMTime();
-        return req;
     }
     virtual int getOutput()
     {
@@ -88,14 +88,13 @@ public:
     {
         delete out_;
     }
-    libpipe::Request& update(libpipe::Request& req)
+    void update(libpipe::Request& req)
     {
         std::ostringstream oss;
         *out_ = (*in_) + 1;
         oss << "Inc: " << *in_ << " -> " << *out_;
-        LIBPIPE_REQUEST_TRACE(req, oss.str());
+        LIBPIPE_PIPELINE_TRACE(req, oss.str());
         this->updateMTime();
-        return req;
     }
     int* getOutput()
     {
@@ -128,7 +127,7 @@ public:
     ~RaiseExceptionAlg()
     {
     }
-    libpipe::Request& update(libpipe::Request& req)
+    void update(libpipe::Request& req)
     {
         // deliberately raise a non-libpipe exception
         throw std::exception();
