@@ -128,14 +128,15 @@ struct FilterRTCTestSuite : vigra::test_suite
             f->processThreadedRequest(req, error);
             if (error) {
                 thrown = true;
-            }shouldEqual(thrown, true);
+            }
+            shouldEqual(thrown, true);
 #else
             try {
                 f->processRequest(req);
             } catch(...) {
                 thrown =true;
             }
-
+            shouldEqual(thrown, true);
 #endif
             delete f;
         }

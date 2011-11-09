@@ -51,15 +51,17 @@ Filter::Filter(const std::string& name, Algorithm* algorithm, Manager* manager) 
 
 Filter::~Filter()
 {
-    // the filter owns its members!
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(algorithmMutex_);
     boost::unique_lock<boost::shared_mutex> lock2(managerMutex_);
+#endif
+    // the filter owns its members!
     if (algorithm_)
         delete algorithm_;
     if (manager_)
         delete manager_;
 }
-
+#ifdef ENABLE_THREADING
 void Filter::processThreadedRequest(libpipe::Request req, boost::exception_ptr& error)
 {
     try {
@@ -71,8 +73,8 @@ void Filter::processThreadedRequest(libpipe::Request req, boost::exception_ptr& 
         error = boost::current_exception();
     }
 }
-
-void Filter::processRequest(libpipe::Request req)
+#endif
+void Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager
     LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
@@ -82,14 +84,18 @@ void Filter::processRequest(libpipe::Request req)
 
 Algorithm* Filter::getAlgorithm() const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(algorithmMutex_);
+#endif
     return algorithm_;
 }
 
 void Filter::setAlgorithm(Algorithm* alg)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(managerMutex_);
     boost::unique_lock<boost::shared_mutex> lock2(algorithmMutex_);
+#endif
     if (algorithm_ != alg) {
         if (algorithm_) {
             delete algorithm_;
@@ -103,13 +109,17 @@ void Filter::setAlgorithm(Algorithm* alg)
 
 Manager* Filter::getManager() const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(managerMutex_);
+#endif
     return manager_;
 }
 
 void Filter::setManager(Manager* manager)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(managerMutex_);
+#endif
     if (manager_ != manager) {
         if (manager_) {
             delete manager_;
@@ -120,13 +130,17 @@ void Filter::setManager(Manager* manager)
 
 std::string Filter::getName() const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(nameMutex_);
+#endif
     return name_;
 }
 
 void Filter::setName(const std::string& name)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(nameMutex_);
+#endif
     name_ = name;
 }
 

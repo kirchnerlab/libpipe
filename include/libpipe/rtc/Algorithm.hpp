@@ -37,7 +37,9 @@
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#ifdef ENABLE_THREADING
 #include <boost/thread.hpp>
+#endif
 
 /**
  * \namespace libpipe The Namespace for all libpipe classes.
@@ -81,7 +83,7 @@ class Algorithm
          * call the \c update function
          * @param [in,out] req A request object.
          */
-        void processRequest(Request req);
+        void processRequest(Request& req);
 
         /** Runs the algorithm and updates the output data, if the Request
          * Type is \c Request::Update. If the request Type is \c Request::DELETE
@@ -187,7 +189,7 @@ class Algorithm
         /** The last modification timestamp.
          */
         timeval mTime_;
-
+#ifdef ENABLE_THREADING
         /** Mutex for the algorithm class to make sure only one thread at a time is
          * calling update methode from processRequest
          */
@@ -200,7 +202,7 @@ class Algorithm
         /** Mutex to secure mTime_
          */
         mutable boost::shared_mutex mTimeMutex_;
-
+#endif
 
 
 

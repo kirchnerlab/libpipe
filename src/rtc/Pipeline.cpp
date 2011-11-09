@@ -80,49 +80,64 @@ void Pipeline::run()
 
 bool Pipeline::getTraceFlag()
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(traceFlagMutex_);
+#endif
     return traceFlag_;
 }
 
 void Pipeline::setTraceFlag(const bool tf)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(traceFlagMutex_);
+#endif
     traceFlag_ = tf;
 }
 
 std::vector<std::string>& Pipeline::getTrace()
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(traceMutex_);
+#endif
     return trace_;
 }
 
 void Pipeline::addTrace(const std::string& t)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(traceMutex_);
+#endif
     time_t rawtime;
     struct tm* timeinfo;
     time(&rawtime);
     timeinfo = localtime(&rawtime);
     static char buffer[40];
     strftime(buffer, 40, "%Y.%m.%d:%H:%M:%S %Z ", timeinfo);
+#ifdef ENABLE_THREADING
     std::ostringstream thread;
     thread << "thread: " << boost::this_thread::get_id() << "\t";
     trace_.push_back(thread.str() + std::string(buffer) + t);
+#else
+    trace_.push_back(std::string(buffer) + t);
+#endif
 
 }
 
 void Pipeline::clearTrace()
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(traceMutex_);
+#endif
     trace_.clear();
 }
 
 std::vector<std::string> Pipeline::trace_;
 
 bool Pipeline::traceFlag_;
-
+#ifdef ENABLE_THREADING
 boost::shared_mutex Pipeline::traceMutex_;
 boost::shared_mutex Pipeline::traceFlagMutex_;
+#endif
 
 
 

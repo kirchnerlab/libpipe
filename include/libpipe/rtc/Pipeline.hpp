@@ -35,7 +35,9 @@
 #include <queue>
 
 #include <boost/shared_ptr.hpp>
+#ifdef ENABLE_THREADING
 #include <boost/thread.hpp>
+#endif
 
 
 /** Macro that add an entry to a requests trace.
@@ -110,7 +112,7 @@ class Pipeline
         /** Trace information.
          */
         static std::vector<std::string> trace_;
-
+#ifdef ENABLE_THREADING
         /** Mutex to secure trace
          */
         static boost::shared_mutex traceMutex_;
@@ -118,7 +120,7 @@ class Pipeline
         /** Mutex to secure traceFlag
          */
         static boost::shared_mutex traceFlagMutex_;
-
+#endif
 };
 
 } /* namespace rtc */

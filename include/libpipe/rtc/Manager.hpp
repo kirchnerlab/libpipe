@@ -35,7 +35,9 @@
 #include <boost/shared_ptr.hpp>
 
 #include <boost/noncopyable.hpp>
+#ifdef ENABLE_THREADING
 #include <boost/thread.hpp>
+#endif
 
 namespace libpipe {
 namespace rtc {
@@ -77,10 +79,10 @@ class Manager : boost::noncopyable
          * the manager will call the \c process request method of all filters
          * it depends on and will subsequently execute its own algorithm.
          *
-         * @param[in] req The request object, non-const (good for e.g. adding trace
+         * @param[in,out] req The request object, non-const (good for e.g. adding trace
          *                information)
          */
-        virtual void processRequest(Request req);
+        virtual void processRequest(Request& req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.
@@ -139,7 +141,7 @@ class Manager : boost::noncopyable
          * @return true if successful
          */
         static const bool registerLoader();
-
+#ifdef ENABLE_THREADING
         /** Mutex for the processRequest
          */
         boost::mutex processRequestMutex_;
@@ -149,6 +151,7 @@ class Manager : boost::noncopyable
         /** Mutex for the source_
          */
         boost::shared_mutex sourcesMutex_;
+#endif
 
 };
 

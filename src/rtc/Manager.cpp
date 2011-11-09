@@ -31,8 +31,6 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/ManagerFactory.hpp>
 
-#include <boost/thread.hpp>
-#include <boost/bind.hpp>
 
 using namespace libpipe::rtc;
 
@@ -52,41 +50,48 @@ Manager::~Manager()
 
 Algorithm* Manager::getAlgorithm()
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(algorithmMutex_);
+#endif
     return algorithm_;
 }
 
 void Manager::setAlgorithm(Algorithm* alg)
 {
+#ifdef ENABLE_THREADING
+    boost::unique_lock<boost::shared_mutex> lock(algorithmMutex_);
+#endif
     // the manager does not own the
     // algorithm object. Hence, just move the pointer.
-    boost::unique_lock<boost::shared_mutex> lock(algorithmMutex_);
     algorithm_ = alg;
 }
 
-void Manager::processRequest(libpipe::Request req)
+void Manager::processRequest(libpipe::Request& req)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::mutex> lock(processRequestMutex_);
-
+#endif
     if (req.is(libpipe::Request::UPDATE)) {
         if (!algorithm_) {
             throw boost::enable_current_exception(
                 libpipe::RequestException(
                     "Cannot process request. No algorithm instance available."));
         }
-
+#ifdef ENABLE_THREADING
         boost::thread_group thread;
         boost::unique_lock<boost::shared_mutex> lockSources(sourcesMutex_);
         // catch errors, to rethrow the exceptions
         std::vector<boost::exception_ptr> error(sources_.size());
         std::vector<boost::exception_ptr>::iterator errorIt = error.begin();
+#endif
         typedef FilterSet::iterator MSI;
         // iterate over all sources
-        for (MSI i = sources_.begin(); i != sources_.end(); ++i, ++errorIt) {
+        for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
 #ifdef ENABLE_THREADING
             thread.add_thread(
                 new boost::thread(&Filter::processThreadedRequest, (*i), req,
                     boost::ref(*errorIt)));
+            errorIt++;
 #else
             try {
                 (*i)->processRequest(req);
@@ -126,19 +131,25 @@ void Manager::processRequest(libpipe::Request req)
 
 void Manager::connect(boost::shared_ptr<Filter> f)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(sourcesMutex_);
+#endif
     sources_.insert(f);
 }
 
 void Manager::disconnect()
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(sourcesMutex_);
+#endif
     sources_.clear();
 }
 
 std::set<boost::shared_ptr<Filter> > Manager::getSources()
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(sourcesMutex_);
+#endif
     return sources_;
 }
 

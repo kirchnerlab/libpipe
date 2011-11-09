@@ -34,8 +34,6 @@
 #include <limits>
 #include <string>
 
-#undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
-#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
 #include "libpipe/ctc/Algorithm.hpp" //for timeval comparisons
 using namespace libpipe::rtc;
@@ -73,9 +71,11 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::processRequest(libpipe::Request req)
+void Algorithm::processRequest(libpipe::Request& req)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::mutex> lock(processRequestMutex_);
+#endif
     this->update(req);
 
     if (req.is(libpipe::Request::DELETE)) {
@@ -85,33 +85,43 @@ void Algorithm::processRequest(libpipe::Request req)
 
 const timeval& Algorithm::getMTime() const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(mTimeMutex_);
+#endif
     return mTime_;
 }
 
 void Algorithm::setMTime(const timeval& mTime)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(mTimeMutex_);
+#endif
     mTime_ = mTime;
 }
 
 void Algorithm::updateMTime()
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(mTimeMutex_);
+#endif
     // use gettimeofday for microsecond resolution
     gettimeofday(&mTime_, NULL);
 }
 
 bool Algorithm::needUpdate() const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(mTimeMutex_);
+#endif
     return mTime_ == Algorithm::MAX_TIME;
 }
 
 boost::shared_ptr<Data> Algorithm::getPort(
     const std::string& portIdentifier) const
 {
+#ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(portMutex_);
+#endif
 
     std::map<std::string, boost::shared_ptr<Data> >::const_iterator iter;
     iter = ports_.find(portIdentifier);
@@ -130,7 +140,9 @@ boost::shared_ptr<Data> Algorithm::getPort(
 void Algorithm::setInput(const std::string& portIdentifier,
     boost::shared_ptr<Data> dataObject)
 {
+#ifdef ENABLE_THREADING
     boost::unique_lock<boost::shared_mutex> lock(portMutex_);
+#endif
     std::map<std::string, boost::shared_ptr<Data> >::iterator iter;
     iter = ports_.find(portIdentifier);
 

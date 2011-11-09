@@ -34,8 +34,11 @@
 #include <libpipe/Request.hpp>
 
 #include <boost/noncopyable.hpp>
-#include <boost/thread.hpp>
 #include <boost/exception_ptr.hpp>
+
+#ifdef ENABLE_THREADING
+#include <boost/thread.hpp>
+#endif
 
 namespace libpipe {
 namespace rtc {
@@ -64,6 +67,7 @@ class Filter : boost::noncopyable
          */
         ~Filter();
 
+#ifdef ENABLE_THREADING
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
          * @param[in] req The request object.
@@ -71,12 +75,13 @@ class Filter : boost::noncopyable
          */
         void processThreadedRequest(libpipe::Request req,
             boost::exception_ptr & error);
+#endif
 
         /** Processes a request.
          * This method forwards the request to the Algorithm and Manager objects.
-         * @param[in] req The request object.
+         * @param[in,out] req The request object.
          */
-         void processRequest(libpipe::Request req);
+         void processRequest(libpipe::Request& req);
 
          /** Returns a  pointer to the algorithm object.
          * @return A pointer to the algorithm object.
