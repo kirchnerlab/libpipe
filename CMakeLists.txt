@@ -2,12 +2,25 @@ PROJECT(LIBPIPE)
 
 # require at least cmake 2.8
 cmake_minimum_required(VERSION 2.8)
-# include macro definitions
-INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/require_out_of_src_build.cmake)
+
+#############################################################################
+# include cmake scripts
+#############################################################################
 SET(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros)
-include(GetGitRevisionDescription)
+
+# require out-of-source build
+INCLUDE(require_out_of_src_build)
+MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
+
+# Git revision saved in variable LIBPIPE_VERSION
+INCLUDE(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC LIBPIPE_VERSION)
-MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
+
+#############################################################################
+# Varaibles to upper string for easier comparisions
+#############################################################################
+
+STRING(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
 
 #############################################################################
 # build libraries
@@ -15,69 +28,91 @@ MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
 # require boost
 SET(Boost_USE_STATIC_LIBS OFF)
 SET(Boost_USE_MULTITHREAD OFF)
-#make sure that at least version 1.47.0 is used
+#make sure that at least version 1.46.0 is used
 SET(BOOST_MIN_VERSION "1.46.0")
 FIND_PACKAGE(Boost ${BOOST_MIN_VERSION} COMPONENTS thread REQUIRED)
-
 
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 
-
-
-# require out-of-source build
-MACRO_REQUIRE_OUT_OF_SRC_BUILD("LIBPIPE requires out-of-source builds.")
-
-# more warnings against everything
+#############################################################################
+# compiler Flags
+#############################################################################
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -Wconversion -ggdb3 -D_FILE_OFFSET_BITS=64")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
 
+
+#############################################################################
+# Cmake generated header files
+#############################################################################
 CONFIGURE_FILE(
     ${CMAKE_CURRENT_SOURCE_DIR}/include/libpipe/config.hpp.cmake 
     ${LIBPIPE_BINARY_DIR}/include/libpipe/config.hpp
 )
 
-# add subdirs
+#############################################################################
+# Cmake Options
+#############################################################################
+
 OPTION(ENABLE_TESTING "Compile tests" ON)
 OPTION(ENABLE_COVERAGE "Enable GCov coverage analysis (defines a 'coverage' target and enforces static build of libpipe)" OFF)
 OPTION(ENABLE_EXAMPLES "Compile examples" OFF)
 OPTION(ENABLE_THREADING "Enable threading" FALSE)
 
-
+#############################################################################
 # global include dirs
+#############################################################################
+
 INCLUDE_DIRECTORIES(
     ${LIBPIPE_SOURCE_DIR}/include
     ${LIBPIPE_BINARY_DIR}/include
 )
 
+#############################################################################
+# messages and error handling
+#############################################################################
+MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
+MESSAGE(STATUS "Build type: "${CMAKE_BUILD_TYPE})
+IF(ENABLE_THREADING)
+    MESSAGE(STATUS "Threading enabled")
+ENDIF()
+IF(ENABLE_TESTING)
+    MESSAGE(STATUS "Testing enabled")
+ENDIF()
+IF(ENABLE_EXAMPLES)
+    MESSAGE(STATUS "Examples enabled")
+ENDIF()
+IF (ENABLE_COVERAGE)
+    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+        MESSAGE(STATUS "Coverage enabled")
+    ELSE()
+        MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
+    ENDIF()
+ENDIF()
 
 #############################################################################
 # code coverage analysis
 #############################################################################
+
 IF (ENABLE_COVERAGE)
-    string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
     IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
-        MESSAGE(STATUS "Coverage enabled")
         SET (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
-    ELSE()
-        MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
+        CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
+            ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
+            @ONLY IMMEDIATE
+        )
+        ADD_CUSTOM_TARGET(
+            coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
+        )        
     ENDIF()
- 
-    CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
-        ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
-        @ONLY IMMEDIATE
-    )
-    ADD_CUSTOM_TARGET(
-        coverage COMMAND /bin/bash ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
-    )
 ENDIF(ENABLE_COVERAGE)
 
 
 #############################################################################
-# regression tests
+# tests
 #############################################################################
-SET(UPDATE_TYPE git)
+
 IF (ENABLE_TESTING)
   INCLUDE(CTest)
   ENABLE_TESTING()
@@ -86,7 +121,7 @@ ENDIF (ENABLE_TESTING)
 
 
 #############################################################################
-# build lib
+# build libpipe
 #############################################################################
 
 ADD_SUBDIRECTORY(src)
@@ -94,6 +129,7 @@ ADD_SUBDIRECTORY(src)
 ############################################################################
 # examples
 ############################################################################
+
 IF (ENABLE_EXAMPLES)
     ADD_SUBDIRECTORY(examples)
 ENDIF (ENABLE_EXAMPLES)
@@ -110,8 +146,6 @@ FIND_PACKAGE(Doxygen)
 
 # target for doxygen
 ADD_CUSTOM_TARGET(doc COMMAND ${DOXYGEN} ${LIBPIPE_BINARY_DIR}/doc/Doxyfile)
-
-
 
 #############################################################################
 # installation
