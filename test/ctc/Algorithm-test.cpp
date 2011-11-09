@@ -48,10 +48,9 @@ struct AlgorithmTestSuite : vigra::test_suite
         ~MyAlgorithm()
         {
         }
-        virtual libpipe::Request& update(libpipe::Request& req)
+        virtual void update(libpipe::Request& req)
         {
             // dummy
-            return req;
         }
     };
 

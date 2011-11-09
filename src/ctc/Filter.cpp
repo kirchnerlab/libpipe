@@ -42,13 +42,12 @@ Filter::~Filter()
     delete manager_;
 }
 
-libpipe::Request& Filter::processRequest(Request& req)
+void Filter::processRequest(Request& req)
 {
     // forward algorithm handle and request to manager
     LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
     LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: stop.");
-    return req;
 }
 
 Algorithm* Filter::getAlgorithm()

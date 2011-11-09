@@ -65,7 +65,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         libpipe::Request req(libpipe::Request::UPDATE);
         bool thrown = false;
         try {
-            req = mtm.processRequest(req);
+            mtm.processRequest(req);
         } catch (libpipe::RequestException& e) {
             thrown = true;
         }
@@ -80,7 +80,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         mtm.setAlgorithm(a);
         thrown = false;
         try {
-            req = mtm.processRequest(req);
+            mtm.processRequest(req);
         } catch (libpipe::RequestException& e) {
             thrown = true;
         }
@@ -89,7 +89,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         a->setMTime(Algorithm::MAX_TIME);
         thrown = false;
         try {
-            req = mtm.processRequest(req);
+            mtm.processRequest(req);
         } catch (libpipe::RequestException& e) {
             // only catching the RequestException also ensures that exceptions
             // are encapsulated (RaiseExceptionAlg throws a std::exception)
@@ -124,16 +124,8 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         libpipe::Request req(libpipe::Request::UPDATE);
         libpipe::ctc::Pipeline pipe;
         pipe.setTraceFlag(true);
-        req = i2->processRequest(req);
-        /*         typedef std::vector<std::string> VS;
-         *         VS trace;
-         *         req.getTrace(trace);
-         *         typedef VS::iterator IT;
-         *         for (IT i = trace.begin(); i != trace.end(); ++i) {
-         *             std::cerr << *i << '\n';
-         *         }
-         *         std::cerr << std::flush;
-         */
+        i2->processRequest(req);
+
 
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
@@ -142,7 +134,7 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         // an mTime different from Algorithm::MAX_TIME and the dependent
         // algorithm (i2) has an mTime that is younger than the source.
         pipe.clearTrace();
-        req = i2->processRequest(req);
+        i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 43);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 44);
 
@@ -154,14 +146,14 @@ struct ModificationTimeManagerTestSuite : vigra::test_suite
         i1->getAlgorithm()->updateMTime();
         *(i1->getAlgorithm()->getOutput()) = 110;
         pipe.clearTrace();
-        req = i2->processRequest(req);
+        i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 110);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 111);
 
         // close the circle: fake a source update
         i1->getAlgorithm()->setMTime(Algorithm::MAX_TIME);
         pipe.clearTrace();
-        req = i2->processRequest(req);
+        i2->processRequest(req);
         shouldEqual(*(i1->getAlgorithm()->getOutput()), 1336);
         shouldEqual(*(i2->getAlgorithm()->getOutput()), 1337);
 

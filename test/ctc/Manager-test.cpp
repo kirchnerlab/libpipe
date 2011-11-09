@@ -133,7 +133,7 @@ struct ManagerTestSuite : vigra::test_suite
             // FIXME: we should have different error classes to distinguish
             //        between different errors.
             try {
-                req = tm.processRequest(req);
+                tm.processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }
@@ -153,7 +153,7 @@ struct ManagerTestSuite : vigra::test_suite
             tm.setAlgorithm(a);
             shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
             a->setInput(42);
-            req = tm.processRequest(req);
+            tm.processRequest(req);
             shouldEqual(a->getOutput(), 42);
             delete a;
             std::vector<std::string> trace;
@@ -164,7 +164,7 @@ struct ManagerTestSuite : vigra::test_suite
             tm.setAlgorithm(b);
             bool thrown = false;
             try {
-                req = tm.processRequest(req);
+                tm.processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -186,7 +186,7 @@ struct ManagerTestSuite : vigra::test_suite
 
             // this is the ok source
             fi->getAlgorithm()->setInput(42);
-            req = tm.processRequest(req);
+            tm.processRequest(req);
             shouldEqual(fi->getAlgorithm()->getOutput(), 42);
 
             // now add the failing source
@@ -196,7 +196,7 @@ struct ManagerTestSuite : vigra::test_suite
 
             bool thrown = false;
             try {
-                req = tm.processRequest(req);
+                tm.processRequest(req);
             } catch (libpipe::RequestException& e) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -219,7 +219,7 @@ struct ManagerTestSuite : vigra::test_suite
             // make sure that the filters are deleted
             fi->getAlgorithm()->setInput(42);
             shouldEqual(tm.getSources().size(), static_cast<size_t>(1));
-            req = tm.processRequest(req);
+            tm.processRequest(req);
             shouldEqual(tm.getSources().size(), static_cast<size_t>(0));
             shouldEqual(tm.getAlgorithm()->needUpdate(), false);
 

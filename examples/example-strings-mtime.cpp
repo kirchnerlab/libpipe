@@ -83,7 +83,7 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->clear();
@@ -96,7 +96,6 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
             oss << this->getMTime();
             LIBPIPE_PIPELINE_TRACE(req,
                 "UppercaseAlgorithm::update: end at " + oss.str().c_str());
-            return req;
         }
 
         /** Provides access to results.
@@ -189,7 +188,7 @@ class Source : public libpipe::ctc::Algorithm
          * @param[in] req The request object.
          * @return The request object.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "Source::update: start.");
             // simply update the modification time. Done.
@@ -198,7 +197,6 @@ class Source : public libpipe::ctc::Algorithm
             oss << this->getMTime();
             LIBPIPE_PIPELINE_TRACE(req,
                 "Source::update: end at " + oss.str().c_str());
-            return req;
         }
 
     protected:

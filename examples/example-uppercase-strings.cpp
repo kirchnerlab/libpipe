@@ -84,7 +84,7 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->get()->clear();
@@ -93,7 +93,6 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
-            return req;
         }
 
         /** Provides access to results.
@@ -186,7 +185,7 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
@@ -195,7 +194,6 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
-            return req;
         }
 
         /** Provides access to results.
@@ -274,7 +272,7 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
@@ -282,7 +280,6 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
-            return req;
         }
 
         /** Provides access to results.
@@ -384,7 +381,7 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
          * This is where all the algorithm implementation goes.
          * @param[in,out] req The request object, forwarded from \c process request.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
@@ -399,7 +396,6 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
                 LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
-            return req;
         }
 
         /** Provides access to results.
@@ -518,10 +514,9 @@ class Source : public libpipe::ctc::Algorithm
          * @param[in] req The request object.
          * @return The request object.
          */
-        libpipe::Request& update(libpipe::Request& req)
+        void update(libpipe::Request& req)
         {
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
-            return req;
         }
 
     protected:

@@ -84,10 +84,9 @@ public:
     /** Processes the current request object.
      * Depending on the information contained in the request object,  this will
      * call the \c update function 
-     * @param[inout] req A request object.
-     * @return A (potentially modified) request object.
+     * @param[in,out] req A request object.
      */
-    virtual Request& processRequest(Request& req);
+    virtual void processRequest(Request& req);
 
     /** Runs the algorithm and updates the output data, if the Request
      * Type is \c Request::Update. If the request Type is \c Request::DELETE
@@ -98,7 +97,7 @@ public:
      *                   purposes). Also useful to get the type of request
      *                   (Update of Delete), so that the input can be deleted.
      */
-    virtual Request& update(Request& req) = 0;
+    virtual void update(Request& req) = 0;
 
     /** Return the last modification timestamp.
      * @return The last modification timestamp.
