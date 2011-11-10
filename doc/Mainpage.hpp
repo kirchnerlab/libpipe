@@ -1,5 +1,5 @@
 /*!
-\mainpage libpipe: a lightweight C++ pipelining library
+\mainpage Libpipe Documentation
 \section sec_intro Introduction
 \section sec_install Installation
 \subsection Release

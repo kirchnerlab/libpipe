@@ -1,11 +1,48 @@
-/* The standard CSS for doxygen 
-
-	modified by RossCairns.com
+/* 
+CSS for libpipe
+Modified by David Sichau 
 */
 
 body, table, div, p, dl {
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 	font-size: 12px;
+}
+html body div#top{
+	margin-bottom: 20px;
+}
+
+html body div#top div#titlearea table tbody tr td#projectlogo img{
+	width: 100px; 
+	height: 100px;
+}
+
+html body div#top div#titlearea table tbody tr td div#projectname div#projectbrief{
+  color: #0000ff;
+  font-size: 20px;
+	padding-top: 0px; 
+	padding-left: 100px; 
+	border-left-width: 0px; 
+	margin-left: 0px; 
+	border-top-width: 0px; 
+	margin-top: -5px;
+}
+html body div#top div#titlearea table tbody tr td span#projectnumber{
+	font-size: 10px;
+	padding: 0px 0px 0px 20px ;
+	color: #0000ff;
+}
+
+html body div#top div#titlearea table tbody tr td div#projectname{
+	margin-bottom: 10px;
+	font-size: 30px;
+	padding: 0px 0px 0px 20px ;
+	color: #0000ff;
+}
+
+html body div.header div.headertitle div.title{
+	font-size: 20px;
+	color: #0000ff;
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;	
 }
 
 p, div, dl {
@@ -23,22 +60,25 @@ div.contents p {
 /* @group Heading Levels */
 
 h1 {
-	margin-bottom: 10px;
-	font-size: 30px;
-	padding: 0px 0px 20px 0px ;
-	border-bottom:1px dotted #E0E0E0;
+	font-size: 20px;
+	padding: 0px 0px 10px 0px ;
+	color:#0000ff;
+	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
+	
+	
 }
 
 h2 {
-	padding-top: 30px;
+	padding-top: 10px;
 	font-size: 17px;
-	color:#42657B;
+	color:#0000ff;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 }
 
 h3 {
-	font-size: 17px;
+	font-size: 15px;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
+	color:#0000ff;
 }
 
 dt {
@@ -555,13 +595,64 @@ hr {
 	padding-top:10px;
 }
 
-.contents {
-	padding-top: 30px;
-}
 
 h1 {
 	margin-top:0;
 }
 .contents .dynsection {
 	margin-top:10px;
+}
+
+
+
+.tabs, .tabs2, .tabs3 {
+    font-size: 13px;
+    width: 100%;
+    z-index: 101;
+    background-color: #0000ff;
+    margin-top: 20px; 
+}
+.tabs2 {
+    font-size: 10px;
+    margin-top: 0px;
+}
+.tabs3 {
+    font-size: 9px;
+    margin-top: 0px;
+}
+.tablist {
+    display: table;
+    margin: 0;
+    padding: 0;
+}
+.tablist li {
+    float: left;
+    line-height: 36px;
+    list-style: none outside none;
+    background-color: #0000ff;
+}
+.tablist a {
+    color: #ffffff;
+    display: block;
+    font-weight: bold;
+    outline: medium none;
+    padding: 0 20px;
+    text-decoration: none;
+    background-color: #0000ff;
+}
+.tabs3 .tablist a {
+    padding: 0 10px;
+}
+.tablist a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    background-color: #0000cc;
+}
+.tablist li.current a {
+    color: #FFFFFF;
+    background-color: #0000dd;
+}
+
+html body div#top div#navrow1.tabs ul.tablist li div#MSearchBox.MSearchBoxInactive{
+	margin-right: 20px;
 }
