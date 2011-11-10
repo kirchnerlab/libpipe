@@ -27,7 +27,7 @@ ENABLE_THREADING [Default: FALSE]
 </dt>
 <dd>generate multithreaded libpipe</dd>
 <dt>
-CMAKE_INSTALL_PREFIX [Default: /usr/]
+CMAKE_INSTALL_PREFIX [Default: /usr/local]
 </dt>
 <dd>allows to specify the installation path</dd>
 <dt>
@@ -76,7 +76,7 @@ For testing you can run the included test and measure the coverage of the tests.
 \code make test \endcode
 </li>
 <li> To generate the coverage report run:
-\code make test && make coverage \endcode
+\code make coverage \endcode
 </li>
 </ol>
 

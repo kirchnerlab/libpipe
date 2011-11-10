@@ -43,5 +43,4 @@ make test
 
 5) To make coverage run
 
-make test
 make coverage
