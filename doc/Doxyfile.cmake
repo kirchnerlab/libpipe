@@ -13,7 +13,12 @@
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
+# With the PROJECT_LOGO tag one can specify an logo or icon that is 
+# included in the documentation. The maximum height of the logo should not 
+# exceed 55 pixels and the maximum width should not exceed 200 pixels. 
+# Doxygen will copy the logo to the output directory.
 
+PROJECT_LOGO           = libpipe.png
 # This tag specifies the encoding used for all characters in the config file
 # that follow. The default is UTF-8 which is also the encoding used for all
 # text before the first occurrence of this tag. Doxygen uses libiconv (or the
@@ -31,7 +36,7 @@ PROJECT_NAME           = libpipe
 # This could be handy for archiving the generated documentation or
 # if some version control system is used.
 
-PROJECT_NUMBER         =
+PROJECT_NUMBER         = 2.0
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
 # base path where the generated documentation will be put.
@@ -568,7 +573,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include/libpipe @LIBPIPE_SOURCE_DIR@/include/libpipe/utilities @LIBPIPE_SOURCE_DIR@/include/libpipe/rtc @LIBPIPE_SOURCE_DIR@/src @LIBPIPE_SOURCE_DIR@/examples
+INPUT                  = @LIBPIPE_SOURCE_DIR@/doc @LIBPIPE_SOURCE_DIR@/include @LIBPIPE_SOURCE_DIR@/src @LIBPIPE_SOURCE_DIR@/examples
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -591,14 +596,13 @@ FILE_PATTERNS          =
 # should be searched for input files as well. Possible values are YES and NO.
 # If left blank NO is used.
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 # The EXCLUDE tag can be used to specify files and/or directories that should
 # excluded from the INPUT source files. This way you can easily exclude a
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = 
-#EXCLUDE                = @MGFP_SOURCE_DIR@/src/stack.h @MGFP_SOURCE_DIR@/src/location.h @MGFP_SOURCE_DIR@/src/position.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded
@@ -780,7 +784,7 @@ HTML_FILE_EXTENSION    = .html
 # each generated HTML page. If it is left blank doxygen will generate a
 # standard header.
 
-HTML_HEADER            =
+HTML_HEADER            =  @LIBPIPE_SOURCE_DIR@/doc/header.html
 
 # The HTML_FOOTER tag can be used to specify a personal HTML footer for
 # each generated HTML page. If it is left blank doxygen will generate a
@@ -809,7 +813,7 @@ HTML_ALIGN_MEMBERS     = YES
 # JavaScript and DHTML is required (for instance Mozilla 1.0+, Firefox
 # Netscape 6.0+, Internet explorer 5.0+, Konqueror, or Safari).
 
-HTML_DYNAMIC_SECTIONS  = NO
+HTML_DYNAMIC_SECTIONS  = YES
 
 # If the GENERATE_DOCSET tag is set to YES, additional index files
 # will be generated that can be used as input for Apple's Xcode 3

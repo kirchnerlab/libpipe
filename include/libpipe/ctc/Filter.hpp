@@ -56,8 +56,7 @@ public:
 
     /** Processes a request.
      * This method forwards the request to the Algorithm and Manager objects.
-     * @param[in] req The request object.
-     * @return The request object with processing information filled out.
+     * @param[in,out] req The request object.
      */
     virtual void processRequest(Request& req);
 

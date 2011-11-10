@@ -52,7 +52,7 @@ public:
 
     /** Processes a request, taking into account the current modification time
      * of the \c Manager's algorithm.
-     * @param[inout] req The request object.
+     * @param[in,out] req The request object.
      */
     virtual void processRequest(libpipe::Request& req);
 };

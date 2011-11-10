@@ -1,9 +1,6 @@
 /*!
-
 \mainpage libpipe: a lightweight C++ pipelining library
-
 \section sec_intro Introduction
-
 \section sec_install Installation
 \subsection Release
 
@@ -48,7 +45,7 @@ CMAKE_BUILD_TYPE
 
 e.g. run cmake like this
 
-\code cmake path_to_libpipe_src -DENABLE_EXAMPLES=TRUE -DENABLE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=RelWithDebInfo \endcode
+\code cmake path_to_libpipe_src -DENABLE_EXAMPLES=TRUE -DENABLE_COVERAGE=TRUE -DCMAKE_BUILD_TYPE=Debug \endcode
 </li>
 <li> To compile the project run:
 
@@ -59,21 +56,27 @@ e.g. run cmake like this
 \code make install \endcode
 </li>
 </ol>
+\subsection Distribution
+<ol>
+<li> To generate installers for libpipe run:
+\code
+cmake path_to_libpipe_src -DENABLE_EXAMPLES=TRUE -DENABLE_COVERAGE=FALSE -DCMAKE_BUILD_TYPE=Release
+make doc && make package
+\endcode
+</li>
+</ol>
 \subsection Testing
 For testing you can run the included test and measure the coverage of the tests.
 <ol>
-<li> Call cmake with ENABLE_TESTING true. If you want a coverage report also set ENABLE_COVERAGE to true.
-\code \code cmake path_to_libpipe_src -DENABLE_COVERAGE=TRUE -DENABLE_TESTING=TRUE -DCMAKE_BUILD_TYPE=RelWithDebInfo \endcode
+<li> Call cmake with ENABLE_TESTING true. If you want a coverage report also set ENABLE_COVERAGE to true and make a debug build.
+\code \code cmake path_to_libpipe_src -DENABLE_COVERAGE=TRUE -DENABLE_TESTING=TRUE -DCMAKE_BUILD_TYPE=Debug \endcode
 </li>
 <li> To execute the tests run:
 
 \code make test \endcode
 </li>
 <li> To generate the coverage report run:
-
-\code make test \endcode
-and then
-\code make coverage \endcode
+\code make test && make coverage \endcode
 </li>
 </ol>
 
@@ -87,7 +90,7 @@ This class needs to implement the following functions:
     <li>public methods:
     <ul>
         <li>\code static Algorithm* create() \endcode</li>
-        <li>\code libpipe::Request& update(libpipe::Request& req) \endcode</li>
+        <li>\code void update(libpipe::Request& req) \endcode</li>
         <li>\code The Destructor \endcode</li>
     </ul></li>
     <li> protected methods:
@@ -116,7 +119,7 @@ to your algorithm class. So the implementation should look like this:
 <h4> update(libpipe::Request& req) Method </h4>
 This method will contain your actual algorithm. In the end the method should return the request.
 To add Information to the request trace use the following code inside the method:
-\code LIBPIPE_REQUEST_TRACE(req, "YOUR MESSAGE"); \endcode
+\code LIBPIPE_PIPELINE_TRACE(req, "YOUR MESSAGE"); \endcode
 To have access to your defined in- and output ports you should add the
 following cast at the beginning of the method for convenience:
 \code
@@ -143,7 +146,7 @@ If you have not allocated memory in your class an empty destructor is sufficient
 
 <h4> The Constructor </h4>
 Make sure to call the libpipe::rtc::Algorithm Constructor.
-\code YOURAlgorithm() :
+\code YOUR_ALGORITHM() :
                 libpipe::rtc::Algorithm()
         { ...
 \endcode
@@ -188,7 +191,7 @@ If you really need to, implement the following functions:
     <li>public methods:
     <ul>
         <li>\code static Manager* create() \endcode</li>
-        <li>\code virtual Request& processRequest(Request& req);\endcode</li>
+        <li>\code void processRequest(Request& req);\endcode</li>
         <li>\code The Destructor \endcode</li>
     </ul></li>
     <li> protected methods:
@@ -229,7 +232,7 @@ Make sure to call the libpipe::rtc::Manager Constructor.
 \code YOUR_MANAGER() :
                 libpipe::rtc::Manager()
         { ...
-
+\endcode
 <h4> registerLoader() Method </h4>
 
 This method will register your new manager class in the ManagerFactory.
@@ -247,15 +250,10 @@ To register your manager you need also to add this line of code outside your cla
 const bool YOUR_MANAGER::registered_ = registerLoader();
 \endcode
 
-
-<h3> <a name="datatypes">Generate new Datatypes </a></h3>
-
-
-
-<h3>Usage of Fabrics</h3>
+<h3>Usage of Factories</h3>
 
  LIBPIPE supports factories for the generation of Algorithm and Managers Objects.
- The Fabrics are defined as \c AlgorithmFactory and \c ManagerFactory
+ The Factories are defined as \c AlgorithmFactory and \c ManagerFactory
  In order to support the generation of Filter at runtime LIBPIPE provides a factory-based
   (compile time) plugin system:  every algorithm and manager class must provide a create method.
   The nifty thing about the LIBPIPE implementation of this setup is that adding a new class
@@ -285,6 +283,13 @@ const bool YOUR_MANAGER::registered_ = registerLoader();
 
  In summary, every new Algorithm or Manager will notify the factory of its identifier
  and pass along a virtual constructor for the respective loader class.
+
+<h3> <a name="datatypes">Generate new Datatypes </a></h3>
+If you want to create your own data type you need to inherit from libpipe::rtc::Data .
+If you want to use your data type in multithreaded libpipe, you also need to implement your
+datatype thread safe.
+
+<h3> Input Files </h3>
 
 
 \section sec_examples Examples

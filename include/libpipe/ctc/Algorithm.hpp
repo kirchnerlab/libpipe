@@ -50,11 +50,11 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv);
 namespace libpipe {
 
 /**
- * @namespace ctc All classes which are needed for compile time configration
+ * @namespace libpipe::ctc All classes which are needed for compile time configuration of libpipe
  */
 namespace ctc {
 
-/** Base class for all LIBPIPE algorithms.
+/** Base class for all configuration time LIBPIPE algorithms.
  */
 class Algorithm
 {
@@ -86,7 +86,7 @@ public:
      * call the \c update function 
      * @param[in,out] req A request object.
      */
-    virtual void processRequest(Request& req);
+     void processRequest(Request& req);
 
     /** Runs the algorithm and updates the output data, if the Request
      * Type is \c Request::Update. If the request Type is \c Request::DELETE

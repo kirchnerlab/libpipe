@@ -39,7 +39,6 @@
 #include <boost/thread.hpp>
 #endif
 
-
 /** Macro that add an entry to a requests trace.
  * This is just for convenience.
  */
@@ -49,11 +48,16 @@
 
 namespace libpipe {
 namespace rtc {
-
+/** The class which hold the libpipe Pipeline and allows loging informations.
+ */
 class Pipeline
 {
     public:
+        /** Constructor
+         */
         Pipeline();
+        /** Destructor
+         */
         ~Pipeline();
 
         /** Add a filter and request on top of the queue.
@@ -66,10 +70,6 @@ class Pipeline
          */
         void run();
 
-        /** Returns the trace.
-         * @param trace [out] The trace of this libpipe pipeline.
-         */
-        static void getTrace(std::vector<std::string>& trace);
         /** Returns the state of the trace flag.
          * If the trace flag is on, clients should add trace information
          * while processing the request, using addTrace().
@@ -98,8 +98,11 @@ class Pipeline
          */
         static void clearTrace();
     private:
+        /** Pipeline of Filters
+         */
         std::queue<boost::shared_ptr<Filter> > pipelineQueue_;
-
+        /** Pipeline of requests
+         */
         std::queue<Request> requestQueue_;
 
         /** Trace status.

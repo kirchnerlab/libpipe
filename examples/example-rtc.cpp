@@ -55,19 +55,6 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~UppercaseAlgorithm()
         {
-
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringInput"));
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringOutput"));
-//            std::cout
-//                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
-//                    << *input_->get() << "\t and output: " << *output_->get()
-//                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -486,12 +473,6 @@ class Source : public libpipe::rtc::Algorithm
          */
         virtual ~Source()
         {
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringOutput"));
-//            std::cout << "\033[22;32m Source destroyed with output: "
-//                    << *output_->get() << "\e[m" << std::endl;
         }
 
         /** Updates the output data (i.e. does nothing).
@@ -501,7 +482,6 @@ class Source : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
         }
 

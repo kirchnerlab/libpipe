@@ -109,12 +109,13 @@ struct PipelineDescription
 
 /**
  * Comparison function to compare two LibpipePipeStructs
+ *
+ * \tparam PipelineDescription pipeline description
+ * \tparam PipelineDescription pipeline description
  */
-///\cond
 struct PipelineDescriptionLess : public std::binary_function<
         PipelineDescription, PipelineDescription, bool>
 {
-        ///\endcond
         /** less than operator
          * @param lhs lefthand side LibpipePipeStruct
          * @param rhs righthand side LibpipePipeStruct
@@ -124,6 +125,8 @@ struct PipelineDescriptionLess : public std::binary_function<
             PipelineDescription& rhs) const;
 };
 
+/** Interface for all Classes which loads configuration files.
+ */
 class Config
 {
     public:
@@ -166,6 +169,7 @@ class Config
 
         /** Checks the input files. Order is important!
          * @param filename Names of the input files. Identified by a string key.
+         * @return true if the file is ok
          */
         virtual bool checkFile(const std::map<std::string, std::string>& filename) const = 0;
 

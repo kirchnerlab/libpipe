@@ -76,27 +76,44 @@ MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
 MESSAGE(STATUS "Build type: "${CMAKE_BUILD_TYPE})
 IF(ENABLE_THREADING)
     MESSAGE(STATUS "Threading enabled")
+ELSE()
+    MESSAGE(STATUS "Threading disabled")   
 ENDIF()
 IF(ENABLE_TESTING)
     MESSAGE(STATUS "Testing enabled")
+ELSE()
+    MESSAGE(STATUS "Testing disabled")
 ENDIF()
 IF(ENABLE_EXAMPLES)
     MESSAGE(STATUS "Examples enabled")
+ELSE()
+    MESSAGE(STATUS "Examples disabled")
 ENDIF()
 IF (ENABLE_COVERAGE)
-    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG" AND ENABLE_TESTING)
         MESSAGE(STATUS "Coverage enabled")
+    ELSEIF(NOT ENABLE_TESTING)
+        MESSAGE(FATAL_ERROR "Coverage analysis requires Testing Enabled")
     ELSE()
         MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
     ENDIF()
 ENDIF()
+#############################################################################
+# tests
+#############################################################################
+
+IF (ENABLE_TESTING)
+  INCLUDE(CTest)
+  ENABLE_TESTING()
+  ADD_SUBDIRECTORY(test)
+ENDIF (ENABLE_TESTING)
 
 #############################################################################
 # code coverage analysis
 #############################################################################
 
 IF (ENABLE_COVERAGE)
-    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+    IF(CMAKE_BUILD_TYPE STREQUAL "DEBUG" AND ENABLE_TESTING)
         SET (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage")
         CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/cmake/scripts/coverage.sh.in
             ${LIBPIPE_BINARY_DIR}/cmake/scripts/coverage.sh
@@ -109,15 +126,7 @@ IF (ENABLE_COVERAGE)
 ENDIF(ENABLE_COVERAGE)
 
 
-#############################################################################
-# tests
-#############################################################################
 
-IF (ENABLE_TESTING)
-  INCLUDE(CTest)
-  ENABLE_TESTING()
-  ADD_SUBDIRECTORY(test)
-ENDIF (ENABLE_TESTING)
 
 
 #############################################################################
@@ -185,9 +194,9 @@ set(CPACK_PACKAGE_VENDOR "massquito.net")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The pipelining library. Git Commit: "$LIBPIPE_VERSION)
 
 # CPack version strings
-SET(CPACK_PACKAGE_VERSION_MAJOR 1)
+SET(CPACK_PACKAGE_VERSION_MAJOR 2)
 SET(CPACK_PACKAGE_VERSION_MINOR 0)
-SET(CPACK_PACKAGE_VERSION_PATCH 1)
+SET(CPACK_PACKAGE_VERSION_PATCH 0)
 
 SET(CPACK_RESOURCE_FILE_README "${LIBPIPE_SOURCE_DIR}/README.txt")
 SET(CPACK_RESOURCE_FILE_LICENSE "${LIBPIPE_SOURCE_DIR}/LICENSE.txt")

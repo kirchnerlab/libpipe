@@ -49,39 +49,7 @@ namespace rtc {
  * on user parameters; (2) using external classes whose final type is data
  * dependent (e.g the well-known Shape/Rectangle/Circle example). In both
  * cases, the final object does not exist while the filters and algorithms are
- * connected. As a consequence, in- and out-data between algorithms cannot be
- * connected either: there is no point in issuing
- * alg1->setInput(alg0->getOutput()), if alg0->getOutput() still is a null
- * pointer.
- *
- * \c SharedData overcomes this problem by essentially providing a proxy object
- * that always allows to default-construct the shared data and to write the 
- * following code:
- * 
- * \li in Alg0.hpp
- * 
- * \code
- * ...
- * protected:
- * ...
- * Constructor(){
- *  ...
- *  ports_["StringInput"] = boost::make_shared<
- *                   libpipe::rtc::SharedData<std::string> >();
- *  ...
- *  }
- * ...
- * \endcode
- *
- * \li somewhere in main.cpp
- * 
- * \code
- * ...
- * filterMap.find("TheSource")->second->getAlgorithm()->connect(
- *           filterMap.find("Filter1")->second->getAlgorithm(), "StringInput",
- *           "StringOutput");
- * \endcode
- *
+ * connected.
  * Note that this simply guarantees that two connected algorithms will always
  * be able to share data, irrespective of the question if the source side is
  * capable of providing the data structure immediately upon construction or

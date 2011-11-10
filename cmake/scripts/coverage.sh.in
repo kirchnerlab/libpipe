@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd @LIBPIPE_BINARY_DIR@
+
+make test
+
 mkdir -p @LIBPIPE_BINARY_DIR@/coverage
 
 #check if gcovr exists

@@ -43,6 +43,8 @@
 namespace libpipe {
 namespace ctc {
 
+/** A class which holds the libpipe pipeline.
+ */
 class Pipeline
 {
     public:
@@ -88,8 +90,11 @@ class Pipeline
         static void clearTrace();
 
     private:
+        /** The Filters which will called
+         */
         std::queue<boost::shared_ptr<Filter> > pipelineQueue_;
-
+        /** The request with which the Filters will be called
+         */
         std::queue<Request> requestQueue_;
 
         /** Trace status.

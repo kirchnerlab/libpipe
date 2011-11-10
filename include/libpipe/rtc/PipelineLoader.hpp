@@ -50,7 +50,6 @@ class PipelineLoader
 
         /** Constructor
          * @param filename The names to the configurations file. Identified by a string key.
-         *
          */
         PipelineLoader(const std::map<std::string, std::string>& filename);
 

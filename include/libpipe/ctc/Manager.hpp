@@ -72,8 +72,7 @@ public:
      * the manager will call the \c process request method of all filters
      * it depends on and will subsequently execute its own algorithm.
      *  
-     * @param[in] req The request object, non-const (good for e.g. adding trace
-     *                information)
+     * @param[in,out] req The request object.
      */
     virtual void processRequest(libpipe::Request& req);
 
@@ -89,7 +88,7 @@ public:
      * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
      * \endcode
      *  
-     * @param[inout] f Pointer to a filter object on which the current manager
+     * @param[in,out] f Pointer to a filter object on which the current manager
      *                 should depend.
      */
     void connect(boost::shared_ptr<Filter> f);

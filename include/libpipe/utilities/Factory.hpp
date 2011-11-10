@@ -35,7 +35,7 @@
 
 namespace libpipe {
 /**
- * \namespace utilities The Namespace where all classes are located which are used for different general usages
+ * \namespace libpipe::utilities The Namespace where all classes are located which are used for different general usages
  */
 namespace utilities {
 

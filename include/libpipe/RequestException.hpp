@@ -31,20 +31,27 @@
 #include <libpipe/utilities/Exception.hpp>
 
 namespace libpipe {
-
+/** Class for Request Exceptions
+ */
 class RequestException : public utilities::Exception
 {
 public:
+    /** Constructor
+     * @param msg The message of the exception
+     */
     RequestException(const char* msg) :
         Exception(msg)
     {
     }
-
+    /** Constructor
+     * @param msg The message of the exception
+     */
     RequestException(const std::string& msg) :
         Exception(msg)
     {
     }
-
+    /** Destructor
+     */
     virtual ~RequestException() throw ()
     {
     }

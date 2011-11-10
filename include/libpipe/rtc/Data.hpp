@@ -31,10 +31,13 @@
 
 namespace libpipe {
 namespace rtc {
-
+/** Class Data as marker class for the datatype used for in and output ports
+ */
 class Data
 {
     public:
+        /** Pure virtual destructor to allow subclassing
+         */
         virtual ~Data()=0;
 };
 
