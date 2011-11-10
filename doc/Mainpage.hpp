@@ -27,7 +27,7 @@ ENABLE_THREADING [Default: FALSE]
 </dt>
 <dd>generate multithreaded libpipe</dd>
 <dt>
-CMAKE_INSTALL_PREFIX [Default: /usr/bin/local/]
+CMAKE_INSTALL_PREFIX [Default: /usr/]
 </dt>
 <dd>allows to specify the installation path</dd>
 <dt>

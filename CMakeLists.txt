@@ -74,6 +74,7 @@ INCLUDE_DIRECTORIES(
 #############################################################################
 MESSAGE(STATUS "Libpipe Git Commit: "${LIBPIPE_VERSION})
 MESSAGE(STATUS "Build type: "${CMAKE_BUILD_TYPE})
+MESSAGE(STATUS "CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}")
 IF(ENABLE_THREADING)
     MESSAGE(STATUS "Threading enabled")
 ELSE()
@@ -165,6 +166,10 @@ SET(CMAKE_INSTALL_PREFIX
 "/usr/local" CACHE PATH "libpipe install prefix" FORCE
 )
 ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+# so that the dmg works also to the given location
+SET(CPACK_PACKAGE_DEFAULT_LOCATION ${CMAKE_INSTALL_PREFIX})
+
+
 # headers
 INSTALL(DIRECTORY ${LIBPIPE_SOURCE_DIR}/include/libpipe
     DESTINATION include
