@@ -99,15 +99,7 @@ IF (ENABLE_COVERAGE)
         MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
     ENDIF()
 ENDIF()
-#############################################################################
-# tests
-#############################################################################
 
-IF (ENABLE_TESTING)
-  INCLUDE(CTest)
-  ENABLE_TESTING()
-  ADD_SUBDIRECTORY(test)
-ENDIF (ENABLE_TESTING)
 
 #############################################################################
 # code coverage analysis
@@ -127,7 +119,15 @@ IF (ENABLE_COVERAGE)
 ENDIF(ENABLE_COVERAGE)
 
 
+#############################################################################
+# tests
+#############################################################################
 
+IF (ENABLE_TESTING)
+  INCLUDE(CTest)
+  ENABLE_TESTING()
+  ADD_SUBDIRECTORY(test)
+ENDIF (ENABLE_TESTING)
 
 
 #############################################################################
