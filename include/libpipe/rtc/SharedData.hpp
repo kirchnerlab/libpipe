@@ -30,7 +30,7 @@
 #include <libpipe/config.hpp>
 
 #include <libpipe/rtc/Data.hpp>
-
+#include <libpipe/utilities/Exception.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <memory>
