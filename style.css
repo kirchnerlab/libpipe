@@ -1,0 +1,56 @@
+body {
+    font-family: sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.85em;
+}
+
+table.canopy {
+    table-layout: fixed;
+    background-color: #ffffff;
+    width:70%;
+    margin-top: 50px;
+    margin-left:auto;
+    margin-right:auto;
+    border: 0px; /*1px solid #eef0e3;*/
+    padding: 25px;
+    vertical-align: middle;
+}
+
+a {
+    /*text-decoration:none;*/
+    color:#85a363;
+}
+
+td.logo {
+    background-color: #ffffff;
+    vertical-align: top;
+    text-align: right;
+    padding: 35px 0px 0px 0px;
+    width: 20%;
+}
+
+td.content {
+    background-color: #ffffff;
+    text-align: left;
+    margin: 15px;
+    border: 10px solid #ffffff;
+    width: 80%;
+}
+
+.paragraph {
+    background-color: #ffffff;
+    text-align: left;
+    margin: 15px;
+    border: 10px solid #ffffff;
+}
+.heading1 {
+    color: #000000; /*#64747c;*/
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.text {
+    margin-top: 15px;
+}
+
