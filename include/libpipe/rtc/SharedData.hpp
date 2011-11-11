@@ -55,6 +55,7 @@ namespace rtc {
  * be able to share data, irrespective of the question if the source side is
  * capable of providing the data structure immediately upon construction or
  * not.
+ * This class also has a fast implementation for safe multithreading.
  */
 template<typename T>
 class SharedData : boost::noncopyable, public Data
@@ -125,7 +126,8 @@ class SharedData : boost::noncopyable, public Data
         /** Mutex to secure ptr_
          */
         mutable boost::shared_mutex ptrMutex_;
-
+        /** enum to specify moment lock.
+         */
         enum LockType
         {
             NOT_LOCKED = 0, SHARED_LOCK = 1, UNIQUE_LOCK = 2
@@ -168,7 +170,7 @@ T* SharedData<T>::get() const
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get();
     }else {
-        libpipe_fail("Lock was not set on SharedData::get()")
+        libpipe_fail("Lock was not set on SharedData::get()");
     }
 #else
     return ptr_.get();
@@ -185,7 +187,7 @@ void SharedData<T>::set(T* ptr)
         }
     }
     else {
-        libpipe_fail("Lock was not set on SharedData::set()")
+        libpipe_fail("Lock was not set on SharedData::set()");
     }
 #else
     if (ptr != ptr_.get()) {
@@ -201,7 +203,7 @@ bool SharedData<T>::isNull()
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get() == 0;
     }else {
-        libpipe_fail("Lock was not set on SharedData::isNull()")
+        libpipe_fail("Lock was not set on SharedData::isNull()");
     }
 #else
     return ptr_.get() == 0;

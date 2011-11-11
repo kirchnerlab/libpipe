@@ -28,6 +28,7 @@
 
 #include <libpipe/config.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #include <memory>
 
@@ -162,7 +163,7 @@ public:
 private:
     /** Pointer to the \c T instance.
      */
-    std::auto_ptr<T> ptr_;
+    boost::scoped_ptr<T> ptr_;
 };
 
 //

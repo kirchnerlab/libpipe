@@ -27,7 +27,7 @@
 
 #include "walltime.h"
 
-const int MATRIX_SIZE = 500;
+const int MATRIX_SIZE = 1000;
 
 /** Matrix Multiplication
  */
@@ -68,20 +68,29 @@ class MatrixMulAlgorithm : public libpipe::rtc::Algorithm
             LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: start.");
             LIBPIPE_PIPELINE_TRACE(req,
                 "MatrixMulAlgorithm::update: multiplication of two matrices.");
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input1_->shared_lock();
+            input2_->shared_lock();
+#endif
+            std::vector<double>* tempIn1 = input1_->get();
+            std::vector<double>* tempIn2 = input2_->get();
+            std::vector<double>* tempOut = output_->get();
             for (int i = 0; i < MATRIX_SIZE; i++) {
                 for (int j = 0; j < MATRIX_SIZE; j++) {
                     double sum = 0;
                     for (int k = 0; k < MATRIX_SIZE; k++) {
-                        sum += input1_->get()->at(i * MATRIX_SIZE + k)
-                                * input2_->get()->at(k * MATRIX_SIZE + j);
+                        sum += (*tempIn1)[i * MATRIX_SIZE + k]
+                                * (*tempIn2)[k * MATRIX_SIZE + j];
                     }
-
-                    output_->get()->at(i * MATRIX_SIZE + j) = sum
-                            / MATRIX_SIZE;
+                    (*tempOut)[i * MATRIX_SIZE + j] = sum / MATRIX_SIZE;
                 }
             }
-
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input1_->unlock();
+            input2_->unlock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: end.");
         }
 
@@ -149,13 +158,19 @@ class Source : public libpipe::rtc::Algorithm
                         this->getPort("MatrixOut"));
 
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+#endif
             // fill matrix with some values
+            std::vector<double>* tempOut = output_->get();
             for (int row = 0; row < MATRIX_SIZE; row++) {
                 for (int col = 0; col < MATRIX_SIZE; col++) {
-                    output_->get()->at(col + (row * MATRIX_SIZE)) = col+row;
+                    (*tempOut)[col + (row * MATRIX_SIZE)] = col + row;
                 }
             }
+#ifdef ENABLE_THREADING
+            output_->unlock();
+#endif
 
         }
 
@@ -215,7 +230,9 @@ class Printer : public libpipe::rtc::Algorithm
                         this->getPort("MatrixIn"));
 
             LIBPIPE_PIPELINE_TRACE(req, "printing matrix");
-
+#ifdef ENABLE_THREADING
+            input_->shared_lock();
+#endif
             // fill matrix with some values
             for (int row = 0; row < MATRIX_SIZE; row++) {
                 for (int col = 0; col < MATRIX_SIZE; col++) {
@@ -226,6 +243,9 @@ class Printer : public libpipe::rtc::Algorithm
             }
             std::cout << std::endl;
             std::cout << std::endl;
+#ifdef ENABLE_THREADING
+            input_->unlock();
+#endif
 
         }
 
@@ -260,7 +280,7 @@ int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
 
-    std::cout<<"Matrix Size: "<<MATRIX_SIZE<<std::endl;
+    std::cout << "Matrix Size: " << MATRIX_SIZE << std::endl;
 
     std::map<std::string, std::string> inputFiles;
     inputFiles["FilterInput"] = "inputFileFilterJSONMatrix.txt";
