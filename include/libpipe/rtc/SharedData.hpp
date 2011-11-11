@@ -110,7 +110,7 @@ private:
 #ifdef ENABLE_THREADING
     /** Mutex to secure ptr_
      */
-    mutable boost::shared_mutex ptrMutex_;
+//    mutable boost::shared_mutex ptrMutex_;
 #endif
 };
 
@@ -138,7 +138,7 @@ template<typename T>
 T* SharedData<T>::get() const
 {
 #ifdef ENABLE_THREADING
-    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
+//    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
 #endif
     return ptr_.get();
 }
@@ -147,7 +147,7 @@ template<typename T>
 void SharedData<T>::set(T* ptr)
 {
 #ifdef ENABLE_THREADING
-    boost::unique_lock<boost::shared_mutex> lock(ptrMutex_);
+//    boost::unique_lock<boost::shared_mutex> lock(ptrMutex_);
 #endif
     if (ptr != ptr_.get()) {
         ptr_.reset(ptr);
@@ -158,7 +158,7 @@ template<typename T>
 bool SharedData<T>::isNull()
 {
 #ifdef ENABLE_THREADING
-    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
+//    boost::shared_lock<boost::shared_mutex> lock(ptrMutex_);
 #endif
     return ptr_.get() == 0;
 }

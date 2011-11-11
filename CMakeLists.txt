@@ -40,6 +40,7 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 #############################################################################
 SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -Wconversion -ggdb3 -D_FILE_OFFSET_BITS=64")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
+
 SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
 
 
@@ -151,6 +152,10 @@ ENDIF (ENABLE_EXAMPLES)
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/Doxyfile.cmake
     ${LIBPIPE_BINARY_DIR}/doc/Doxyfile
     @ONLY IMMEDIATE
+    )
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/libpipe.png
+    ${LIBPIPE_BINARY_DIR}/doc/html/libpipe.png
+    COPYONLY
     )
 FIND_PACKAGE(Doxygen)
 

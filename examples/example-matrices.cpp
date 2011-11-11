@@ -27,7 +27,7 @@
 
 #include "walltime.h"
 
-const int MATRIX_SIZE = 1000;
+const int MATRIX_SIZE = 500;
 
 /** Matrix Multiplication
  */
@@ -153,7 +153,7 @@ class Source : public libpipe::rtc::Algorithm
             // fill matrix with some values
             for (int row = 0; row < MATRIX_SIZE; row++) {
                 for (int col = 0; col < MATRIX_SIZE; col++) {
-                    output_->get()->at(col + (row * MATRIX_SIZE)) = 1.0;
+                    output_->get()->at(col + (row * MATRIX_SIZE)) = col+row;
                 }
             }
 
@@ -259,6 +259,8 @@ const bool Printer::registered_ = registerLoader();
 int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
+
+    std::cout<<"Matrix Size: "<<MATRIX_SIZE<<std::endl;
 
     std::map<std::string, std::string> inputFiles;
     inputFiles["FilterInput"] = "inputFileFilterJSONMatrix.txt";

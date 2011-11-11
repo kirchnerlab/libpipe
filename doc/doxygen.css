@@ -17,7 +17,7 @@ html body div#top div#titlearea table tbody tr td#projectlogo img{
 }
 
 html body div#top div#titlearea table tbody tr td div#projectname div#projectbrief{
-  color: #0000ff;
+  color: #cd0c11;
   font-size: 20px;
 	padding-top: 0px; 
 	padding-left: 100px; 
@@ -29,19 +29,19 @@ html body div#top div#titlearea table tbody tr td div#projectname div#projectbri
 html body div#top div#titlearea table tbody tr td span#projectnumber{
 	font-size: 10px;
 	padding: 0px 0px 0px 20px ;
-	color: #0000ff;
+	color: #cd0c11;
 }
 
 html body div#top div#titlearea table tbody tr td div#projectname{
 	margin-bottom: 10px;
 	font-size: 30px;
 	padding: 0px 0px 0px 20px ;
-	color: #0000ff;
+	color: #cd0c11;
 }
 
 html body div.header div.headertitle div.title{
 	font-size: 20px;
-	color: #0000ff;
+	color: #cd0c11;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;	
 }
 
@@ -62,7 +62,7 @@ div.contents p {
 h1 {
 	font-size: 20px;
 	padding: 0px 0px 10px 0px ;
-	color:#0000ff;
+	color:#cd0c11;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 	
 	
@@ -71,14 +71,14 @@ h1 {
 h2 {
 	padding-top: 10px;
 	font-size: 17px;
-	color:#0000ff;
+	color:#cd0c11;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
 }
 
 h3 {
 	font-size: 15px;
 	font-family: Lucida Grande, Verdana, Geneva, Arial, sans-serif;
-	color:#0000ff;
+	color:#cd0c11;
 }
 
 dt {
@@ -609,7 +609,7 @@ h1 {
     font-size: 13px;
     width: 100%;
     z-index: 101;
-    background-color: #0000ff;
+    background-color: #cd0c11;
     margin-top: 20px; 
 }
 .tabs2 {
@@ -629,7 +629,7 @@ h1 {
     float: left;
     line-height: 36px;
     list-style: none outside none;
-    background-color: #0000ff;
+    background-color: #cd0c11;
 }
 .tablist a {
     color: #ffffff;
@@ -638,7 +638,7 @@ h1 {
     outline: medium none;
     padding: 0 20px;
     text-decoration: none;
-    background-color: #0000ff;
+    background-color: #cd0c11;
 }
 .tabs3 .tablist a {
     padding: 0 10px;
@@ -646,11 +646,11 @@ h1 {
 .tablist a:hover {
     color: #FFFFFF;
     text-decoration: none;
-    background-color: #0000cc;
+    background-color: #880C0A;
 }
 .tablist li.current a {
     color: #FFFFFF;
-    background-color: #0000dd;
+    background-color: #AA0C11;
 }
 
 html body div#top div#navrow1.tabs ul.tablist li div#MSearchBox.MSearchBoxInactive{

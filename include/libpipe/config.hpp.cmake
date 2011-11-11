@@ -27,5 +27,16 @@
 
     #cmakedefine ENABLE_THREADING
 
+    #ifdef _WIN32
+     Ê Ê#define VC_EXTRALEAN
+     Ê Ê#include <windows.h>
+    	#define LIBPIPE_EXPORT __declspec( dllexport )
+    	/* Disable a template related MSVC warning.
+    	 Ê See: http://www.unknownroad.com/rtfm/VisualStudio/warningC4251.html */
+    	#pragma warning( disable: 4251 )
+    #else
+    	#define LIBPIPE_EXPORT
+    #endif
+    
 #endif
 
