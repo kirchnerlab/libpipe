@@ -95,6 +95,7 @@ struct SharedDataTestSuite : vigra::test_suite
 
         void lockingExceptions()
         {
+            int* pI = new int(5);
             SharedData<int> s;
             bool thrown = false;
             try {
@@ -110,7 +111,7 @@ struct SharedDataTestSuite : vigra::test_suite
             }shouldEqual(thrown, true);
             thrown = false;
             try {
-                s.set(new int(3));
+                s.set(pI);
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -130,7 +131,7 @@ struct SharedDataTestSuite : vigra::test_suite
             }shouldEqual(thrown, false);
             thrown = false;
             try {
-                s.set(new int(3));
+                s.set(pI);
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, true);
@@ -150,7 +151,7 @@ struct SharedDataTestSuite : vigra::test_suite
             }shouldEqual(thrown, false);
             thrown = false;
             try {
-                s.set(new int(3));
+                s.set(pI);
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, false);
