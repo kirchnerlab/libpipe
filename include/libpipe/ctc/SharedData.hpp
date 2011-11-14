@@ -113,7 +113,7 @@ namespace ctc {
  * not.
  */
 template<typename T>
-class SharedData : boost::noncopyable
+class LIBPIPE_EXPORT SharedData : boost::noncopyable
 {
 public:
     /** Constructor.

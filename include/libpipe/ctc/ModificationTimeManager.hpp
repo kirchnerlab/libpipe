@@ -38,7 +38,7 @@ namespace ctc {
  * the algoritms it manages.
  * :TODO:01/01/2011 11:12:42:mkirchner: fill in details how it works.
  */
-class ModificationTimeManager : public Manager
+class LIBPIPE_EXPORT ModificationTimeManager : public Manager
 {
 public:
     /** Constructor.

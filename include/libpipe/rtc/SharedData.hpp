@@ -58,7 +58,7 @@ namespace rtc {
  * This class also has a fast implementation for safe multithreading.
  */
 template<typename T>
-class SharedData : boost::noncopyable, public Data
+class LIBPIPE_EXPORT SharedData : boost::noncopyable, public Data
 {
     public:
         /** Constructor.

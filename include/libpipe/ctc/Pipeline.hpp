@@ -45,7 +45,7 @@ namespace ctc {
 
 /** A class which holds the libpipe pipeline.
  */
-class Pipeline
+class LIBPIPE_EXPORT Pipeline
 {
     public:
         Pipeline();

@@ -40,7 +40,7 @@ namespace utilities {
  * typedef Singleton<SinglImpl> Singl;
  */
 template<class T>
-class Singleton
+class LIBPIPE_EXPORT Singleton
 {
     public:
         /** Returns exactly one instance of the object.

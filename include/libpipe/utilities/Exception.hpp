@@ -27,6 +27,7 @@
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_EXCEPTION_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_EXCEPTION_HPP__
 
+#include <libpipe/config.hpp>
 #include <boost/exception/all.hpp>
 #include <string>
 
@@ -35,7 +36,7 @@ namespace utilities {
 
 /** libpipe expection base class.
  */
-class Exception : public boost::exception
+class LIBPIPE_EXPORT Exception: public boost::exception
 {
 public:
     /** Constructor (C strings).

@@ -47,7 +47,7 @@ class Filter;
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
  */
-class Manager :  boost::noncopyable
+class LIBPIPE_EXPORT Manager :  boost::noncopyable
 {
 public:
     /** Constructor.

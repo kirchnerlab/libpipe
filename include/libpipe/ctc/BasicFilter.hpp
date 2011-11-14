@@ -60,7 +60,7 @@ namespace ctc {
  * \endcode
  */
 template<class A, class M>
-class BasicFilter : public Filter
+class LIBPIPE_EXPORT BasicFilter : public Filter
 {
 public:
 

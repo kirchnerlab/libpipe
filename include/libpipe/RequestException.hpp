@@ -33,7 +33,7 @@
 namespace libpipe {
 /** Class for Request Exceptions
  */
-class RequestException : public utilities::Exception
+class LIBPIPE_EXPORT RequestException : public utilities::Exception
 {
 public:
     /** Constructor

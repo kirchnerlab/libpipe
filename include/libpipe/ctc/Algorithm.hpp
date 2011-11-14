@@ -56,7 +56,7 @@ namespace ctc {
 
 /** Base class for all configuration time LIBPIPE algorithms.
  */
-class Algorithm
+class LIBPIPE_EXPORT Algorithm
 {
 public:
     /** Holds the maximum time value that can be represented in a

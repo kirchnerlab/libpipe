@@ -40,7 +40,7 @@ namespace rtc {
 
 /** ConfigJSON Class for loading the configuration from JSON files
  */
-class ConfigJSON : public Config
+class LIBPIPE_EXPORT ConfigJSON : public Config
 {
     public:
 

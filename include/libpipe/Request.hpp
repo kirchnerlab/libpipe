@@ -36,7 +36,7 @@ namespace libpipe {
 /** A request object.
  * The request object is used to transfer requests between filters. 
  */
-class Request
+class LIBPIPE_EXPORT Request
 {
     public:
         /** Defines the request type.

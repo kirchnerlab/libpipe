@@ -50,7 +50,7 @@ namespace libpipe {
 namespace rtc {
 /** The class which hold the libpipe Pipeline and allows loging informations.
  */
-class Pipeline
+class LIBPIPE_EXPORT Pipeline
 {
     public:
         /** Constructor

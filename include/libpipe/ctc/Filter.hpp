@@ -43,7 +43,7 @@ class Manager;
 /** The base class for all LIBPIPE filters. Filters are non-copyable by
  * default.
  */
-class Filter : private boost::noncopyable
+class LIBPIPE_EXPORT Filter : private boost::noncopyable
 {
 public:
     /** Constructor.

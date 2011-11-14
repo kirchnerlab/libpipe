@@ -39,7 +39,7 @@
 namespace libpipe {
 namespace rtc {
 
-class Config;
+class LIBPIPE_EXPORT Config;
 
 /** Generates the objects needed by libpipe, it only relies on the Config interface. And
  * not on the input file.
