@@ -99,6 +99,8 @@ IF (ENABLE_COVERAGE)
     ELSE()
         MESSAGE(FATAL_ERROR "Coverage analysis requires DEBUG build")
     ENDIF()
+ELSE()
+    MESSAGE(STATUS "Coverage disabled")
 ENDIF()
 
 

@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
@@ -45,7 +45,6 @@
 
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
-
 
 namespace libpipe {
 namespace rtc {
@@ -73,8 +72,16 @@ class IdentityRTC : public Algorithm
             boost::shared_ptr<libpipe::rtc::SharedData<int> > out_ =
                     boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
                         this->getPort("intOutput"));
+#ifdef ENABLE_THREADING
+            out_->lock();
+            in_->shared_lock();
+#endif
             out_ = in_;
             this->updateMTime();
+#ifdef ENABLE_THREADING
+            out_->unlock();
+            in_->unlock();
+#endif
         }
 
     private:
@@ -147,10 +154,6 @@ const bool RaiseExceptionAlg::registered_ = registerLoader();
 }
 }
 
-
-
-
-
 /** Converts std::string input to uppercase.
  * Although not exceedingly useful, this is a good example of how to write
  * an LIBPIPE algorithm. Basically, there are only two requirements (and one
@@ -181,19 +184,6 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~UppercaseAlgorithm()
         {
-
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout
-                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
-                    << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -210,6 +200,10 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
 
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->get()->clear();
@@ -218,6 +212,10 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -276,19 +274,6 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~LowercaseAlgorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-
-            std::cout
-                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
-                    << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -305,7 +290,10 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_.get()->get()->clear();
             LIBPIPE_PIPELINE_TRACE(req,
@@ -313,6 +301,10 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -357,22 +349,6 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~CombineAlgorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput1"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput2"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
-                    << *input1_->get() << " and " << *input2_->get()
-                    << "\t and output: " << *output_->get() << "\e[m"
-                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -394,12 +370,23 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input1_->shared_lock();
+            input2_->shared_lock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
             output_.get()->get()->clear();
             LIBPIPE_PIPELINE_TRACE(req,
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input1_->unlock();
+            input2_->unlock();
+#endif
         }
 
     protected:
@@ -468,24 +455,6 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            if (input_) {
-                std::cout << "\033[22;32m ROT13 destroyed with input: "
-                        << *input_->get() << "\t and output: "
-                        << *output_->get() << "\e[m" << std::endl;
-            } else {
-                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
-                        << "\t and output: " << *output_->get() << "\e[m"
-                        << std::endl;
-            }
-
         }
 
         /** Runs the algorithm and updates the output data.
@@ -503,7 +472,13 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
             if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
+
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
                 LIBPIPE_PIPELINE_TRACE(req,
@@ -516,6 +491,10 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                 LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -589,12 +568,6 @@ class Source : public libpipe::rtc::Algorithm
          */
         virtual ~Source()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_.get()->get() << "\e[m" << std::endl;
         }
 
         /** Updates the output data (i.e. does nothing).
@@ -631,6 +604,5 @@ class Source : public libpipe::rtc::Algorithm
 };
 
 const bool Source::registered_ = registerLoader();
-
 
 #endif
