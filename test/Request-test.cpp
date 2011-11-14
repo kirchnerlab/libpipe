@@ -64,6 +64,7 @@ struct RequestTestSuite : vigra::test_suite
         // make sure this compiles
         Request reqU(Request::UPDATE);
         Request reqD(Request::DELETE);
+        Request req;
     }
 
     /** Check Request.is().
