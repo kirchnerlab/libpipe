@@ -285,9 +285,29 @@ const bool YOUR_MANAGER::registered_ = registerLoader();
  and pass along a virtual constructor for the respective loader class.
 
 <h3> <a name="datatypes">Generate new Datatypes </a></h3>
+You can use the provided libpipe::rtc::SharedData template class to add your own datatypes.
+If you want to use std::vector to share data between filters you can do this the following way.
+\code
+libpipe::rtc::SharedData<std::vector<double> >
+\endcode
+If you use multithreading in your pipeline, the SharedData class also provides fast thread safe access.
+However you need to lock the class before you make use of any member functions. For multithreading
+sharedData provides the following functions:
+\code
+libpipe::rtc::SharedData<T>::lock()
+libpipe::rtc::SharedData<T>::shared_lock()
+libpipe::rtc::SharedData<T>::unlock()
+\endcode
+Before calling any member functions you need to lock the class. With \c lock() you get unique access
+to the class, you need this if you want to call \c set(...). With \c shared_lock() you get shared access
+to the class, this is needed if you want to call \c get() or \c isNull().
+When you are finished with the access make sure to call \c unlock(). Otherwise you might get
+a dead lock.
+
 If you want to create your own data type you need to inherit from libpipe::rtc::Data .
 If you want to use your data type in multithreaded libpipe, you also need to implement your
 datatype thread safe.
+
 
 <h3> Input Files </h3>
 

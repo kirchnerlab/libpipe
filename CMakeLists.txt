@@ -38,10 +38,14 @@ LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
 #############################################################################
 # compiler Flags
 #############################################################################
-SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -Wconversion -ggdb3 -D_FILE_OFFSET_BITS=64")
-SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
 
-SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
+# Set default compile flags for GCC
+if(CMAKE_COMPILER_IS_GNUCXX)
+    SET(CMAKE_CXX_FLAGS_DEBUG  "-O0 -Wall -Wconversion -ggdb3 -D_FILE_OFFSET_BITS=64")
+    SET(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -ftree-vectorize -msse2")
+    SET(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -O3")
+endif(CMAKE_COMPILER_IS_GNUCXX)
+
 
 
 #############################################################################
