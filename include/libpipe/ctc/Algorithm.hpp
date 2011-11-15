@@ -37,15 +37,15 @@
 
 /** Comparison operator for \c struct \c timeval objects.
  */
-bool operator==(const timeval& lhs, const timeval& rhs);
+LIBPIPE_EXPORT bool operator==(const timeval& lhs, const timeval& rhs);
 
 /** Comparison operator for \c struct \c timeval objects.
  */
-bool operator<=(const timeval& lhs, const timeval& rhs);
+LIBPIPE_EXPORT bool operator<=(const timeval& lhs, const timeval& rhs);
 
 /** Stream operator for timeval structs.
  */
-std::ostream& operator<<(std::ostream& os, const timeval& tv);
+LIBPIPE_EXPORT std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 namespace libpipe {
 

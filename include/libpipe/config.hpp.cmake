@@ -39,10 +39,14 @@
 	    #pragma warning (disable: 4275)
         #pragma warning (disable: 4101)
         #pragma warning (disable: 4503)
+        #pragma warning (disable: 4244) //time_h warnings long
+        
 
     	#undef DELETE
     	#undef max
     	#undef min
+    	
+    	typedef long suseconds_t;
     #else
     	#define LIBPIPE_EXPORT
     #endif

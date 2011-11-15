@@ -544,7 +544,7 @@ int main(int argc, char *argv[])
     }
 
     std::cout
-            << "\033[22;35m All output after this is due to automatically called destructors. \e[m"
+            << "All output after this is due to automatically called destructors."
             << std::endl;
 
     return EXIT_SUCCESS;

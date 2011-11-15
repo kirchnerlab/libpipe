@@ -25,7 +25,7 @@
 */
 #ifndef __LIBPIPE_TEST_UTILS_HPP__
 #define __LIBPIPE_TEST_UTILS_HPP__
-
+#include <libpipe/config.hpp>
 #include <libpipe/ctc/Algorithm.hpp>
 #include <libpipe/ctc/BasicFilter.hpp>
 #include <libpipe/Request.hpp>

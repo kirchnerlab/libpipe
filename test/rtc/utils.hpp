@@ -477,7 +477,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
             output_->lock();
             input_->shared_lock();
 #endif
-            if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
+            if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
 
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();

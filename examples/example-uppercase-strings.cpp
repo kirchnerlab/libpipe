@@ -74,10 +74,9 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          */
         virtual ~UppercaseAlgorithm()
         {
-            std::cout
-                    << "\033[22;32m Uppercase Algorithm destroyed with input: "
+            std::cout << "Uppercase Algorithm destroyed with input: "
                     << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
+                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -179,9 +178,9 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
         virtual ~LowercaseAlgorithm()
         {
             std::cout
-                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
+                    << "Lowercase Algorithm destroyed with input: "
                     << *input_->get() << "\t and output: " << *output_->get()
-                    << "\e[m" << std::endl;
+                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -268,10 +267,9 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
          */
         virtual ~CombineAlgorithm()
         {
-            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
+            std::cout << "Combine Algorithm destroyed with input: "
                     << *input1_->get() << " and " << *input2_->get()
-                    << "\t and output: " << *output_->get() << "\e[m"
-                    << std::endl;
+                    << "\t and output: " << *output_->get() << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -384,13 +382,11 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
         virtual ~ROT13Algorithm()
         {
             if (input_) {
-                std::cout << "\033[22;32m ROT13 destroyed with input: "
-                        << *input_->get() << "\t and output: "
-                        << *output_->get() << "\e[m" << std::endl;
+                std::cout << "ROT13 destroyed with input: " << *input_->get()
+                        << "\t and output: " << *output_->get() << std::endl;
             } else {
-                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
-                        << "\t and output: " << *output_->get() << "\e[m"
-                        << std::endl;
+                std::cout << "ROT13 destroyed with input: " << ""
+                        << "\t and output: " << *output_->get() << std::endl;
             }
 
         }
@@ -403,7 +399,7 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
+            if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
                 LIBPIPE_PIPELINE_TRACE(req,
@@ -514,8 +510,8 @@ class Source : public libpipe::ctc::Algorithm
          */
         virtual ~Source()
         {
-            std::cout << "\033[22;32m Source destroyed with output: "
-                    << *output_->get() << "\e[m" << std::endl;
+            std::cout << "Source destroyed with output: "
+                    << *output_->get() << std::endl;
         }
 
         /** Set the output.
@@ -638,7 +634,7 @@ int main(int argc, char *argv[])
 
     typedef std::vector<std::string> VS;
     VS trace;
-    trace=pipeline.getTrace();
+    trace = pipeline.getTrace();
     for (VS::const_iterator i = trace.begin(); i != trace.end(); ++i) {
         std::cout << *i << '\n';
     }

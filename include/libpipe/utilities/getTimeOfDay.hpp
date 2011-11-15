@@ -27,7 +27,7 @@ struct timezone
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 #else
-#include <time.h>
+#include <sys/time.h>
 #endif
 
 #endif /* GETTIMEOFDAY_H_ */

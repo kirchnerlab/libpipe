@@ -23,6 +23,7 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#include <libpipe/config.hpp>
 #include <iostream>
 #include "vigra/unittest.hxx"
 #define private public
@@ -30,7 +31,7 @@
 #include "libpipe/ctc/Algorithm.hpp"
 #undef private
 #undef protected
-#include <sys/time.h> // for gettimeofday
+#include <libpipe/utilities/getTimeOfDay.hpp> // for gettimeofday
 #include <limits>
 using namespace libpipe::ctc;
 
