@@ -64,7 +64,7 @@ class LIBPIPE_EXPORT Pipeline
          * @param req The Request which will be processed by the filter
          * @param filter The filter which handles the request.
          */
-        void push(Request const & req, boost::shared_ptr<Filter> filter);
+        void push(const libpipe::Request & req, boost::shared_ptr<Filter> filter);
 
         /** Will run all requests in the queue. This needs to be called to run Libpipe.
          */

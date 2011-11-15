@@ -31,7 +31,7 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/rtc/Data.hpp>
 
-#include <sys/time.h> // for timeval
+#include <time.h> // for timeval
 #include <map>
 
 #include <boost/pointer_cast.hpp>

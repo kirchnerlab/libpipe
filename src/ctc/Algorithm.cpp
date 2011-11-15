@@ -25,11 +25,9 @@
 */
 #include <libpipe/ctc/Algorithm.hpp>
 #include <cstring> // for memset
-#include <sys/time.h> // for gettimeofday
+#include <libpipe/utilities/getTimeOfDay.hpp> // for gettimeofday
 #include <limits>
 
-#undef LIBPIPE_FILELOG_MAX_LOGGING_LEVEL
-#define LIBPIPE_FILELOG_MAX_LOGGING_LEVEL libpipe::logINFO
 
 bool operator<=(const timeval& lhs, const timeval& rhs)
 {
@@ -89,7 +87,7 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::processRequest(Request& req)
+void Algorithm::processRequest(libpipe::Request& req)
 {
     this->update(req);
     if(req.is(Request::DELETE)){

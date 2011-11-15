@@ -39,7 +39,7 @@ ModificationTimeManager::~ModificationTimeManager()
 }
 
 void ModificationTimeManager::processRequest(
-    Request& req)
+    libpipe::Request& req)
 {
     // make sure we have been set up correctly
     if (!algorithm_) {

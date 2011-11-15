@@ -32,7 +32,7 @@
 #include <string>
 #include <map>
 #include <libpipe/Request.hpp>
-#include <sys/time.h> // for timeval
+#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
 #include <ostream>
 
 /** Comparison operator for \c struct \c timeval objects.

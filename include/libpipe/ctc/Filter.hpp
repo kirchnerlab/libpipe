@@ -58,7 +58,7 @@ public:
      * This method forwards the request to the Algorithm and Manager objects.
      * @param[in,out] req The request object.
      */
-    virtual void processRequest(Request& req);
+    virtual void processRequest(libpipe::Request& req);
 
     /** Returns a  pointer to the algorithm object.
      * @return A pointer to the algorithm object.

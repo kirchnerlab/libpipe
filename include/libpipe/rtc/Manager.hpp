@@ -82,7 +82,7 @@ class LIBPIPE_EXPORT Manager : boost::noncopyable
          * @param[in,out] req The request object, non-const (good for e.g. adding trace
          *                information)
          */
-        virtual void processRequest(Request& req);
+        virtual void processRequest(libpipe::Request& req);
 
         /** Connect the manager to a filter it depends on. Each call connects the
          * Manager to the specified filter; duplicates will be ignored.
