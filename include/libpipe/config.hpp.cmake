@@ -37,8 +37,7 @@
 	    #pragma warning (disable: 4275) //non dll-interface class 'boost::exception' warnings
         #pragma warning (disable: 4101) // warnings to catch statment of Exceptions without using them
         #pragma warning (disable: 4503) // for warnings related to long definitions in boost and std
-        //#pragma warning (disable: 4996) // for warnings related to getTimeOfDay
-        //#pragma warning (disable: 4244) //time_h warnings long
+        #pragma warning (disable: 4996) // for warnings related to Windows getTimeOfDay
         
 
     	#undef DELETE
