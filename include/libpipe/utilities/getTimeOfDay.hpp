@@ -7,7 +7,7 @@
 
 #ifndef GETTIMEOFDAY_H_
 #define GETTIMEOFDAY_H_
-
+#include <libpipe/config.hpp>
 
 #ifdef _WIN32
 #include <time.h>

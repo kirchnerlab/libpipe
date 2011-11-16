@@ -34,11 +34,10 @@
     	/* Disable a template related MSVC warning.
     	  See: http://www.unknownroad.com/rtfm/VisualStudio/warningC4251.html */
     	#pragma warning( disable: 4251 )
-	    #pragma warning ( disable : 4996 )
-    	#pragma warning ( disable : 4996 )
-	    #pragma warning (disable: 4275)
-        #pragma warning (disable: 4101)
-        #pragma warning (disable: 4503)
+	    #pragma warning (disable: 4275) //non dll-interface class 'boost::exception' warnings
+        #pragma warning (disable: 4101) // warnings to catch statment of Exceptions without using them
+        #pragma warning (disable: 4503) // for warnings related to long definitions in boost and std
+        #pragma warning (disable: 4996) // for warnings related to getTimeOfDay
         #pragma warning (disable: 4244) //time_h warnings long
         
 

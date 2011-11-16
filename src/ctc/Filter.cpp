@@ -42,7 +42,7 @@ Filter::~Filter()
     delete manager_;
 }
 
-void Filter::processRequest(Request& req)
+void Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager
     LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");

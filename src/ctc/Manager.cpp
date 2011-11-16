@@ -50,7 +50,7 @@ void Manager::setAlgorithm(Algorithm* alg)
     algorithm_ = alg;
 }
 
-void Manager::processRequest(Request& req)
+void Manager::processRequest(libpipe::Request& req)
 {
     if (req.is(Request::UPDATE)) {
         if (!algorithm_) {

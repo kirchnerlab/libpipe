@@ -383,7 +383,7 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-            if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
+            if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_->get()->clear();
                 LIBPIPE_PIPELINE_TRACE(req,
