@@ -71,45 +71,15 @@ struct AlgorithmTestSuite : vigra::test_suite
     AlgorithmTestSuite() :
         vigra::test_suite("Algorithm")
     {
-        add(testCase(&AlgorithmTestSuite::testFreeOperators));
         add(testCase(&AlgorithmTestSuite::testInitialization));
         add(testCase(&AlgorithmTestSuite::testProcessRequest));
         add(testCase(&AlgorithmTestSuite::testUpdateMTime));
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
-#ifndef  _WIN32
         add(testCase(&AlgorithmTestSuite::testInitTime));
-#endif
-
     }
 
-    /** Test free operators
-     */
-    void testFreeOperators()
-    {
-        timeval tv1, tv2;
-        gettimeofday(&tv1, NULL);
-        tv2 = tv1;
-        shouldEqual(operator==(tv1, tv2), true);
-        shouldEqual(operator==(tv2, tv1), true);
-        shouldEqual(operator<=(tv1, tv2), true);
-        shouldEqual(operator<=(tv2, tv1), true);
-        tv2.tv_sec += 1;
-        shouldEqual(operator==(tv1, tv2), false);
-        shouldEqual(operator==(tv2, tv1), false);
-        shouldEqual(operator<=(tv1, tv2), true);
-        shouldEqual(operator<=(tv2, tv1), false);
-        tv2 = Algorithm::MAX_TIME;
-        shouldEqual(operator==(tv1, tv2), false);
-        shouldEqual(operator==(tv2, tv1), false);
-        shouldEqual(operator<=(tv1, tv2), true);
-        shouldEqual(operator<=(tv2, tv1), false);
-        tv1 = Algorithm::MAX_TIME;
-        shouldEqual(operator==(tv1, tv2), true);
-        shouldEqual(operator==(tv2, tv1), true);
-        shouldEqual(operator<=(tv1, tv2), true);
-        shouldEqual(operator<=(tv2, tv1), true);
-    }
+
 
     /** Test if the max initialization worked.
      */
@@ -162,23 +132,24 @@ struct AlgorithmTestSuite : vigra::test_suite
         a.setMTime(a.getMTime());
     }
 
-#ifndef  _WIN32
+
     void testInitTime()
     {
         timeval tv;
-        tv.tv_sec =  std::numeric_limits<time_t>::max();
-        tv.tv_usec = std::numeric_limits<suseconds_t>::max();
+        set_max(tv.tv_sec);
+        set_max(tv.tv_usec);
         shouldEqual(tv,Algorithm::MAX_TIME);
 
-        tv.tv_sec = std::numeric_limits<time_t>::min();
-        tv.tv_usec = std::numeric_limits<suseconds_t>::min();
+        set_min(tv.tv_sec);
+        set_min(tv.tv_usec);
         shouldEqual(tv,Algorithm::MIN_TIME);
         MyAlgorithm a;
+#ifndef  _WIN32
         a.initMaxTime();
         a.initMinTime();
-
-    }
 #endif
+    }
+
 };
 
 /** The main function that runs the tests for class Algorithm.

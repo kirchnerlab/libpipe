@@ -53,6 +53,7 @@ INCLUDE_DIRECTORIES(
 
 
 #### Sources
+SET(SRCS_UTILITIES_GETTIMEOFDAY utilities/getTimeOfDay-test.cpp)
 SET(SRCS_RTC_PIPELINE rtc/Pipeline-test.cpp)
 SET(SRCS_PIPELINE_LOADER rtc/PipelineLoader-test.cpp)
 SET(SRCS_CONFIGJSON rtc/ConfigJSON-test.cpp)
@@ -75,6 +76,7 @@ SET(SRCS_REQUESTEXCEPTION RequestException-test.cpp)
 SET(SRCS_REQUEST Request-test.cpp)
 
 #### Tests
+ADD_LIBPIPE_TEST("utilities/getTimeOfDay" test_utilities_gettimeofday ${SRCS_UTILITIES_GETTIMEOFDAY})
 ADD_LIBPIPE_TEST("rtc/Pipeline" test_rtc_pipeline ${SRCS_RTC_PIPELINE})
 ADD_LIBPIPE_TEST("rtc/PipelineLoader" test_rtc_pipelineLoader ${SRCS_PIPELINE_LOADER})
 ADD_LIBPIPE_TEST("rtc/ConfigJSON" test_rtc_configJSON ${SRCS_CONFIGJSON})
