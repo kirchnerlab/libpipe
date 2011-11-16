@@ -29,11 +29,8 @@
 #include <iostream>
 #include "vigra/unittest.hxx"
 
-#define private public
-#define protected public
 #include "libpipe/rtc/ConfigJSON.hpp"
-#undef private
-#undef protected
+
 
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
