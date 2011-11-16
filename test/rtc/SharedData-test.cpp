@@ -28,7 +28,15 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include <libpipe/rtc/SharedData.hpp>
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 
 
 using namespace libpipe::rtc;
@@ -47,7 +55,9 @@ struct SharedDataTestSuite : vigra::test_suite
         {
 #ifdef ENABLE_THREADING
             add(testCase(&SharedDataTestSuite::instanceThreading));
+#ifndef _WIN32
             add(testCase(&SharedDataTestSuite::locking));
+#endif
             add(testCase(&SharedDataTestSuite::lockingExceptions));
 
 #else
@@ -74,7 +84,7 @@ struct SharedDataTestSuite : vigra::test_suite
             s.unlock();
             s2.unlock();
         }
-
+#ifndef _WIN32
         void locking()
         {
             SharedData<int> s;
@@ -89,7 +99,7 @@ struct SharedDataTestSuite : vigra::test_suite
             shouldEqual(s.lockType_==SharedData<int>::NOT_LOCKED, false);
             shouldEqual(s.lockType_==SharedData<int>::UNIQUE_LOCK, true);
         }
-
+#endif
         void lockingExceptions()
         {
             int* pI = new int(5);
