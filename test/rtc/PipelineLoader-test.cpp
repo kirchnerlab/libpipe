@@ -28,12 +28,16 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include "libpipe/rtc/PipelineLoader.hpp"
 #include "libpipe/rtc/Pipeline.hpp"
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 
 #include "rtc/utils.hpp"
 
@@ -55,7 +59,9 @@ struct ControlerTestSuite : vigra::test_suite
             add(testCase(&ControlerTestSuite::testMemory));
             add(testCase(&ControlerTestSuite::testWrongCalls));
             add(testCase(&ControlerTestSuite::testFilter));
+#ifndef  _WIN32
             add(testCase(&ControlerTestSuite::testPipeline));
+#endif
 
         }
 
@@ -76,6 +82,7 @@ struct ControlerTestSuite : vigra::test_suite
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
             PipelineLoader creator(inputFiles);
             bool thrown = false;
+#ifndef  _WIN32
             try {
                 creator.connectManagers("blubblub");
             } catch (...) {
@@ -88,6 +95,7 @@ struct ControlerTestSuite : vigra::test_suite
             } catch (...) {
                 thrown = true;
             }shouldEqual(thrown, true);
+#endif
 
             thrown = false;
             try {
@@ -108,7 +116,7 @@ struct ControlerTestSuite : vigra::test_suite
             boost::shared_ptr<Filter> f1 = creator.getFilter("Lowercase");
             shouldEqual(f1->getName(), "Lowercase");
         }
-
+#ifndef  _WIN32
         void testPipeline()
         {
             std::map<std::string, std::string> inputFiles;
@@ -119,6 +127,7 @@ struct ControlerTestSuite : vigra::test_suite
             Pipeline pipe = creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "Lowercase");
         }
+#endif
 };
 
 /** The main function that runs the tests for class rtc#LibpipeCreator.

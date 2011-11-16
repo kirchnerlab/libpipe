@@ -25,11 +25,15 @@
  */
 #include <libpipe/config.hpp>
 #include <iostream>
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include <libpipe/ctc/Pipeline.hpp>
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 #include "vigra/unittest.hxx"
 #include "ctc/utils.hpp"
 
@@ -52,11 +56,14 @@ struct PipelineTestSuite : vigra::test_suite
         PipelineTestSuite() :
                 vigra::test_suite("Pipeline")
         {
+#ifndef  _WIN32
             add(testCase(&PipelineTestSuite::testPush));
+#endif
             add(testCase(&PipelineTestSuite::testRunAndTrace));
             add(testCase(&PipelineTestSuite::testTraceFlag));
             add(testCase(&PipelineTestSuite::testTrace));
         }
+#ifndef  _WIN32
         void testPush()
         {
             Pipeline pipeline;
@@ -83,6 +90,7 @@ struct PipelineTestSuite : vigra::test_suite
             shouldEqual(pipeline.pipelineQueue_.empty(), false);
 
         }
+#endif
 
         void testRunAndTrace()
         {
@@ -106,8 +114,9 @@ struct PipelineTestSuite : vigra::test_suite
 
             std::vector<std::string> trace;
             trace=pipeline.getTrace();
-
+#ifndef  _WIN32
             shouldEqual(trace.size(), pipeline.trace_.size());
+#endif
         }
 
         /** Check trace flag getter/setter

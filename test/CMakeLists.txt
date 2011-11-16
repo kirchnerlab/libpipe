@@ -21,6 +21,7 @@ MACRO(ADD_LIBPIPE_TEST name exe src)
     
     SET(TEST_LIBS  
         pipe
+        ${Boost_LIBRARIES}
     )
 
     TARGET_LINK_LIBRARIES(${exe} ${TEST_LIBS})

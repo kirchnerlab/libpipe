@@ -28,14 +28,18 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include "libpipe/rtc/PipelineLoader.hpp"
 #include "rtc/utils.hpp"
 #include "libpipe/rtc/Pipeline.hpp"
 #include "libpipe/Request.hpp"
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
@@ -51,12 +55,14 @@ struct PipelineTestSuite : vigra::test_suite
         PipelineTestSuite() :
                 vigra::test_suite("rtc/Pipeline")
         {
+#ifndef  _WIN32
             add(testCase(&PipelineTestSuite::testPush));
+#endif
             add(testCase(&PipelineTestSuite::testRunAndTrace));
             add(testCase(&PipelineTestSuite::testTraceFlag));
             add(testCase(&PipelineTestSuite::testTrace));
         }
-
+#ifndef _WIN32
         void testPush()
         {
 
@@ -84,6 +90,7 @@ struct PipelineTestSuite : vigra::test_suite
             shouldEqual(pipeline.pipelineQueue_.empty(), false);
 
         }
+#endif
 
         void testRunAndTrace()
         {
@@ -100,11 +107,12 @@ struct PipelineTestSuite : vigra::test_suite
             } catch (libpipe::utilities::Exception& e) {
                 thrown = true;
             }shouldEqual(thrown, false);
-
+#ifndef  _WIN32
             std::vector<std::string> trace;
             trace=pipeline.getTrace();
 
             shouldEqual(trace.size(), pipeline.trace_.size());
+#endif
         }
         /** Check trace flag getter/setter
          */

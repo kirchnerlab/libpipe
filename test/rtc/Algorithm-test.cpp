@@ -26,12 +26,15 @@
 #include <libpipe/config.hpp>
 #include <iostream>
 #include "vigra/unittest.hxx"
-
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include <libpipe/rtc/Algorithm.hpp>
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 #include <libpipe/rtc/Pipeline.hpp>
@@ -121,14 +124,15 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
         AlgorithmRTCTestSuite() :
                 vigra::test_suite("rtc/Algorithm")
         {
-            // add(testCase(&AlgorithmTestSuite::fail));
             add(testCase(&AlgorithmRTCTestSuite::testFreeOperators));
             add(testCase(&AlgorithmRTCTestSuite::testInitialization));
             add(testCase(&AlgorithmRTCTestSuite::testProcessRequest));
             add(testCase(&AlgorithmRTCTestSuite::testUpdateMTime));
             add(testCase(&AlgorithmRTCTestSuite::testNeedUpdate));
             add(testCase(&AlgorithmRTCTestSuite::testGetSet));
+#ifndef  _WIN32
             add(testCase(&AlgorithmRTCTestSuite::testInitTime));
+#endif
             add(testCase(&AlgorithmRTCTestSuite::testports));
 
         }
@@ -221,7 +225,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             a->setMTime(a->getMTime());
             delete a;
         }
-
+#ifndef  _WIN32
         void testInitTime()
         {
             timeval tv;
@@ -238,6 +242,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             a->initMinTime();
             delete a;
         }
+#endif
 
         void testports()
         {

@@ -25,12 +25,15 @@
  */
 
 #include <libpipe/config.hpp>
-
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include <libpipe/rtc/Manager.hpp>
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 #include <iostream>
 #include "vigra/unittest.hxx"
 #include <exception>
@@ -66,7 +69,9 @@ struct ManagerRTCTestSuite : vigra::test_suite
         {
             add(testCase(&ManagerRTCTestSuite::testSetAlgorithm));
             add(testCase(&ManagerRTCTestSuite::testSharedPtr));
+#ifndef  _WIN32
             add(testCase(&ManagerRTCTestSuite::testConnect));
+#endif
             add(
                 testCase(&ManagerRTCTestSuite::testProcessRequestNoAlgorithmSetup));
             add(testCase(&ManagerRTCTestSuite::testProcessRequestNoSources));
@@ -116,6 +121,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
 
         /** Test source setup, i.e. connecting.
          */
+#ifndef  _WIN32
         void testConnect()
         {
             // Use a derived class to gain access to the source list.
@@ -137,6 +143,7 @@ struct ManagerRTCTestSuite : vigra::test_suite
             delete tm;
 
         }
+#endif
 
         /** Request processing w/o a defined algorithm.
          */
@@ -169,7 +176,9 @@ struct ManagerRTCTestSuite : vigra::test_suite
             Algorithm* a = AlgorithmFactory::instance().createObject(
                 "IdentityRTC");
             tm->setAlgorithm(a);
+#ifndef  _WIN32
             shouldEqual(tm->getSources().size(), static_cast<size_t>(0));
+#endif
             tm->processRequest(req);
             delete a;
             std::vector<std::string> trace;
@@ -255,9 +264,13 @@ struct ManagerRTCTestSuite : vigra::test_suite
             tm->connect(boost::dynamic_pointer_cast<Filter>(fi));
 
             // make sure that the filters are deleted
+#ifndef  _WIN32
             shouldEqual(tm->getSources().size(), static_cast<size_t>(1));
+#endif
             tm->processRequest(req);
+#ifndef  _WIN32
             shouldEqual(tm->getSources().size(), static_cast<size_t>(0));
+#endif
             shouldEqual(tm->getAlgorithm()->needUpdate(), false);
 
             delete a;

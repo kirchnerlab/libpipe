@@ -30,11 +30,15 @@
 #include <cstring>
 
 #include "vigra/unittest.hxx"
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include <libpipe/rtc/Filter.hpp>
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 #include <libpipe/rtc/ManagerFactory.hpp>
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 
@@ -85,13 +89,14 @@ struct FilterRTCTestSuite : vigra::test_suite
             libpipe::rtc::Algorithm* p = bf->getAlgorithm();
             shouldEqual(bf->getAlgorithm(), p);
             // switch algorithm
-
+#ifndef  _WIN32
             Algorithm* c = AlgorithmFactory::instance().createObject(
                 "IdentityRTC");
 
             bf->setAlgorithm(c);
 
             shouldEqual(bf->getAlgorithm(), c);
+#endif
 
             delete bf;
 
@@ -104,10 +109,11 @@ struct FilterRTCTestSuite : vigra::test_suite
                 "RaiseExceptionAlg", "MangerRTC");
             libpipe::rtc::Manager* p = bf->getManager();
             shouldEqual(bf->getManager(), p);
-
+#ifndef  _WIN32
             Manager* m = ManagerFactory::instance().createObject("MangerRTC");
             bf->setManager(m);
             shouldEqual(bf->getManager(), m);
+#endif
 
             delete bf;
         }

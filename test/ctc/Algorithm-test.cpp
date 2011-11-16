@@ -26,11 +26,15 @@
 #include <libpipe/config.hpp>
 #include <iostream>
 #include "vigra/unittest.hxx"
-#define private public
-#define protected public
+#ifndef  _WIN32
+    #define private public
+    #define protected public
+#endif
 #include "libpipe/ctc/Algorithm.hpp"
-#undef private
-#undef protected
+#ifndef  _WIN32
+    #undef private
+    #undef protected
+#endif
 #include <libpipe/utilities/getTimeOfDay.hpp> // for gettimeofday
 #include <limits>
 using namespace libpipe::ctc;
@@ -67,14 +71,15 @@ struct AlgorithmTestSuite : vigra::test_suite
     AlgorithmTestSuite() :
         vigra::test_suite("Algorithm")
     {
-        // add(testCase(&AlgorithmTestSuite::fail));
         add(testCase(&AlgorithmTestSuite::testFreeOperators));
         add(testCase(&AlgorithmTestSuite::testInitialization));
         add(testCase(&AlgorithmTestSuite::testProcessRequest));
         add(testCase(&AlgorithmTestSuite::testUpdateMTime));
         add(testCase(&AlgorithmTestSuite::testNeedUpdate));
         add(testCase(&AlgorithmTestSuite::testGetSet));
+#ifndef  _WIN32
         add(testCase(&AlgorithmTestSuite::testInitTime));
+#endif
 
     }
 
@@ -157,14 +162,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         a.setMTime(a.getMTime());
     }
 
-    /** Test that is guaranteed to fail.
-     * Leave this in until the complete Algorithm class has tests.
-     */
-    void fail()
-    {
-        failTest("No unit tests for class Algorithm!");
-    }
-
+#ifndef  _WIN32
     void testInitTime()
     {
         timeval tv;
@@ -180,6 +178,7 @@ struct AlgorithmTestSuite : vigra::test_suite
         a.initMinTime();
 
     }
+#endif
 };
 
 /** The main function that runs the tests for class Algorithm.
