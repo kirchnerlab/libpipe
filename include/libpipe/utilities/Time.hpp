@@ -24,8 +24,8 @@
  * THE SOFTWARE.
  */
 
-#ifndef GETTIMEOFDAY_H_
-#define GETTIMEOFDAY_H_
+#ifndef __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_TIME_HPP__
+#define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_TIME_HPP__
 #include <libpipe/config.hpp>
 
 #ifdef _WIN32
@@ -41,7 +41,11 @@ struct timezone
     int tz_minuteswest; /* minutes W of Greenwich */
     int tz_dsttime; /* type of dst correction */
 };
-
+/** Windows function which provides gettimeofday functionality
+ * @param tv Timeval
+ * @param tz Timezone
+ * @return 0 if no errors occured
+ */
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 
 #else
@@ -66,16 +70,21 @@ bool operator<=(const timeval& lhs, const timeval& rhs);
  */
 std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
+/** Platform independent max limit for type
+ * @param val the variable which will get the max value
+ */
 template<typename T>
 void set_max(T& val)
 {
     val = std::numeric_limits<T>::max();
 }
-
+/** Platform independent min limit for type
+ * @param val the variable which will get the min value
+ */
 template<typename T>
 void set_min(T& val)
 {
     val = std::numeric_limits<T>::min();
 }
 
-#endif /* GETTIMEOFDAY_H_ */
+#endif /* __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_TIME_HPP__ */

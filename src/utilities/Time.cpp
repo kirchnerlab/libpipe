@@ -27,7 +27,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include <libpipe/utilities/getTimeOfDay.hpp>
+#include <libpipe/utilities/Time.hpp>
 
 
 #ifdef _WIN32
