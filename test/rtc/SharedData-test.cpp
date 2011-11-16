@@ -28,11 +28,8 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#define private public
-#define protected public
 #include <libpipe/rtc/SharedData.hpp>
-#undef private
-#undef protected
+
 
 using namespace libpipe::rtc;
 
