@@ -1,7 +1,7 @@
 #ifndef WALLTIME_H
 #define WALLTIME_H
 
-#include <libpipe/utilities/getTimeOfDay.hpp>
+#include <libpipe/utilities/Time.hpp>
 
 double walltime(double *t0){
     double mic;

@@ -35,9 +35,9 @@
     #undef private
     #undef protected
 #endif
-#include <libpipe/utilities/getTimeOfDay.hpp> // for gettimeofday
-#include <limits>
+#include <libpipe/utilities/Time.hpp> // for gettimeofday
 using namespace libpipe::ctc;
+
 
 /** Test suite for the libpipe::Algorithm base class.
  * The basic setup is: derive from Algorithm and test all inherited functions. 
@@ -136,12 +136,12 @@ struct AlgorithmTestSuite : vigra::test_suite
     void testInitTime()
     {
         timeval tv;
-        set_max(tv.tv_sec);
-        set_max(tv.tv_usec);
+        libpipe::utilities::set_max(tv.tv_sec);
+        libpipe::utilities::set_max(tv.tv_usec);
         shouldEqual(tv,Algorithm::MAX_TIME);
 
-        set_min(tv.tv_sec);
-        set_min(tv.tv_usec);
+        libpipe::utilities::set_min(tv.tv_sec);
+        libpipe::utilities::set_min(tv.tv_usec);
         shouldEqual(tv,Algorithm::MIN_TIME);
         MyAlgorithm a;
 #ifndef  _WIN32

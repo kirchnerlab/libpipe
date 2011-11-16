@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include "vigra/unittest.hxx"
-#include <libpipe/utilities/getTimeOfDay.hpp>
+#include <libpipe/utilities/Time.hpp>
 
 
 /** <+Short description of the test suite+>
@@ -39,20 +39,20 @@ struct getTimeOfDayTestSuite : vigra::test_suite {
         shouldEqual(operator==(tv2, tv1), false);
         shouldEqual(operator<=(tv1, tv2), true);
         shouldEqual(operator<=(tv2, tv1), false);
-        set_max(tv2.tv_sec);
-        set_max(tv2.tv_usec);
+        libpipe::utilities::set_max(tv2.tv_sec);
+        libpipe::utilities::set_max(tv2.tv_usec);
         shouldEqual(operator==(tv1, tv2), false);
         shouldEqual(operator==(tv2, tv1), false);
         shouldEqual(operator<=(tv1, tv2), true);
         shouldEqual(operator<=(tv2, tv1), false);
-        set_max(tv1.tv_sec);
-        set_max(tv1.tv_usec);
+        libpipe::utilities::set_max(tv1.tv_sec);
+        libpipe::utilities::set_max(tv1.tv_usec);
         shouldEqual(operator==(tv1, tv2), true);
         shouldEqual(operator==(tv2, tv1), true);
         shouldEqual(operator<=(tv1, tv2), true);
         shouldEqual(operator<=(tv2, tv1), true);
-        set_min(tv2.tv_sec);
-        set_min(tv2.tv_usec);
+        libpipe::utilities::set_min(tv2.tv_sec);
+        libpipe::utilities::set_min(tv2.tv_usec);
         shouldEqual(operator==(tv1, tv2), false);
         shouldEqual(operator==(tv2, tv1), false);
         shouldEqual(operator<=(tv1, tv2), false);

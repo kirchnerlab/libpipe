@@ -29,7 +29,6 @@
  */
 #include <libpipe/utilities/Time.hpp>
 
-
 #ifdef _WIN32
 
 int gettimeofday(struct timeval *tv, struct timezone *tz)

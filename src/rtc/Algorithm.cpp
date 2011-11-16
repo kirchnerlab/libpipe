@@ -39,16 +39,16 @@ using namespace libpipe::rtc;
 timeval Algorithm::initMaxTime()
 {
     timeval tv;
-    set_max(tv.tv_sec);
-    set_max(tv.tv_usec);
+    libpipe::utilities::set_max(tv.tv_sec);
+    libpipe::utilities::set_max(tv.tv_usec);
     return tv;
 }
 
 timeval Algorithm::initMinTime()
 {
     timeval tv;
-    set_min(tv.tv_sec);
-    set_min(tv.tv_usec);
+    libpipe::utilities::set_min(tv.tv_sec);
+    libpipe::utilities::set_min(tv.tv_usec);
     return tv;
 }
 

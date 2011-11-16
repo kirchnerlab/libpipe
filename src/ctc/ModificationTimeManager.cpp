@@ -28,6 +28,7 @@
 #include <libpipe/ctc/Algorithm.hpp>
 
 using namespace libpipe::ctc;
+using namespace libpipe::utilities; // for timeval comparisions
 
 ModificationTimeManager::ModificationTimeManager() :
     Manager()

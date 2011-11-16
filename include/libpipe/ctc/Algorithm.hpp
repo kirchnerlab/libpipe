@@ -33,7 +33,7 @@
 #include <map>
 #include <libpipe/Request.hpp>
 #include <ostream>
-#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
+#include <libpipe/utilities/Time.hpp> // for timeval
 
 namespace libpipe {
 

@@ -28,6 +28,30 @@
 #define __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_TIME_HPP__
 #include <libpipe/config.hpp>
 
+// for all OS
+#include <time.h> // for timeval
+#include <ostream>
+#include <limits>
+#ifndef _WIN32
+//Linux and Mac stuff
+#include <sys/time.h>
+#endif
+
+
+
+/** Comparison operator for \c struct \c timeval objects.
+ */
+bool operator==(const timeval& lhs, const timeval& rhs);
+
+/** Comparison operator for \c struct \c timeval objects.
+ */
+bool operator<=(const timeval& lhs, const timeval& rhs);
+
+/** Stream operator for timeval structs.
+ */
+std::ostream& operator<<(std::ostream& os, const timeval& tv);
+
+
 #ifdef _WIN32
 //Windows stuff
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
@@ -47,28 +71,11 @@ struct timezone
  * @return 0 if no errors occured
  */
 int gettimeofday(struct timeval *tv, struct timezone *tz);
-
-#else
-//Linux and Mac stuff
-#include <sys/time.h>
-
 #endif
-// for all OS
-#include <time.h> // for timeval
-#include <ostream>
-#include <limits>
 
-/** Comparison operator for \c struct \c timeval objects.
- */
-bool operator==(const timeval& lhs, const timeval& rhs);
 
-/** Comparison operator for \c struct \c timeval objects.
- */
-bool operator<=(const timeval& lhs, const timeval& rhs);
-
-/** Stream operator for timeval structs.
- */
-std::ostream& operator<<(std::ostream& os, const timeval& tv);
+namespace libpipe {
+namespace utilities {
 
 /** Platform independent max limit for type
  * @param val the variable which will get the max value
@@ -86,5 +93,6 @@ void set_min(T& val)
 {
     val = std::numeric_limits<T>::min();
 }
-
+} // end namespace utilities
+} // end namespace libpipe
 #endif /* __LIBPIPE_INCLUDE_LIBPIPE_UTILITIES_TIME_HPP__ */

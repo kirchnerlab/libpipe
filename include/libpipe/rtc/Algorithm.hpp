@@ -32,7 +32,7 @@
 #include <libpipe/rtc/Data.hpp>
 
 #include <map>
-#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
+#include <libpipe/utilities/Time.hpp> // for timeval
 
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>

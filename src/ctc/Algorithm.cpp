@@ -25,7 +25,6 @@
  */
 #include <libpipe/ctc/Algorithm.hpp>
 #include <cstring> // for memset
-#include <libpipe/utilities/getTimeOfDay.hpp> // for gettimeofday
 
 using namespace libpipe::ctc;
 
@@ -33,16 +32,16 @@ timeval Algorithm::initMaxTime()
 {
 
     timeval tv;
-    set_max(tv.tv_sec);
-    set_max(tv.tv_usec);
+    libpipe::utilities::set_max(tv.tv_sec);
+    libpipe::utilities::set_max(tv.tv_usec);
     return tv;
 }
 
 timeval Algorithm::initMinTime()
 {
     timeval tv;
-    set_min(tv.tv_sec);
-    set_min(tv.tv_usec);
+    libpipe::utilities::set_min(tv.tv_sec);
+    libpipe::utilities::set_min(tv.tv_usec);
     return tv;
 }
 
@@ -89,10 +88,6 @@ void Algorithm::updateMTime()
 
 bool Algorithm::needUpdate() const
 {
-    /*
-     LIBPIPE_LOG(libpipe::logDEBUG) << "Comparing timevals: " << "[" << mTime_.tv_sec << "."
-     << mTime_.tv_usec << "] vs. [" << Algorithm::MAX_TIME.tv_sec << "."
-     << Algorithm::MAX_TIME.tv_usec;
-     */
+    using namespace  libpipe::utilities;
     return mTime_ == Algorithm::MAX_TIME;
 }

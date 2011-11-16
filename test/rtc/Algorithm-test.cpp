@@ -47,7 +47,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/pointer_cast.hpp>
 
-#include "libpipe/ctc/Algorithm.hpp" //for timeval comparisons
+#include <libpipe/utilities/Time.hpp> //for timeval comparisons
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
@@ -124,46 +124,16 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
         AlgorithmRTCTestSuite() :
                 vigra::test_suite("rtc/Algorithm")
         {
-            add(testCase(&AlgorithmRTCTestSuite::testFreeOperators));
             add(testCase(&AlgorithmRTCTestSuite::testInitialization));
             add(testCase(&AlgorithmRTCTestSuite::testProcessRequest));
             add(testCase(&AlgorithmRTCTestSuite::testUpdateMTime));
             add(testCase(&AlgorithmRTCTestSuite::testNeedUpdate));
             add(testCase(&AlgorithmRTCTestSuite::testGetSet));
-#ifndef  _WIN32
             add(testCase(&AlgorithmRTCTestSuite::testInitTime));
-#endif
             add(testCase(&AlgorithmRTCTestSuite::testports));
 
         }
 
-        /** Test free operators
-         */
-        void testFreeOperators()
-        {
-            timeval tv1, tv2;
-            gettimeofday(&tv1, NULL);
-            tv2 = tv1;
-            shouldEqual(operator==(tv1, tv2), true);
-            shouldEqual(operator==(tv2, tv1), true);
-            shouldEqual(operator<=(tv1, tv2), true);
-            shouldEqual(operator<=(tv2, tv1), true);
-            tv2.tv_sec += 1;
-            shouldEqual(operator==(tv1, tv2), false);
-            shouldEqual(operator==(tv2, tv1), false);
-            shouldEqual(operator<=(tv1, tv2), true);
-            shouldEqual(operator<=(tv2, tv1), false);
-            tv2 = Algorithm::MAX_TIME;
-            shouldEqual(operator==(tv1, tv2), false);
-            shouldEqual(operator==(tv2, tv1), false);
-            shouldEqual(operator<=(tv1, tv2), true);
-            shouldEqual(operator<=(tv2, tv1), false);
-            tv1 = Algorithm::MAX_TIME;
-            shouldEqual(operator==(tv1, tv2), true);
-            shouldEqual(operator==(tv2, tv1), true);
-            shouldEqual(operator<=(tv1, tv2), true);
-            shouldEqual(operator<=(tv2, tv1), true);
-        }
 
         /** Test if the max initialization worked.
          */
@@ -225,24 +195,27 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             a->setMTime(a->getMTime());
             delete a;
         }
-#ifndef  _WIN32
+
         void testInitTime()
         {
             timeval tv;
-            tv.tv_sec = std::numeric_limits<time_t>::max();
-            tv.tv_usec = std::numeric_limits<suseconds_t>::max();
+            libpipe::utilities::set_max(tv.tv_sec);
+            libpipe::utilities::set_max(tv.tv_usec);
+
             shouldEqual(tv, Algorithm::MAX_TIME);
 
-            tv.tv_sec = std::numeric_limits<time_t>::min();
-            tv.tv_usec = std::numeric_limits<suseconds_t>::min();
+            libpipe::utilities::set_min(tv.tv_sec);
+            libpipe::utilities::set_min(tv.tv_usec);
             shouldEqual(tv, Algorithm::MIN_TIME);
+#ifndef  _WIN32
             Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             a->initMaxTime();
             a->initMinTime();
             delete a;
-        }
 #endif
+        }
+
 
         void testports()
         {
