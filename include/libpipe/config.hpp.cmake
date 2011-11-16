@@ -45,7 +45,8 @@
     	#undef max
     	#undef min
     	
-    	typedef long suseconds_t;
+    	typedef int suseconds_t;
+    	typedef int time_t;
     #else
     	#define LIBPIPE_EXPORT
     #endif
