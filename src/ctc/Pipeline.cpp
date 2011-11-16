@@ -38,7 +38,7 @@ Pipeline::~Pipeline()
 {
 }
 
-void Pipeline::push(Request const & req,
+void Pipeline::push(const libpipe::Request & req,
     boost::shared_ptr<Filter> filter)
 {
     pipelineQueue_.push(filter);
