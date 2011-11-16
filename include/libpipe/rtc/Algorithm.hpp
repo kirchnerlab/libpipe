@@ -31,8 +31,8 @@
 #include <libpipe/Request.hpp>
 #include <libpipe/rtc/Data.hpp>
 
-#include <time.h> // for timeval
 #include <map>
+#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
 
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>

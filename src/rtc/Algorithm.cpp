@@ -34,23 +34,21 @@
 #include <limits>
 #include <string>
 
-
-#include "libpipe/ctc/Algorithm.hpp" //for timeval comparisons
 using namespace libpipe::rtc;
 
 timeval Algorithm::initMaxTime()
 {
     timeval tv;
-    tv.tv_sec = std::numeric_limits<time_t>::max();
-    tv.tv_usec = std::numeric_limits<suseconds_t>::max();
+    set_max(tv.tv_sec);
+    set_max(tv.tv_usec);
     return tv;
 }
 
 timeval Algorithm::initMinTime()
 {
     timeval tv;
-    tv.tv_sec = std::numeric_limits<time_t>::min();
-    tv.tv_usec = std::numeric_limits<suseconds_t>::min();
+    set_min(tv.tv_sec);
+    set_min(tv.tv_usec);
     return tv;
 }
 

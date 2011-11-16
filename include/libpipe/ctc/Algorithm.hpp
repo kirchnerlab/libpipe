@@ -32,20 +32,8 @@
 #include <string>
 #include <map>
 #include <libpipe/Request.hpp>
-#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
 #include <ostream>
-
-/** Comparison operator for \c struct \c timeval objects.
- */
-LIBPIPE_EXPORT bool operator==(const timeval& lhs, const timeval& rhs);
-
-/** Comparison operator for \c struct \c timeval objects.
- */
-LIBPIPE_EXPORT bool operator<=(const timeval& lhs, const timeval& rhs);
-
-/** Stream operator for timeval structs.
- */
-LIBPIPE_EXPORT std::ostream& operator<<(std::ostream& os, const timeval& tv);
+#include <libpipe/utilities/getTimeOfDay.hpp> // for timeval
 
 namespace libpipe {
 
