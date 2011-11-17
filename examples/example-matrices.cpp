@@ -27,7 +27,7 @@
 
 #include "walltime.h"
 
-const int MATRIX_SIZE = 100;
+int MATRIX_SIZE = 100;
 
 /** Matrix Multiplication
  */
@@ -233,7 +233,7 @@ class Printer : public libpipe::rtc::Algorithm
 #ifdef ENABLE_THREADING
             input_->shared_lock();
 #endif
-            // fill matrix with some values
+            // print the matrix
             for (int row = 0; row < MATRIX_SIZE; row++) {
                 for (int col = 0; col < MATRIX_SIZE; col++) {
                     std::cout << input_->get()->at(col + (row * MATRIX_SIZE))
@@ -276,9 +276,63 @@ class Printer : public libpipe::rtc::Algorithm
 
 const bool Printer::registered_ = registerLoader();
 
+/** Handles the several Algorithm so that they can be executed in parallel,
+ *  as the Pipeline will execute them in sequential order.
+ */
+class Handler : public libpipe::rtc::Algorithm
+{
+    public:
+        static Algorithm* create()
+        {
+            return new Handler;
+        }
+
+        /** Destructor.
+         */
+        virtual ~Handler()
+        {
+        }
+
+        /** Does nothing.
+         * The output is provided as a constant, hence there is nothing to do.
+         * @param[in] req The request object.
+         */
+        void update(libpipe::Request& req)
+        {
+            LIBPIPE_PIPELINE_TRACE(req, "start handler");
+        }
+
+    protected:
+
+    private:
+        /** Constructor.
+         */
+        Handler() :
+                libpipe::rtc::Algorithm()
+        {
+        }
+        /** registers the Algorithm in the factory
+         * @return true is registration was successful
+         */
+        static const bool registerLoader()
+        {
+            std::string ids = "Handler";
+            return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
+                Handler::create);
+        }
+        /// true is class is registered in Algorithm Factory
+        static const bool registered_;
+
+};
+
+const bool Handler::registered_ = registerLoader();
+
 int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
+    if (argc >= 1) {
+        MATRIX_SIZE = atoi(argv[1]);
+    }
 
     std::cout << "Matrix Size: " << MATRIX_SIZE << std::endl;
 

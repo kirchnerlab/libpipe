@@ -14,6 +14,12 @@
             "filterIdentifier": "Printer",
             "algorithmName": "Printer",
             "managerName": "MangerRTC"
+        },
+        {
+            "filterIdentifier": "Handler",
+            "algorithmName": "Handler",
+            "managerName": "MangerRTC"
         }
+        
     ]
 }
