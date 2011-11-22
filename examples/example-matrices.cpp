@@ -330,8 +330,12 @@ const bool Handler::registered_ = registerLoader();
 int main(int argc, char *argv[])
 {
     using namespace libpipe::rtc;
-    if (argc >= 1) {
+    if (argc == 2) {
         MATRIX_SIZE = atoi(argv[1]);
+    }
+    else{
+        std::cerr<<"usage: ./example-matrices MATRIX_SIZE[int]"<<std::endl;
+        exit(1);
     }
 
     std::cout << "Matrix Size: " << MATRIX_SIZE << std::endl;
