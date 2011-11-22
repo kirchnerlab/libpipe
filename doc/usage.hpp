@@ -308,7 +308,7 @@ In this file you define the connections between the individual filters.
 }
 \endcode
 \c filterName is an identifier used to define a filter. \c identifier identifies this filter object.
-\precursorName identifies the precursor filter object. \c ports::filterName identifies the precursor
+\c precursorName identifies the precursor filter object. \c ports::filterName identifies the precursor
 filter object. \c portNameOfFilter defines the port of this filter which will be connected to
 \c portNameOfThis port of the precursor filter object.
 

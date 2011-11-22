@@ -1,7 +1,7 @@
 /**
 \page installation Installation
 
-\subsection Release
+\section Release
 
 <ol>
 <li> Run cmake:
@@ -55,7 +55,7 @@ e.g. run cmake like this
 \code make install \endcode
 </li>
 </ol>
-\subsection Distribution
+\section Distribution
 <ol>
 <li> To generate installers for libpipe run:
 \code
@@ -64,7 +64,7 @@ make doc && make package
 \endcode
 </li>
 </ol>
-\subsection Testing
+\section Testing
 For testing you can run the included test and measure the coverage of the tests.
 <ol>
 <li> Call cmake with ENABLE_TESTING true. If you want a coverage report also set ENABLE_COVERAGE to true and make a debug build.
