@@ -37,6 +37,7 @@ namespace ctc {
 /** A manager class that makes use of the modification time information of 
  * the algoritms it manages.
  * :TODO:01/01/2011 11:12:42:mkirchner: fill in details how it works.
+ * @ingroup ctc
  */
 class LIBPIPE_EXPORT ModificationTimeManager : public Manager
 {

@@ -50,7 +50,12 @@ namespace libpipe {
  */
 namespace rtc {
 
+/**
+ *  @defgroup rtc All runtime configuration related code
+ */
+
 /** Base class for all LIBPIPE Runtime configuration algorithms.
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT Algorithm
 {

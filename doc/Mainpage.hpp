@@ -1,6 +1,9 @@
 /*!
 \mainpage Libpipe Documentation
 \section sec_intro Introduction
+
+Libpipe is a lightweight C++ pipelining library.
+
 \section sec_install Installation
 \subsection Release
 
@@ -309,7 +312,110 @@ If you want to use your data type in multithreaded libpipe, you also need to imp
 datatype thread safe.
 
 
-<h3> Input Files </h3>
+<h3> Implementation of own Input Files types</h3>
+
+With the libpipe library JSON input files are supported. You can define your own input files
+by implementing a own class which inherits from libpipe::rtc::Config. For details see our implementation
+in libpipe::rtc::ConfigJSON. To make use of your own class you need to change one line in
+libpipe::rtc::PipelineLoader:
+\code
+...
+PipelineLoader::PipelineLoader(const std::map<std::string, std::string>& inputFile)
+{
+    //change this line with your own Implementation to support other input files.
+    configuration_ = new ConfigJSON;
+    ...
+\endcode
+
+<h3> JSON Input Files</h3>
+
+To configure libpipe with JSON files you need to generate three different files.
+
+<dl>
+<dt>
+Filter
+</dt>
+<dd>defines your filters</dd>
+<dt>
+Connection
+</dt>
+<dd>defines the connections between your filters</dd>
+<dt>
+Pipeline
+</dt>
+<dd>defines execution of your pipeline</dd>
+</dl>
+
+
+<h4>Filter file</h4>
+In this file you need to define all filters. One Filter object will look like this:
+\code
+{
+    "filters": [
+    ...
+    ,{
+            "filterIdentifier": "IDENTIFIER_OF_FILTER",
+            "algorithmName": "NAME_OF_ALGORITHM",
+            "managerName": "NAME_OF_MANAGER"
+    }...
+    ]
+}
+\endcode
+\c filterIdentifier is your own chosen Identifier for the filter defined. \c algorithmName is the name of
+the algorithm class you want to use. \c managerName is the name of the manager class you want to use.
+
+<h4>Connections file</h4>
+In this file you define the connections between the individual filters.
+
+\code
+{
+    "connections": [
+        ...
+        ,{
+            "filterName": "IDENTIFIER_OF_FILTER",
+            "identifier": "IDENTIFIER_OF_THIS",
+            "precursors": [
+                {
+                    "precursorName": "IDENTIFIER_OF_PRECURSOR"
+                }
+            ],
+            "ports": [
+                {
+                    "filterName": "IDENTIFIER_OF_PRECURSOR",
+                    "portNameOfFilter": "PORT_IDENTIFIER_OF_PRECURSOR",
+                    "portNameOfThis": "PORT_IDENTIFIER_OF_THIS"
+                }
+            ]
+        }
+        ...
+    ]
+}
+\endcode
+\c filterName is an identifier used to define a filter. \c identifier identifies this filter object.
+\precursorName identifies the precursor filter object. \c ports::filterName identifies the precursor
+filter object. \c portNameOfFilter defines the port of this filter which will be connected to
+\c portNameOfThis port of the precursor filter object.
+
+<h4>Pipeline file</h4>
+Here the execution of your filters is defined.
+\code
+{
+    "pipeline": [
+        ...
+        ,{
+            "filterName": "IDENTIFIER_OF_FILTER",
+            "requestType": "UPDATE",
+            "requestRank": 1,
+            "makeTrace": "true"
+        }
+        ...
+    ]
+}
+\endcode
+\c filterName identifies the filter object where the in \c requestType defined request is executed.
+At the moment only the UPDATE and DELETE request can be executed. \c requestRank is an integer
+defining the order of execution the higher the later it will be executed. With the boolean \c makeTrace
+one can define if you want to generate a trace of the execution of this object.
 
 
 \section sec_examples Examples

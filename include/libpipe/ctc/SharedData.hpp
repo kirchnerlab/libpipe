@@ -111,6 +111,7 @@ namespace ctc {
  * be able to share data, irrespective of the question if the source side is
  * capable of providing the data structure immediately upon construction or
  * not.
+ * @ingroup ctc
  */
 template<typename T>
 class LIBPIPE_EXPORT SharedData : boost::noncopyable

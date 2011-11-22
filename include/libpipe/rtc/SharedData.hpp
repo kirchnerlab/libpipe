@@ -56,6 +56,7 @@ namespace rtc {
  * capable of providing the data structure immediately upon construction or
  * not.
  * This class also has a fast implementation for safe multithreading.
+ * @ingroup rtc
  */
 template<typename T>
 class LIBPIPE_EXPORT SharedData : boost::noncopyable, public Data

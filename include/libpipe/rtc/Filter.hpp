@@ -49,6 +49,7 @@ class Manager;
 
 /** The only class for all LIBPIPE runtime configuration filters. Filters are non-copyable by
  * default. You should not inherit from this class.
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT Filter : boost::noncopyable
 {

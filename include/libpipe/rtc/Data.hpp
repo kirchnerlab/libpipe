@@ -32,6 +32,7 @@
 namespace libpipe {
 namespace rtc {
 /** Class Data as marker class for the datatype used for in and output ports
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT Data
 {

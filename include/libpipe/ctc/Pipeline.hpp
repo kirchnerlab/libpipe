@@ -44,6 +44,7 @@ namespace libpipe {
 namespace ctc {
 
 /** A class which holds the libpipe pipeline.
+ * @ingroup ctc
  */
 class LIBPIPE_EXPORT Pipeline
 {

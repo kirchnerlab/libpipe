@@ -126,6 +126,7 @@ struct PipelineDescriptionLess : public std::binary_function<
 };
 
 /** Interface for all Classes which loads configuration files.
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT Config
 {

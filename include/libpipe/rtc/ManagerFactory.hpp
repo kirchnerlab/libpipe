@@ -39,6 +39,7 @@ namespace rtc {
 class Manager;
 
 /** The Manager Factory
+ * @ingroup rtc
  */
 typedef utilities::Singleton<utilities::Factory<Manager, std::string> > ManagerFactory;
 

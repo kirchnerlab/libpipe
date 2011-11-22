@@ -49,6 +49,7 @@
 namespace libpipe {
 namespace rtc {
 /** The class which hold the libpipe Pipeline and allows loging informations.
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT Pipeline
 {

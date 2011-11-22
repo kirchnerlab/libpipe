@@ -46,6 +46,7 @@ class Filter;
  * While the filters provide all data processing capabilities, the managers
  * link the components of the pipeline and make sure that filters get executed
  * in the correct order.
+ * @ingroup ctc
  */
 class LIBPIPE_EXPORT Manager :  boost::noncopyable
 {
