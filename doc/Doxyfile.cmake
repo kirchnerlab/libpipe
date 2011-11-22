@@ -17,8 +17,9 @@
 # included in the documentation. The maximum height of the logo should not 
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
+PROJECT_LOGO           = @LIBPIPE_SOURCE_DIR@/doc/libpipe.png
 
-PROJECT_LOGO           = @LIBPIPE_BINARY_DIR@/doc/html/libpipe.png
+
 # This tag specifies the encoding used for all characters in the config file
 # that follow. The default is UTF-8 which is also the encoding used for all
 # text before the first occurrence of this tag. Doxygen uses libiconv (or the
