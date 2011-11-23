@@ -14,6 +14,7 @@ SET(SRCS
     ctc/Manager.cpp
     ctc/Pipeline.cpp
     utilities/Exception.cpp
+    utilities/Parameters.cpp
     utilities/Time.cpp
     Request.cpp
 )
