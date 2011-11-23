@@ -43,8 +43,8 @@ namespace utilities {
  * based on an underlying variant that can take any type but has currently
  * been limited to
  * \code
- *      Size, Int, Double, std::string, SizeVector, IntVector,
-        DoubleVector, std::vector<std::string> >, std::pair<Double, Double>
+ *      size_t, int, double, std::string, std::vector<size_t>, std::vector<int>,
+        std::vector<double>, std::vector<std::string> >, std::pair<double, double>
  * \endcode
  * Using \c Parameters instances is straightforward, however there are a few
  * best practices:

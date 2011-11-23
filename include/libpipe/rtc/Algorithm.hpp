@@ -164,6 +164,10 @@ class LIBPIPE_EXPORT Algorithm
         void connect(Algorithm* alg, const std::string& algPortIdentifier,
             const std::string& thisPortIdentifier);
 
+        void setParameters(const libpipe::utilities::Parameters& param){
+            parameters_=param;
+        }
+
     protected:
         /** Constructor.
          */
@@ -172,6 +176,10 @@ class LIBPIPE_EXPORT Algorithm
         /** Map of the ports and their \c std::string Identifier
          */
         std::map<std::string, boost::shared_ptr<Data> > ports_;
+
+        /** Stores the parameters needed by the update methode of the algorithm
+         */
+        libpipe::utilities::Parameters parameters_;
 
     private:
 
