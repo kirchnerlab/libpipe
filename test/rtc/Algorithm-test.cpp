@@ -38,6 +38,7 @@
 #include <libpipe/rtc/AlgorithmFactory.hpp>
 #include <libpipe/rtc/SharedData.hpp>
 #include <libpipe/rtc/Pipeline.hpp>
+#include <libpipe/utilities/Parameters.hpp>
 
 #include <limits>
 
@@ -193,7 +194,12 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             Algorithm* a = AlgorithmFactory::instance().createObject(
                 "MyAlgorithm");
             a->setMTime(a->getMTime());
+            libpipe::utilities::Parameters p;
+            a->setParameters(p);
+
             delete a;
+
+
         }
 
         void testInitTime()

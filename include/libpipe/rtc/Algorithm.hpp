@@ -33,6 +33,7 @@
 
 #include <map>
 #include <libpipe/utilities/Time.hpp> // for timeval
+#include <libpipe/utilities/Parameters.hpp>
 
 #include <boost/pointer_cast.hpp>
 #include <boost/shared_ptr.hpp>
@@ -164,9 +165,7 @@ class LIBPIPE_EXPORT Algorithm
         void connect(Algorithm* alg, const std::string& algPortIdentifier,
             const std::string& thisPortIdentifier);
 
-        void setParameters(const libpipe::utilities::Parameters& param){
-            parameters_=param;
-        }
+        void setParameters(const libpipe::utilities::Parameters& param);
 
     protected:
         /** Constructor.

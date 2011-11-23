@@ -59,7 +59,7 @@ namespace utilities {
  *     SomeObject::SomeObject(...) : ...
  *     {
  *         ...
- *         std::vector<std::string> > req, opt;
+ *         std::vector<std::string> req, opt;
  *         req.push_back("delta");
  *         opt.push_back("solution");
  *         params_ = Parameters(req, opt);

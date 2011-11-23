@@ -97,6 +97,11 @@ void Algorithm::setMTime(const timeval& mTime)
     mTime_ = mTime;
 }
 
+void Algorithm::setParameters(const libpipe::utilities::Parameters& param)
+{
+    parameters_ = param;
+}
+
 void Algorithm::updateMTime()
 {
 #ifdef ENABLE_THREADING
