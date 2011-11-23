@@ -34,6 +34,7 @@
 #include <map>
 #include <functional>
 #include <queue>
+#include <libpipe/utilities/Parameters.hpp>
 
 namespace libpipe {
 namespace rtc {
