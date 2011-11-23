@@ -86,6 +86,8 @@ struct FilterDescription
         /** List of ports the filters algorithm is connected to
          */
         std::list<PortDescription> ports;
+
+        libpipe::utilities::Parameters parameters;
 };
 
 /**

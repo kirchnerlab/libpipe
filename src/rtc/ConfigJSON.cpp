@@ -125,6 +125,8 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
 
             }
 // Read the file. If there is an error, report it and exit.
+
+    //TODO add parameter file with filtername and 1 parameter
     try {
         boost::property_tree::read_json(filename.find("ConnectionInput")->second,
             ptConnections);

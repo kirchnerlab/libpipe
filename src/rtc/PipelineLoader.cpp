@@ -93,6 +93,7 @@ void PipelineLoader::generateFilters()
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
                 it->managerName));
+        filterMap_[it->filterName]->getAlgorithm()->setParameters(it->parameters);
     }
 
     // first all Filters need to be generated before they get connected

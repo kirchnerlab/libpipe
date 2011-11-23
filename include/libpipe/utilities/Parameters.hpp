@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 Marc Kirchner
-* Copyright (c) 2011 David-Matthias Sichau
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 Marc Kirchner
+ * Copyright (c) 2011 David-Matthias Sichau
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #ifndef __LIBPIPE_INCLUDE_UTILITIES_PARAMETERS_HPP__
 #define __LIBPIPE_INCLUDE_UTILITIES_PARAMETERS_HPP__
@@ -44,7 +44,7 @@ namespace utilities {
  * been limited to
  * \code
  *      size_t, int, double, std::string, std::vector<size_t>, std::vector<int>,
-        std::vector<double>, std::vector<std::string> >, std::pair<double, double>
+ std::vector<double>, std::vector<std::string> >, std::pair<double, double>
  * \endcode
  * Using \c Parameters instances is straightforward, however there are a few
  * best practices:
@@ -90,86 +90,90 @@ namespace utilities {
  */
 class Parameters
 {
-public:
-    /** Exception class instances of which are thrown if a requested
-     *  parameter key is invalid.
-     */
-    class InvalidParameterName : public Exception
-    {
     public:
-        explicit InvalidParameterName(const char* message);
-        explicit InvalidParameterName(const std::string& message);
-        virtual ~InvalidParameterName() throw ();
-    };
+        /** Exception class instances of which are thrown if a requested
+         *  parameter key is invalid.
+         */
+        class InvalidParameterName : public Exception
+        {
+            public:
+                explicit InvalidParameterName(const char* message);
+                explicit InvalidParameterName(const std::string& message);
+                virtual ~InvalidParameterName() throw ();
+        };
 
-    /** Exception class; signifies runtime type errors while using the
-     *  \c Parameter interface.
-     */
-    class InvalidParameterType : public Exception
-    {
-    public:
-        explicit InvalidParameterType(const char* message);
-        explicit InvalidParameterType(const std::string& message);
-        virtual ~InvalidParameterType() throw ();
-    };
+        /** Exception class; signifies runtime type errors while using the
+         *  \c Parameter interface.
+         */
+        class InvalidParameterType : public Exception
+        {
+            public:
+                explicit InvalidParameterType(const char* message);
+                explicit InvalidParameterType(const std::string& message);
+                virtual ~InvalidParameterType() throw ();
+        };
 
-    explicit Parameters();
+        explicit Parameters();
 
-    /** Constructor.
-     * @param[in] required The names (keys) of required parameters. These keys
-     *                     will be required for validate() to succeed.
-     * @param[in] optional The names (keys) of required parameters.
-     */
-    Parameters(const std::vector<std::string>& required, const std::vector<std::string>& optional);
+        /** Constructor.
+         * @param[in] required The names (keys) of required parameters. These keys
+         *                     will be required for validate() to succeed.
+         * @param[in] optional The names (keys) of required parameters.
+         */
+        Parameters(const std::vector<std::string>& required,
+            const std::vector<std::string>& optional);
 
-    /** Set a key/value pair.
-     * @param key The key.
-     * @param value The value.
-     * @throw Throws \c InvalidParameterName if the key is not among the
-     *        required or optional keys.
-     */
-    template<typename T>
-    void set(const std::string& key, const T& value);
+        /** Set a key/value pair.
+         * @param key The key.
+         * @param value The value.
+         * @throw Throws \c InvalidParameterName if the key is not among the
+         *        required or optional keys.
+         */
+        template<typename T>
+        void set(const std::string& key, const T& value);
 
-    /** Retrieve the value for a specific key.
-     * Type conversion is implemented using the template parameter:
-     * \code
-     *     ...
-     *     Parameters p(req, opt);
-     *     p.set("name", "someValue");
-     *     std::string s = p.get<std::string>("name");
-     *     ...
-     * \endcode
-     * @param key The key of interest.
-     * @return A const reference to the value associated with the key \c key.
-     * @throw Throws \c InvalidParameterName if the key is not among the
-     *        required or optional keys and \c InvalidParameterType if the
-     *        requested type does not match the stored type.
-     */
-    template<typename T>
-    const T& get(const std::string& key);
+        /** Retrieve the value for a specific key.
+         * Type conversion is implemented using the template parameter:
+         * \code
+         *     ...
+         *     Parameters p(req, opt);
+         *     p.set("name", "someValue");
+         *     std::string s = p.get<std::string>("name");
+         *     ...
+         * \endcode
+         * @param key The key of interest.
+         * @return A const reference to the value associated with the key \c key.
+         * @throw Throws \c InvalidParameterName if the key is not among the
+         *        required or optional keys and \c InvalidParameterType if the
+         *        requested type does not match the stored type.
+         */
+        template<typename T>
+        const T& get(const std::string& key);
 
-    /** Check if a particular parameter name (i.e. key) exists.
-     *
-     * @param key The key for which the check is requested.
-     * @return True if the key is found. Always false for invalid parameters.
-     */
-    bool count(const std::string& key) const;
+        /** Check if a particular parameter name (i.e. key) exists.
+         *
+         * @param key The key for which the check is requested.
+         * @return True if the key is found. Always false for invalid parameters.
+         */
+        bool count(const std::string& key) const;
 
-    /** Check if all required parameters have been set.
-     * This check if all required key have be associated with a value. Note that
-     * this does NOT check if the types of the values are correct (as the
-     * expected type is currently not stored).
-     * @return True if all required parameters are associated with a value.
-     */
-    bool validate() const;
+        /** Check if all required parameters have been set.
+         * This check if all required key have be associated with a value. Note that
+         * this does NOT check if the types of the values are correct (as the
+         * expected type is currently not stored).
+         * @return True if all required parameters are associated with a value.
+         */
+        bool validate() const;
 
-private:
-    std::vector<std::string> requiredParams_, optionalParams_;
-    typedef boost::variant<size_t, int, double, std::string, std::vector<size_t>, std::vector<int>,
-            std::vector<double>, std::vector<std::string>, std::pair<double, double> > Variant;
-    typedef std::map<std::string, Variant> Map;
-    Map params_;
+        typedef boost::variant<size_t, int, double, std::string,
+                std::vector<size_t>, std::vector<int>, std::vector<double>,
+                std::vector<std::string>, std::pair<double, double> > Variant;
+
+    private:
+        std::vector<std::string> requiredParams_, optionalParams_;
+
+        typedef std::map<std::string, Variant> Map;
+        Map params_;
 };
 
 }
