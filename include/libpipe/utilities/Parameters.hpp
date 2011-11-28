@@ -97,8 +97,16 @@ class Parameters
         class InvalidParameterName : public Exception
         {
             public:
+                /** Exception Constructor from c string
+                 * @param message
+                 */
                 explicit InvalidParameterName(const char* message);
+                /** Exception Constructor from std::string
+                 * @param message
+                 */
                 explicit InvalidParameterName(const std::string& message);
+                /** virtual Destructor
+                 */
                 virtual ~InvalidParameterName() throw ();
         };
 
@@ -108,11 +116,20 @@ class Parameters
         class InvalidParameterType : public Exception
         {
             public:
+                /** Exception Constructor from c string
+                 * @param message
+                 */
                 explicit InvalidParameterType(const char* message);
+                /** Exception Constructor from std::string
+                 * @param message
+                 */
                 explicit InvalidParameterType(const std::string& message);
+                /** virtual Destructor
+                 */
                 virtual ~InvalidParameterType() throw ();
         };
-
+        /** nonconverting Constructor
+         */
         explicit Parameters();
 
         /** Constructor.
@@ -174,14 +191,22 @@ class Parameters
          */
         bool validate() const;
 
+        /** Possible types that can be stored by Parameters
+         */
         typedef boost::variant<size_t, int, double, std::string,
                 std::vector<size_t>, std::vector<int>, std::vector<double>,
                 std::vector<std::string>, std::pair<double, double> > Variant;
 
     private:
+        /** Storage of Parameters
+         */
         std::vector<std::string> requiredParams_, optionalParams_;
 
+        /** Typedef of Parameters Map
+         */
         typedef std::map<std::string, Variant> Map;
+        /** Store the actual parameters
+         */
         Map params_;
 };
 

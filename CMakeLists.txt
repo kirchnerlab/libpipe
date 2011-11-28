@@ -160,7 +160,7 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/Doxyfile.cmake
     @ONLY IMMEDIATE
     )
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/libpipe.png
-    ${LIBPIPE_BINARY_DIR}/doc/html/libpipe.png
+    ${LIBPIPE_BINARY_DIR}/doc/libpipe.png
     COPYONLY
     )
 FIND_PACKAGE(Doxygen)

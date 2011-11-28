@@ -165,6 +165,9 @@ class LIBPIPE_EXPORT Algorithm
         void connect(Algorithm* alg, const std::string& algPortIdentifier,
             const std::string& thisPortIdentifier);
 
+        /** Set the parameters
+         * @param param The Parameters where paramters are set to.
+         */
         void setParameters(const libpipe::utilities::Parameters& param);
 
     protected:
