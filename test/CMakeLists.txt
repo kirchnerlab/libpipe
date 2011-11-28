@@ -134,3 +134,8 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFilePipelineJSON.txt.cmake
     ${LIBPIPE_BINARY_DIR}/test/inputFilePipelineJSON.txt
     @ONLY IMMEDIATE
 )
+
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/test/rtc/inputFileParametersJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/test/inputFileParametersJSON.txt
+    @ONLY IMMEDIATE
+)

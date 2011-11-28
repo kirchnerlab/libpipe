@@ -577,7 +577,13 @@ class Source : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
+            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+                    boost::dynamic_pointer_cast<
+                            libpipe::rtc::SharedData<std::string> >(
+                        this->getPort("StringOutput"));
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
+
+            (*output_->get()) = parameters_.get<std::string>("SourceString");
         }
 
     protected:

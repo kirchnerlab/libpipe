@@ -71,6 +71,8 @@ struct ControlerTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             PipelineLoader creator(inputFiles);
         }
 
@@ -80,6 +82,8 @@ struct ControlerTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             PipelineLoader creator(inputFiles);
             bool thrown = false;
 #ifndef  _WIN32
@@ -112,6 +116,8 @@ struct ControlerTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             PipelineLoader creator(inputFiles);
             boost::shared_ptr<Filter> f1 = creator.getFilter("Lowercase");
             shouldEqual(f1->getName(), "Lowercase");
@@ -123,6 +129,8 @@ struct ControlerTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             PipelineLoader creator(inputFiles);
             Pipeline pipe = creator.getPipeline();
             shouldEqual(pipe.pipelineQueue_.front()->getName(), "Lowercase");

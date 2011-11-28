@@ -31,7 +31,6 @@
 
 #include "libpipe/rtc/ConfigJSON.hpp"
 
-
 /** <+Short description of the test suite+>
  * <+Longer description of the test suite+> 
  */
@@ -63,6 +62,8 @@ struct ConfigJSONTestSuite : vigra::test_suite
                 inputFiles["sda"] = "inputFileFilterJSON.txt";
                 inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
                 inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+                inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
@@ -77,6 +78,8 @@ struct ConfigJSONTestSuite : vigra::test_suite
                 inputFiles["FilterInput"] = "wrongInputFile.txt";
                 inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
                 inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+                inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
@@ -91,6 +94,8 @@ struct ConfigJSONTestSuite : vigra::test_suite
                 inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
                 inputFiles["ConnectionInput"] = "wrongInputFile.txt";
                 inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+                inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
@@ -105,6 +110,24 @@ struct ConfigJSONTestSuite : vigra::test_suite
                 inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
                 inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
                 inputFiles["PipelineInput"] = "wrongInputFile.txt";
+                inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
+                test.parseInputFile(inputFiles);
+            } catch (...) {
+                thrown = true;
+            }shouldEqual(thrown, true);
+
+            thrown = false;
+
+            try {
+                ConfigJSON test;
+
+                std::map<std::string, std::string> inputFiles;
+                inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
+                inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
+                inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+                inputFiles["ParameterInput"] = "wrongInputFile.txt";
+
                 test.parseInputFile(inputFiles);
             } catch (...) {
                 thrown = true;
@@ -120,6 +143,8 @@ struct ConfigJSONTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             ConfigJSON test;
             shouldEqual(test.checkFile(inputFiles), true);
 
@@ -132,6 +157,8 @@ struct ConfigJSONTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             ConfigJSON test;
             test.parseInputFile(inputFiles);
 

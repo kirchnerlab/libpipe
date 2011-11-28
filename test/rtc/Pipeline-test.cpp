@@ -98,6 +98,8 @@ struct PipelineTestSuite : vigra::test_suite
             inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
             inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
             inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+            inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
+
             PipelineLoader creator(inputFiles);
 
             Pipeline pipeline = creator.getPipeline();
