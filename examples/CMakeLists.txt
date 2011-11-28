@@ -29,7 +29,12 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFilePipelineJSON.txt.cmake
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileConnectionJSON.txt.cmake
     ${LIBPIPE_BINARY_DIR}/examples/inputFileConnectionJSON.txt
     @ONLY IMMEDIATE
-    ) 
+    )
+    
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileParametersJSON.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFileParametersJSON.txt
+    @ONLY IMMEDIATE
+    )  
         
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileFilterJSONMatrix.txt.cmake
     ${LIBPIPE_BINARY_DIR}/examples/inputFileFilterJSONMatrix.txt

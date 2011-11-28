@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <libpipe/config.hpp>
 
@@ -95,16 +95,19 @@ std::priority_queue<PipelineDescription, std::vector<PipelineDescription>,
     return requestQueue_;
 }
 
-void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filename)
+void ConfigJSON::parseInputFile(
+    const std::map<std::string, std::string>& filename)
 {
 
     boost::property_tree::ptree ptFilter;
     boost::property_tree::ptree ptConnections;
     boost::property_tree::ptree ptPipeline;
+    boost::property_tree::ptree ptParameters;
 
     // Read the file. If there is an error, report it and exit.
     try {
-        boost::property_tree::read_json(filename.find("FilterInput")->second, ptFilter);
+        boost::property_tree::read_json(filename.find("FilterInput")->second,
+            ptFilter);
     } catch (std::exception& e) {
         std::ostringstream oss;
         oss << "I/O error while reading Filter file. With exception: "
@@ -126,10 +129,10 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
             }
 // Read the file. If there is an error, report it and exit.
 
-    //TODO add parameter file with filtername and 1 parameter
+//TODO add parameter file with filtername and 1 parameter
     try {
-        boost::property_tree::read_json(filename.find("ConnectionInput")->second,
-            ptConnections);
+        boost::property_tree::read_json(
+            filename.find("ConnectionInput")->second, ptConnections);
     } catch (std::exception& e) {
         std::ostringstream oss;
         oss << "I/O error while reading Connection file. With exception: "
@@ -190,6 +193,7 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
     BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptPipeline.get_child("pipeline"))
             {
+
                 PipelineDescription tempLibpipeRequest;
 
                 tempLibpipeRequest.filterName = v.second.get<std::string>(
@@ -204,9 +208,44 @@ void ConfigJSON::parseInputFile(const std::map<std::string, std::string>& filena
                 requestQueue_.push(tempLibpipeRequest);
             }
 
+    // generates the pipeline
+    // Read the file. If there is an error, report it and exit.
+    try {
+        boost::property_tree::read_json(
+            filename.find("ParameterInput")->second, ptParameters);
+    } catch (std::exception& e) {
+        std::ostringstream oss;
+        oss << "I/O error while reading Pipeline file. With exception: "
+                << e.what();
+        libpipe_fail(oss.str());
+    }
+
+    BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
+            ptParameters.get_child("parameters"))
+            {
+                std::string filterIdentifier;
+
+                filterIdentifier = v.second.get<std::string>(
+                    "filterIdentifier");
+
+                for (std::list<FilterDescription>::iterator it =
+                        filterList_.begin(); it != filterList_.end(); it++) {
+                    if (it->filterName == filterIdentifier) {
+                        libpipe::utilities::Parameters p = it->parameters;
+                        ///TODO import variant instead of string
+                        p.addRequiredParameters(v.second.get<std::string>("paramIdentifier"));
+                        p.set(
+                            v.second.get<std::string>("paramIdentifier"),
+                            v.second.get<std::string>("param"));
+                        it->parameters = p;
+                    }
+                }
+            }
+
 }
 
-bool ConfigJSON::checkFile(const std::map<std::string, std::string>& filename) const
+bool ConfigJSON::checkFile(
+    const std::map<std::string, std::string>& filename) const
 {
     return true;
     ///TODO implement test

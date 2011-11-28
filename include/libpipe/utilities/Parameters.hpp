@@ -123,6 +123,15 @@ class Parameters
         Parameters(const std::vector<std::string>& required,
             const std::vector<std::string>& optional);
 
+        /** Adds a new required Parameter to the Parameters
+         * @param required The name (key) of a additional required parameter
+         */
+        void addRequiredParameters(const std::string& required);
+        /** Adds a new optinal Parameter to the Parameters
+         * @param optional The name (key) of a additional optional parameter
+         */
+        void addOptionalParameters(const std::string& optional);
+
         /** Set a key/value pair.
          * @param key The key.
          * @param value The value.

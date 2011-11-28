@@ -228,22 +228,22 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~CombineAlgorithm()
         {
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringInput1"));
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringInput2"));
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringOutput"));
-//            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
-//                    << *input1_->get() << " and " << *input2_->get()
-//                    << "\t and output: " << *output_->get() << "\e[m"
-//                    << std::endl;
+            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
+                    boost::dynamic_pointer_cast<
+                            libpipe::rtc::SharedData<std::string> >(
+                        this->getPort("StringInput1"));
+            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
+                    boost::dynamic_pointer_cast<
+                            libpipe::rtc::SharedData<std::string> >(
+                        this->getPort("StringInput2"));
+            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+                    boost::dynamic_pointer_cast<
+                            libpipe::rtc::SharedData<std::string> >(
+                        this->getPort("StringOutput"));
+            std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
+                    << *input1_->get() << " and " << *input2_->get()
+                    << "\t and output: " << *output_->get() << "\e[m"
+                    << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -347,23 +347,6 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          */
         virtual ~ROT13Algorithm()
         {
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringInput"));
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringOutput"));
-//            if (input_) {
-//                std::cout << "\033[22;32m ROT13 destroyed with input: "
-//                        << *input_->get() << "\t and output: "
-//                        << *output_->get() << "\e[m" << std::endl;
-//            } else {
-//                std::cout << "\033[22;32m ROT13 destroyed with input: " << ""
-//                        << "\t and output: " << *output_->get() << "\e[m"
-//                        << std::endl;
-//            }
 
         }
 
@@ -482,7 +465,14 @@ class Source : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
+            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
+                    boost::dynamic_pointer_cast<
+                            libpipe::rtc::SharedData<std::string> >(
+                        this->getPort("StringOutput"));
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
+
+            (*output_->get()) = parameters_.get<std::string>("SourceString");
+
         }
 
     protected:
@@ -495,7 +485,7 @@ class Source : public libpipe::rtc::Algorithm
         {
             ports_["StringOutput"] = boost::make_shared<
                     libpipe::rtc::SharedData<std::string> >(
-                new std::string("Hello World!"));
+                new std::string(""));
         }
         /** registers the Algorithm in the factory
          * @return true is registration was successful
@@ -515,12 +505,19 @@ const bool Source::registered_ = registerLoader();
 
 int main(int argc, char *argv[])
 {
+#ifdef ENABLE_THREADING
+    std::cerr
+            << "this application runs only in non threaded environments, to try threading use example-matrices"
+            << std::endl;
+    return 1;
+#endif
     using namespace libpipe::rtc;
 
     std::map<std::string, std::string> inputFiles;
     inputFiles["FilterInput"] = "inputFileFilterJSON.txt";
     inputFiles["ConnectionInput"] = "inputFileConnectionJSON.txt";
     inputFiles["PipelineInput"] = "inputFilePipelineJSON.txt";
+    inputFiles["ParameterInput"] = "inputFileParametersJSON.txt";
 
     Pipeline pipeline;
     try {

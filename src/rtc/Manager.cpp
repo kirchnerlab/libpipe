@@ -31,7 +31,6 @@
 #include <libpipe/rtc/Algorithm.hpp>
 #include <libpipe/rtc/ManagerFactory.hpp>
 
-
 using namespace libpipe::rtc;
 
 Manager* Manager::create()
@@ -117,12 +116,18 @@ void Manager::processRequest(libpipe::Request& req)
         std::string str(e.what());
         throw boost::enable_current_exception(
             libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+                "Manager: Cannot process request: algorithm execution caused exception: "
+                        + str));
+    } catch (libpipe::utilities::Exception& e) {
+        std::string str(e.what());
+        throw boost::enable_current_exception(
+            libpipe::RequestException(
+                "Manager: Cannot process request: algorithm execution caused exception: "
                         + str));
     } catch (...) {
         throw boost::enable_current_exception(
             libpipe::RequestException(
-                "ModificationTimeManager: Cannot process request: algorithm execution caused exception."));
+                "Manager: Cannot process request: algorithm execution caused exception."));
     }
     if (req.is(libpipe::Request::DELETE)) {
         this->disconnect();
