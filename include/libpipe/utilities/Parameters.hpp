@@ -34,6 +34,8 @@
 #include <map>
 #include <vector>
 #include <boost/variant.hpp>
+#include <boost/lexical_cast.hpp>
+
 namespace libpipe {
 namespace utilities {
 
@@ -168,13 +170,13 @@ class Parameters
          *     ...
          * \endcode
          * @param key The key of interest.
-         * @return A const reference to the value associated with the key \c key.
+         * @return A copy to the value associated with the key \c key.
          * @throw Throws \c InvalidParameterName if the key is not among the
          *        required or optional keys and \c InvalidParameterType if the
          *        requested type does not match the stored type.
          */
         template<typename T>
-        const T& get(const std::string& key);
+        const T get(const std::string& key);
 
         /** Check if a particular parameter name (i.e. key) exists.
          *
@@ -191,16 +193,17 @@ class Parameters
          */
         bool validate() const;
 
+    private:
         /** Possible types that can be stored by Parameters
          */
-        typedef boost::variant<size_t, int, double, std::string,
-                std::vector<size_t>, std::vector<int>, std::vector<double>,
-                std::vector<std::string>, std::pair<double, double> > Variant;
+        typedef boost::variant<std::string, std::vector<std::string> > Variant;
 
-    private:
-        /** Storage of Parameters
+        /** Storage of required Parameters
          */
-        std::vector<std::string> requiredParams_, optionalParams_;
+        std::vector<std::string> requiredParams_;
+        /** Storage of optional Parameters
+         */
+        std::vector<std::string> optionalParams_;
 
         /** Typedef of Parameters Map
          */
@@ -208,6 +211,30 @@ class Parameters
         /** Store the actual parameters
          */
         Map params_;
+
+        /** Internal retrieve the value for a specific key.
+         * Type conversion is implemented using the template parameter:
+         * @param key The key of interest.
+         * @return A copy to the value associated with the key \c key.
+         * @throw Throws \c InvalidParameterName if the key is not among the
+         *        required or optional keys and \c InvalidParameterType if the
+         *        requested type does not match the stored type.
+         */
+        template<typename T>
+        const T get_impl(const std::string& key, T*);
+
+        /** Internal retrieve the value for a specific key.
+         * Type conversion is implemented using the template parameter:    ...
+         * @param key The key of interest.
+         * @return A copy to the value associated with the key \c key.
+         * @throw Throws \c InvalidParameterName if the key is not among the
+         *        required or optional keys and \c InvalidParameterType if the
+         *        requested type does not match the stored type.
+         */
+        template<typename T>
+        const std::vector<T> get_impl(const std::string& key,
+            std::vector<T> *);
+
 };
 
 }
@@ -237,14 +264,52 @@ void Parameters::set(const std::string& key, const T& value)
 }
 
 template<typename T>
-const T& Parameters::get(const std::string& key)
+const T Parameters::get(const std::string& key)
+{
+
+    //The static_cast<T*>(0) in get is just a tricky way to disambiguate the call.
+    //The type of static_cast<T*>(0) is T*, and passing it as second argument to
+    //get_impl will help compiler to choose the correct version of get_impl.
+    //If T is not std::vector, the first version will be chosen, otherwise the second
+    //version will be chosen.
+    return get_impl(key, static_cast<T*>(0));
+}
+
+//general case
+template<typename T>
+const T Parameters::get_impl(const std::string& key, T*)
+{
+
+    Map::iterator i = params_.find(key);
+    if (i == params_.end()) {
+        throw InvalidParameterName("Parameter does not exist: " + key);
+    }
+    try {
+        return boost::lexical_cast<T>(boost::get<std::string>(i->second));
+    } catch (boost::bad_get&) {
+        throw InvalidParameterType(
+            "Request for parameter " + key + " expects wrong type.");
+    }
+}
+
+//template overload
+template<typename T>
+const std::vector<T> Parameters::get_impl(const std::string& key,
+    std::vector<T> *)
 {
     Map::iterator i = params_.find(key);
     if (i == params_.end()) {
         throw InvalidParameterName("Parameter does not exist: " + key);
     }
     try {
-        return boost::get<T>(i->second);
+        std::vector<std::string> temp = boost::get<std::vector<std::string> >(
+            i->second);
+        std::vector<T> ret;
+        for (std::vector<std::string>::const_iterator it = temp.begin();
+                it != temp.end(); it++) {
+            ret.push_back(boost::lexical_cast<T>(*it));
+        }
+        return ret;
     } catch (boost::bad_get&) {
         throw InvalidParameterType(
             "Request for parameter " + key + " expects wrong type.");

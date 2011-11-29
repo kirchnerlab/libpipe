@@ -231,11 +231,26 @@ void ConfigJSON::parseInputFile(
                         filterList_.begin(); it != filterList_.end(); it++) {
                     if (it->filterName == filterIdentifier) {
                         libpipe::utilities::Parameters p = it->parameters;
-                        ///TODO import variant instead of string
-                        p.addRequiredParameters(v.second.get<std::string>("paramIdentifier"));
-                        p.set(
-                            v.second.get<std::string>("paramIdentifier"),
-                            v.second.get<std::string>("param"));
+                        p.addRequiredParameters(
+                            v.second.get<std::string>("paramIdentifier"));
+
+                        // if it is not an array
+                        if (v.second.get_child("param").size() == 0) {
+                            p.set(v.second.get<std::string>("paramIdentifier"),
+                                v.second.get<std::string>("param"));
+                        } else {
+                            //if it is an array
+                            std::vector<std::string> tempParam;
+                            BOOST_FOREACH(const boost::property_tree::ptree::value_type & r,
+                                    v.second.get_child("param"))
+                                    {
+                                        tempParam.push_back(r.second.data());
+                                    }
+                            p.set(v.second.get<std::string>("paramIdentifier"),
+                                tempParam);
+
+                        }
+
                         it->parameters = p;
                     }
                 }

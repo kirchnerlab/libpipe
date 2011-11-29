@@ -29,7 +29,7 @@
 #include <libpipe/config.hpp>
 
 // for all OS
-#include <time.h> // for timeval
+#include <ctime> // for timeval
 #include <ostream>
 #include <limits>
 #ifndef _WIN32

@@ -3,7 +3,8 @@
         {
             "filterIdentifier": "Source",
             "paramIdentifier": "SourceString",
-            "param": "Hello World blub"
+            "param": "HELLO WORLD"
+            
                 
         }
     ]
