@@ -49,4 +49,9 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFilePipelineJSONMatrix.txt.cm
 CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileConnectionJSONMatrix.txt.cmake
     ${LIBPIPE_BINARY_DIR}/examples/inputFileConnectionJSONMatrix.txt
     @ONLY IMMEDIATE
+    )   
+    
+CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/examples/inputFileParametersJSONMatrix.txt.cmake
+    ${LIBPIPE_BINARY_DIR}/examples/inputFileParametersJSONMatrix.txt
+    @ONLY IMMEDIATE
     )    

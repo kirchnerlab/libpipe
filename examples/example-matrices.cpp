@@ -344,6 +344,8 @@ int main(int argc, char *argv[])
     inputFiles["FilterInput"] = "inputFileFilterJSONMatrix.txt";
     inputFiles["ConnectionInput"] = "inputFileConnectionJSONMatrix.txt";
     inputFiles["PipelineInput"] = "inputFilePipelineJSONMatrix.txt";
+    inputFiles["ParameterInput"] = "inputFileParametersJSONMatrix.txt";
+
     Pipeline pipeline;
     try {
         PipelineLoader loader(inputFiles);

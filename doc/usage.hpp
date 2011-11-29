@@ -260,6 +260,10 @@ Connection
 Pipeline
 </dt>
 <dd>defines execution of your pipeline</dd>
+<dt>
+Parameters
+</dt>
+<dd>defines parameters for your filter objects</dd>
 </dl>
 
 
@@ -332,4 +336,27 @@ Here the execution of your filters is defined.
 At the moment only the UPDATE and DELETE request can be executed. \c requestRank is an integer
 defining the order of execution the higher the later it will be executed. With the boolean \c makeTrace
 one can define if you want to generate a trace of the execution of this object.
+
+<h4>Parameters file</h4>
+In this file parameters for Filter Objects are defined.
+\code
+{
+    "parameters": [
+        {
+            "filterIdentifier": "Source",
+            "paramIdentifier": "SourceString",
+            "param": "Hello how are you World?"
+        },
+        ...
+    ]
+}
+\endcode
+\c filterIdentifier identifies the filter object where a new parameter \c SourceString with value \param
+is defined. To access a parameter from the object the following code can be used. Where the template
+parameter is the type of the parameter.
+\code
+parameters_.get<double>("ParameterName");
+\endcode
+
+
 */
