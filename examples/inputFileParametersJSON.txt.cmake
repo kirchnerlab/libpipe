@@ -3,9 +3,7 @@
         {
             "filterIdentifier": "Source",
             "paramIdentifier": "SourceString",
-            "param": "HELLO WORLD"
-            
-                
+            "param": "Hello how are you World?"             
         }
     ]
 }
