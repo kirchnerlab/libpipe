@@ -46,6 +46,7 @@ namespace rtc {
 
 PipelineLoader::PipelineLoader(const std::map<std::string, std::string>& inputFile)
 {
+    //change this line with your own Implementation to support other input files.
     configuration_ = new ConfigJSON;
     try{
         configuration_->parseInputFile(inputFile);

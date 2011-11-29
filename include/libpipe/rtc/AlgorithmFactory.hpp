@@ -38,6 +38,7 @@ namespace rtc {
 class Algorithm;
 
 /** The Algorithm Factory
+ * @ingroup rtc
  */
 typedef utilities::Singleton<utilities::Factory<Algorithm, std::string> > AlgorithmFactory;
 

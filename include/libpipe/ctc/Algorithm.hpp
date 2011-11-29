@@ -42,7 +42,12 @@ namespace libpipe {
  */
 namespace ctc {
 
+/**
+ *  @defgroup ctc All compile time related code
+ */
+
 /** Base class for all configuration time LIBPIPE algorithms.
+ * @ingroup ctc
  */
 class LIBPIPE_EXPORT Algorithm
 {

@@ -39,10 +39,14 @@
 namespace libpipe {
 namespace rtc {
 
+
+/// \cond
 class LIBPIPE_EXPORT Config;
+/// \endcond
 
 /** Generates the objects needed by libpipe, it only relies on the Config interface. And
  * not on the input file.
+ * @ingroup rtc
  */
 class PipelineLoader
 {

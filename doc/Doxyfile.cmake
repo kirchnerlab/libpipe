@@ -19,6 +19,7 @@
 # Doxygen will copy the logo to the output directory.
 
 PROJECT_LOGO           = @LIBPIPE_BINARY_DIR@/doc/libpipe.png
+
 # This tag specifies the encoding used for all characters in the config file
 # that follow. The default is UTF-8 which is also the encoding used for all
 # text before the first occurrence of this tag. Doxygen uses libiconv (or the

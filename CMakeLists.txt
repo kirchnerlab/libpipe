@@ -163,6 +163,7 @@ CONFIGURE_FILE(${LIBPIPE_SOURCE_DIR}/doc/libpipe.png
     ${LIBPIPE_BINARY_DIR}/doc/libpipe.png
     COPYONLY
     )
+
 FIND_PACKAGE(Doxygen)
 
 # target for doxygen

@@ -39,6 +39,7 @@ namespace libpipe {
 namespace rtc {
 
 /** ConfigJSON Class for loading the configuration from JSON files
+ * @ingroup rtc
  */
 class LIBPIPE_EXPORT ConfigJSON : public Config
 {

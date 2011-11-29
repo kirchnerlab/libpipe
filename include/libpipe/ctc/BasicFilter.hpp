@@ -58,6 +58,7 @@ namespace ctc {
  * uf->getAlgorithm()->setInputFoo(someOtherFilter->getAlgorithm()->getOutputBar());
  * ...
  * \endcode
+ * @ingroup ctc
  */
 template<class A, class M>
 class LIBPIPE_EXPORT BasicFilter : public Filter
