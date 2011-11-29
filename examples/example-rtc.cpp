@@ -72,7 +72,10 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
             output_->get()->clear();
             LIBPIPE_PIPELINE_TRACE(req,
@@ -80,6 +83,10 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
             LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -142,19 +149,6 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~LowercaseAlgorithm()
         {
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringInput"));
-//            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-//                    boost::dynamic_pointer_cast<
-//                            libpipe::rtc::SharedData<std::string> >(
-//                        this->getPort("StringOutput"));
-//
-//            std::cout
-//                    << "\033[22;32m Lowercase Algorithm destroyed with input: "
-//                    << *input_->get() << "\t and output: " << *output_->get()
-//                    << "\e[m" << std::endl;
         }
 
         /** Runs the algorithm and updates the output data.
@@ -172,7 +166,10 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
             output_->get()->clear();
 
@@ -181,6 +178,10 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
             LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -240,10 +241,20 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+#ifdef ENABLE_THREADING
+            output_->shared_lock();
+            input1_->shared_lock();
+            input2_->shared_lock();
+#endif
             std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
                     << *input1_->get() << " and " << *input2_->get()
                     << "\t and output: " << *output_->get() << "\e[m"
                     << std::endl;
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input1_->unlock();
+            input2_->unlock();
+#endif
         }
 
         /** Runs the algorithm and updates the output data.
@@ -266,6 +277,11 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input1_->shared_lock();
+            input2_->shared_lock();
+#endif
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
             output_->get()->clear();
 
@@ -273,6 +289,11 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                 "CombineAlgorithm::update: combining inputs");
             combine(output_);
             LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input1_->unlock();
+            input2_->unlock();
+#endif
         }
 
     protected:
@@ -366,6 +387,10 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
+#ifdef ENABLE_THREADING
+            output_->lock();
+            input_->shared_lock();
+#endif
             if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
                 LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
                 output_->get()->clear();
@@ -380,6 +405,10 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
                 LIBPIPE_PIPELINE_TRACE(req,
                     "ROT13Algorithm::update: deleted the input");
             }
+#ifdef ENABLE_THREADING
+            output_->unlock();
+            input_->unlock();
+#endif
         }
 
     protected:
@@ -471,7 +500,13 @@ class Source : public libpipe::rtc::Algorithm
                         this->getPort("StringOutput"));
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
 
+#ifdef ENABLE_THREADING
+            output_->lock();
+#endif
             (*output_->get()) = parameters_.get<std::string>("SourceString");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+#endif
 
         }
 
@@ -505,12 +540,6 @@ const bool Source::registered_ = registerLoader();
 
 int main(int argc, char *argv[])
 {
-#ifdef ENABLE_THREADING
-    std::cerr
-            << "this application runs only in non threaded environments, to try threading use example-matrices"
-            << std::endl;
-    return 1;
-#endif
     using namespace libpipe::rtc;
 
     std::map<std::string, std::string> inputFiles;
