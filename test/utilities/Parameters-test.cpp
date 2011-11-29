@@ -64,8 +64,8 @@ struct ParametersTestSuite : vigra::test_suite
             std::vector<std::string> req, opt;
             req += "p1", "p2", "p3";
             Parameters p(req, opt);
+            p.set("p1", "2.5");
             double p1 = 2.5;
-            p.set("p1", p1);
             double q1 = p.get<double>("p1");
             shouldEqual(p1, q1);
             std::string p2("Hello world!");
@@ -88,7 +88,7 @@ struct ParametersTestSuite : vigra::test_suite
                 Parameters p(req, opt);
                 bool thrown = false;
                 try {
-                    p.set("invalid", 4);
+                    p.set("invalid", "4");
                 } catch (Parameters::InvalidParameterName& e) {
                     thrown = true;
                 }
@@ -100,7 +100,7 @@ struct ParametersTestSuite : vigra::test_suite
                 Parameters p(req, opt);
                 bool thrown = false;
                 try {
-                    p.set("valid", 4);
+                    p.set("valid", "4");
                 } catch (Parameters::InvalidParameterName& e) {
                     thrown = true;
                 }
@@ -113,7 +113,7 @@ struct ParametersTestSuite : vigra::test_suite
                 Parameters p(req, opt);
                 bool thrown = false;
                 try {
-                    p.set("valid", 4);
+                    p.set("valid", "4");
                 } catch (Parameters::InvalidParameterName& e) {
                     thrown = true;
                 }shouldEqual(thrown, false);
@@ -158,7 +158,7 @@ struct ParametersTestSuite : vigra::test_suite
             std::vector<std::string> req, opt;
             req += "p1", "p2";
             Parameters p(req, opt);
-            p.set("p1", -23.5);
+            p.set("p1", "-23.5");
             shouldEqual(p.validate(), false);
             p.set("p2", "asdf");
             shouldEqual(p.validate(), true);
@@ -170,7 +170,7 @@ struct ParametersTestSuite : vigra::test_suite
             req += "p1", "p2";
             Parameters p(req, opt);
             shouldEqual(p.count("p1"), static_cast<size_t>(0));
-            p.set("p1", -23.5);
+            p.set("p1", "-23.5");
             shouldEqual(p.count("p1"), static_cast<size_t>(1));
             shouldEqual(p.count("p2"), static_cast<size_t>(0));
             p.set("p2", "asdf");
@@ -185,7 +185,7 @@ struct ParametersTestSuite : vigra::test_suite
             std::vector<std::string> req, opt;
             req += "p1", "p2";
             Parameters p(req, opt);
-            p.set("p1", -23.5);
+            p.set("p1", "-23.5");
             p.set("p2", "asdf");
             shouldEqual(p.validate(), true);
             p.addRequiredParameters("p3");

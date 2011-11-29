@@ -161,7 +161,7 @@ class Parameters
         void set(const std::string& key, const T& value);
 
         /** Retrieve the value for a specific key.
-         * Type conversion is implemented using the template parameter:
+         * Type conversion is implemented using the template parameter with boost::lexical_cast:
          * \code
          *     ...
          *     Parameters p(req, opt);
@@ -286,7 +286,7 @@ const T Parameters::get_impl(const std::string& key, T*)
     }
     try {
         return boost::lexical_cast<T>(boost::get<std::string>(i->second));
-    } catch (boost::bad_get&) {
+    } catch (boost::bad_lexical_cast &) {
         throw InvalidParameterType(
             "Request for parameter " + key + " expects wrong type.");
     }
@@ -310,7 +310,7 @@ const std::vector<T> Parameters::get_impl(const std::string& key,
             ret.push_back(boost::lexical_cast<T>(*it));
         }
         return ret;
-    } catch (boost::bad_get&) {
+    } catch (boost::bad_lexical_cast&) {
         throw InvalidParameterType(
             "Request for parameter " + key + " expects wrong type.");
     }
