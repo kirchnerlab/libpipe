@@ -582,8 +582,13 @@ class Source : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
             LIBPIPE_PIPELINE_TRACE(req, "providing input.");
-
+#ifdef ENABLE_THREADING
+            output_->lock();
+#endif
             (*output_->get()) = parameters_.get<std::string>("SourceString");
+#ifdef ENABLE_THREADING
+            output_->unlock();
+#endif
         }
 
     protected:
