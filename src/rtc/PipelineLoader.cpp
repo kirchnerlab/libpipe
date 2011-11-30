@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <libpipe/config.hpp>
 
@@ -38,25 +38,34 @@
 #include <libpipe/rtc/Config.hpp>
 #include <libpipe/rtc/ConfigJSON.hpp>
 
-
 #include <boost/shared_ptr.hpp>
 
 namespace libpipe {
 namespace rtc {
 
-PipelineLoader::PipelineLoader(const std::map<std::string, std::string>& inputFile)
+PipelineLoader::PipelineLoader(
+    const std::map<std::string, std::string>& inputFile)
 {
     //change this line with your own Implementation to support other input files.
     configuration_ = new ConfigJSON;
-    try{
+    try {
         configuration_->parseInputFile(inputFile);
-    } catch (utilities::Exception& e){
+    } catch (...) {
         // fix memory leak when the parsing throws an exception.
         delete configuration_;
         throw;
     }
-    this->generateFilters();
-    this->generatePipeline();
+    try {
+        this->generateFilters();
+    } catch (...) {
+        throw;
+    }
+
+    try {
+        this->generatePipeline();
+    } catch (...) {
+        throw;
+    }
 }
 
 PipelineLoader::~PipelineLoader()
@@ -70,13 +79,11 @@ boost::shared_ptr<Filter> PipelineLoader::getFilter(
     if (filterMap_.find(filtername) != filterMap_.end()) {
         return filterMap_.find(filtername)->second;
     } else {
-
         std::ostringstream oss;
         oss
-                << " LibpipeCreator::getFilter failed, the following filter was not found: "
+                << " LibpipePipeline::getFilter failed, the following filter was not found: "
                 << filtername;
         libpipe_fail(oss.str());
-
     }
 }
 
@@ -94,7 +101,8 @@ void PipelineLoader::generateFilters()
         filterMap_[it->filterName] = boost::shared_ptr<Filter>(
             Filter::create(it->filterName, it->algorithmName,
                 it->managerName));
-        filterMap_[it->filterName]->getAlgorithm()->setParameters(it->parameters);
+        filterMap_[it->filterName]->getAlgorithm()->setParameters(
+            it->parameters);
     }
 
     // first all Filters need to be generated before they get connected
@@ -108,11 +116,11 @@ void PipelineLoader::generateFilters()
 
 void PipelineLoader::connectManagers(const std::string& filtername)
 {
-    std::list<PrecursorDescription> precursors = configuration_->getPrecursorFilter(
-        filtername);
+    std::list<PrecursorDescription> precursors =
+            configuration_->getPrecursorFilter(filtername);
 
-    for (std::list<PrecursorDescription>::const_iterator it = precursors.begin();
-            it != precursors.end(); ++it) {
+    for (std::list<PrecursorDescription>::const_iterator it =
+            precursors.begin(); it != precursors.end(); ++it) {
 
         if (filterMap_.find(filtername) != filterMap_.end()) {
             filterMap_.find(filtername)->second->getManager()->connect(

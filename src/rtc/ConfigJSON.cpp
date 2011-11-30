@@ -127,6 +127,7 @@ void ConfigJSON::parseInputFile(
                         v.second.get<std::string>("managerName");
 
             }
+
 // Read the file. If there is an error, report it and exit.
 
     try {
@@ -177,6 +178,7 @@ void ConfigJSON::parseInputFile(
                         }
                 filterList_.push_back(tempFilterStruct);
             }
+
     // generates the pipeline
     // Read the file. If there is an error, report it and exit.
     try {
@@ -214,7 +216,7 @@ void ConfigJSON::parseInputFile(
             filename.find("ParameterInput")->second, ptParameters);
     } catch (std::exception& e) {
         std::ostringstream oss;
-        oss << "I/O error while reading Pipeline file. With exception: "
+        oss << "I/O error while reading Parameter file. With exception: "
                 << e.what();
         libpipe_fail(oss.str());
     }

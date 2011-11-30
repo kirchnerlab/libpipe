@@ -48,7 +48,7 @@ class LIBPIPE_EXPORT Config;
  * not on the input file.
  * @ingroup rtc
  */
-class PipelineLoader
+class LIBPIPE_EXPORT PipelineLoader
 {
     public:
 
