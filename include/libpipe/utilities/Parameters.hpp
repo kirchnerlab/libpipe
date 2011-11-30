@@ -286,7 +286,10 @@ const T Parameters::get_impl(const std::string& key, T*)
     }
     try {
         return boost::lexical_cast<T>(boost::get<std::string>(i->second));
-    } catch (boost::bad_lexical_cast &) {
+    } catch (boost::bad_lexical_cast&) {
+        throw InvalidParameterType(
+            "Request for parameter " + key + " wrong conversation.");
+    } catch (boost::bad_get&) {
         throw InvalidParameterType(
             "Request for parameter " + key + " expects wrong type.");
     }
@@ -311,6 +314,9 @@ const std::vector<T> Parameters::get_impl(const std::string& key,
         }
         return ret;
     } catch (boost::bad_lexical_cast&) {
+        throw InvalidParameterType(
+            "Request for parameter " + key + " wrong conversation.");
+    } catch (boost::bad_get&) {
         throw InvalidParameterType(
             "Request for parameter " + key + " expects wrong type.");
     }
