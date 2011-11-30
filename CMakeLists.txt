@@ -205,9 +205,9 @@ INSTALL(DIRECTORY ${LIBPIPE_BINARY_DIR}/doc
 ##############################################################################
 ## exporting libpipe
 ##############################################################################
-get_target_property(LIBPIPE_LIBRARY Libpipe LOCATION)
+get_target_property(LIBPIPE_LIBRARY pipe LOCATION)
 
-get_filename_component( LIBPIPE_INSTALL_LIBRARY LIBPIPE_LIBRARY NAME)
+get_filename_component(LIBPIPE_INSTALL_LIBRARY ${LIBPIPE_LIBRARY} NAME)
 
 set (LIBPIPE_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/${LIBPIPE_INSTALL_LIBRARY})
 set (LIBPIPE_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
@@ -215,9 +215,11 @@ set (LIBPIPE_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
 configure_file(
     "${PROJECT_SOURCE_DIR}/cmake/macros/LibpipeConfig.cmake.in"
     "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake")
-    
-install(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /lib/Libpipe/)
-
+if (UNIX)    
+    INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /lib/Libpipe/)
+elseif(WIN32)
+    INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /cmake/)
+endif()
 
 ##############################################################################
 ## packaging

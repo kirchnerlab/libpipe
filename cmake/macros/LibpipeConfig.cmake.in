@@ -4,6 +4,10 @@
 # LIBPIPE_LIBRARIES - List of fully qualified libraries to link against
 #
 # LIBPIPE_FOUND - set to 1 if found
+#
+# Do not delete this file if you want to use find_package(Libpipe)
+# in your cmake project
+
 
 set (LIBPIPE_FOUND 1)
 
