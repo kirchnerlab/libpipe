@@ -215,10 +215,19 @@ set (LIBPIPE_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
 configure_file(
     "${PROJECT_SOURCE_DIR}/cmake/macros/LibpipeConfig.cmake.in"
     "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake")
+   
+export(TARGETS pipe
+  FILE "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeLibraryDepends.cmake")
+ 
+export(PACKAGE Libpipe)
+    
 if (UNIX)    
     INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /lib/Libpipe/)
+    INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeLibraryDepends.cmake" DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/libpipe/cmake/)
 elseif(WIN32)
     INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /cmake/)
+    INSTALL(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeLibraryDepends.cmake" DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/libpipe/cmake/)
+    
 endif()
 
 ##############################################################################

@@ -9,8 +9,14 @@
 # in your cmake project
 
 
+include("@CMAKE_INSTALL_PREFIX@/lib/libpipe/cmake/LibpipeLibraryDepends.cmake")     
+
+
 set (LIBPIPE_FOUND 1)
 
 set (LIBPIPE_INCLUDE_DIR "@LIBPIPE_INCLUDE@")
 
-set (LIBPIPE_LIBRARIES "@LIBPIPE_LIBRARY@")
+set(LIBPIPE_LIBRARIES pipe)
+
+set(Libpipe_BUILD_SETTINGS_FILE  "@CMAKE_INSTALL_PREFIX@/lib/libpipe/LibpipeLibraryDepends.cmake")
+
