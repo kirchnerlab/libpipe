@@ -200,6 +200,25 @@ INSTALL(DIRECTORY ${LIBPIPE_BINARY_DIR}/doc
     COMPONENT documentation
     PATTERN "Doxyfile" EXCLUDE)
 
+
+
+##############################################################################
+## exporting libpipe
+##############################################################################
+get_target_property(LIBPIPE_LIBRARY Libpipe LOCATION)
+
+get_filename_component( LIBPIPE_INSTALL_LIBRARY LIBPIPE_LIBRARY NAME)
+
+set (LIBPIPE_LIBRARY ${CMAKE_INSTALL_PREFIX}/lib/${LIBPIPE_INSTALL_LIBRARY})
+set (LIBPIPE_INCLUDE ${CMAKE_INSTALL_PREFIX}/include)
+
+configure_file(
+    "${PROJECT_SOURCE_DIR}/cmake/macros/LibpipeConfig.cmake.in"
+    "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake")
+    
+install(FILES "${PROJECT_BINARY_DIR}/InstallFiles/LibpipeConfig.cmake" DESTINATION /lib/Libpipe/)
+
+
 ##############################################################################
 ## packaging
 ##############################################################################

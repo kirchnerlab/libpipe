@@ -1,0 +1,12 @@
+# Find the libpipe includes and library
+#
+# LIBPIPE_INCLUDE_DIR - where to find libpipe.h
+# LIBPIPE_LIBRARIES - List of fully qualified libraries to link against
+#
+# LIBPIPE_FOUND - set to 1 if found
+
+set (LIBPIPE_FOUND 1)
+
+set (LIBPIPE_INCLUDE_DIR "@LIBPIPE_INCLUDE@")
+
+set (LIBPIPE_LIBRARIES "@LIBPIPE_LIBRARY@")
