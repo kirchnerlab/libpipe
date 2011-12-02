@@ -14,6 +14,8 @@ include("@CMAKE_INSTALL_PREFIX@/lib/libpipe/cmake/LibpipeLibraryDepends.cmake")
 
 set (LIBPIPE_FOUND 1)
 
+set( ENABLE_THREADING @ENABLE_THREADING@)
+
 set (LIBPIPE_INCLUDE_DIR "@LIBPIPE_INCLUDE@")
 
 set(LIBPIPE_LIBRARIES pipe)
