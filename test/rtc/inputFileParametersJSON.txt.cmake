@@ -2,8 +2,12 @@
     "parameters": [
         {
             "filterIdentifier": "Source",
-            "paramIdentifier": "SourceString",
-            "param": "Hello World blub"
+           "parameters": [
+                {
+                    "paramIdentifier": "SourceString",
+                    "param": "Hello how are you World?"
+                }
+           ]
                 
         }
     ]

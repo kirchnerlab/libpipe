@@ -233,25 +233,36 @@ void ConfigJSON::parseInputFile(
                         filterList_.begin(); it != filterList_.end(); it++) {
                     if (it->filterName == filterIdentifier) {
                         libpipe::utilities::Parameters p = it->parameters;
-                        p.addRequiredParameters(
-                            v.second.get<std::string>("paramIdentifier"));
+                        BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
+                                v.second.get_child("parameters"))
+                                {
+                                    p.addRequiredParameters(
+                                        t.second.get<std::string>(
+                                            "paramIdentifier"));
 
-                        // if it is not an array
-                        if (v.second.get_child("param").size() == 0) {
-                            p.set(v.second.get<std::string>("paramIdentifier"),
-                                v.second.get<std::string>("param"));
-                        } else {
-                            //if it is an array
-                            std::vector<std::string> tempParam;
-                            BOOST_FOREACH(const boost::property_tree::ptree::value_type & r,
-                                    v.second.get_child("param"))
-                                    {
-                                        tempParam.push_back(r.second.data());
+                                    // if it is not an array
+                                    if (t.second.get_child("param").size()
+                                            == 0) {
+                                        p.set(
+                                            t.second.get<std::string>(
+                                                "paramIdentifier"),
+                                            t.second.get<std::string>(
+                                                "param"));
+                                    } else {
+                                        //if it is an array
+                                        std::vector<std::string> tempParam;
+                                        BOOST_FOREACH(const boost::property_tree::ptree::value_type & r,
+                                                t.second.get_child("param"))
+                                                {
+                                                    tempParam.push_back(
+                                                        r.second.data());
+                                                }
+                                        p.set(
+                                            t.second.get<std::string>(
+                                                "paramIdentifier"), tempParam);
+
                                     }
-                            p.set(v.second.get<std::string>("paramIdentifier"),
-                                tempParam);
-
-                        }
+                                }
 
                         it->parameters = p;
                     }

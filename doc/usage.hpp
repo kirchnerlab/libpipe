@@ -344,8 +344,12 @@ In this file parameters for Filter Objects are defined.
     "parameters": [
         {
             "filterIdentifier": "Source",
-            "paramIdentifier": "SourceString",
-            "param": "Hello how are you World?"
+            "parameters": [
+                {
+                    "paramIdentifier": "SourceString",
+                    "param": "Hello how are you World?"
+                }
+             ]
         },
         ...
     ]
