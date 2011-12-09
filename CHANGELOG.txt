@@ -1,0 +1,8 @@
+Version 2.1.0
+		- libpipe accept parameters read in by a parameter file
+Version 2.0.0
+		- libpipe allowes multithreading of filters.
+Version 1.5.0
+		- libpipe can be configured at runtime
+Version 1.0.0
+    - libpipe is configured at compile time

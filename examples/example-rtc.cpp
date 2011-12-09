@@ -503,8 +503,9 @@ class Source : public libpipe::rtc::Algorithm
 #ifdef ENABLE_THREADING
             output_->lock();
 #endif
-            (*output_->get()) = parameters_.get<std::string>("SourceString");
-            (*output_->get()) = parameters_.get<std::string>("SourceString2");
+            std::string temp = parameters_.get<std::string>("SourceString")
+                    + parameters_.get<std::string>("SourceString2");
+            (*output_->get()) = temp;
 #ifdef ENABLE_THREADING
             output_->unlock();
 #endif
