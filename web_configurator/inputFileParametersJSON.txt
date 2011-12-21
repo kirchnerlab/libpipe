@@ -1,0 +1,145 @@
+{
+    "parameters": [
+        {
+            "filterIdentifier": "TopXInWindowsOfSizeZFilter1",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                },
+                {
+                    "paramIdentifier": "winsize",
+                    "param": "1000000000"  
+                }
+            ]
+                         
+        },
+        {
+            "filterIdentifier": "TopXInYRegionsFilter1",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                },
+                {
+                    "paramIdentifier": "nregions",
+                    "param": "3"     
+                }
+            ]
+                      
+        },
+        {
+            "filterIdentifier": "TopXFilter1",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                }
+            ]
+            
+        },
+        {
+            "filterIdentifier": "TopXFilterMerge1",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                }
+            ]           
+        },
+        {
+            "filterIdentifier": "TopXFilterMerge2",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                }
+            ]             
+        },
+        {
+            "filterIdentifier": "TopXFilterMerge3",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                }
+            ]               
+        },
+        {
+            "filterIdentifier": "TopXFilterMerge4",
+            "parameters": [
+                {
+                    "paramIdentifier": "top",
+                    "param": "2"
+                }
+            ]               
+        },
+        {
+            "filterIdentifier": "MgfFileReaderFilter1",
+            "parameters": [
+                {
+                    "paramIdentifier": "infilename",
+                    "param": "biggest.mgf"   
+                },
+                {
+                    "paramIdentifier": "verbose",
+                    "param": "0" 
+                }
+            ]    
+                      
+        },
+        {
+            "filterIdentifier": "MgfFilePrinterFilterTopX",
+            "parameters": [
+                {
+                    "paramIdentifier": "precision",
+                    "param": "4"  
+                },
+                {
+                    "paramIdentifier": "outfile",
+                    "param": "outTOPX.mgf"
+                }
+            ]           
+        },
+        {
+            "filterIdentifier": "MgfFilePrinterFilterTopXMerged",
+            "parameters": [
+                {
+                    "paramIdentifier": "precision",
+                    "param": "4"  
+                },
+                {
+                    "paramIdentifier": "outfile",
+                    "param": "outTOPXMerge.mgf"
+                }
+            ] 
+          
+        },
+        {
+            "filterIdentifier": "MgfFilePrinterFilterTopXInYRegions",
+            "parameters": [
+                {
+                    "paramIdentifier": "precision",
+                    "param": "4"  
+                },
+                {
+                    "paramIdentifier": "outfile",
+                    "param": "out2TOPXInY.mgf"
+                }
+            ]              
+        },
+        {
+            "filterIdentifier": "MgfFilePrinterFilterTopXInWindowsOfSizeZ",
+             "parameters": [
+                {
+                    "paramIdentifier": "precision",
+                    "param": "4"  
+                },
+                {
+                    "paramIdentifier": "outfile",
+                    "param": "outTOPXInZ.mgf"
+                }
+            ]               
+        }
+    ]
+}
