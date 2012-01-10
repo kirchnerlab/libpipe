@@ -65,9 +65,8 @@ class MatrixMulAlgorithm : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::vector<double> > >(
                         this->getPort("MatrixIn2"));
 
-            LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: start.");
-            LIBPIPE_PIPELINE_TRACE(req,
-                "MatrixMulAlgorithm::update: multiplication of two matrices.");
+            LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: multiplication of two matrices.");
 #ifdef ENABLE_THREADING
             output_->lock();
             input1_->shared_lock();
@@ -91,7 +90,7 @@ class MatrixMulAlgorithm : public libpipe::rtc::Algorithm
             input1_->unlock();
             input2_->unlock();
 #endif
-            LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: end.");
         }
 
     protected:
@@ -157,7 +156,7 @@ class Source : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::vector<double> > >(
                         this->getPort("MatrixOut"));
 
-            LIBPIPE_PIPELINE_TRACE(req, "providing input.");
+            LIBPIPE_PIPELINE_TRACE("providing input.");
 #ifdef ENABLE_THREADING
             output_->lock();
 #endif
@@ -229,7 +228,7 @@ class Printer : public libpipe::rtc::Algorithm
                             libpipe::rtc::SharedData<std::vector<double> > >(
                         this->getPort("MatrixIn"));
 
-            LIBPIPE_PIPELINE_TRACE(req, "printing matrix");
+            LIBPIPE_PIPELINE_TRACE("printing matrix");
 #ifdef ENABLE_THREADING
             input_->shared_lock();
 #endif
@@ -299,7 +298,7 @@ class Handler : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "start handler");
+            LIBPIPE_PIPELINE_TRACE("start handler");
         }
 
     protected:

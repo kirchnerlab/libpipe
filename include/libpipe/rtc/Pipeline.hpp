@@ -42,7 +42,7 @@
 /** Macro that add an entry to a requests trace.
  * This is just for convenience.
  */
-#define LIBPIPE_PIPELINE_TRACE(req, str) \
+#define LIBPIPE_PIPELINE_TRACE(str) \
   if (libpipe::rtc::Pipeline::getTraceFlag()) \
   libpipe::rtc::Pipeline::addTrace(std::string(__FUNCTION__) + ": " + str)
 

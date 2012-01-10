@@ -86,17 +86,15 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: start.");
             output_->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "UppercaseAlgorithm::update: transforming to uppercase.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->begin(), input_->end(),
                 std::back_inserter(*output_), toupper);
             this->updateMTime();
             std::ostringstream oss;
             oss << this->getMTime();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "UppercaseAlgorithm::update: end at " + oss.str().c_str());
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: end at " + oss.str().c_str());
         }
 
         /** Provides access to results.
@@ -196,13 +194,12 @@ class Source : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "Source::update: start.");
+            LIBPIPE_PIPELINE_TRACE("Source::update: start.");
             // simply update the modification time. Done.
             this->updateMTime();
             std::ostringstream oss;
             oss << this->getMTime();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "Source::update: end at " + oss.str().c_str());
+            LIBPIPE_PIPELINE_TRACE("Source::update: end at " + oss.str().c_str());
         }
 
     protected:
@@ -233,7 +230,7 @@ int main(int argc, char *argv[])
     libpipe::Request req(libpipe::Request::UPDATE);
     Pipeline pipe;
     pipe.setTraceFlag(true);
-    LIBPIPE_PIPELINE_TRACE(req, "Starting.");
+    LIBPIPE_PIPELINE_TRACE("Starting.");
     try {
         // round 1
         stringFilter->processRequest(req);
