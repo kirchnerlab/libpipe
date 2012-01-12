@@ -1,49 +1,7 @@
 {
     "connections": [
         {
-            "filterName": "Source1a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source2a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source3a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source4a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source5a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source6a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source7a",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source8a",
+            "filterName": "Source1",
             "identifier": "Source",
             "precursors": [],
             "ports": []
@@ -53,20 +11,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source1a"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source2a"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source1a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source2a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -78,20 +36,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source3a"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source4a"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source3a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source4a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -103,20 +61,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source5a"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source6a"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source5a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source6a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -128,20 +86,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source7a"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source8a"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source7a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source8a",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -224,72 +182,24 @@
         
         },
         {
-            "filterName": "Source1b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source2b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source3b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source4b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source5b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source6b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source7b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source8b",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
             "filterName": "Multiplication1b",
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source1b"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source2b"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source1b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source2b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -301,20 +211,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source3b"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source4b"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source3b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source4b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -326,20 +236,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source5b"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source6b"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source5b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source6b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -351,20 +261,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source7b"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source8b"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source7b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source8b",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -447,72 +357,24 @@
         
         },
         {
-            "filterName": "Source1c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source2c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source3c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source4c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source5c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source6c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source7c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source8c",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
             "filterName": "Multiplication1c",
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source1c"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source2c"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source1c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source2c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -524,20 +386,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source3c"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source4c"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source3c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source4c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -549,20 +411,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source5c"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source6c"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source5c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source6c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -574,20 +436,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source7c"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source8c"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source7c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source8c",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -670,72 +532,24 @@
         
         },
         {
-            "filterName": "Source1d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source2d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source3d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source4d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source5d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source6d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source7d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
-            "filterName": "Source8d",
-            "identifier": "Source",
-            "precursors": [],
-            "ports": []
-        },
-        {
             "filterName": "Multiplication1d",
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source1d"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source2d"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source1d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source2d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -747,20 +561,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source3d"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source4d"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source3d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source4d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -772,20 +586,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source5d"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source6d"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source5d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source6d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
@@ -797,20 +611,20 @@
             "identifier": "MatrixMulAlgorithm",
             "precursors": [
                 {
-                    "precursorName": "Source7d"
+                    "precursorName": "Source1"
                 },
                 {
-                    "precursorName": "Source8d"
+                    "precursorName": "Source1"
                 }
             ],
             "ports": [
                 {
-                    "filterName": "Source7d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn1"
                 },
                 {
-                    "filterName": "Source8d",
+                    "filterName": "Source1",
                     "portNameOfFilter": "MatrixOut",
                     "portNameOfThis": "MatrixIn2"
                 }
