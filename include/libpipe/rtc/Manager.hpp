@@ -55,103 +55,104 @@ class Filter;
  */
 class LIBPIPE_EXPORT Manager : boost::noncopyable
 {
-    public:
+public:
 
-        /** create Methode for manager which is called by ManagerFactory
-         * @return A Pointer to the new generated Manager, keep in mind that you are responsible for deleting the pointer after usage
-         */
-        static Manager* create();
+    /** create Methode for manager which is called by ManagerFactory
+     * @return A Pointer to the new generated Manager, keep in mind that you
+     *         are responsible for deleting the pointer after usage
+     */
+    static Manager* create();
 
-        /** Destructor.
-         */
-        virtual ~Manager();
+    /** Destructor.
+     */
+    virtual ~Manager();
 
-        /** Get a pointer to the algorithm object currently managed by the manager.
-         * @return A pointer to an algorithm object (or 0).
-         */
-        Algorithm* getAlgorithm();
+    /** Get a pointer to the algorithm object currently managed by the manager.
+     * @return A pointer to an algorithm object (or 0).
+     */
+    Algorithm* getAlgorithm();
 
-        /** Set the algorithm that is managed by the manager.
-         * @param[in] alg Pointer to the algorithm object.
-         */
-        void setAlgorithm(Algorithm* alg);
+    /** Set the algorithm that is managed by the manager.
+     * @param[in] alg Pointer to the algorithm object.
+     */
+    void setAlgorithm(Algorithm* alg);
 
-        /** Process a processing request. In the simple base class implementation
-         * the manager will call the \c process request method of all filters
-         * it depends on and will subsequently execute its own algorithm.
-         *
-         * @param[in,out] req The request object, non-const (good for e.g. adding trace
-         *                information)
-         */
-        virtual void processRequest(libpipe::Request& req);
+    /** Process a processing request. In the simple base class implementation
+     * the manager will call the \c process request method of all filters
+     * it depends on and will subsequently execute its own algorithm.
+     *
+     * @param[in,out] req The request object, non-const (good for e.g. adding trace
+     *                information)
+     */
+    virtual void processRequest(libpipe::Request& req);
 
-        /** Connect the manager to a filter it depends on. Each call connects the
-         * Manager to the specified filter; duplicates will be ignored.
-         * Because of the use of shared_pointers one need to dynamically cast the
-         * pointers to boost::shared_ptr<Filter> this can be done with the use of
-         * boost::dynamic_pointer_cast<Filter>
-         * \code
-         * ...
-         * boost::shared_ptr<UserFilter> uf (new UserFilter("FilterName"));
-         * ...
-         * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
-         * \endcode
-         *
-         * @param [in,out] f Pointer to a filter object on which the current manager
-         *                 should depend.
-         */
-        void connect(boost::shared_ptr<Filter> f);
+    /** Connect the manager to a filter it depends on. Each call connects the
+     * Manager to the specified filter; duplicates will be ignored.
+     * Because of the use of shared_pointers one need to dynamically cast the
+     * pointers to boost::shared_ptr<Filter> this can be done with the use of
+     * boost::dynamic_pointer_cast<Filter>
+     * \code
+     * ...
+     * boost::shared_ptr<UserFilter> uf (new UserFilter("FilterName"));
+     * ...
+     * uf->getManager()->connect(boost::dynamic_pointer_cast<Filter>(someOtherFilter->getManager()));
+     * \endcode
+     *
+     * @param [in,out] f Pointer to a filter object on which the current manager
+     *                 should depend.
+     */
+    void connect(boost::shared_ptr<Filter> f);
 
-    protected:
+protected:
 
-        /** Constructor.
-         */
-        Manager();
+    /** Constructor.
+     */
+    Manager();
 
-        /** Convenience typedef: a filter set.
-         */
-        typedef std::set<boost::shared_ptr<Filter> > FilterSet;
+    /** Convenience typedef: a filter set.
+     */
+    typedef std::set<boost::shared_ptr<Filter> > FilterSet;
 
-        /** The set of filters the manager depends on.
-         */
-        FilterSet sources_;
+    /** The set of filters the manager depends on.
+     */
+    FilterSet sources_;
 
-        /** Pointer to the algorithm that is managed by the manager.
-         */
-        Algorithm* algorithm_;
+    /** Pointer to the algorithm that is managed by the manager.
+     */
+    Algorithm* algorithm_;
 
-        /** Disconnects the manager from all his input filters.
-         * The Algorithm calls does at the same time fix the output
-         * of the corresponding Algorithm, so that the output will
-         * stay constant.
-         *
-         */
-        void disconnect();
+    /** Disconnects the manager from all his input filters.
+     * The Algorithm calls does at the same time fix the output
+     * of the corresponding Algorithm, so that the output will
+     * stay constant.
+     *
+     */
+    void disconnect();
 
-    private:
-        /** Returns the Filter Manager is dependent on
-         * @return A Set of shared_ptr to Filters
-         */
-        std::set<boost::shared_ptr<Filter> > getSources();
-        /** Register Filter in the FilterFactory
-         *
-         */
-        static const bool registered_;
+private:
+    /** Returns the Filter Manager is dependent on
+     * @return A Set of shared_ptr to Filters
+     */
+    std::set<boost::shared_ptr<Filter> > getSources();
+    /** Register Filter in the FilterFactory
+     *
+     */
+    static const bool registered_;
 
-        /** Registers the manager in the managerfactory
-         * @return true if successful
-         */
-        static const bool registerLoader();
+    /** Registers the manager in the managerfactory
+     * @return true if successful
+     */
+    static const bool registerLoader();
 #ifdef ENABLE_THREADING
-        /** Mutex for the processRequest
-         */
-        boost::mutex processRequestMutex_;
-        /** Mutex for the algorithm_
-         */
-        boost::shared_mutex algorithmMutex_;
-        /** Mutex for the source_
-         */
-        boost::shared_mutex sourcesMutex_;
+    /** Mutex for the processRequest
+     */
+    boost::mutex processRequestMutex_;
+    /** Mutex for the algorithm_
+     */
+    boost::shared_mutex algorithmMutex_;
+    /** Mutex for the source_
+     */
+    boost::shared_mutex sourcesMutex_;
 #endif
 
 };
