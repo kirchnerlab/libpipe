@@ -122,7 +122,7 @@ class LIBPIPE_EXPORT Algorithm
          * to be run and that its modification time value should be disregarded.
          * Managers must check \c needUpdate prior to making use of the information
          * delivered by \c getMTime.
-         * There are two major application scenarios that make use of the flag:
+         * There are three major application scenarios that make use of the flag:
          * \li When algorithms are instantiated for the first time, their creation
          *     date need not coincide with the execution sequence (this is
          *     especially true for filter setups with branches). Hence, their
