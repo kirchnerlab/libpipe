@@ -42,6 +42,15 @@ namespace libpipe {
 
 namespace rtc {
 
+/** Macro that prepares the stored data for use in update methods
+ * This is just for convenience.
+ */
+#define LIBPIPE_PREPARE_READ_INPUT(varName, dataReference, type, portName) {  \
+        boost::shared_ptr<libpipe::rtc::SharedData<type> > varName = boost::dynamic_pointer_cast<libpipe::rtc::SharedData<type> >(this->getPort("portName")); \
+        varName->shared_lock(); \
+        const type& dataReference = *(varName->get()); \
+}
+
 /** A template class used to hold data that is shared between algorithms.
  * Sometimes algorithm objects are not able to immediately instanciate a result
  * object but need to process data beforehand. The two foremost cases where
@@ -170,7 +179,7 @@ T* SharedData<T>::get() const
 #ifdef ENABLE_THREADING
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get();
-    }else {
+    } else {
         libpipe_fail("Lock was not set on SharedData::get()");
     }
 #else
@@ -186,8 +195,7 @@ void SharedData<T>::set(T* ptr)
         if (ptr != ptr_.get()) {
             ptr_.reset(ptr);
         }
-    }
-    else {
+    } else {
         libpipe_fail("Lock was not set on SharedData::set()");
     }
 #else
@@ -203,7 +211,7 @@ bool SharedData<T>::isNull()
 #ifdef ENABLE_THREADING
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get() == 0;
-    }else {
+    } else {
         libpipe_fail("Lock was not set on SharedData::isNull()");
     }
 #else

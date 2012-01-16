@@ -62,8 +62,8 @@ public:
         LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: start.");
 
         // Gain access to the in- and output
-        Ptr input1_ = boost::dynamic_pointer_cast<SharedDoubles>(
-            this->getPort("MatrixIn1"));
+       // Ptr input1_ = boost::dynamic_pointer_cast<SharedDoubles>(
+        //    this->getPort("MatrixIn1"));
         Ptr input2_ = boost::dynamic_pointer_cast<SharedDoubles>(
             this->getPort("MatrixIn2"));
         Ptr output_ = boost::dynamic_pointer_cast<SharedDoubles>(
@@ -73,15 +73,17 @@ public:
         // Make use of the locking mechanisms in case we
         // use multithreading. Don't forget to unlock further down.
         output_->lock(); // exclusive lock for writing
-        input1_->shared_lock(); // non-exclusive for shared reading
+        //input1_->shared_lock(); // non-exclusive for shared reading
         input2_->shared_lock(); // non-exclusive for shared reading
 #endif
         // Get references to the data, not pointers.
         // Also, be a good programmer and make the input const.
-        const Doubles& tempIn1 = *(input1_->get());
+        //const Doubles& tempIn1 = *(input1_->get());
         const Doubles& tempIn2 = *(input2_->get());
         Doubles& tempOut = *(output_->get());
 
+
+        LIBPIPE_PREPARE_READ_INPUT(input1_, tempIn1, Doubles, MatrixIn1);
         // Again, log what is happening
         LIBPIPE_PIPELINE_TRACE(
             "MatrixMulAlgorithm::update: multiplication of two matrices.");
