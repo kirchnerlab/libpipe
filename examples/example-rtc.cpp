@@ -45,6 +45,9 @@
 class UppercaseAlgorithm : public libpipe::rtc::Algorithm
 {
     public:
+        // use convenience typedefs to avoid cluttering up the code
+        typedef std::string String;
+        typedef libpipe::rtc::SharedData<String> SharedString;
 
         static Algorithm* create()
         {
@@ -64,24 +67,19 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-#ifdef ENABLE_THREADING
-            output_->lock();
-            input_->shared_lock();
-#endif
+
+            LIBPIPE_PREPARE_READ_ACCESS(input_, dataIn_, String, "StringInput");
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, dataOut_, String,
+                "StringOutput");
+
             LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: start.");
-            output_->get()->clear();
-            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: transforming to uppercase.");
-            std::transform(input_->get()->begin(), input_->get()->end(),
-                std::back_inserter(*output_->get()), toupper);
+            dataOut_.clear();
+            LIBPIPE_PIPELINE_TRACE(
+                "UppercaseAlgorithm::update: transforming to uppercase.");
+            std::transform(dataIn_.begin(), dataIn_.end(),
+                std::back_inserter(dataOut_), toupper);
             LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: end.");
+
 #ifdef ENABLE_THREADING
             output_->unlock();
             input_->unlock();
@@ -96,9 +94,9 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
                 libpipe::rtc::Algorithm()
         {
             ports_["StringInput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >();
+                    SharedString>();
             ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string);
+                    SharedString >(new std::string);
         }
 
     private:
@@ -139,6 +137,9 @@ const bool UppercaseAlgorithm::registered_ = registerLoader();
 class LowercaseAlgorithm : public libpipe::rtc::Algorithm
 {
     public:
+        // use convenience typedefs to avoid cluttering up the code
+        typedef std::string String;
+        typedef libpipe::rtc::SharedData<String> SharedString;
 
         static Algorithm* create()
         {
@@ -157,24 +158,18 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-#ifdef ENABLE_THREADING
-            output_->lock();
-            input_->shared_lock();
-#endif
-            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: start.");
-            output_->get()->clear();
+            LIBPIPE_PREPARE_READ_ACCESS(input_, dataIn_, String, "StringInput");
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, dataOut_, String,
+                "StringOutput");
 
-            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: transforming to uppercase.");
-            std::transform(input_->get()->begin(), input_->get()->end(),
-                std::back_inserter(*output_->get()), tolower);
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: start.");
+            dataOut_.clear();
+
+            LIBPIPE_PIPELINE_TRACE(
+                "LowercaseAlgorithm::update: transforming to uppercase.");
+            std::transform(dataIn_.begin(), dataIn_.end(),
+                std::back_inserter(dataOut_), tolower);
+
             LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: end.");
 #ifdef ENABLE_THREADING
             output_->unlock();
@@ -192,9 +187,9 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
                 libpipe::rtc::Algorithm()
         {
             ports_["StringInput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >();
+                    SharedString >();
             ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string);
+                    SharedString >(new std::string);
         }
         /** registers the Algorithm in the factory
          * @return true is registration was successful
@@ -218,6 +213,10 @@ const bool LowercaseAlgorithm::registered_ = registerLoader();
 class CombineAlgorithm : public libpipe::rtc::Algorithm
 {
     public:
+        // use convenience typedefs to avoid cluttering up the code
+        typedef std::string String;
+        typedef libpipe::rtc::SharedData<String> SharedString;
+
         static Algorithm* create()
         {
             return new CombineAlgorithm;
@@ -227,26 +226,17 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          */
         virtual ~CombineAlgorithm()
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput1"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput2"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-#ifdef ENABLE_THREADING
-            output_->shared_lock();
-            input1_->shared_lock();
-            input2_->shared_lock();
-#endif
+
+            LIBPIPE_PREPARE_READ_ACCESS(input1_, dataIn1_, String,
+                "StringInput1");
+            LIBPIPE_PREPARE_READ_ACCESS(input2_, dataIn2_, String,
+                "StringInput2");
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, dataOut_, String,
+                "StringOutput");
+
             std::cout << "\033[22;32m Combine Algorithm destroyed with input: "
-                    << *input1_->get() << " and " << *input2_->get()
-                    << "\t and output: " << *output_->get() << "\e[m"
+                    << dataIn1_ << " and " << dataIn2_
+                    << "\t and output: " << dataOut_ << "\e[m"
                     << std::endl;
 #ifdef ENABLE_THREADING
             output_->unlock();
@@ -262,29 +252,19 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
+            LIBPIPE_PREPARE_READ_ACCESS(input1_, dataIn1_, String,
+                "StringInput1");
+            LIBPIPE_PREPARE_READ_ACCESS(input2_, dataIn2_, String,
+                "StringInput2");
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, dataOut_, String,
+                "StringOutput");
 
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput1"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput2"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-#ifdef ENABLE_THREADING
-            output_->lock();
-            input1_->shared_lock();
-            input2_->shared_lock();
-#endif
             LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: start.");
-            output_->get()->clear();
+            dataOut_.clear();
 
-            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: combining inputs");
-            combine(output_);
+            LIBPIPE_PIPELINE_TRACE(
+                "CombineAlgorithm::update: combining inputs");
+            combine(dataOut_, dataIn1_, dataIn2_);
             LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: end.");
 #ifdef ENABLE_THREADING
             output_->unlock();
@@ -299,23 +279,12 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
         /** Combines two inputs
          * @param result The result
          */
-        void combine(
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > result)
+        void combine(String& result,
+            const String& input1_,
+            const String& input2_)
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input1_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput1"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input2_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput2"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            result->get()->append(*input1_->get());
-            result->get()->append(*input2_->get());
+            result.append(input1_);
+            result.append(input2_);
         }
 
         /** Constructor.
@@ -325,11 +294,11 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
                 libpipe::rtc::Algorithm()
         {
             ports_["StringInput1"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >();
+                    SharedString >();
             ports_["StringInput2"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >();
+                    SharedString >();
             ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string);
+                    SharedString >(new std::string);
 
         }
         /** registers the Algorithm in the factory
@@ -355,6 +324,9 @@ const bool CombineAlgorithm::registered_ = registerLoader();
 class ROT13Algorithm : public libpipe::rtc::Algorithm
 {
     public:
+        // use convenience typedefs to avoid cluttering up the code
+        typedef std::string String;
+        typedef libpipe::rtc::SharedData<String> SharedString;
 
         static Algorithm* create()
         {
@@ -376,29 +348,25 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringInput"));
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-#ifdef ENABLE_THREADING
-            output_->lock();
-            input_->shared_lock();
-#endif
+
+            LIBPIPE_PREPARE_READ_ACCESS(input_, dataIn_, String,
+                "StringInput");
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, dataOut_, String,
+                "StringOutput");
+
             if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
                 LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: start.");
-                output_->get()->clear();
-                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: transforming with ROT13.");
-                rot13(input_, output_);
+                dataOut_.clear();
+                LIBPIPE_PIPELINE_TRACE(
+                    "ROT13Algorithm::update: transforming with ROT13.");
+                rot13(dataIn_, dataOut_);
 
                 LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
-                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: deleted the input");
+                LIBPIPE_PIPELINE_TRACE(
+                    "ROT13Algorithm::update: deleted the input");
             }
 #ifdef ENABLE_THREADING
             output_->unlock();
@@ -415,25 +383,23 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
          * @param[in] str A handle to the input string
          * @param[out] result A handle to the ciphered input
          */
-        void rot13(
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > str,
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > result)
+        void rot13(const String& str, String& result)
         {
             static std::string const lcalph = "abcdefghijklmnopqrstuvwxyz",
                     ucalph = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
             std::string::size_type pos;
 
-            result->get()->reserve(str->get()->length());
+            result.reserve(str.length());
 
-            for (std::string::const_iterator it = str->get()->begin();
-                    it != str->get()->end(); ++it) {
+            for (std::string::const_iterator it = str.begin(); it != str.end();
+                    ++it) {
                 if ((pos = lcalph.find(*it)) != std::string::npos)
-                    result->get()->push_back(lcalph[(pos + 13) % 26]);
+                    result.push_back(lcalph[(pos + 13) % 26]);
                 else if ((pos = ucalph.find(*it)) != std::string::npos)
-                    result->get()->push_back(ucalph[(pos + 13) % 26]);
+                    result.push_back(ucalph[(pos + 13) % 26]);
                 else
-                    result->get()->push_back(*it);
+                    result.push_back(*it);
             }
         }
 
@@ -443,10 +409,9 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
         ROT13Algorithm() :
                 libpipe::rtc::Algorithm()
         {
-            ports_["StringInput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >();
-            ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(new std::string);
+            ports_["StringInput"] = boost::make_shared<SharedString>();
+            ports_["StringOutput"] = boost::make_shared<SharedString>(
+                new std::string);
         }
         /** registers the Algorithm in the factory
          * @return true is registration was successful
@@ -471,6 +436,10 @@ const bool ROT13Algorithm::registered_ = registerLoader();
 class Source : public libpipe::rtc::Algorithm
 {
     public:
+        // use convenience typedefs to avoid cluttering up the code
+        typedef std::string String;
+        typedef libpipe::rtc::SharedData<String> SharedString;
+
         static Algorithm* create()
         {
             return new Source;
@@ -489,18 +458,15 @@ class Source : public libpipe::rtc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            boost::shared_ptr<libpipe::rtc::SharedData<std::string> > output_ =
-                    boost::dynamic_pointer_cast<
-                            libpipe::rtc::SharedData<std::string> >(
-                        this->getPort("StringOutput"));
-            LIBPIPE_PIPELINE_TRACE("providing input.");
 
-#ifdef ENABLE_THREADING
-            output_->lock();
-#endif
-            std::string temp = parameters_.get<std::string>("SourceString")
-                    + parameters_.get<std::string>("SourceString2");
-            (*output_->get()) = temp;
+            LIBPIPE_PREPARE_WRITE_ACCESS(output_, tempOut, String,
+                "StringOutput");
+
+            String temp = parameters_.get<String>("SourceString")
+                    + parameters_.get<String>("SourceString2");
+
+            tempOut = temp;
+
 #ifdef ENABLE_THREADING
             output_->unlock();
 #endif
@@ -515,8 +481,7 @@ class Source : public libpipe::rtc::Algorithm
         Source() :
                 libpipe::rtc::Algorithm()
         {
-            ports_["StringOutput"] = boost::make_shared<
-                    libpipe::rtc::SharedData<std::string> >(
+            ports_["StringOutput"] = boost::make_shared<SharedString>(
                 new std::string(""));
         }
         /** registers the Algorithm in the factory

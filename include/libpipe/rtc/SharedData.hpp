@@ -44,10 +44,10 @@ namespace rtc {
 
 /** Macro that prepares the stored data for read access in update methods
  * This is just for convenience.
- * @param varName the variable name of the input
+ * @param varName the variable name where the input is stored
  * @param dataReference the reference to the data stored in varName
  * @param type Type of the data returned by dataReference
- * @param portName Sting of the corresponding port name
+ * @param portName String of the corresponding port name
  * @attention Do not forget to unlock varName at the end of the update method if you have multithreading enabled!
  */
 #ifdef ENABLE_THREADING
@@ -63,10 +63,10 @@ namespace rtc {
 
 /** Macro that prepares the stored data for write access in update methods
  * This is just for convenience.
- * @param varName the variable name of the input
+ * @param varName the variable name where the input is stored
  * @param dataReference the reference to the data stored in varName
  * @param type Type of the data returned by dataReference
- * @param portName Sting of the corresponding port name
+ * @param portName String of the corresponding port name
  * @attention Do not forget to unlock varName at the end of the update method if you have multithreading enabled!
  *
  */
