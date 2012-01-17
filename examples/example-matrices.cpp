@@ -36,7 +36,7 @@ public:
     // use convenience typedefs to avoid cluttering up the code
     typedef std::vector<double> Doubles;
     typedef libpipe::rtc::SharedData<Doubles> SharedDoubles;
-    typedef boost::shared_ptr<SharedDoubles> Ptr;
+
 
     /** Virtual constructor.
      * @return Base class pointer to a new \c MatrixMulAlgorithm object.
@@ -62,28 +62,9 @@ public:
         LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: start.");
 
         // Gain access to the in- and output
-       // Ptr input1_ = boost::dynamic_pointer_cast<SharedDoubles>(
-        //    this->getPort("MatrixIn1"));
-        Ptr input2_ = boost::dynamic_pointer_cast<SharedDoubles>(
-            this->getPort("MatrixIn2"));
-        Ptr output_ = boost::dynamic_pointer_cast<SharedDoubles>(
-            this->getPort("MatrixOut"));
-
-#ifdef ENABLE_THREADING
-        // Make use of the locking mechanisms in case we
-        // use multithreading. Don't forget to unlock further down.
-        output_->lock(); // exclusive lock for writing
-        //input1_->shared_lock(); // non-exclusive for shared reading
-        input2_->shared_lock(); // non-exclusive for shared reading
-#endif
-        // Get references to the data, not pointers.
-        // Also, be a good programmer and make the input const.
-        //const Doubles& tempIn1 = *(input1_->get());
-        const Doubles& tempIn2 = *(input2_->get());
-        Doubles& tempOut = *(output_->get());
-
-
-        LIBPIPE_PREPARE_READ_INPUT(input1_, tempIn1, Doubles, MatrixIn1);
+        LIBPIPE_PREPARE_READ_ACCESS(input1_, tempIn1, Doubles, "MatrixIn1");
+        LIBPIPE_PREPARE_READ_ACCESS(input2_, tempIn2, Doubles, "MatrixIn2");
+        LIBPIPE_PREPARE_WRITE_ACCESS(output_, tempOut, Doubles, "MatrixOut");
         // Again, log what is happening
         LIBPIPE_PIPELINE_TRACE(
             "MatrixMulAlgorithm::update: multiplication of two matrices.");
@@ -152,7 +133,6 @@ public:
     // use convenience typedefs to avoid cluttering up the code
     typedef std::vector<double> Doubles;
     typedef libpipe::rtc::SharedData<Doubles> SharedDoubles;
-    typedef boost::shared_ptr<SharedDoubles> Ptr;
 
     static Algorithm* create()
     {
@@ -173,14 +153,9 @@ public:
     void update(libpipe::Request& req)
     {
         LIBPIPE_PIPELINE_TRACE("Source::update: start.");
-        Ptr output_ = boost::dynamic_pointer_cast<SharedDoubles>(
-            this->getPort("MatrixOut"));
+        LIBPIPE_PREPARE_WRITE_ACCESS(output_, tempOut, Doubles, "MatrixOut");
 
-#ifdef ENABLE_THREADING
-        output_->lock();
-#endif
         // fill matrix with some values
-        std::vector<double>& tempOut = *(output_->get());
         LIBPIPE_PIPELINE_TRACE("Source::update: filling matrix.");
         for (int row = 0; row < MATRIX_SIZE; row++) {
             for (int col = 0; col < MATRIX_SIZE; col++) {
@@ -226,7 +201,6 @@ public:
     // use convenience typedefs to avoid cluttering up the code
     typedef std::vector<double> Doubles;
     typedef libpipe::rtc::SharedData<Doubles> SharedDoubles;
-    typedef boost::shared_ptr<SharedDoubles> Ptr;
 
     static Algorithm* create()
     {
@@ -248,15 +222,12 @@ public:
     {
         LIBPIPE_PIPELINE_TRACE( "Printer::update: start.");
         // Gain access to the in- and output
-        Ptr input_ = boost::dynamic_pointer_cast<SharedDoubles>(
-            this->getPort("MatrixIn"));
+        LIBPIPE_PREPARE_READ_ACCESS(input_, in, Doubles, "MatrixIn");
+
 
         LIBPIPE_PIPELINE_TRACE("printing matrix");
-#ifdef ENABLE_THREADING
-        input_->shared_lock();
-#endif
+
         // print the matrix
-        const std::vector<double>& in = *(input_->get());
         for (int row = 0; row < MATRIX_SIZE; row++) {
             for (int col = 0; col < MATRIX_SIZE; col++) {
                 std::cout << in[col + (row * MATRIX_SIZE)] << " ";
