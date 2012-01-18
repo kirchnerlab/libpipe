@@ -174,7 +174,7 @@ public:
      * the LibpipeDataObject dataObject
      * @param dataObject The Object the Port will point to
      */
-    void setInput(const std::string& portIdentifier, boost::shared_ptr<Data> dataObject);
+    void setPort(const std::string& portIdentifier, boost::shared_ptr<Data> dataObject);
 
     /** Connects the port of this algorithm identified by thisPortIdentifier to the port of alg algorithm
      * identified by algPortIdentifier

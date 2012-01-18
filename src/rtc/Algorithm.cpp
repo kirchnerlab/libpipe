@@ -139,7 +139,7 @@ boost::shared_ptr<Data> Algorithm::getPort(const std::string& portIdentifier) co
 
 }
 
-void Algorithm::setInput(const std::string& portIdentifier,
+void Algorithm::setPort(const std::string& portIdentifier,
     boost::shared_ptr<Data> dataObject)
 {
 #ifdef ENABLE_THREADING
@@ -161,6 +161,6 @@ void Algorithm::setInput(const std::string& portIdentifier,
 void Algorithm::connect(Algorithm* alg, const std::string& algPortIdentifier,
     const std::string& thisPortIdentifier)
 {
-    this->setInput(thisPortIdentifier, alg->getPort(algPortIdentifier));
+    this->setPort(thisPortIdentifier, alg->getPort(algPortIdentifier));
 }
 

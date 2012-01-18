@@ -242,7 +242,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
             input->lock();
 #endif
             input->set(new int(10));
-            b->setInput("intOutput", input);
+            b->setPort("intOutput", input);
 
             shouldEqual(
                 *boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(b->getPort("intOutput"))->get(),
@@ -272,7 +272,7 @@ struct AlgorithmRTCTestSuite : vigra::test_suite
 
             thrown = false;
             try {
-                a->setInput("blub", input);
+                a->setPort("blub", input);
             } catch (libpipe::utilities::Exception& e) {
                 shouldEqual(
                     strncmp(e.what(),"Algorithm::setInput failed, the following port was not registered: blub",70),
