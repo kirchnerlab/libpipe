@@ -45,8 +45,7 @@ namespace utilities {
  * based on an underlying variant that can take any type but has currently
  * been limited to
  * \code
- *      size_t, int, double, std::string, std::vector<size_t>, std::vector<int>,
- std::vector<double>, std::vector<std::string> >, std::pair<double, double>
+ *      std::string, std::vector<std::string> >
  * \endcode
  * Using \c Parameters instances is straightforward, however there are a few
  * best practices:
@@ -72,8 +71,8 @@ namespace utilities {
  *     parameter object from scratch but instead copy the existing object:
  * \code
  *    Parameters p = someObject.getParameters();
- *    p.set("delta", 0.773);
- *    p.set("solution", 42);
+ *    p.set("delta", "0.773");
+ *    p.set("solution", "42");
  *    someObject.setParameters(p);
  * \endcode
  * \li before using the values in a \c Parameters object, the client should
