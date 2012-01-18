@@ -61,7 +61,7 @@ public:
      */
     ~Pipeline();
 
-    /** Add a filter and request on top of the queue.
+    /** Add a filter and request on the end of the queue.
      * @param req The Request which will be processed by the filter
      * @param filter The filter which handles the request.
      */
