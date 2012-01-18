@@ -53,7 +53,7 @@ public:
     }
     void update(libpipe::Request& req)
     {
-        LIBPIPE_PIPELINE_TRACE(req, "Identity: copying value.");
+        LIBPIPE_PIPELINE_TRACE("Identity: copying value.");
         out_ = in_;
         this->updateMTime();
     }
@@ -93,7 +93,7 @@ public:
         std::ostringstream oss;
         *out_ = (*in_) + 1;
         oss << "Inc: " << *in_ << " -> " << *out_;
-        LIBPIPE_PIPELINE_TRACE(req, oss.str());
+        LIBPIPE_PIPELINE_TRACE(oss.str());
         this->updateMTime();
     }
     int* getOutput()

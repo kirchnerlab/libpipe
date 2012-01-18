@@ -59,7 +59,7 @@ public:
     void update(libpipe::Request& req)
     {
         // Take note of what we are doing
-        LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: start.");
+        LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: start.");
 
         // Gain access to the in- and output
         Ptr input1_ = boost::dynamic_pointer_cast<SharedDoubles>(
@@ -83,7 +83,7 @@ public:
         Doubles& tempOut = *(output_->get());
 
         // Again, log what is happening
-        LIBPIPE_PIPELINE_TRACE(req,
+        LIBPIPE_PIPELINE_TRACE(
             "MatrixMulAlgorithm::update: multiplication of two matrices.");
 
         // Let's roll. This is O(N^2).
@@ -103,8 +103,9 @@ public:
         input1_->unlock();
         input2_->unlock();
 #endif
+
         // And tell the world that we are done.
-        LIBPIPE_PIPELINE_TRACE(req, "MatrixMulAlgorithm::update: end.");
+        LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: end.");
     }
 
 protected:
@@ -162,13 +163,14 @@ public:
     {
     }
 
+
     /** Updates the output data (i.e. does nothing).
      * The output is provided as a constant, hence there is nothing to do.
      * @param[in] req The request object.
      */
     void update(libpipe::Request& req)
     {
-        LIBPIPE_PIPELINE_TRACE(req, "Source::update: start.");
+        LIBPIPE_PIPELINE_TRACE("Source::update: start.");
         Ptr output_ = boost::dynamic_pointer_cast<SharedDoubles>(
             this->getPort("MatrixOut"));
 
@@ -177,7 +179,7 @@ public:
 #endif
         // fill matrix with some values
         std::vector<double>& tempOut = *(output_->get());
-        LIBPIPE_PIPELINE_TRACE(req, "Source::update: filling matrix.");
+        LIBPIPE_PIPELINE_TRACE("Source::update: filling matrix.");
         for (int row = 0; row < MATRIX_SIZE; row++) {
             for (int col = 0; col < MATRIX_SIZE; col++) {
                 tempOut[col + (row * MATRIX_SIZE)] = col + row;
@@ -186,7 +188,7 @@ public:
 #ifdef ENABLE_THREADING
         output_->unlock();
 #endif
-        LIBPIPE_PIPELINE_TRACE(req, "Source::update: end.");
+        LIBPIPE_PIPELINE_TRACE("Source::update: end.");
     }
 
 private:
@@ -235,18 +237,19 @@ public:
     {
     }
 
+
     /** Updates the output data (i.e. does nothing).
      * The output is provided as a constant, hence there is nothing to do.
      * @param[in] req The request object.
      */
     void update(libpipe::Request& req)
     {
-        LIBPIPE_PIPELINE_TRACE(req, "Printer::update: start.");
+        LIBPIPE_PIPELINE_TRACE( "Printer::update: start.");
         // Gain access to the in- and output
         Ptr input_ = boost::dynamic_pointer_cast<SharedDoubles>(
             this->getPort("MatrixIn"));
 
-        LIBPIPE_PIPELINE_TRACE(req, "printing matrix");
+        LIBPIPE_PIPELINE_TRACE("printing matrix");
 #ifdef ENABLE_THREADING
         input_->shared_lock();
 #endif
@@ -262,7 +265,7 @@ public:
 #ifdef ENABLE_THREADING
         input_->unlock();
 #endif
-        LIBPIPE_PIPELINE_TRACE(req, "Printer::update: end.");
+        LIBPIPE_PIPELINE_TRACE("Printer::update: end.");
     }
 
 protected:
@@ -291,56 +294,57 @@ private:
 
 const bool Printer::registered_ = Printer::registerLoader();
 
-///** Handles the several Algorithms so that they can be executed in parallel,
-// *  as the Pipeline will execute them in sequential order.
-// */
-//class Handler : public libpipe::rtc::Algorithm
-//{
-//public:
-//    static Algorithm* create()
-//    {
-//        return new Handler;
-//    }
-//
-//    /** Destructor.
-//     */
-//    virtual ~Handler()
-//    {
-//    }
-//
-//    /** Does nothing.
-//     * The output is provided as a constant, hence there is nothing to do.
-//     * @param[in] req The request object.
-//     */
-//    void update(libpipe::Request& req)
-//    {
-//        LIBPIPE_PIPELINE_TRACE(req, "start handler");
-//    }
-//
-//protected:
-//
-//private:
-//    /** Constructor.
-//     */
-//    Handler() :
-//        libpipe::rtc::Algorithm()
-//    {
-//    }
-//    /** registers the Algorithm in the factory
-//     * @return true is registration was successful
-//     */
-//    static const bool registerLoader()
-//    {
-//        std::string ids = "Handler";
-//        return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
-//            Handler::create);
-//    }
-//    /// true is class is registered in Algorithm Factory
-//    static const bool registered_;
-//
-//};
-//
-//const bool Handler::registered_ = registerLoader();
+
+/** Handles the several Algorithms so that they can be executed in parallel,
+ *  as the Pipeline will execute them in sequential order.
+ */
+class Handler : public libpipe::rtc::Algorithm
+{
+public:
+    static Algorithm* create()
+    {
+        return new Handler;
+    }
+
+    /** Destructor.
+     */
+    virtual ~Handler()
+    {
+    }
+
+    /** Does nothing.
+     * The output is provided as a constant, hence there is nothing to do.
+     * @param[in] req The request object.
+     */
+    void update(libpipe::Request& req)
+    {
+        LIBPIPE_PIPELINE_TRACE("start handler");
+    }
+
+protected:
+
+private:
+    /** Constructor.
+     */
+    Handler() :
+        libpipe::rtc::Algorithm()
+    {
+    }
+    /** registers the Algorithm in the factory
+     * @return true is registration was successful
+     */
+    static const bool registerLoader()
+    {
+        std::string ids = "Handler";
+        return libpipe::rtc::AlgorithmFactory::instance().registerType(ids,
+            Handler::create);
+    }
+    /// true is class is registered in Algorithm Factory
+    static const bool registered_;
+
+};
+
+const bool Handler::registered_ = registerLoader();
 
 int main(int argc, char *argv[])
 {

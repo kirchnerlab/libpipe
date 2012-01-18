@@ -45,9 +45,9 @@ Filter::~Filter()
 void Filter::processRequest(libpipe::Request& req)
 {
     // forward algorithm handle and request to manager
-    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: start.");
+    LIBPIPE_PIPELINE_TRACE(this->getName() + "::processRequest: start.");
     this->getManager()->processRequest(req);
-    LIBPIPE_PIPELINE_TRACE(req, this->getName() + "::processRequest: stop.");
+    LIBPIPE_PIPELINE_TRACE(this->getName() + "::processRequest: stop.");
 }
 
 Algorithm* Filter::getAlgorithm()

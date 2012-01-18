@@ -36,7 +36,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#define LIBPIPE_PIPELINE_TRACE(req, str) \
+#define LIBPIPE_PIPELINE_TRACE(str) \
   if (libpipe::ctc::Pipeline::getTraceFlag()) \
   libpipe::ctc::Pipeline::addTrace(std::string(__FUNCTION__) + ": " + str)
 

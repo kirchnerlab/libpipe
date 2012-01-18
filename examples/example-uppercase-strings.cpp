@@ -86,13 +86,12 @@ class UppercaseAlgorithm : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "UppercaseAlgorithm::update: transforming to uppercase.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
-            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -190,13 +189,12 @@ class LowercaseAlgorithm : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "LowercaseAlgorithm::update: transforming to uppercase.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
-            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -279,12 +277,11 @@ class CombineAlgorithm : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "CombineAlgorithm::update: combining inputs");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: combining inputs");
             combine(output_);
-            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: end.");
         }
 
         /** Provides access to results.
@@ -400,17 +397,15 @@ class ROT13Algorithm : public libpipe::ctc::Algorithm
         void update(libpipe::Request& req)
         {
             if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
-                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
-                LIBPIPE_PIPELINE_TRACE(req,
-                    "ROT13Algorithm::update: transforming with ROT13.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
-                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: end.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
-                LIBPIPE_PIPELINE_TRACE(req,
-                    "ROT13Algorithm::update: deleted the input");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: deleted the input");
             }
         }
 
@@ -537,7 +532,7 @@ class Source : public libpipe::ctc::Algorithm
          */
         void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "providing input.");
+            LIBPIPE_PIPELINE_TRACE("providing input.");
         }
 
     protected:

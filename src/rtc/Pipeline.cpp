@@ -61,7 +61,7 @@ void Pipeline::run()
             }
         }
 
-        LIBPIPE_PIPELINE_TRACE(tempReq, tempStr);
+        LIBPIPE_PIPELINE_TRACE(tempStr);
 #ifdef ENABLE_THREADING
         boost::exception_ptr error;
         pipelineQueue_.front()->processThreadedRequest(tempReq, error);

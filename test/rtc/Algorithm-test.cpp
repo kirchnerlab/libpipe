@@ -71,7 +71,7 @@ class MyAlgorithm : public Algorithm
         }
         virtual void update(libpipe::Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "Identity: copying value.");
+            LIBPIPE_PIPELINE_TRACE("Identity: copying value.");
 
             boost::shared_ptr<libpipe::rtc::SharedData<int> > in_ =
                     boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(

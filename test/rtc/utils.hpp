@@ -64,7 +64,7 @@ class IdentityRTC : public Algorithm
         }
         void update(Request& req)
         {
-            LIBPIPE_PIPELINE_TRACE(req, "Identity: copying value.");
+            LIBPIPE_PIPELINE_TRACE("Identity: copying value.");
 
             boost::shared_ptr<libpipe::rtc::SharedData<int> > in_ =
                     boost::dynamic_pointer_cast<libpipe::rtc::SharedData<int> >(
@@ -205,13 +205,12 @@ class UppercaseAlgorithm : public libpipe::rtc::Algorithm
             input_->shared_lock();
 #endif
 
-            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: start.");
             output_->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "UppercaseAlgorithm::update: transforming to uppercase.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), toupper);
-            LIBPIPE_PIPELINE_TRACE(req, "UppercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("UppercaseAlgorithm::update: end.");
 #ifdef ENABLE_THREADING
             output_->unlock();
             input_->unlock();
@@ -294,13 +293,12 @@ class LowercaseAlgorithm : public libpipe::rtc::Algorithm
             output_->lock();
             input_->shared_lock();
 #endif
-            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: start.");
             output_.get()->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "LowercaseAlgorithm::update: transforming to uppercase.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: transforming to uppercase.");
             std::transform(input_->get()->begin(), input_->get()->end(),
                 std::back_inserter(*output_->get()), tolower);
-            LIBPIPE_PIPELINE_TRACE(req, "LowercaseAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("LowercaseAlgorithm::update: end.");
 #ifdef ENABLE_THREADING
             output_->unlock();
             input_->unlock();
@@ -376,12 +374,11 @@ class CombineAlgorithm : public libpipe::rtc::Algorithm
             input1_->shared_lock();
             input2_->shared_lock();
 #endif
-            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: start.");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: start.");
             output_.get()->get()->clear();
-            LIBPIPE_PIPELINE_TRACE(req,
-                "CombineAlgorithm::update: combining inputs");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: combining inputs");
             combine(output_);
-            LIBPIPE_PIPELINE_TRACE(req, "CombineAlgorithm::update: end.");
+            LIBPIPE_PIPELINE_TRACE("CombineAlgorithm::update: end.");
 #ifdef ENABLE_THREADING
             output_->unlock();
             input1_->unlock();
@@ -479,17 +476,15 @@ class ROT13Algorithm : public libpipe::rtc::Algorithm
 #endif
             if (req.is(libpipe::Request::UPDATE) && this->needUpdate()) {
 
-                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: start.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: start.");
                 output_.get()->get()->clear();
-                LIBPIPE_PIPELINE_TRACE(req,
-                    "ROT13Algorithm::update: transforming with ROT13.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: transforming with ROT13.");
                 rot13(input_, output_);
-                LIBPIPE_PIPELINE_TRACE(req, "ROT13Algorithm::update: end.");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: end.");
 
             } else if (req.is(libpipe::Request::DELETE)) {
                 input_.reset();
-                LIBPIPE_PIPELINE_TRACE(req,
-                    "ROT13Algorithm::update: deleted the input");
+                LIBPIPE_PIPELINE_TRACE("ROT13Algorithm::update: deleted the input");
             }
 #ifdef ENABLE_THREADING
             output_->unlock();
@@ -581,7 +576,7 @@ class Source : public libpipe::rtc::Algorithm
                     boost::dynamic_pointer_cast<
                             libpipe::rtc::SharedData<std::string> >(
                         this->getPort("StringOutput"));
-            LIBPIPE_PIPELINE_TRACE(req, "providing input.");
+            LIBPIPE_PIPELINE_TRACE("providing input.");
 #ifdef ENABLE_THREADING
             output_->lock();
 #endif

@@ -60,7 +60,7 @@ void Pipeline::run()
                 }
         }
 
-        LIBPIPE_PIPELINE_TRACE(tempReq, tempStr);
+        LIBPIPE_PIPELINE_TRACE(tempStr);
 
         pipelineQueue_.front()->getManager()->processRequest(tempReq);
 
