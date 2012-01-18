@@ -33,10 +33,10 @@ timeval Algorithm::initMaxTime()
     timeval tv;
     libpipe::utilities::set_max(tv.tv_sec);
     libpipe::utilities::set_max(tv.tv_usec);
-            return tv;
-        }
+    return tv;
+}
 
-        timevalAlgorit hm::initMinTime()
+timeval Algorithm::initMinTime()
 {
     timeval tv;
     libpipe::utilities::set_min(tv.tv_sec);
@@ -53,7 +53,7 @@ const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
 Algorithm::Algorithm() :
-mTime_(Algorithm::MAX_TIME)
+        mTime_(Algorithm::MAX_TIME)
 {
 }
 
@@ -61,28 +61,28 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::proce ssRequest(libpipe::Request& req)
+void Algorithm::processRequest(libpipe::Request& req)
 {
-    this->upda te(req);
-if (req.is(Request::DELETE)) {
-            this->setMTime (Algorithm::MIN_TIME);
+    this->update(req);
+    if (req.is(Request::DELETE)) {
+        this->setMTime(Algorithm::MIN_TIME);
     }
 }
 
-co nst timeval& Algorithm::getMTime() const
+const timeval& Algorithm::getMTime() const
 {
-return mTime_;
+    return mTime_;
 }
 
 void Algorithm::setMTime(const timeval& mTime)
 {
-mTime_ = mTime;
+    mTime_ = mTime;
 }
 
 void Algorithm::updateMTime()
 {
 // use gettimeofday for microsecond resolution
-gettimeofday(&mTime_, NULL);
+    gettimeofday(&mTime_, NULL);
 }
 
 bool Algorithm::needUpdate() const

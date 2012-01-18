@@ -38,7 +38,7 @@ Manager::~Manager()
 }
 Algorithm* Manager::getAlgorithm()
 {
-    return algorithm _;
+    return algorithm_;
 }
 
 void Manager::setAlgorithm(Algorithm* alg)
@@ -57,7 +57,7 @@ if (req.is (Request::UPDATE)) {
                     }
                     typedef FilterSet::iterator MSI;
                     // iterate over all sources
-                    for (M SI i = sources_.begin(); i != sources_.end(); ++i) {
+                    for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
                 (*i)->processRequest(req);
             } catch (RequestException& e) {
