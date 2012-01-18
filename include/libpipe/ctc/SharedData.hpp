@@ -1,28 +1,28 @@
 /*
-*
-* Copyright (c) 2011 David-Matthias Sichau
-* Copyright (c) 2010 Marc Kirchner
-*
-* This file is part of libpipe.
-*
-* Permission is hereby granted, free of charge, to any person obtaining a copy
-* of this software and associated documentation files (the "Software"), to deal
-* in the Software without restriction, including without limitation the rights
-* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-* copies of the Software, and to permit persons to whom the Software is
-* furnished to do so, subject to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ *
+ * Copyright (c) 2011 David-Matthias Sichau
+ * Copyright (c) 2010 Marc Kirchner
+ *
+ * This file is part of libpipe.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 #ifndef __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 #define __LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
 
@@ -36,7 +36,7 @@ namespace libpipe {
 namespace ctc {
 
 /** A template class used to hold data that is shared between algorithms.
- * Sometimes algorithm objects are not able to immediately instanciate a result
+ * Sometimes algorithm objects are not able to immediately instantiate a result
  * object but need to process data beforehand. The two foremost cases where
  * this holds true are: (1) using external classes that implement the 'object
  * initialization is resource allocation' idiom, where the allocation depends
@@ -172,13 +172,13 @@ private:
 //
 template<typename T>
 SharedData<T>::SharedData() :
-    ptr_(0)
+ptr_(0)
 {
 }
 
 template<typename T>
 SharedData<T>::SharedData(T* ptr) :
-    ptr_(ptr)
+ptr_(ptr)
 {
 }
 
@@ -211,4 +211,3 @@ bool SharedData<T>::isNull()
 } // end namespace libpipe
 
 #endif //__LIBPIPE_INCLUDE_LIBPIPE_CTC_SHAREDDATA_HPP__
-

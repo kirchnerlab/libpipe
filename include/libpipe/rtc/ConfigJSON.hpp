@@ -43,67 +43,67 @@ namespace rtc {
  */
 class LIBPIPE_EXPORT ConfigJSON : public Config
 {
-    public:
+public:
 
-        /** Constructor
-         */
-        ConfigJSON();
+    /** Constructor
+     */
+    ConfigJSON();
 
-        /** Destructor
-         */
-        ~ConfigJSON();
+    /** Destructor
+     */
+    ~ConfigJSON();
 
-        /** Parses the input files.
-         * \li key: "FilterInput" Input file with the Filter Configuration
-         * \li key: "ConnectionInput" Input file with the Connection Configurations
-         * \li key: "PipelineInput" Input file with the Pipeline configuration
-         * @param filename Names of the input files
-         */
-        virtual void parseInputFile(
+    /** Parses the input files.
+     * \li key: "FilterInput" Input file with the Filter Configuration
+     * \li key: "ConnectionInput" Input file with the Connection Configurations
+     * \li key: "PipelineInput" Input file with the Pipeline configuration
+     * @param filename Names of the input files
+     */
+    virtual void parseInputFile(
             const std::map<std::string, std::string>& filename);
 
-        /** Gives a list of all Filters that need to be generated
-         * @return A list of Filters
-         */
-        virtual const std::list<FilterDescription>& getFilters() const;
+    /** Gives a list of all Filters that need to be generated
+     * @return A list of Filters
+     */
+    virtual const std::list<FilterDescription>& getFilters() const;
 
-        /** Returns the precursor Filters
-         * @param filtername The name of the Filter, which manager get connected to the Precursors
-         * @return List of Precursors Filter filtername gets connected to
-         */
-        virtual const std::list<PrecursorDescription>& getPrecursorFilter(
+    /** Returns the precursor Filters
+     * @param filtername The name of the Filter, which manager get connected to the Precursors
+     * @return List of Precursors Filter filtername gets connected to
+     */
+    virtual const std::list<PrecursorDescription>& getPrecursorFilter(
             const std::string& filtername) const;
 
-        /** Returns the ports
-         * @param filtername The name of the Filter which ports are returned
-         * @return list of all ports one Filter is connected to
-         */
-        virtual const std::list<PortDescription>& getPort(
+    /** Returns the ports
+     * @param filtername The name of the Filter which ports are returned
+     * @return list of all ports one Filter is connected to
+     */
+    virtual const std::list<PortDescription>& getPort(
             const std::string& filtername) const;
 
-        /** Returns the libpipe Pipeline
-         * @return A priority_queue where all elements are ordered after their request rank,
-         * the smallest comes first
-         */
-        virtual std::priority_queue<PipelineDescription,
-                std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const;
+    /** Returns the libpipe Pipeline
+     * @return A priority_queue where all elements are ordered after their request rank,
+     * the smallest comes first
+     */
+    virtual std::priority_queue<PipelineDescription,
+    std::vector<PipelineDescription>, PipelineDescriptionLess> getLibpipePipe() const;
 
-        /** Checks the input files. Order is important!
-         * @param filename Names of the input files
-         * @return true if the file is correct
-         */
-        virtual bool checkFile(
+    /** Checks the input files. Order is important!
+     * @param filename Names of the input files
+     * @return true if the file is correct
+     */
+    virtual bool checkFile(
             const std::map<std::string, std::string>& filename) const;
 
-    private:
+private:
 
-        /** List of Filters descriptions
-         */
-        std::list<FilterDescription> filterList_;
-        /** Pipeline of request informations
-         */
-        std::priority_queue<PipelineDescription,
-                std::vector<PipelineDescription>, PipelineDescriptionLess> requestQueue_;
+    /** List of Filters descriptions
+     */
+    std::list<FilterDescription> filterList_;
+    /** Pipeline of request informations
+     */
+    std::priority_queue<PipelineDescription,
+    std::vector<PipelineDescription>, PipelineDescriptionLess> requestQueue_;
 
 };
 

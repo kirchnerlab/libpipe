@@ -53,7 +53,7 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 
 #ifdef _WIN32
-//Windows stuff
+// Windows stuff
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
 #define DELTA_EPOCH_IN_MICROSECS  11644473600000000Ui64
 #else
@@ -62,13 +62,13 @@ std::ostream& operator<<(std::ostream& os, const timeval& tv);
 
 struct timezone
 {
-    int tz_minuteswest; /* minutes W of Greenwich */
+    int tz_minuteswest; /* minutes west of Greenwich */
     int tz_dsttime; /* type of dst correction */
 };
-/** Windows function which provides gettimeofday functionality
- * @param tv Timeval
- * @param tz Timezone
- * @return 0 if no errors occured
+/** gettimeofday for Windows
+ * @param tv A timeval object.
+ * @param tz A timezone object.
+ * @return Error code. Zero upon success.
  */
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 #endif

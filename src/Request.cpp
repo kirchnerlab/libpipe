@@ -30,12 +30,12 @@
 using namespace libpipe;
 
 Request::Request(const Request::Type& t) :
-        type_(t)
+    type_(t)
 {
 }
 
 Request::Request() :
-        type_(Request::UPDATE)
+    type_(Request::UPDATE)
 {
 }
 
@@ -52,6 +52,4 @@ Request::Type Request::getType() const
 {
     return type_;
 }
-
-
 

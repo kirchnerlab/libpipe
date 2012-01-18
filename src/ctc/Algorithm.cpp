@@ -25,7 +25,6 @@
  */
 #include <libpipe/ctc/Algorithm.hpp>
 #include <cstring> // for memset
-
 using namespace libpipe::ctc;
 
 timeval Algorithm::initMaxTime()
@@ -34,10 +33,10 @@ timeval Algorithm::initMaxTime()
     timeval tv;
     libpipe::utilities::set_max(tv.tv_sec);
     libpipe::utilities::set_max(tv.tv_usec);
-    return tv;
-}
+            return tv;
+        }
 
-timeval Algorithm::initMinTime()
+        timevalAlgorit hm::initMinTime()
 {
     timeval tv;
     libpipe::utilities::set_min(tv.tv_sec);
@@ -45,7 +44,7 @@ timeval Algorithm::initMinTime()
     return tv;
 }
 
-// initialize with maximum value such that any call to update will make the
+// initialize w ith maximum value such that any call to update will make the
 // instance "younger" than any non-updated instances
 const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 
@@ -54,7 +53,7 @@ const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
 Algorithm::Algorithm() :
-        mTime_(Algorithm::MAX_TIME)
+mTime_(Algorithm::MAX_TIME)
 {
 }
 
@@ -62,32 +61,32 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::processRequest(libpipe::Request& req)
+void Algorithm::proce ssRequest(libpipe::Request& req)
 {
-    this->update(req);
-    if (req.is(Request::DELETE)) {
-        this->setMTime(Algorithm::MIN_TIME);
+    this->upda te(req);
+if (req.is(Request::DELETE)) {
+            this->setMTime (Algorithm::MIN_TIME);
     }
 }
 
-const timeval& Algorithm::getMTime() const
+co nst timeval& Algorithm::getMTime() const
 {
-    return mTime_;
+return mTime_;
 }
 
 void Algorithm::setMTime(const timeval& mTime)
 {
-    mTime_ = mTime;
+mTime_ = mTime;
 }
 
 void Algorithm::updateMTime()
 {
-    // use gettimeofday for microsecond resolution
-    gettimeofday(&mTime_, NULL);
+// use gettimeofday for microsecond resolution
+gettimeofday(&mTime_, NULL);
 }
 
 bool Algorithm::needUpdate() const
 {
-    using namespace  libpipe::utilities;
+    using namespace libpipe::utilities;
     return mTime_ == Algorithm::MAX_TIME;
 }

@@ -38,49 +38,49 @@ namespace libpipe {
  */
 class LIBPIPE_EXPORT Request
 {
-    public:
-        /** Defines the request type.
-         * UPDATE for updating the filters
-         * DELETE for deleting the filters
-         */
-        enum Type
-        {
-            UPDATE = 0, DELETE = 1
-        };
+public:
+    /** Defines the request type.
+     * UPDATE for updating the filters
+     * DELETE for deleting the filters
+     */
+    enum Type
+    {
+        UPDATE = 0, DELETE = 1
+    };
 
-        /** Constructor.
-         * Requires a request type.
-         * @param[in] t The type of the request.
-         */
-        Request(const Type& t);
+    /** Constructor.
+     * Requires a request type.
+     * @param[in] t The type of the request.
+     */
+    Request(const Type& t);
 
-        /**Constructor
-         * Type is Update
-         */
-        Request();
+    /**Constructor
+     * Type is Update
+     */
+    Request();
 
-        /** Destructor.
-         * Virtual, to allow subclassing.
-         */
-        virtual ~Request();
+    /** Destructor.
+     * Virtual, to allow subclassing.
+     */
+    virtual ~Request();
 
-        /** Tests the type of a request.
-         * @param[in] t A request type.
-         * @return true of t is of the same type as this
-         */
-        bool is(const Type& t);
+    /** Tests the type of a request.
+     * @param[in] t A request type.
+     * @return true of t is of the same type as this
+     */
+    bool is(const Type& t);
 
-        /** Returns the type of request
-         * @return The Request Type of the request
-         */
-        Type getType() const;
+    /** Returns the type of request
+     * @return The Request Type of the request
+     */
+    Type getType() const;
 
-    protected:
+protected:
 
-        /** The request type.
-         * @see Type
-         */
-        Type type_;
+    /** The request type.
+     * @see Type
+     */
+    Type type_;
 
 };
 

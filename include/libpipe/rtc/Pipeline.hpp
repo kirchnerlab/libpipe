@@ -48,82 +48,83 @@
 
 namespace libpipe {
 namespace rtc {
-/** The class which hold the libpipe Pipeline and allows loging informations.
+/** Holds the configured libpipe pipeline and provides logging support.
  * @ingroup rtc
  */
 class LIBPIPE_EXPORT Pipeline
 {
-    public:
-        /** Constructor
-         */
-        Pipeline();
-        /** Destructor
-         */
-        ~Pipeline();
+public:
+    /** Constructor
+     */
+    Pipeline();
+    /** Destructor
+     */
+    ~Pipeline();
 
-        /** Add a filter and request on top of the queue.
-         * @param req The Request which will be processed by the filter
-         * @param filter The filter which handles the request.
-         */
-        void push(const libpipe::Request & req, boost::shared_ptr<Filter> filter);
+    /** Add a filter and request on top of the queue.
+     * @param req The Request which will be processed by the filter
+     * @param filter The filter which handles the request.
+     */
+    void push(const libpipe::Request & req, boost::shared_ptr<Filter> filter);
 
-        /** Will run all requests in the queue. This needs to be called to run Libpipe.
-         */
-        void run();
+    /** Will run all requests in the queue. This needs to be called to run Libpipe.
+     */
+    void run();
 
-        /** Returns the state of the trace flag.
-         * If the trace flag is on, clients should add trace information
-         * while processing the request, using addTrace().
-         * @return The state if the trace flag (true == on).
-         */
-        static bool getTraceFlag();
+    /** Returns the state of the trace flag.
+     * If the trace flag is on, clients should add trace information
+     * while processing the request, using addTrace().
+     * @return The state if the trace flag (true == on).
+     */
+    static bool getTraceFlag();
 
-        /** Set the state of the trace flag.
-         * This allows to switch tracing on and off.
-         * @param[in] tf The new trace flag setting (true == on).
-         */
-        static void setTraceFlag(const bool tf);
+    /** Set the state of the trace flag.
+     * This allows to switch tracing on and off.
+     * @param[in] tf The new trace flag setting (true == on).
+     */
+    static void setTraceFlag(const bool tf);
 
-        /** Returns all traces collected in the Request object.
-         * @return trace All collected trace information.
-         */
-        static std::vector<std::string>& getTrace();
+    /** Returns all traces collected in the Request object.
+     * @return trace All collected trace information.
+     */
+    static std::vector<std::string>& getTrace();
 
-        /** Add trace information to the request object.
-         * Currently the request object simply collects std::strings.
-         * @param[in] t Trace information.
-         */
-        static void addTrace(const std::string& t);
+    /** Add trace information to the request object.
+     * Currently the request object simply collects std::strings.
+     * @param[in] t Trace information.
+     */
+    static void addTrace(const std::string& t);
 
-        /** Clears all trace information from the Request object.
-         */
-        static void clearTrace();
-    private:
-        /** Pipeline of Filters
-         */
-        std::queue<boost::shared_ptr<Filter> > pipelineQueue_;
-        /** Pipeline of requests
-         */
-        std::queue<Request> requestQueue_;
+    /** Clears all trace information from the Request object.
+     */
+    static void clearTrace();
 
-        /** Trace status.
-         * If true, clients receiving the request should store
-         * trace information using addTrace().
-         * @see addTrace
-         */
-        static bool traceFlag_;
+private:
+    /** Pipeline of Filters
+     */
+    std::queue<boost::shared_ptr<Filter> > pipelineQueue_;
+    /** Pipeline of requests
+     */
+    std::queue<Request> requestQueue_;
 
-        /** Trace information.
-         */
-        static std::vector<std::string> trace_;
+    /** Trace status.
+     * If true, clients receiving the request should store
+     * trace information using addTrace().
+     * @see addTrace
+     */
+    static bool traceFlag_;
+
+    /** Trace information.
+     */
+    static std::vector<std::string> trace_;
 #ifdef ENABLE_THREADING
-        /** Mutex to secure trace
-         */
-        static boost::shared_mutex traceMutex_;
+    /** Mutex to secure trace
+     */
+    static boost::shared_mutex traceMutex_;
 
-        /** Mutex to secure traceFlag
-         */
-        static boost::shared_mutex traceFlagMutex_;
+    /** Mutex to secure traceFlag
+     */
+    static boost::shared_mutex traceFlagMutex_;
 #endif
 };
 

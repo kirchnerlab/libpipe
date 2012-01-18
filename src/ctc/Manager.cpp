@@ -30,17 +30,15 @@
 using namespace libpipe::ctc;
 
 Manager::Manager() :
-        algorithm_(0)
-{
-}
+algorithm_(0)
+{}
 
 Manager::~Manager()
 {
 }
-
 Algorithm* Manager::getAlgorithm()
 {
-    return algorithm_;
+    return algorithm _;
 }
 
 void Manager::setAlgorithm(Algorithm* alg)
@@ -52,14 +50,14 @@ void Manager::setAlgorithm(Algorithm* alg)
 
 void Manager::processRequest(libpipe::Request& req)
 {
-    if (req.is(Request::UPDATE)) {
-        if (!algorithm_) {
-            throw RequestException(
-                "Cannot process request. No algorithm setup available.");
-        }
-        typedef FilterSet::iterator MSI;
-        // iterate over all sources
-        for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
+if (req.is (Request::UPDATE)) {
+            if (!algorithm_) {
+                        throw RequestException(
+                        "Cannot process request. No algorithm setup available.");
+                    }
+                    typedef FilterSet::iterator MSI;
+                    // iterate over all sources
+                    for (M SI i = sources_.begin(); i != sources_.end(); ++i) {
             try {
                 (*i)->processRequest(req);
             } catch (RequestException& e) {
@@ -72,11 +70,11 @@ void Manager::processRequest(libpipe::Request& req)
     } catch (std::exception& e) {
         std::string str(e.what());
         throw RequestException(
-            "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
-                    + str);
+        "ModificationTimeManager: Cannot process request: algorithm execution caused exception: "
+        + str);
     } catch (...) {
         throw RequestException(
-            "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
+        "ModificationTimeManager: Cannot process request: algorithm execution caused exception.");
     }
     if (req.is(Request::DELETE)) {
         this->disconnect();

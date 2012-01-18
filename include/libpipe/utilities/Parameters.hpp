@@ -52,7 +52,7 @@ namespace utilities {
  * best practices:
  * \li in most cases a \c Parameters instance will be part of e.g. a \c Filter
  *     or an algorithm class/object. In this case, the containing class should
- *     provide \c get functionality to a properly instanciated \c Parameters
+ *     provide \c get functionality to a properly instantiated \c Parameters
  *     object, that has been initialized with the correct required and optional
  *     parameter names (i.e. keys) as well as \c set functionality for the
  *     complete \c Parameters instance.
@@ -76,7 +76,7 @@ namespace utilities {
  *    p.set("solution", 42);
  *    someObject.setParameters(p);
  * \endcode
- * \li before using the values in a \c Parameters object, the callee should
+ * \li before using the values in a \c Parameters object, the client should
  *     validate the contents to see if the required keys are present:
  * \code
  *     ...
@@ -92,148 +92,151 @@ namespace utilities {
  */
 class Parameters
 {
+public:
+    /** Exception class for invalid parameter keys.
+     */
+    class InvalidParameterName : public Exception
+    {
     public:
-        /** Exception class instances of which are thrown if a requested
-         *  parameter key is invalid.
+        /** Exception Constructor from C string
+         * @param message
          */
-        class InvalidParameterName : public Exception
-        {
-            public:
-                /** Exception Constructor from c string
-                 * @param message
-                 */
-                explicit InvalidParameterName(const char* message);
-                /** Exception Constructor from std::string
-                 * @param message
-                 */
-                explicit InvalidParameterName(const std::string& message);
-                /** virtual Destructor
-                 */
-                virtual ~InvalidParameterName() throw ();
-        };
+        explicit InvalidParameterName(const char* message);
 
-        /** Exception class; signifies runtime type errors while using the
-         *  \c Parameter interface.
+        /** Exception Constructor from std::string
+         * @param message
          */
-        class InvalidParameterType : public Exception
-        {
-            public:
-                /** Exception Constructor from c string
-                 * @param message
-                 */
-                explicit InvalidParameterType(const char* message);
-                /** Exception Constructor from std::string
-                 * @param message
-                 */
-                explicit InvalidParameterType(const std::string& message);
-                /** virtual Destructor
-                 */
-                virtual ~InvalidParameterType() throw ();
-        };
-        /** nonconverting Constructor
-         */
-        explicit Parameters();
+        explicit InvalidParameterName(const std::string& message);
 
-        /** Constructor.
-         * @param[in] required The names (keys) of required parameters. These keys
-         *                     will be required for validate() to succeed.
-         * @param[in] optional The names (keys) of required parameters.
+        /** virtual Destructor
          */
-        Parameters(const std::vector<std::string>& required,
-            const std::vector<std::string>& optional);
+        virtual ~InvalidParameterName() throw ();
+    };
 
-        /** Adds a new required Parameter to the Parameters
-         * @param required The name (key) of a additional required parameter
+    /** Exception class for runtime type errors while using the
+     *  \c Parameter interface.
+     */
+    class InvalidParameterType : public Exception
+    {
+    public:
+        /** Exception Constructor from C string
+         * @param message
          */
-        void addRequiredParameters(const std::string& required);
-        /** Adds a new optinal Parameter to the Parameters
-         * @param optional The name (key) of a additional optional parameter
-         */
-        void addOptionalParameters(const std::string& optional);
+        explicit InvalidParameterType(const char* message);
 
-        /** Set a key/value pair.
-         * @param key The key.
-         * @param value The value.
-         * @throw Throws \c InvalidParameterName if the key is not among the
-         *        required or optional keys.
+        /** Exception Constructor from std::string
+         * @param message
          */
-        template<typename T>
-        void set(const std::string& key, const T& value);
+        explicit InvalidParameterType(const std::string& message);
 
-        /** Retrieve the value for a specific key.
-         * Type conversion is implemented using the template parameter with boost::lexical_cast:
-         * \code
-         *     ...
-         *     Parameters p(req, opt);
-         *     p.set("name", "someValue");
-         *     std::string s = p.get<std::string>("name");
-         *     ...
-         * \endcode
-         * @param key The key of interest.
-         * @return A copy to the value associated with the key \c key.
-         * @throw Throws \c InvalidParameterName if the key is not among the
-         *        required or optional keys and \c InvalidParameterType if the
-         *        requested type does not match the stored type.
+        /** virtual Destructor
          */
-        template<typename T>
-        const T get(const std::string& key);
+        virtual ~InvalidParameterType() throw ();
+    };
 
-        /** Check if a particular parameter name (i.e. key) exists.
-         *
-         * @param key The key for which the check is requested.
-         * @return True if the key is found. Always false for invalid parameters.
-         */
-        bool count(const std::string& key) const;
+    /** Explicit constructor to avoid implicit type conversions.
+     */
+    explicit Parameters();
 
-        /** Check if all required parameters have been set.
-         * This check if all required key have be associated with a value. Note that
-         * this does NOT check if the types of the values are correct (as the
-         * expected type is currently not stored).
-         * @return True if all required parameters are associated with a value.
-         */
-        bool validate() const;
+    /** Constructor.
+     * @param[in] required The names (keys) of required parameters. These keys
+     *                     will be required for validate() to succeed.
+     * @param[in] optional The names (keys) of required parameters.
+     */
+    Parameters(const std::vector<std::string>& required,
+        const std::vector<std::string>& optional);
 
-    private:
-        /** Possible types that can be stored by Parameters
-         */
-        typedef boost::variant<std::string, std::vector<std::string> > Variant;
+    /** Adds a new required Parameter to the Parameters
+     * @param required The name (key) of a additional required parameter
+     */
+    void addRequiredParameters(const std::string& required);
+    /** Adds a new optinal Parameter to the Parameters
+     * @param optional The name (key) of a additional optional parameter
+     */
+    void addOptionalParameters(const std::string& optional);
 
-        /** Storage of required Parameters
-         */
-        std::vector<std::string> requiredParams_;
-        /** Storage of optional Parameters
-         */
-        std::vector<std::string> optionalParams_;
+    /** Set a key/value pair.
+     * @param key The key.
+     * @param value The value.
+     * @throw Throws \c InvalidParameterName if the key is not among the
+     *        required or optional keys.
+     */
+    template<typename T>
+    void set(const std::string& key, const T& value);
 
-        /** Typedef of Parameters Map
-         */
-        typedef std::map<std::string, Variant> Map;
-        /** Store the actual parameters
-         */
-        Map params_;
+    /** Retrieve the value for a specific key.
+     * Type conversion is implemented using the template parameter with boost::lexical_cast:
+     * \code
+     *     ...
+     *     Parameters p(req, opt);
+     *     p.set("name", "someValue");
+     *     std::string s = p.get<std::string>("name");
+     *     ...
+     * \endcode
+     * @param key The key of interest.
+     * @return A copy to the value associated with the key \c key.
+     * @throw Throws \c InvalidParameterName if the key is not among the
+     *        required or optional keys and \c InvalidParameterType if the
+     *        requested type does not match the stored type.
+     */
+    template<typename T>
+    const T get(const std::string& key);
 
-        /** Internal retrieve the value for a specific key.
-         * Type conversion is implemented using the template parameter:
-         * @param key The key of interest.
-         * @return A copy to the value associated with the key \c key.
-         * @throw Throws \c InvalidParameterName if the key is not among the
-         *        required or optional keys and \c InvalidParameterType if the
-         *        requested type does not match the stored type.
-         */
-        template<typename T>
-        const T get_impl(const std::string& key, T*);
+    /** Check if a particular parameter name (i.e. key) exists.
+     *
+     * @param key The key for which the check is requested.
+     * @return True if the key is found. Always false for invalid parameters.
+     */
+    bool count(const std::string& key) const;
 
-        /** Internal retrieve the value for a specific key.
-         * Type conversion is implemented using the template parameter:    ...
-         * @param key The key of interest.
-         * @return A copy to the value associated with the key \c key.
-         * @throw Throws \c InvalidParameterName if the key is not among the
-         *        required or optional keys and \c InvalidParameterType if the
-         *        requested type does not match the stored type.
-         */
-        template<typename T>
-        const std::vector<T> get_impl(const std::string& key,
-            std::vector<T> *);
+    /** Check if all required parameters have been set.
+     * This check if all required key have be associated with a value. Note that
+     * this does NOT check if the types of the values are correct (as the
+     * expected type is currently not stored).
+     * @return True if all required parameters are associated with a value.
+     */
+    bool validate() const;
+
+private:
+    /** Possible types that can be stored by Parameters
+     */
+    typedef boost::variant<std::string, std::vector<std::string> > Variant;
+
+    /** Storage of required Parameters
+     */
+    std::vector<std::string> requiredParams_;
+    /** Storage of optional Parameters
+     */
+    std::vector<std::string> optionalParams_;
+
+    /** Typedef of Parameters Map
+     */
+    typedef std::map<std::string, Variant> Map;
+    /** Store the actual parameters
+     */
+    Map params_;
+
+    /** Internal retrieve the value for a specific key.
+     * Type conversion is implemented using the template parameter:
+     * @param key The key of interest.
+     * @return A copy to the value associated with the key \c key.
+     * @throw Throws \c InvalidParameterName if the key is not among the
+     *        required or optional keys and \c InvalidParameterType if the
+     *        requested type does not match the stored type.
+     */
+    template<typename T>
+    const T get_impl(const std::string& key, T*);
+
+    /** Internal retrieve the value for a specific key.
+     * Type conversion is implemented using the template parameter:    ...
+     * @param key The key of interest.
+     * @return A copy to the value associated with the key \c key.
+     * @throw Throws \c InvalidParameterName if the key is not among the
+     *        required or optional keys and \c InvalidParameterType if the
+     *        requested type does not match the stored type.
+     */
+    template<typename T>
+    const std::vector<T> get_impl(const std::string& key, std::vector<T> *);
 
 };
 
@@ -272,7 +275,7 @@ const T Parameters::get(const std::string& key)
     //get_impl will help compiler to choose the correct version of get_impl.
     //If T is not std::vector, the first version will be chosen, otherwise the second
     //version will be chosen.
-    return get_impl(key, static_cast<T*>(0));
+    return get_impl(key, static_cast<T*> (0));
 }
 
 //general case
@@ -305,11 +308,11 @@ const std::vector<T> Parameters::get_impl(const std::string& key,
         throw InvalidParameterName("Parameter does not exist: " + key);
     }
     try {
-        std::vector<std::string> temp = boost::get<std::vector<std::string> >(
-            i->second);
+        std::vector < std::string > temp
+                = boost::get<std::vector<std::string> >(i->second);
         std::vector<T> ret;
-        for (std::vector<std::string>::const_iterator it = temp.begin();
-                it != temp.end(); it++) {
+        for (std::vector<std::string>::const_iterator it = temp.begin(); it
+                != temp.end(); it++) {
             ret.push_back(boost::lexical_cast<T>(*it));
         }
         return ret;

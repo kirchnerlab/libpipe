@@ -57,8 +57,8 @@ const std::list<FilterDescription>& ConfigJSON::getFilters() const
 const std::list<PrecursorDescription>& ConfigJSON::getPrecursorFilter(
     const std::string& filtername) const
 {
-    for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
-            it != filterList_.end(); ++it) {
+    for (std::list<FilterDescription>::const_iterator it = filterList_.begin(); it
+            != filterList_.end(); ++it) {
         if (it->filterName == filtername) {
             return it->precursors;
         }
@@ -75,8 +75,8 @@ const std::list<PrecursorDescription>& ConfigJSON::getPrecursorFilter(
 const std::list<PortDescription>& ConfigJSON::getPort(
     const std::string& filtername) const
 {
-    for (std::list<FilterDescription>::const_iterator it = filterList_.begin();
-            it != filterList_.end(); ++it) {
+    for (std::list<FilterDescription>::const_iterator it = filterList_.begin(); it
+            != filterList_.end(); ++it) {
         if (it->filterName == filtername) {
             return it->ports;
         }
@@ -115,20 +115,20 @@ void ConfigJSON::parseInputFile(
         libpipe_fail(oss.str());
     }
 
-    std::map<std::string, std::string> algorithmMap;
-    std::map<std::string, std::string> managerMap;
+    std::map < std::string, std::string > algorithmMap;
+    std::map < std::string, std::string > managerMap;
 
     BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptFilter.get_child("filters"))
-            {
-                algorithmMap[v.second.get<std::string>("filterIdentifier")] =
-                        v.second.get<std::string>("algorithmName");
-                managerMap[v.second.get<std::string>("filterIdentifier")] =
-                        v.second.get<std::string>("managerName");
+    {
+        algorithmMap[v.second.get<std::string>("filterIdentifier")] =
+        v.second.get<std::string>("algorithmName");
+        managerMap[v.second.get<std::string>("filterIdentifier")] =
+        v.second.get<std::string>("managerName");
 
-            }
+    }
 
-// Read the file. If there is an error, report it and exit.
+    // Read the file. If there is an error, report it and exit.
 
     try {
         boost::property_tree::read_json(
@@ -142,48 +142,48 @@ void ConfigJSON::parseInputFile(
 
     BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptConnections.get_child("connections"))
-            {
+    {
 
-                FilterDescription tempFilterStruct;
+        FilterDescription tempFilterStruct;
 
-                tempFilterStruct.filterName = v.second.get<std::string>(
+        tempFilterStruct.filterName = v.second.get<std::string>(
+                "filterName");
+        tempFilterStruct.algorithmName = algorithmMap[v.second.get<
+        std::string>("identifier")];
+        tempFilterStruct.managerName = managerMap[v.second.get<
+        std::string>("identifier")];
+
+        PrecursorDescription tempPrecursor;
+        BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
+                v.second.get_child("precursors"))
+        {
+            tempPrecursor.precursorName = t.second.get<
+            std::string>("precursorName");
+            tempFilterStruct.precursors.push_back(
+                    tempPrecursor);
+        }
+
+        PortDescription tempPorts;
+        BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
+                v.second.get_child("ports"))
+        {
+            tempPorts.filterName = t.second.get<std::string>(
                     "filterName");
-                tempFilterStruct.algorithmName = algorithmMap[v.second.get<
-                        std::string>("identifier")];
-                tempFilterStruct.managerName = managerMap[v.second.get<
-                        std::string>("identifier")];
-
-                PrecursorDescription tempPrecursor;
-                BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
-                        v.second.get_child("precursors"))
-                        {
-                            tempPrecursor.precursorName = t.second.get<
-                                    std::string>("precursorName");
-                            tempFilterStruct.precursors.push_back(
-                                tempPrecursor);
-                        }
-
-                PortDescription tempPorts;
-                BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
-                        v.second.get_child("ports"))
-                        {
-                            tempPorts.filterName = t.second.get<std::string>(
-                                "filterName");
-                            tempPorts.portNameOfFilter = t.second.get<
-                                    std::string>("portNameOfFilter");
-                            tempPorts.portNameOfThis =
-                                    t.second.get<std::string>(
-                                        "portNameOfThis");
-                            tempFilterStruct.ports.push_back(tempPorts);
-                        }
-                filterList_.push_back(tempFilterStruct);
-            }
+            tempPorts.portNameOfFilter = t.second.get<
+            std::string>("portNameOfFilter");
+            tempPorts.portNameOfThis =
+            t.second.get<std::string>(
+                    "portNameOfThis");
+            tempFilterStruct.ports.push_back(tempPorts);
+        }
+        filterList_.push_back(tempFilterStruct);
+    }
 
     // generates the pipeline
     // Read the file. If there is an error, report it and exit.
     try {
-        boost::property_tree::read_json(filename.find("PipelineInput")->second,
-            ptPipeline);
+        boost::property_tree::read_json(
+            filename.find("PipelineInput")->second, ptPipeline);
     } catch (std::exception& e) {
         std::ostringstream oss;
         oss << "I/O error while reading Pipeline file. With exception: "
@@ -193,21 +193,21 @@ void ConfigJSON::parseInputFile(
 
     BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
             ptPipeline.get_child("pipeline"))
-            {
+    {
 
-                PipelineDescription tempLibpipeRequest;
+        PipelineDescription tempLibpipeRequest;
 
-                tempLibpipeRequest.filterName = v.second.get<std::string>(
-                    "filterName");
-                tempLibpipeRequest.requestRank = v.second.get<int>(
-                    "requestRank");
-                tempLibpipeRequest.requestType = v.second.get<std::string>(
-                    "requestType");
-                tempLibpipeRequest.makeTrace = v.second.get<bool>("makeTrace",
-                    false);
+        tempLibpipeRequest.filterName = v.second.get<std::string>(
+                "filterName");
+        tempLibpipeRequest.requestRank = v.second.get<int>(
+                "requestRank");
+        tempLibpipeRequest.requestType = v.second.get<std::string>(
+                "requestType");
+        tempLibpipeRequest.makeTrace = v.second.get<bool>("makeTrace",
+                false);
 
-                requestQueue_.push(tempLibpipeRequest);
-            }
+        requestQueue_.push(tempLibpipeRequest);
+    }
 
     // generates the pipeline
     // Read the file. If there is an error, report it and exit.
@@ -221,61 +221,61 @@ void ConfigJSON::parseInputFile(
         libpipe_fail(oss.str());
     }
 
-    BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
-            ptParameters.get_child("parameters"))
+BOOST_FOREACH(const boost::property_tree::ptree::value_type & v,
+        ptParameters.get_child("parameters"))
+{
+    std::string filterIdentifier;
+
+    filterIdentifier = v.second.get<std::string>(
+            "filterIdentifier");
+
+    for (std::list<FilterDescription>::iterator it =
+            filterList_.begin(); it != filterList_.end(); it++) {
+        if (it->filterName == filterIdentifier) {
+            libpipe::utilities::Parameters p = it->parameters;
+            BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
+                    v.second.get_child("parameters"))
             {
-                std::string filterIdentifier;
+                p.addRequiredParameters(
+                        t.second.get<std::string>(
+                                "paramIdentifier"));
 
-                filterIdentifier = v.second.get<std::string>(
-                    "filterIdentifier");
-
-                for (std::list<FilterDescription>::iterator it =
-                        filterList_.begin(); it != filterList_.end(); it++) {
-                    if (it->filterName == filterIdentifier) {
-                        libpipe::utilities::Parameters p = it->parameters;
-                        BOOST_FOREACH(const boost::property_tree::ptree::value_type & t,
-                                v.second.get_child("parameters"))
-                                {
-                                    p.addRequiredParameters(
-                                        t.second.get<std::string>(
-                                            "paramIdentifier"));
-
-                                    // if it is not an array
-                                    if (t.second.get_child("param").size()
-                                            == 0) {
-                                        p.set(
-                                            t.second.get<std::string>(
-                                                "paramIdentifier"),
-                                            t.second.get<std::string>(
-                                                "param"));
-                                    } else {
-                                        //if it is an array
-                                        std::vector<std::string> tempParam;
-                                        BOOST_FOREACH(const boost::property_tree::ptree::value_type & r,
-                                                t.second.get_child("param"))
-                                                {
-                                                    tempParam.push_back(
-                                                        r.second.data());
-                                                }
-                                        p.set(
-                                            t.second.get<std::string>(
-                                                "paramIdentifier"), tempParam);
-
-                                    }
-                                }
-
-                        it->parameters = p;
+                // if it is not an array
+                if (t.second.get_child("param").size()
+                        == 0) {
+                    p.set(
+                            t.second.get<std::string>(
+                                    "paramIdentifier"),
+                            t.second.get<std::string>(
+                                    "param"));
+                } else {
+                    //if it is an array
+                    std::vector<std::string> tempParam;
+                    BOOST_FOREACH(const boost::property_tree::ptree::value_type & r,
+                            t.second.get_child("param"))
+                    {
+                        tempParam.push_back(
+                                r.second.data());
                     }
+                    p.set(
+                            t.second.get<std::string>(
+                                    "paramIdentifier"), tempParam);
+
                 }
             }
+
+            it->parameters = p;
+        }
+    }
+}
 
 }
 
 bool ConfigJSON::checkFile(
     const std::map<std::string, std::string>& filename) const
 {
-    return true;
-    ///TODO implement test
+return true;
+///TODO implement test
 }
 
 } /* namespace rtc */

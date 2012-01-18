@@ -47,103 +47,111 @@ namespace rtc {
 class Algorithm;
 class Manager;
 
-/** The only class for all LIBPIPE runtime configuration filters. Filters are non-copyable by
- * default. You should not inherit from this class.
+/** A filter that supports runtime configuration.
+ * Filters are non-copyable composite objects that combine a \c Manager and
+ * an \c Algorithm object. Note that the \c Filter
+ * destructor is not virtual, that \c Filter is hence not designed to
+ * serve as a base class and that extension of filter functionalities
+ * should be implemented by extending its constituents, i.e.
+ * \c Algorithm and \c Manager.
  * @ingroup rtc
  */
 class LIBPIPE_EXPORT Filter : boost::noncopyable
 {
-    public:
+public:
 
-        /** static create Methode to generate Filters
-         * @param name Name of the Filter
-         * @param algorithmName Identifier of the Algorithm used.
-         * @param managerName Identifier of the Manager used
-         * @return a new Instance of Filter
-         */
-        static Filter* create(const std::string& name,
+    /** Filter factory method.
+     * @param name Unique name of the filter.
+     * @param algorithmName String that uniquely identifies an algorithm type.
+     * @param managerName String that uniquely identifies a manager type.
+     * @return A pointer to a new \c Filter instance.
+     */
+    static Filter* create(const std::string& name,
             const std::string& algorithmName, const std::string& managerName);
 
-        /** Destructor of class Filter it will releas the memory for the algorithm and manager the filter contains
-         */
-        ~Filter();
+    /** Destructor.
+     */
+    ~Filter();
 
 #ifdef ENABLE_THREADING
-        /** Processes a request.
-         * This method forwards the request to the Algorithm and Manager objects.
-         * @param[in] req The request object.
-         * @param[out] error A Pointer to a thrown exception.
-         */
-        void processThreadedRequest(libpipe::Request req,
+    /** Processes a request.
+     * This simply forwards the request to the Algorithm and Manager objects.
+     * @param[in] req The request object.
+     * @param[out] error Pointer to an active exception (in the multithreading
+     *                   code only).
+     */
+    void processThreadedRequest(libpipe::Request req,
             boost::exception_ptr & error);
 #endif
 
-        /** Processes a request.
-         * This method forwards the request to the Algorithm and Manager objects.
-         * @param[in,out] req The request object.
-         */
-         void processRequest(libpipe::Request& req);
+    /** Processes a request.
+     * This simply forwards the request to the Algorithm and Manager objects.
+     * @param[in,out] req The request object.
+     */
+    void processRequest(libpipe::Request& req);
 
-         /** Returns a  pointer to the algorithm object.
-         * @return A pointer to the algorithm object.
-         */
-        Algorithm* getAlgorithm() const;
+    /** Returns a  pointer to the algorithm object.
+     * @return A pointer to the algorithm object.
+     */
+    Algorithm* getAlgorithm() const;
 
-        /** Returns a  pointer to the Manager object.
-         * @return A pointer to the Manager object.
-         */
-        Manager* getManager() const;
+    /** Returns a  pointer to the Manager object.
+     * @return A pointer to the Manager object.
+     */
+    Manager* getManager() const;
 
-        /** Returns the name of the filter.
-         * @return The name of the filter.
-         */
-        std::string getName() const;
+    /** Returns the name of the filter.
+     * @return The name of the filter.
+     */
+    std::string getName() const;
 
-        /** Set the name of the filter.
-         * @param[in] name The name of the filter.
-         */
-        void setName(const std::string& name);
+    /** Set the name of the filter.
+     * @param[in] name The name of the filter.
+     */
+    void setName(const std::string& name);
 
-    private:
-        /** Constructor.
-         * @param name The name of the filter.
-         * @param algorithm Pointer to the Algorithm that the filter will uses
-         * @param manager Pointer to the Manager that the filter will uses
-         */
-        Filter(const std::string& name, Algorithm* algorithm,
+private:
+    /** Constructor.
+     * @param name The name of the filter.
+     * @param algorithm Pointer to the \c Algorithm instance.
+     * @param manager Pointer to the \c Manager instance.
+     */
+    Filter(const std::string& name, Algorithm* algorithm,
             Manager* manager);
-        /** Set the algorithm that should be used for this filter.
-         * @param[in] alg Pointer to the Algorithm object.
-         */
-        void setAlgorithm(Algorithm* alg);
 
-        /** Set the manager that manages the filter.
-         * @param[in] manager Pointer to the Manager object.
-         */
-        void setManager(Manager* manager);
+    /** Set the algorithm that should be used for this filter.
+     * @param[in] alg Pointer to the \c Algorithm object.
+     */
+    void setAlgorithm(Algorithm* alg);
 
-        /** A pointer to the algorithm that is part of the filter.
-         */
-        Algorithm* algorithm_;
+    /** Set the manager that manages the filter.
+     * @param[in] manager Pointer to the \c Manager object.
+     */
+    void setManager(Manager* manager);
 
-        /** A pointer to the manager that is part of the filter.
-         */
-        Manager* manager_;
+    /** Pointer to the algorithm that is part of the filter.
+     */
+    Algorithm* algorithm_;
 
-        /** Holds the name of the filter.
-         */
-        std::string name_;
+    /** Pointer to the manager that is part of the filter.
+     */
+    Manager* manager_;
 
-        /** Mutex for the name_
-         */
-        mutable boost::shared_mutex nameMutex_;
-        /** Mutex for the algorithm_
-         */
-        mutable boost::shared_mutex algorithmMutex_;
-        /** Mutex for the manager_
-         */
-        mutable boost::shared_mutex managerMutex_;
+    /** The name of the filter.
+     */
+    std::string name_;
 
+    /** Mutex for the name_
+     */
+    mutable boost::shared_mutex nameMutex_;
+
+    /** Mutex for the algorithm_
+     */
+    mutable boost::shared_mutex algorithmMutex_;
+
+    /** Mutex for the manager_
+     */
+    mutable boost::shared_mutex managerMutex_;
 };
 
 } // namespace rtc

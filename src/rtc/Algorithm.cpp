@@ -61,7 +61,7 @@ const timeval Algorithm::MAX_TIME = Algorithm::initMaxTime();
 const timeval Algorithm::MIN_TIME = Algorithm::initMinTime();
 
 Algorithm::Algorithm() :
-        mTime_(Algorithm::MAX_TIME)
+    mTime_(Algorithm::MAX_TIME)
 {
 }
 
@@ -119,8 +119,7 @@ bool Algorithm::needUpdate() const
     return mTime_ == Algorithm::MAX_TIME;
 }
 
-boost::shared_ptr<Data> Algorithm::getPort(
-    const std::string& portIdentifier) const
+boost::shared_ptr<Data> Algorithm::getPort(const std::string& portIdentifier) const
 {
 #ifdef ENABLE_THREADING
     boost::shared_lock<boost::shared_mutex> lock(portMutex_);

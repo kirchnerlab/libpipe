@@ -4,7 +4,7 @@
  *
  * This file is part of libpipe.
  *
- * Implementation for windows gettimeofday adapted from
+ * Implementation for Windows gettimeofday adapted from
  * http://suacommunity.com/dictionary/gettimeofday-entry.php
  *
  * This file is part of libpipe.
@@ -71,12 +71,10 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
             _tzset();
             tzflag++;
         }
-
         // Adjust for the timezone west of Greenwich
         tz->tz_minuteswest = _timezone / 60;
         tz->tz_dsttime = _daylight;
     }
-
     return 0;
 }
 
@@ -84,8 +82,8 @@ int gettimeofday(struct timeval *tv, struct timezone *tz)
 
 bool operator<=(const timeval& lhs, const timeval& rhs)
 {
-    if (lhs.tv_sec < rhs.tv_sec
-            || (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec <= rhs.tv_usec)) {
+    if (lhs.tv_sec < rhs.tv_sec || (lhs.tv_sec == rhs.tv_sec && lhs.tv_usec
+            <= rhs.tv_usec)) {
         return true;
     }
     return false;

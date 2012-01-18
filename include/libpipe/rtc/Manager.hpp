@@ -57,9 +57,9 @@ class LIBPIPE_EXPORT Manager : boost::noncopyable
 {
 public:
 
-    /** create Methode for manager which is called by ManagerFactory
-     * @return A Pointer to the new generated Manager, keep in mind that you
-     *         are responsible for deleting the pointer after usage
+    /** Factory method for \c Manager objects. Call
+     * @return A Pointer to a new \c Manager object. Ownership lies with
+     *         the caller.
      */
     static Manager* create();
 
@@ -67,26 +67,27 @@ public:
      */
     virtual ~Manager();
 
-    /** Get a pointer to the algorithm object currently managed by the manager.
-     * @return A pointer to an algorithm object (or 0).
+    /** Get a pointer to the \c Algorithm object that is currently
+     * managed by the manager.
+     * @return Pointer to an \c Algorithm object (or 0).
      */
     Algorithm* getAlgorithm();
 
-    /** Set the algorithm that is managed by the manager.
+    /** Set the \c Algorithm object that is managed by the manager.
      * @param[in] alg Pointer to the algorithm object.
      */
     void setAlgorithm(Algorithm* alg);
 
-    /** Process a processing request. In the simple base class implementation
-     * the manager will call the \c process request method of all filters
-     * it depends on and will subsequently execute its own algorithm.
-     *
+    /** Process a request. In the default base class implementation,
+     * the manager calls the \c processRequest methods of all filters
+     * it depends. It subsequently executes \c Algorithm::processRequest
+     * on its own \c Algorithm instance.
      * @param[in,out] req The request object, non-const (good for e.g. adding trace
-     *                information)
+     *                    information)
      */
     virtual void processRequest(libpipe::Request& req);
 
-    /** Connect the manager to a filter it depends on. Each call connects the
+    /** Construct dependencies between filters. Each call connects the
      * Manager to the specified filter; duplicates will be ignored.
      * Because of the use of shared_pointers one need to dynamically cast the
      * pointers to boost::shared_ptr<Filter> this can be done with the use of

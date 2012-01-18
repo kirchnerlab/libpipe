@@ -61,80 +61,89 @@ namespace rtc {
 template<typename T>
 class LIBPIPE_EXPORT SharedData : boost::noncopyable, public Data
 {
-    public:
-        /** Constructor.
-         */
-        SharedData();
+public:
+    /** Constructor.
+     */
+    SharedData();
 
-        /** Construct from an existing pointer, taking over ownership.
-         * The best practice follows the \c auto_ptr and \c shared_ptr idioms:
-         * call new in the parameters.
-         * \code
-         * ...
-         * SharedData<int> x(new int);
-         * ...
-         * x.set(new int);
-         * *(x.get()) = 10;
-         * ...
-         * \endcode
-         *
-         * @param[in] ptr Pointer to a \c T instance or 0. If \c ptr is a valid
-         *                pointer, \c SharedData takes ownership!
-         */
-        SharedData(T* ptr);
+    /** Construct from an existing pointer, taking over ownership.
+     * Best practice corresponds to the \c auto_ptr and \c shared_ptr best
+     * practices, see
+     * http://www.boost.org/doc/libs/1_48_0/libs/smart_ptr/shared_ptr.htm
+     * In particular, always use a named SharedData object to hold the
+     * result of new:
+     * \code
+     * ...
+     * SharedData<int> x(new int);
+     * ...
+     * x.set(new int);
+     * *(x.get()) = 10;
+     * ...
+     * \endcode
+     *
+     * @param[in] ptr Pointer to a \c T instance or 0. If \c ptr is a valid
+     *                pointer, \c SharedData takes ownership.
+     */
+    SharedData(T* ptr);
 
-        /** Desctructor.
-         */
-        ~SharedData();
+    /** Desctructor.
+     */
+    ~SharedData();
 
 #ifdef ENABLE_THREADING
-        /** To get unique ownership to this datatype
-         */
-        void lock();
-        /** To get shared ownership to this datatype
-         */
-        void shared_lock();
-        /** To release ownership to this datatype
-         */
-        void unlock();
+    /** Locks access to the object for single-threaded write access.
+     */
+    void lock();
+    /** Locks access to the object for multi-threaded read access.
+     */
+    void shared_lock();
+    /** Releases a lock held on the object.
+     */
+    void unlock();
 
 #endif
 
-        /** Returns a pointer to the wrapped object.
-         * There are no constness constraints on the object.
-         * @return A pointer to the wrapped object.
-         */
-        T* get() const;
+    /** Returns a pointer to the wrapped object.
+     * There are no constness constraints on the object.
+     * @return A pointer to the wrapped object.
+     */
+    T* get() const;
 
-        /** Set the shared object.
-         * @see SharedData<T>::SharedData(T* ptr)
-         * @param[in] ptr Pointer to the shared object, ownership is taken over!
-         */
-        void set(T* ptr);
+    /** Set the shared object.
+     * @see SharedData<T>::SharedData(T* ptr)
+     * @param[in] ptr Pointer to the shared object. \c SharedData takes
+     *                ownership and clients must not attempt to delete the
+     *                referenced memory.
+     */
+    void set(T* ptr);
 
-        /** Convenience function to check if the \c SharedData holds a valid
-         * object.
-         * @return True if the \c SharedData object points to a valid \c T
-         *         instance.
-         */
-        bool isNull();
+    /** Convenience function to check if the \c SharedData holds a valid
+     * object.
+     * @return True if the \c SharedData object points to a valid \c T
+     *         instance.
+     */
+    bool isNull();
 
-    private:
-        /** Pointer to the \c T instance.
-         */
-        boost::scoped_ptr<T> ptr_;
+private:
+    /** Pointer to the \c T instance.
+     */
+    boost::scoped_ptr<T> ptr_;
+
 #ifdef ENABLE_THREADING
-        /** Mutex to secure ptr_
-         */
-        mutable boost::shared_mutex ptrMutex_;
-        /** enum to specify moment lock.
-         */
-        enum LockType
-        {
-            NOT_LOCKED = 0, SHARED_LOCK = 1, UNIQUE_LOCK = 2
-        };
+    /** Mutex/semaphore to control access to \c ptr_
+     */
+    mutable boost::shared_mutex ptrMutex_;
 
-        LockType lockType_;
+    /** Available lock types.
+     */
+    enum LockType
+    {
+        NOT_LOCKED = 0, SHARED_LOCK = 1, UNIQUE_LOCK = 2
+    };
+
+    /** The type of locking the object is currently under.
+     */
+    LockType lockType_;
 #endif
 };
 
@@ -143,18 +152,18 @@ class LIBPIPE_EXPORT SharedData : boost::noncopyable, public Data
 //
 template<typename T>
 SharedData<T>::SharedData() :
-        ptr_(0)
+    ptr_(0)
 #ifdef ENABLE_THREADING
-            , lockType_(NOT_LOCKED)
+, lockType_(NOT_LOCKED)
 #endif
 {
 }
 
 template<typename T>
 SharedData<T>::SharedData(T* ptr) :
-        ptr_(ptr)
+    ptr_(ptr)
 #ifdef ENABLE_THREADING
-            , lockType_(NOT_LOCKED)
+, lockType_(NOT_LOCKED)
 #endif
 {
 }
@@ -170,7 +179,7 @@ T* SharedData<T>::get() const
 #ifdef ENABLE_THREADING
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get();
-    }else {
+    } else {
         libpipe_fail("Lock was not set on SharedData::get()");
     }
 #else
@@ -203,7 +212,7 @@ bool SharedData<T>::isNull()
 #ifdef ENABLE_THREADING
     if (lockType_ == SHARED_LOCK || lockType_ == UNIQUE_LOCK) {
         return ptr_.get() == 0;
-    }else {
+    } else {
         libpipe_fail("Lock was not set on SharedData::isNull()");
     }
 #else

@@ -36,21 +36,23 @@ namespace libpipe {
 class LIBPIPE_EXPORT RequestException : public utilities::Exception
 {
 public:
-    /** Constructor
-     * @param msg The message of the exception
+    /** Constructor.
+     * @param msg The error message.
      */
     RequestException(const char* msg) :
         Exception(msg)
     {
     }
-    /** Constructor
-     * @param msg The message of the exception
+
+    /** Constructor.
+     * @param msg The error message.
      */
     RequestException(const std::string& msg) :
         Exception(msg)
     {
     }
-    /** Destructor
+
+    /** Destructor.
      */
     virtual ~RequestException() throw ()
     {

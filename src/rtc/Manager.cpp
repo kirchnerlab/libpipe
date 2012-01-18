@@ -39,7 +39,7 @@ Manager* Manager::create()
 }
 
 Manager::Manager() :
-        algorithm_(0)
+    algorithm_(0)
 {
 }
 
@@ -88,8 +88,8 @@ void Manager::processRequest(libpipe::Request& req)
         for (MSI i = sources_.begin(); i != sources_.end(); ++i) {
 #ifdef ENABLE_THREADING
             thread.add_thread(
-                new boost::thread(&Filter::processThreadedRequest, (*i), req,
-                    boost::ref(*errorIt)));
+                    new boost::thread(&Filter::processThreadedRequest, (*i), req,
+                            boost::ref(*errorIt)));
             errorIt++;
 #else
             try {
@@ -106,7 +106,7 @@ void Manager::processRequest(libpipe::Request& req)
         for (std::vector<boost::exception_ptr>::iterator it = error.begin();
                 it != error.end(); it++) {
             if ((*it))
-                boost::rethrow_exception((*it));
+            boost::rethrow_exception((*it));
         }
 #endif
     }

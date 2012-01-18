@@ -28,13 +28,13 @@
 using namespace libpipe::utilities;
 
 Parameters::InvalidParameterName::InvalidParameterName(const char* message) :
-        Exception(message)
+    Exception(message)
 {
 }
 
 Parameters::InvalidParameterName::InvalidParameterName(
     const std::string& message) :
-        Exception(message)
+    Exception(message)
 {
 }
 
@@ -43,13 +43,13 @@ Parameters::InvalidParameterName::~InvalidParameterName() throw ()
 }
 
 Parameters::InvalidParameterType::InvalidParameterType(const char* message) :
-        Exception(message)
+    Exception(message)
 {
 }
 
 Parameters::InvalidParameterType::InvalidParameterType(
     const std::string& message) :
-        Exception(message)
+    Exception(message)
 {
 }
 
@@ -63,7 +63,7 @@ Parameters::Parameters()
 
 Parameters::Parameters(const std::vector<std::string>& required,
     const std::vector<std::string>& optional) :
-        requiredParams_(required), optionalParams_(optional)
+    requiredParams_(required), optionalParams_(optional)
 {
 }
 

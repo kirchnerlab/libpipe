@@ -1,5 +1,4 @@
 /*
- *
  * Copyright (c) 2011 David-Matthias Sichau
  * Copyright (c) 2010 Marc Kirchner
  *
@@ -35,94 +34,101 @@
 
 namespace libpipe {
 /**
- * \namespace libpipe::utilities The Namespace where all classes are located which are used for different general usages
+ * \namespace libpipe::utilities Libpipe utility classes namespace.
  */
 namespace utilities {
 
 /**
- * Throws an exception at errors
+ * Error policy that throws an exception.
  */
 template<typename IdentifierType, typename ProductType>
 class ErrorPolicyThrowException
 {
-    protected:
-        /** error policy for unknown type
-         * @param id The identifier of the unknown type
-         * @return throws an exception
-         */
-        static ProductType* onUnknownType(const IdentifierType& id)
-        {
-            throw std::bad_typeid();
-        }
+protected:
+    /** Throw an exception of an unknown type is encountered.
+     * @param id The identifier of the unknown type
+     * @return throws an exception
+     */
+    static ProductType* onUnknownType(const IdentifierType& id)
+    {
+        throw std::bad_typeid();
+    }
 };
 
 /**
- * Returns a 0 pointer at errors
+ * Error policy that returns a null pointer.
  */
 template<typename IdentifierType, typename ProductType>
 class ErrorPolicyReturnNull
 {
-    protected:
-        /** error policy for unknown type
-         * @param id The identifier of the unknown type
-         * @return a 0 pointer
-         */
-        static ProductType* onUnknownType(const IdentifierType& id)
-        {
-            return 0;
-        }
+protected:
+    /** Return a numm pointer.
+     * @param id The identifier of the unknown type
+     * @return a 0 pointer
+     */
+    static ProductType* onUnknownType(const IdentifierType& id)
+    {
+        return 0;
+    }
 };
 
-/** Implementation of an factory to register generation of objects.
- *
+/** Factory implementation, following [Alexandescu, 2002].
  */
-template<class AbstractProduct, typename IdentifierType, template<typename,
-        class > class FactoryErrorPolicy = ErrorPolicyThrowException,
-typename ProductCreatorSignature = AbstractProduct* (*)()>
-class LIBPIPE_EXPORT Factory : public FactoryErrorPolicy<IdentifierType,
-        AbstractProduct>
+template<
+class AbstractProduct,
+typename IdentifierType,
+template<typename,class > class FactoryErrorPolicy = ErrorPolicyThrowException,
+typename ProductCreatorSignature = AbstractProduct* (*)()
+> class LIBPIPE_EXPORT Factory : public FactoryErrorPolicy<
+    IdentifierType,
+    AbstractProduct
+>
 {
-    public:
-        /** Registers a class
-         * @param id The identifier of the class
-         * @param creator the creator method of the class
-         * @return true if successful
-         */
-        bool registerType(const IdentifierType& id,
+public:
+    /** Registers a type with the factory.
+     * @param id The identifier of the type.
+     * @param creator Function pointer to the type creation method.
+     * @return A boolean, true on success.
+     */
+    bool registerType(const IdentifierType& id,
             ProductCreatorSignature creator)
-        {
-            return productMap_.insert(
+    {
+        return productMap_.insert(
                 typename ProductMap::value_type(id, creator)).second;
-        }
+    }
 
-        /** unregisters a class
-         * @param id The identifier of the class
-         * @return true if successful
-         */
-        bool unregisterType(const IdentifierType& id)
-        {
-            return (productMap_.erase(id) == 1);
-        }
+    /** Unregisters a type.
+     * @param id The type identifier.
+     * @return A boolean, true on success.
+     */
+    bool unregisterType(const IdentifierType& id)
+    {
+        return (productMap_.erase(id) == 1);
+    }
 
-        /** creates an instance of the class
-         * @param id the identifier of the class
-         * @return a pointer to an new instance of the class
-         */
-        AbstractProduct* createObject(const IdentifierType& id) const
-        {
-            typename ProductMap::const_iterator i = productMap_.find(id);
-            if (i != productMap_.end()) {
-                return (*i).second();
-            }
-            return onUnknownType(id);
+    /** Create an instance of the specified type.
+     * @param id The type identifier.
+     * @return A pointer to an new instance of the requested type.
+     * @note The behavior upon requesting a non-existent type id
+     *       defined by the FactoryErrorPolicy policy.
+     */
+    AbstractProduct* createObject(const IdentifierType& id) const
+    {
+        typename ProductMap::const_iterator i = productMap_.find(id);
+        if (i != productMap_.end()) {
+            return (*i).second();
         }
-    public:
-        /** typedef of the map used to store the creator methods
-         */
-        typedef std::map<IdentifierType, ProductCreatorSignature> ProductMap;
-        /** the actual map where the creator methods are stored.
-         */
-        ProductMap productMap_;
+        return onUnknownType(id);
+    }
+public:
+    /** Define a type that maps between type ids
+     * and the pointers to their creation methods.
+     */
+    typedef std::map<IdentifierType, ProductCreatorSignature> ProductMap;
+
+    /** The mapping between type ids and function pointers.
+     */
+    ProductMap productMap_;
 };
 
 } //end namespace utilities
