@@ -80,12 +80,11 @@ public:
                 tempOut[i * MATRIX_SIZE + j] = sum / MATRIX_SIZE;
             }
         }
-#ifdef ENABLE_THREADING
-        // Allow other threads to gain access to the data again.
-        output_->unlock();
-        input1_->unlock();
-        input2_->unlock();
-#endif
+
+        LIBPIPE_CLEAN_ACCESS(output_);
+        LIBPIPE_CLEAN_ACCESS(input1_);
+        LIBPIPE_CLEAN_ACCESS(input2_);
+
 
         // And tell the world that we are done.
         LIBPIPE_PIPELINE_TRACE("MatrixMulAlgorithm::update: end.");

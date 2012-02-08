@@ -80,7 +80,17 @@ namespace rtc {
         boost::shared_ptr<libpipe::rtc::SharedData<type> > varName = boost::dynamic_pointer_cast<libpipe::rtc::SharedData<type> >(this->getPort(portName)); \
         type& dataReference = *(varName->get());
 #endif
+/** Macro that cleans the stored data at the end of the update methods
+ * This is just for convenience.
+ * @param varName the variable name where the input is stored
+ */
+#ifdef ENABLE_THREADING
+#define LIBPIPE_CLEAN_ACCESS(varName)   \
+        varName->unlock();
+#else
+#define LIBPIPE_CLEAN_ACCESS(varName)   \
 
+#endif
 /** A template class used to hold data that is shared between algorithms.
  * Sometimes algorithm objects are not able to immediately instanciate a result
  * object but need to process data beforehand. The two foremost cases where
