@@ -40,15 +40,17 @@ This method will contain your actual algorithm. In the end the method should ret
 To add Information to the request trace use the following code inside the method:
 \code LIBPIPE_PIPELINE_TRACE(req, "YOUR MESSAGE"); \endcode
 To have access to your defined in- and output ports you should add the
-following cast at the beginning of the method for convenience:
+following macro at the beginning of the method for convenience:
 \code
-boost::shared_ptr<libpipe::rtc::SharedData<std::string> > input =
-     boost::dynamic_pointer_cast<libpipe::rtc::SharedData<std::string>
-     >(this->getPort("YOUR_INPUT_PORT"));
+LIBPIPE_PREPARE_READ_ACCESS(input1_, tempIn1, Doubles, "MatrixIn1");
+LIBPIPE_PREPARE_WRITE_ACCESS(output_, tempOut, Doubles, "MatrixOut");
 \endcode
-This code should cast your port from the libpipe::rtc::data object back to your original data type.
-In the example above the input data is of type libpipe::rtc::SharedData<std::string>. After the cast
-you can access your input over the variable \c input in your code like you would access a normal pointer.
+This macro gives you access to your in and output. If you want to write your data make sure that you
+call \cLIBPIPE_PREPARE_WRITE_ACCESS, as this enables thread safe writting under the hood.
+
+The first argument of your macro will generate a variable of this name where your in/output is stored.
+The second parameter will give you a variable with direct access to the data. The third parameter
+will be the type of your data. The last argument is the name of the port where your data is stored.
 
 If you want to delete memory if a delete request is called on your algorithm you can do this by checking
 the type of the request:
@@ -59,6 +61,11 @@ if (req.is(libpipe::Request::UPDATE) and this->needUpdate()) {
     //code if delete is called
 }
 \endcode
+
+At the end of you update methode you need to clean up your data objects. This can be done by the
+macro \cLIBPIPE_CLEAN_ACCESS(input1_) where the first argument is your variable storing the
+in/output is stored.
+
 
 <h4> The Destructor </h4>
 If you have not allocated memory in your class an empty destructor is sufficient.
