@@ -81,9 +81,9 @@ public:
             }
         }
 
-        LIBPIPE_CLEAN_ACCESS(output_);
-        LIBPIPE_CLEAN_ACCESS(input1_);
-        LIBPIPE_CLEAN_ACCESS(input2_);
+        LIBPIPE_CLEAR_ACCESS(output_);
+        LIBPIPE_CLEAR_ACCESS(input1_);
+        LIBPIPE_CLEAR_ACCESS(input2_);
 
 
         // And tell the world that we are done.
@@ -161,9 +161,8 @@ public:
                 tempOut[col + (row * MATRIX_SIZE)] = col + row;
             }
         }
-#ifdef ENABLE_THREADING
-        output_->unlock();
-#endif
+
+        LIBPIPE_CLEAR_ACCESS(output_)
         LIBPIPE_PIPELINE_TRACE("Source::update: end.");
     }
 
@@ -234,9 +233,7 @@ public:
             std::cout << '\n';
         }
         std::cout << '\n' << std::endl;
-#ifdef ENABLE_THREADING
-        input_->unlock();
-#endif
+        LIBPIPE_CLEAR_ACCESS(input_);
         LIBPIPE_PIPELINE_TRACE("Printer::update: end.");
     }
 

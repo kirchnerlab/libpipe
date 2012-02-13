@@ -85,10 +85,10 @@ namespace rtc {
  * @param varName the variable name where the input is stored
  */
 #ifdef ENABLE_THREADING
-#define LIBPIPE_CLEAN_ACCESS(varName)   \
+#define LIBPIPE_CLEAR_ACCESS(varName)   \
         varName->unlock();
 #else
-#define LIBPIPE_CLEAN_ACCESS(varName)   \
+#define LIBPIPE_CLEAR_ACCESS(varName)   \
 
 #endif
 /** A template class used to hold data that is shared between algorithms.
