@@ -1,0 +1,13 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="libstdc++.tag$a00274.html" title="{deque\&lt; deque\&lt; _Tp, _Allocator \&gt; \&gt;\n||}" alt="" coords="5,145,232,234"/>
+<area shape="rect" id="node5" href="libstdc++.tag$a00275.html" title="{list\&lt; list\&lt; _Tp, _Allocator \&gt; \&gt;\n||}" alt="" coords="256,145,448,234"/>
+<area shape="rect" id="node7" href="libstdc++.tag$a00276.html" title="{map\&lt; map\&lt; _Key, _Tp, _Compare, _Allocator \&gt; \&gt;\n||}" alt="" coords="472,145,784,234"/>
+<area shape="rect" id="node9" href="libstdc++.tag$a00277.html" title="{multimap\&lt; multimap\&lt; _Key, _Tp, _Compare, _Allocator \&gt; \&gt;\n||}" alt="" coords="808,145,1176,234"/>
+<area shape="rect" id="node11" href="libstdc++.tag$a00278.html" title="{multiset\&lt; multiset\&lt; _Key, _Compare, _Allocator \&gt; \&gt;\n||}" alt="" coords="1200,145,1523,234"/>
+<area shape="rect" id="node13" href="libstdc++.tag$a00279.html" title="{set\&lt; set\&lt; _Key, _Compare, _Allocator \&gt; \&gt;\n||}" alt="" coords="1547,145,1813,234"/>
+<area shape="rect" id="node15" href="libstdc++.tag$a00280.html" title="{unordered_map\&lt; unordered_map\&lt; _Key, _Tp, _Hash, _Pred, _Alloc \&gt; \&gt;\n||}" alt="" coords="1837,145,2275,234"/>
+<area shape="rect" id="node17" href="libstdc++.tag$a00281.html" title="{unordered_multimap\&lt; unordered_multimap\&lt; _Key, _Tp, _Hash, _Pred, _Alloc \&gt; \&gt;\n||}" alt="" coords="2299,145,2792,234"/>
+<area shape="rect" id="node19" href="libstdc++.tag$a00282.html" title="{unordered_multiset\&lt; unordered_multiset\&lt; _Value, _Hash, _Pred, _Alloc \&gt; \&gt;\n||}" alt="" coords="2816,145,3275,234"/>
+<area shape="rect" id="node21" href="libstdc++.tag$a00283.html" title="{unordered_set\&lt; unordered_set\&lt; _Value, _Hash, _Pred, _Alloc \&gt; \&gt;\n||}" alt="" coords="3299,145,3701,234"/>
+<area shape="rect" id="node23" href="libstdc++.tag$a00284.html" title="{vector\&lt; vector\&lt; _Tp, _Allocator \&gt; \&gt;\n||}" alt="" coords="3725,145,3955,234"/>
+</map>
