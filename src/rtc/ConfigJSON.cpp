@@ -106,7 +106,7 @@ void ConfigJSON::parseInputFile(
 
     // Read the file. If there is an error, report it and exit.
     try {
-        if (filename.find("FilterInput") == filename.end()) {
+        if (filename.count("FilterInput") == 0) {
             std::ostringstream oss;
             oss
                     << "I/O error while reading Filter file. FilterInput not founded in std::map: ";
@@ -137,7 +137,7 @@ void ConfigJSON::parseInputFile(
     // Read the file. If there is an error, report it and exit.
 
     try {
-        if (filename.find("ConnectionInput") == filename.end()) {
+        if (filename.count("ConnectionInput") == 0) {
             std::ostringstream oss;
             oss
                     << "I/O error while reading Filter file. ConnectionInput not founded in std::map: ";
@@ -190,7 +190,7 @@ void ConfigJSON::parseInputFile(
     // Read the file. If there is an error, report it and exit.
     try {
 
-        if (filename.find("PipelineInput") == filename.end()) {
+        if (filename.count("PipelineInput") == 0) {
             std::ostringstream oss;
             oss
                     << "I/O error while reading Filter file. PipelineInput not founded in std::map: ";
@@ -226,7 +226,7 @@ void ConfigJSON::parseInputFile(
     // Read the file. If there is an error, report it and exit.
     try {
 
-        if (filename.find("ParameterInput") == filename.end()) {
+        if (filename.count("ParameterInput") == 0) {
             std::ostringstream oss;
             oss
                     << "I/O error while reading Filter file. ParameterInput not founded in std::map: ";
