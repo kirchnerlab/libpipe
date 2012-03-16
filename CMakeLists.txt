@@ -20,6 +20,10 @@ get_git_head_revision(GIT_REFSPEC LIBPIPE_VERSION)
 # Varaibles to upper string for easier comparisions
 #############################################################################
 
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "RelWithDebInfo")
+ENDIF(NOT CMAKE_BUILD_TYPE)
+MESSAGE(STATUS "CBT: ${CMAKE_BUILD_TYPE}")
 STRING(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
 
 #############################################################################
