@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$classlibpipe_1_1ctc_1_1_filter.html" title="{Filter\n|&#45; algorithm_\l&#45; manager_\l&#45; name_\l|+ Filter()\l+ ~Filter()\l+ getAlgorithm()\l+ getManager()\l+ getName()\l+ processRequest()\l+ setName()\l# setAlgorithm()\l# setManager()\l}" alt="" coords="20,145,156,421"/>
+<area shape="rect" id="node7" href="$classlibpipe_1_1ctc_1_1_manager.html" title="{Manager\n|# algorithm_\l# sources_\l|+ Manager()\l+ ~Manager()\l+ connect()\l+ getAlgorithm()\l+ processRequest()\l+ setAlgorithm()\l# disconnect()\l}" alt="" coords="180,173,316,393"/>
+<area shape="rect" id="node11" href="$classlibpipe_1_1ctc_1_1_shared_data.html" title="{SharedData\&lt; T \&gt;\n|&#45; ptr_\l|+ SharedData()\l+ SharedData()\l+ ~SharedData()\l+ get()\l+ isNull()\l+ set()\l}" alt="" coords="340,191,463,374"/>
+<area shape="rect" id="node5" href="$classlibpipe_1_1ctc_1_1_basic_filter.html" title="{BasicFilter\&lt; A, M \&gt;\n||+ BasicFilter()\l+ ~BasicFilter()\l+ getAlgorithm()\l+ getManager()\l}" alt="" coords="5,470,141,615"/>
+<area shape="rect" id="node9" href="$classlibpipe_1_1ctc_1_1_modification_time_manager.html" title="{ModificationTimeManager\n||+ ModificationTimeManager()\l+ ~ModificationTimeManager()\l+ processRequest()\l}" alt="" coords="165,479,363,606"/>
+</map>

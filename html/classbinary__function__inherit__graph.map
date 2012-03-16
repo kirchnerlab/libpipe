@@ -1,0 +1,9 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="libstdc++.tag$a00127.html" title="{_EqualFromLess\&lt; _T1, _T2, bool \&gt;\n||}" alt="" coords="5,145,232,234"/>
+<area shape="rect" id="node5" href="libstdc++.tag$a00128.html" title="{_EqualTo\&lt; _T1, _T2, bool \&gt;\n||}" alt="" coords="256,145,440,234"/>
+<area shape="rect" id="node7" href="libstdc++.tag$a00133.html" title="{_Less\&lt; _T1, _T2, bool \&gt;\n||}" alt="" coords="464,145,629,234"/>
+<area shape="rect" id="node9" href="libstdc++.tag$a00134.html" title="{_Lexicographic\&lt; std::pair\&lt; _T1, _T2 \&gt;, std::pair\&lt; _T1, _T2 \&gt;, bool \&gt;\n||}" alt="" coords="653,145,1072,234"/>
+<area shape="rect" id="node11" href="libstdc++.tag$a00135.html" title="{_LexicographicReverse\&lt; _T1, _T2, bool \&gt;\n||}" alt="" coords="1096,145,1360,234"/>
+<area shape="rect" id="node13" href="libstdc++.tag$a00151.html" title="{_Multiplies\&lt; _Tp1, _Tp2, _Result \&gt;\n||}" alt="" coords="1384,145,1611,234"/>
+<area shape="rect" id="node15" href="libstdc++.tag$a00154.html" title="{_Plus\&lt; _Tp1, _Tp2, _Result \&gt;\n||}" alt="" coords="1635,145,1832,234"/>
+</map>

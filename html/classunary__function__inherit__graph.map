@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="libstdc++.tag$a00014.html" title="{_Ffit_finder\&lt; std::pair\&lt; _Tp, _Tp \&gt;, bool \&gt;\n||}" alt="" coords="5,145,272,234"/>
+<area shape="rect" id="node5" href="libstdc++.tag$a00097.html" title="{__binder1st\&lt; _SecondArgumentType, _ResultType \&gt;\n||}" alt="" coords="296,145,627,234"/>
+<area shape="rect" id="node7" href="libstdc++.tag$a00098.html" title="{__binder2nd\&lt; _FirstArgumentType, _ResultType \&gt;\n||}" alt="" coords="651,145,965,234"/>
+<area shape="rect" id="node9" href="libstdc++.tag$a00123.html" title="{__unary_negate\&lt; argument_type, bool \&gt;\n||}" alt="" coords="989,145,1245,234"/>
+</map>
