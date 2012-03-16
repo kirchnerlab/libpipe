@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Libpipe Cofiguration File Editor</title>
+		<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+		<script src="js/jquery-1.7.1.js" type="text/javascript"></script>
+		<script src="js/Parameter/Parameters.js" type="text/javascript"></script>
+		<script src="js/Filter/Filters.js" type="text/javascript"></script>
+		<script src="js/Connection/Connections.js" type="text/javascript"></script>
+		<script src="js/Pipeline/Pipeline.js" type="text/javascript"></script>
+		<script src="js/CompleteFilter.js" type="text/javascript"></script>
+		<script src="js/Parameter/NewParametersDialog.js" type="text/javascript"></script>
+		<script src="js/Parameter/DeleteParametersDialog.js" type="text/javascript"></script>
+		<script src="js/Filter/NewFilterDialog.js" type="text/javascript"></script>
+		<script src="js/Filter/DeleteFilterDialog.js" type="text/javascript"></script>
+		<script src="js/Pipeline/DeletePipelineDialog.js" type="text/javascript"></script>
+		<script src="js/Pipeline/NewPipelineDialog.js" type="text/javascript"></script>
+		<script src="js/Connection/DeleteConnectionDialog.js" type="text/javascript"></script>
+		<script src="js/Connection/NewConnectionDialog.js" type="text/javascript"></script>
+		<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+		<style type="text/css">
+			label {
+				width: 150px;    /*Or however much space you need for the form’s labels*/
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Libpipe Cofiguration File Editor</h1>
+		<div id="loadFiles">
+			<label>Parameter File:</label>
+			<input type="file" name="fileParameter" />
+			<br />
+			<label>Filter File:</label>
+			<input type="file" name="fileFilter" />
+			<br />
+			<label>Connection File:</label>
+			<input type="file" name="fileConnection" />
+			<br />
+			<label>Pipeline File:</label>
+			<input type="file" name="filePipeline" />
+			<br />
+			<button id="getdata-button">
+				Load the JSON Data
+			</button>
+		</div>
+		<div id="new_param"></div>
+		<div id="new_filter"></div>
+		<div id="new_pipeline"></div>
+		<div id="new_connection"></div>
+		<div id="new_precursor"></div>
+		<div id="del_param"></div>
+		<div id="del_filter"></div>
+		<div id="del_pipeline"></div>
+		<div id="del_connection"></div>
+		<script>
+			var completeFilter = new CompleteFilter;
+			$('#getdata-button').live('click', function() {
+				completeFilter.loadData();
+
+				//generate tabs
+				html = completeFilter.generateTabs();
+
+				$(html).appendTo('body');
+				$("#tabs").tabs({
+					selected : 3 //select tab
+
+				});
+
+			});
+
+			$(document).ready(function() {
+
+			});
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,3 @@
+* to add a test for a new class: ./create_test.py <CLASSNAME>
+* to add a test for a class for which there already are a few
+  tests: edit the respective .cpp file.

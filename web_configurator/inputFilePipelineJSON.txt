@@ -1,0 +1,16 @@
+{
+    "pipeline": [
+        {
+            "filterName": "MgfFilePrinterFilterTopXInWindowsOfSizeZ",
+            "requestType": "UPDATE",
+            "requestRank": 1,
+            "makeTrace": "true"
+        },
+        {
+            "filterName": "MgfFilePrinterFilterTopXInWindowsOfSizeZqew",
+            "requestType": "UPDATEeqw",
+            "requestRank": 13,
+            "makeTrace": "trueeqw"
+        }
+    ]
+}

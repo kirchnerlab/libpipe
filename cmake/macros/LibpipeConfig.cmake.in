@@ -1,0 +1,24 @@
+# Find the libpipe includes and library
+#
+# LIBPIPE_INCLUDE_DIR - where to find libpipe.h
+# LIBPIPE_LIBRARIES - List of fully qualified libraries to link against
+#
+# LIBPIPE_FOUND - set to 1 if found
+#
+# Do not delete this file if you want to use find_package(Libpipe)
+# in your cmake project
+
+
+include("@CMAKE_INSTALL_PREFIX@/lib/libpipe/cmake/LibpipeLibraryDepends.cmake")     
+
+
+set (LIBPIPE_FOUND 1)
+
+set( ENABLE_THREADING @ENABLE_THREADING@)
+
+set (LIBPIPE_INCLUDE_DIR "@LIBPIPE_INCLUDE@")
+
+set(LIBPIPE_LIBRARIES pipe)
+
+set(Libpipe_BUILD_SETTINGS_FILE  "@CMAKE_INSTALL_PREFIX@/lib/libpipe/LibpipeLibraryDepends.cmake")
+
