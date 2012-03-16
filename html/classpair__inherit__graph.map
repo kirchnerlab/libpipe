@@ -1,3 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="libstdc++.tag$a00130.html" title="{_IteratorPair\&lt; _Iterator1, _Iterator2 \&gt;\n||}" alt="" coords="5,145,240,234"/>
+<area shape="rect" id="node3" href="libstdc++.tag$a00130.html" title="{_IteratorPair\&lt; _Iterator1, _Iterator2 \&gt;\n|+ first\l+ second\l|+ _IteratorPair()\l+ operator _Iterator2()\l+ operator+()\l+ operator++()\l+ operator++()\l+ operator&#45;()\l+ operator&#45;&#45;()\l+ operator&#45;&#45;()\l+ operator=()\l+ swap()\l}" alt="" coords="4,145,267,423"/>
 </map>

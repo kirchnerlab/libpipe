@@ -1,10 +1,10 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="53,767,146,857"/>
-<area shape="rect" id="node4" href="libstdc++.tag$a00258.html" title="{basic_string\&lt; char \&gt;\n||}" alt="" coords="170,767,311,857"/>
-<area shape="rect" id="node8" href="libstdc++.tag$a00258.html" title="STL class." alt="" coords="81,442,329,531"/>
-<area shape="rect" id="node11" href="$classlibpipe_1_1ctc_1_1_manager.html" title="{Manager\n|# algorithm_\l# sources_\l|+ Manager()\l+ ~Manager()\l+ connect()\l+ getAlgorithm()\l+ processRequest()\l+ setAlgorithm()\l# disconnect()\l}" alt="" coords="407,702,543,922"/>
-<area shape="rect" id="node13" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="353,442,446,531"/>
-<area shape="rect" id="node15" href="libstdc++.tag$a00270.html" title="{set\&lt; boost::shared_ptr\&lt; Filter \&gt; \&gt;\n||}" alt="" coords="470,442,689,531"/>
-<area shape="rect" id="node19" href="libstdc++.tag$a00270.html" title="STL class." alt="" coords="483,163,686,253"/>
-<area shape="rect" id="node22" href="$classlibpipe_1_1ctc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l&#45; mTime_\l|+ Algorithm()\l+ ~Algorithm()\l+ getMTime()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ update()\l+ updateMTime()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="717,339,853,634"/>
+<area shape="rect" id="node2" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="64,988,167,1078"/>
+<area shape="rect" id="node4" href="libstdc++.tag$a00258.html" title="{basic_string\&lt; char \&gt;\n|+ npos\l|+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\l+ basic_string()\land 120 more...}" alt="" coords="191,894,347,1172"/>
+<area shape="rect" id="node8" href="libstdc++.tag$a00258.html" title="STL class." alt="" coords="97,538,370,816"/>
+<area shape="rect" id="node11" href="$classlibpipe_1_1ctc_1_1_manager.html" title="{Manager\n|# algorithm_\l# sources_\l|+ Manager()\l+ ~Manager()\l+ connect()\l+ getAlgorithm()\l+ processRequest()\l+ setAlgorithm()\l# disconnect()\l}" alt="" coords="407,922,552,1144"/>
+<area shape="rect" id="node13" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="394,632,496,722"/>
+<area shape="rect" id="node15" href="libstdc++.tag$a00270.html" title="{set\&lt; boost::shared_ptr\&lt; Filter \&gt; \&gt;\n|+ keys\l|+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ begin()\l+ cbegin()\l+ cend()\land 31 more...}" alt="" coords="521,538,767,816"/>
+<area shape="rect" id="node19" href="libstdc++.tag$a00270.html" title="STL class." alt="" coords="546,164,766,442"/>
+<area shape="rect" id="node22" href="$classlibpipe_1_1ctc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l&#45; mTime_\l|+ Algorithm()\l+ ~Algorithm()\l+ getMTime()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ update()\l+ updateMTime()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="802,529,947,826"/>
 </map>

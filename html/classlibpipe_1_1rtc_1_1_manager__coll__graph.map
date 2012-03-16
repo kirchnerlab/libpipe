@@ -1,16 +1,15 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="260,1222,353,1311"/>
-<area shape="rect" id="node4" href="libstdc++.tag$a00270.html" title="{set\&lt; boost::shared_ptr\&lt; Filter \&gt; \&gt;\n||}" alt="" coords="93,478,312,567"/>
-<area shape="rect" id="node8" href="libstdc++.tag$a00270.html" title="STL class." alt="" coords="5,321,208,410"/>
-<area shape="rect" id="node17" href="libstdc++.tag$a00552.html" title="{map\&lt; std::string, Variant \&gt;\n||}" alt="" coords="771,478,947,567"/>
-<area shape="rect" id="node22" href="libstdc++.tag$a00552.html" title="STL class." alt="" coords="436,321,676,410"/>
-<area shape="rect" id="node39" href="libstdc++.tag$a00552.html" title="{map\&lt; std::string, boost::shared_ptr\&lt; Data \&gt; \&gt;\n||}" alt="" coords="336,478,624,567"/>
-<area shape="rect" id="node11" href="$classbool.html" title="{bool\n||}" alt="" coords="588,1222,633,1311"/>
-<area shape="rect" id="node13" href="$classlibpipe_1_1rtc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l# parameters_\l# ports_\l&#45; mTime_\l|+ ~Algorithm()\l+ connect()\l+ getMTime()\l+ getPort()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ setParameters()\l+ setPort()\l+ update()\l+ updateMTime()\l+ create()\l# Algorithm()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="428,1054,564,1479"/>
-<area shape="rect" id="node15" href="$classlibpipe_1_1utilities_1_1_parameters.html" title="{Parameters\n|&#45; optionalParams_\l&#45; params_\l&#45; requiredParams_\l|+ Parameters()\l+ Parameters()\l+ addOptionalParameters()\l+ addRequiredParameters()\l+ count()\l+ get()\l+ set()\l+ validate()\l&#45; get_impl()\l&#45; get_impl()\l}" alt="" coords="769,654,948,949"/>
-<area shape="rect" id="node20" href="$class_t.html" title="{T\n||}" alt="" coords="908,163,945,253"/>
-<area shape="rect" id="node26" href="libstdc++.tag$a00730.html" title="{vector\&lt; std::string \&gt;\n||}" alt="" coords="1068,478,1207,567"/>
-<area shape="rect" id="node34" href="libstdc++.tag$a00730.html" title="STL class." alt="" coords="1175,321,1321,410"/>
-<area shape="rect" id="node28" href="libstdc++.tag$a00248.html" title="{_Vector_base\&lt; _Tp, _Alloc \&gt;\n||}" alt="" coords="1280,163,1469,253"/>
-<area shape="rect" id="node30" href="$class___vector__impl.html" title="{_Vector_impl\n||}" alt="" coords="1159,6,1255,95"/>
+<area shape="rect" id="node2" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="291,2164,393,2254"/>
+<area shape="rect" id="node4" href="libstdc++.tag$a00270.html" title="{set\&lt; boost::shared_ptr\&lt; Filter \&gt; \&gt;\n|+ keys\l|+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ set()\l+ begin()\l+ cbegin()\l+ cend()\land 31 more...}" alt="" coords="94,1125,340,1403"/>
+<area shape="rect" id="node8" href="libstdc++.tag$a00270.html" title="STL class." alt="" coords="4,573,224,851"/>
+<area shape="rect" id="node17" href="libstdc++.tag$a00552.html" title="{map\&lt; std::string, Variant \&gt;\n|+ elements\l+ keys\l|+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ at()\l+ at()\l+ begin()\land 38 more...}" alt="" coords="856,1115,1055,1413"/>
+<area shape="rect" id="node22" href="libstdc++.tag$a00552.html" title="STL class." alt="" coords="491,563,752,861"/>
+<area shape="rect" id="node39" href="libstdc++.tag$a00552.html" title="{map\&lt; std::string, boost::shared_ptr\&lt; Data \&gt; \&gt;\n|+ elements\l+ keys\l|+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ map()\l+ at()\l+ at()\l+ begin()\land 38 more...}" alt="" coords="364,1115,691,1413"/>
+<area shape="rect" id="node11" href="$classbool.html" title="{bool\n||}" alt="" coords="640,2164,689,2254"/>
+<area shape="rect" id="node13" href="$classlibpipe_1_1rtc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l# parameters_\l# ports_\l&#45; mTime_\l|+ ~Algorithm()\l+ connect()\l+ getMTime()\l+ getPort()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ setParameters()\l+ setPort()\l+ update()\l+ updateMTime()\l+ create()\l# Algorithm()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="469,1995,615,2424"/>
+<area shape="rect" id="node15" href="$classlibpipe_1_1utilities_1_1_parameters.html" title="{Parameters\n|&#45; optionalParams_\l&#45; params_\l&#45; requiredParams_\l|+ Parameters()\l+ Parameters()\l+ addOptionalParameters()\l+ addRequiredParameters()\l+ count()\l+ get()\l+ set()\l+ validate()\l&#45; get_impl()\l&#45; get_impl()\l}" alt="" coords="857,1593,1055,1890"/>
+<area shape="rect" id="node26" href="libstdc++.tag$a00730.html" title="{vector\&lt; std::string \&gt;\n|+ _M_impl\l+ elements\l|+ vector()\l+ vector()\l+ vector()\l+ vector()\l+ vector()\l+ vector()\l+ vector()\l+ vector()\l+ ~vector()\l+ _M_allocate()\land 53 more...# _M_allocate_and_copy()\l# _M_assign_aux()\l# _M_assign_aux()\l# _M_assign_dispatch()\l# _M_assign_dispatch()\l# _M_check_len()\l# _M_default_append()\l# _M_default_initialize()\l# _M_erase_at_end()\l# _M_fill_assign()\land 11 more...}" alt="" coords="1122,1021,1403,1507"/>
+<area shape="rect" id="node34" href="libstdc++.tag$a00730.html" title="STL class." alt="" coords="1300,469,1580,955"/>
+<area shape="rect" id="node28" href="libstdc++.tag$a00248.html" title="{_Vector_base\&lt; _Tp, _Alloc \&gt;\n|+ _M_impl\l|+ _Vector_base()\l+ _Vector_base()\l+ _Vector_base()\l+ _Vector_base()\l+ _M_allocate()\l+ _M_deallocate()\l+ _M_get_Tp_allocator()\l+ _M_get_Tp_allocator()\l+ get_allocator()\l}" alt="" coords="1455,162,1661,403"/>
+<area shape="rect" id="node30" href="$class___vector__impl.html" title="{_Vector_impl\n||}" alt="" coords="1321,6,1425,96"/>
 </map>

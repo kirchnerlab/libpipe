@@ -1,4 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classlibpipe_1_1ctc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l&#45; mTime_\l|+ Algorithm()\l+ ~Algorithm()\l+ getMTime()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ update()\l+ updateMTime()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="67,182,203,477"/>
-<area shape="rect" id="node12" href="$classbool.html" title="{bool\n||}" alt="" coords="416,285,461,374"/>
+<area shape="rect" id="node2" href="$classlibpipe_1_1ctc_1_1_algorithm.html" title="{Algorithm\n|+ MAX_TIME\l+ MIN_TIME\l&#45; mTime_\l|+ Algorithm()\l+ ~Algorithm()\l+ getMTime()\l+ needUpdate()\l+ processRequest()\l+ setMTime()\l+ update()\l+ updateMTime()\l&#45; initMaxTime()\l&#45; initMinTime()\l}" alt="" coords="69,182,215,479"/>
+<area shape="rect" id="node12" href="$classbool.html" title="{bool\n||}" alt="" coords="451,286,500,376"/>
 </map>

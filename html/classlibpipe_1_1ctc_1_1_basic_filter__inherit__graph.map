@@ -1,4 +1,4 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$classlibpipe_1_1ctc_1_1_filter.html" title="{Filter\n|&#45; algorithm_\l&#45; manager_\l&#45; name_\l|+ Filter()\l+ ~Filter()\l+ getAlgorithm()\l+ getManager()\l+ getName()\l+ processRequest()\l+ setName()\l# setAlgorithm()\l# setManager()\l}" alt="" coords="5,145,141,421"/>
-<area shape="rect" id="node4" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="27,6,120,95"/>
+<area shape="rect" id="node2" href="$classlibpipe_1_1ctc_1_1_filter.html" title="{Filter\n|&#45; algorithm_\l&#45; manager_\l&#45; name_\l|+ Filter()\l+ ~Filter()\l+ getAlgorithm()\l+ getManager()\l+ getName()\l+ processRequest()\l+ setName()\l# setAlgorithm()\l# setManager()\l}" alt="" coords="4,145,149,423"/>
+<area shape="rect" id="node4" href="$classboost_1_1noncopyable.html" title="{noncopyable\n||}" alt="" coords="26,6,128,96"/>
 </map>

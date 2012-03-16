@@ -1,7 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$classboost_1_1exception.html" title="exception" alt="" coords="7,58,84,89"/>
-<area shape="rect" id="node3" href="$classlibpipe_1_1utilities_1_1_exception.html" title="Exception" alt="" coords="133,58,213,89"/>
-<area shape="rect" id="node5" href="$classlibpipe_1_1_request_exception.html" title="RequestException" alt="" coords="311,5,439,35"/>
-<area shape="rect" id="node7" href="$classlibpipe_1_1utilities_1_1_parameters_1_1_invalid_parameter_name.html" title="Parameters::InvalidParameterName" alt="" coords="261,58,488,89"/>
-<area shape="rect" id="node9" href="$classlibpipe_1_1utilities_1_1_parameters_1_1_invalid_parameter_type.html" title="Parameters::InvalidParameterType" alt="" coords="264,111,485,142"/>
+<area shape="rect" id="node1" href="$classboost_1_1exception.html" title="exception" alt="" coords="6,59,90,90"/>
+<area shape="rect" id="node3" href="$classlibpipe_1_1utilities_1_1_exception.html" title="Exception" alt="" coords="139,59,224,90"/>
+<area shape="rect" id="node5" href="$classlibpipe_1_1_request_exception.html" title="RequestException" alt="" coords="328,5,464,35"/>
+<area shape="rect" id="node7" href="$classlibpipe_1_1utilities_1_1_parameters_1_1_invalid_parameter_name.html" title="Parameters::InvalidParameterName" alt="" coords="273,59,519,90"/>
+<area shape="rect" id="node9" href="$classlibpipe_1_1utilities_1_1_parameters_1_1_invalid_parameter_type.html" title="Parameters::InvalidParameterType" alt="" coords="276,114,516,145"/>
 </map>
