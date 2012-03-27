@@ -42,8 +42,13 @@
 			<label>Pipeline File:</label>
 			<input type="file" name="filePipeline" />
 			<br />
+			<br />
 			<button id="getdata-button">
 				Load the JSON Data from the files
+			</button>
+			
+			<button id="getdata-new-button">
+				Start with empty JSON Files
 			</button>
 		</div>
 		<div id="new_param"></div>
@@ -59,6 +64,19 @@
 			var completeFilter = new CompleteFilter;
 			$('#getdata-button').live('click', function() {
 				completeFilter.loadData();
+
+				//generate tabs
+				html = completeFilter.generateTabs();
+
+				$(html).appendTo('body');
+				$("#tabs").tabs({
+					selected : 3 //select tab
+
+				});
+
+			});
+			$('#getdata-new-button').live('click', function() {
+				completeFilter.loadEmptyData();
 
 				//generate tabs
 				html = completeFilter.generateTabs();

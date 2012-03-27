@@ -7,8 +7,42 @@ function CompleteFilter() {
 	this.filters
 	this.connections
 	this.pipeline
-	this.loadData = function() {
+	
+	this.loadEmptyData = function() {
 
+		var urlParams = "inputFiles/Parameters.txt" ;
+		var urlFilter = "inputFiles/Filter.txt";
+		var urlConnection = "inputFiles/Connection.txt";
+		var urlPipeline = "inputFiles/Pipeline.txt";
+		this.params = new Parameters(urlParams);
+		this.filters = new Filters(urlFilter);
+		this.connections = new Connections(urlConnection);
+		this.pipeline = new Pipeline(urlPipeline);
+		//to synchonise the calls
+		$.ajaxSetup({
+			async : false
+		});
+		this.params.loadJSON();
+		$.ajaxSetup({
+			async : false
+		});
+		this.filters.loadJSON();
+		$.ajaxSetup({
+			async : false
+		});
+		this.connections.loadJSON();
+		$.ajaxSetup({
+			async : false
+		});
+		this.pipeline.loadJSON();
+
+		$("#loadFiles").slideUp();
+	}	
+	
+	
+	
+	this.loadData = function() {
+		alert($(":input[name=fileParameter]").val())
 		var urlParams = $(":input[name=fileParameter]").val();
 		var urlFilter = $(":input[name=fileFilter]").val();
 		var urlConnection = $(":input[name=fileConnection]").val();
